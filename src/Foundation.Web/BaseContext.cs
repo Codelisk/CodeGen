@@ -11,8 +11,13 @@ namespace Foundation.Web
     [BaseContext]
     public class BaseContext<T> : DbContext where T : class
     {
-        public BaseContext(DbContextOptions<BaseContext<T>> options)
-        : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseInMemoryDatabase(nameof(T));
+        }
+        public BaseContext(DbContextOptions<BaseContext<T>> opt)
+        : base(opt)
         {
         }
         public DbSet<T> Items { get; set; } = null!;

@@ -8,14 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-
-var services = builder.Services;
-services.AddDbContext<BaseContext<CategoryDto>>(opt =>
-opt.UseInMemoryDatabase("CategoryList"));
-services.AddDbContext<BaseContext<ProductDto>>(opt =>
-opt.UseInMemoryDatabase("ProductList"));
-services.AddTransient<DefaultRepository<CategoryDto>>();
-services.AddTransient<DefaultRepository<ProductDto>>();
+builder.Services.AddControllerServices();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

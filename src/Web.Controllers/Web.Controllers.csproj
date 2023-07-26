@@ -7,9 +7,18 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <ProjectReference Include="..\..\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\Foundation.Web\Foundation.Web.csproj" />
     <ProjectReference Include="..\Foundation\Foundation.csproj" />
-    <ProjectReference Include="..\Generators\Controller.Generator\Controller.Generator.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\Generators\Controller.Generator\Controller.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false">
+    </ProjectReference>
+    <ProjectReference Include="..\Generators\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="obj\generated\Controller.Generator\Controller.Generator.Generators.MainControllerGenerator\Controller\" />
+  </ItemGroup>
+
 
 </Project>
