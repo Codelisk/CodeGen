@@ -2,18 +2,26 @@ using Foundation.Dtos;
 using Foundation.Web;
 using Microsoft.EntityFrameworkCore;
 using Web.Database.Models;
+using Web.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-builder.Services.AddDbContext<BaseContext<CategoryDto>>(opt =>
-    opt.UseInMemoryDatabase("CategoryList"));
+
+var services = builder.Services;
+services.AddDbContext<BaseContext<CategoryDto>>(opt =>
+opt.UseInMemoryDatabase("CategoryList"));
+services.AddDbContext<BaseContext<ProductDto>>(opt =>
+opt.UseInMemoryDatabase("ProductList"));
+services.AddTransient<DefaultRepository<CategoryDto>>();
+services.AddTransient<DefaultRepository<ProductDto>>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddFoundationWeb();
 
 var app = builder.Build();

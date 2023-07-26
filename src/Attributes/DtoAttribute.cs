@@ -1,8 +1,8 @@
 ﻿namespace Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    public class Dto : Attribute
+    public class DtoAttribute : Attribute
     {
-
+        public string Name { get; set; } = "Dto";
     }
 }

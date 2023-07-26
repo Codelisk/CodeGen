@@ -26,7 +26,7 @@ namespace Foundation.Web
             return result.Entity;
         }
         [Get]
-        public async Task<T> Get()
+        public async Task<T> Get(Guid id)
         {
             return await _context.Items.FirstAsync();
         }
@@ -34,6 +34,12 @@ namespace Foundation.Web
         public async Task<List<T>> GetAll()
         {
             return await _context.Items.ToListAsync();
+        }
+        [Delete]
+        public async Task Delete(T t)
+        {
+            _context.Items.Remove(t);
+            await _context.SaveChangesAsync();
         }
     }
 }

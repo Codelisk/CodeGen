@@ -1,4 +1,4 @@
-﻿namespace Web.Controllers
+﻿namespace Generator.Foundation
 {
     public class Class1
     {
