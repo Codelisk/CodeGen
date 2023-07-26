@@ -1,4 +1,4 @@
-﻿namespace Foundation.Web
+﻿namespace Web.Database
 {
     public class Class1
     {

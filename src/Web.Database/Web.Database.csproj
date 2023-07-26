@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0-preview.6.23329.4" />
   </ItemGroup>
 
-
   <ItemGroup>
-    <ProjectReference Include="..\Attributes\Attributes.csproj" />
+    <ProjectReference Include="..\Foundation.Web\Foundation.Web.csproj" />
     <ProjectReference Include="..\Foundation\Foundation.csproj" />
   </ItemGroup>
+
 </Project>
