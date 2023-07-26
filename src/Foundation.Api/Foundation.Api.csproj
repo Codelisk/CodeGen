@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <ItemGroup>
+    <ProjectReference Include="..\Attributes\Attributes.csproj" />
+    <ProjectReference Include="..\Foundation\Foundation.csproj" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Refit" />
     <PackageReference Include="Polly" />
     <PackageReference Include="Refit.Newtonsoft.Json" />
     <PackageReference Include="Microsoft.Extensions.Logging" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <ProjectReference Include="..\Generators\Api.Generator\Api.Generator.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
 </Project>

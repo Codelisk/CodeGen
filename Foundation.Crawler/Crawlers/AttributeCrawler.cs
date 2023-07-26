@@ -1,4 +1,5 @@
 ﻿using Attributes;
+using Attributes.ApiAttributes;
 using Attributes.WebAttributes.Database;
 using Attributes.WebAttributes.Dto;
 using Attributes.WebAttributes.Repository;
@@ -15,6 +16,10 @@ namespace Foundation.Crawler.Crawlers
 {
     public static class AttributeCrawler
     {
+        public static INamedTypeSymbol BaseApi(this GeneratorExecutionContext context)
+        {
+            return context.GetClassesWithAttribute(nameof(BaseApiAttribute)).First();
+        }
         public static INamedTypeSymbol BaseContext(this GeneratorExecutionContext context)
         {
             return context.GetClassesWithAttribute(nameof(BaseContextAttribute)).First();
@@ -32,6 +37,10 @@ namespace Foundation.Crawler.Crawlers
             repo.GetMethodsWithAttribute(nameof(GetAllAttribute)).First(),
             repo.GetMethodsWithAttribute(nameof(SaveAttribute)).First(),
             repo.GetMethodsWithAttribute(nameof(DeleteAttribute)).First());
+        }
+        public static INamedTypeSymbol BaseRepository(this GeneratorExecutionContext context)
+        {
+            return context.GetClassesWithAttribute(nameof(BaseRepositoryAttribute)).First();
         }
         public static INamedTypeSymbol BaseController(this GeneratorExecutionContext context)
         {

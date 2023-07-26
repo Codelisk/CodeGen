@@ -10,6 +10,12 @@
   <!-- WebSample -->
   
   <ItemGroup>
+      <PackageReference Update="Refit" Version="6.3.2" />
+      <PackageReference Update="Refit.Newtonsoft.Json" Version="6.3.2" />
+      <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+      <PackageReference Update="Microsoft.Extensions.Logging" Version="6.0.0" />
+      <PackageReference Update="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Update="Polly" Version="7.2.3" />
     <PackageReference Update="Ardalis.ApiEndpoints" Version="4.0.1" />
     <PackageReference Update="Ardalis.GuardClauses" Version="4.0.1" />
     <PackageReference Update="Ardalis.Specification.EntityFrameworkCore" Version="6.1.0" />
