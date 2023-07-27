@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Attributes.WebAttributes.Repository.Base;
+using Shared.Constants;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Attributes.WebAttributes.Repository
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-    public class DeleteAttribute : Attribute
+    [Url("")]
+    public class DeleteAttribute : BaseHttpAttribute
     {
+        public override string UrlPrefix => ApiUrls.Delete;
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Foundation.Web
 {
-    [BaseController]
+    [DefaultController]
     [Route("[controller]")]
     public class BaseController<T> : Controller where T : BaseDto
     {

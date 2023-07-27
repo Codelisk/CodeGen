@@ -7,11 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Api.Generator.Generators.CodeBuilders
+namespace Api.Generator.Generators.CodeBuilders.FromController
 {
-    public class RepositoriesCodeBuilder : BaseWebApiCodeBuilder
+    public class RepositoriesFromControllerCodeBuilder : BaseWebApiCodeBuilder
     {
-        public RepositoriesCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
+        public RepositoriesFromControllerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Api.Generator.Generators.CodeBuilders
             foreach (var c in allClasses.Where(x => x.Interfaces.Any(x => SymbolEqualityComparer.Default.Equals(x, context.BaseApi()))).ToList())
             {
                 var codeBuilder = CreateBuilder();
-                var repoName = c.RepositoryName();
+                var repoName = c.RepositoryNameFromApi();
                 var repoClass = codeBuilder.AddClass(repoName).SetBaseClass(context.BaseRepository().Construct(c));
 
                 var constructor = repoClass.AddConstructor()

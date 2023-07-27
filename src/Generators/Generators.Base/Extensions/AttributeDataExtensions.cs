@@ -23,5 +23,12 @@ namespace Generators.Base.Extensions
         {
             return attributeData.FirstOrDefault(x=>GetAttributeName(x).Equals(name));
         }
+        public static string GetAttributePropertyDefaultValue<T>(AttributeData attributeData) where T : Attribute
+        {
+            throw new NotImplementedException();
+            var property = attributeData.AttributeClass.GetPropertyWithAttribute(nameof(T)).GetAttributes().First();
+
+            return property.NamedArguments.First().Value.Value.ToString();
+        }
     }
 }

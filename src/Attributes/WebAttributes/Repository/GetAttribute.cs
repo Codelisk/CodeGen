@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Attributes.WebAttributes.Repository.Base;
+using Shared.Constants;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -8,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Attributes.WebAttributes.Repository
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-    public class GetAttribute : Attribute
+    public class GetAttribute : BaseHttpAttribute
     {
+        public override string UrlPrefix => ApiUrls.Get;
     }
 }

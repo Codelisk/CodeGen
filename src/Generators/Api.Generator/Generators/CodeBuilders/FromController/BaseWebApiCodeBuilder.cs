@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Api.Generator.Generators.CodeBuilders
+namespace Api.Generator.Generators.CodeBuilders.FromController
 {
     public abstract class BaseWebApiCodeBuilder : BaseCodeBuilder
     {
@@ -18,7 +18,7 @@ namespace Api.Generator.Generators.CodeBuilders
         }
         protected IEnumerable<INamedTypeSymbol> GetControllers(GeneratorExecutionContext context)
         {
-            return context.GetAllClassesWithBaseClass(context.BaseController());
+            return context.GetClassesWithBaseClass(context.BaseController());
         }
     }
 }

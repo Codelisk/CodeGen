@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Foundation.Crawler\Foundation.Crawler.csproj" />
+    <ProjectReference Include="..\..\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\..\Foundation\Foundation.csproj" />
     <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>

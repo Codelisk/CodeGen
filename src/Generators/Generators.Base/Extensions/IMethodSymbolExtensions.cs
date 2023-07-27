@@ -49,6 +49,40 @@ namespace Generators.Base.Extensions
 
             return context.Compilation.GetSpecialType(SpecialType.System_String); // Return null if the DoWithLoggingAsync<int>() method call is not found or if the return type is not available
         }
+        public static string GetPropertyOfAttribute<TAttribute, TPropertyAttribute>(this IMethodSymbol methodSymbol) where TAttribute : Attribute where TPropertyAttribute : Attribute
+        {
+            // Get the attributes applied to the method
+            var attributes = methodSymbol.GetAttributes();
+
+            // Find the custom attribute of type GetAttribute
+            INamedTypeSymbol getAttributeType = methodSymbol.ContainingAssembly
+                .GetTypeByMetadataName(nameof(TAttribute));
+
+            var getAttributeData = attributes.FirstOrDefault(a => a.AttributeClass.Equals(getAttributeType));
+
+            if (getAttributeData != null)
+            {
+                // Find the property with the Url attribute
+                var urlProperty = getAttributeType.GetMembers().OfType<IPropertySymbol>()
+                    .FirstOrDefault(property => property.GetAttributes().Any(attr => attr.AttributeClass.Name == nameof(TPropertyAttribute)));
+
+                if (urlProperty != null)
+                {
+                    // Get the 'UrlPrefix' property value from the GetAttribute
+                    string urlPrefix = urlProperty.GetAttributes()
+                        .FirstOrDefault(attr => attr.AttributeClass.Name == nameof(TPropertyAttribute))
+                        .ConstructorArguments.FirstOrDefault().Value.ToString();
+
+                    return urlPrefix;
+                }
+            }
+
+            return null; // If the UrlPrefix is not found or GetAttribute is not applied.
+        }
+        public static AttributeData GetAttributeWithBaseType(this IMethodSymbol methodSymbol, Type type)
+        {
+            return methodSymbol.GetAttributes().FirstOrDefault(x => x.GetType() == type);
+        }
         public static AttributeData GetAttributeByName(this IMethodSymbol methodSymbol, string attributeName)
         {
             return methodSymbol.GetAttributes().FirstOrDefault(x => x.GetAttributeName().Equals(attributeName));

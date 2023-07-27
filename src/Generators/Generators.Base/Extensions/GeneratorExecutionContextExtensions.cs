@@ -7,7 +7,16 @@ namespace Generators.Base.Extensions
 {
     public static class GeneratorExecutionContextExtensions
     {
-        public static IEnumerable<INamedTypeSymbol> GetAllClassesWithBaseClass(this GeneratorExecutionContext context, INamedTypeSymbol baseClass)
+        public static INamedTypeSymbol GetClass<T>(this GeneratorExecutionContext context, string assemblyName)
+        {
+            return context.GetAllClasses(assemblyName).Single(x=>x.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat).Equals(typeof(T).Name));
+        }
+        public static IEnumerable<INamedTypeSymbol> GetClassesWithBaseClass<T>(this GeneratorExecutionContext context)
+        {
+            var name = typeof(T).Name;
+            return context.GetAllClasses("").Where(x =>x.BaseType?.Name is not null &&  x.BaseType.Name.Equals(name));
+        }
+        public static IEnumerable<INamedTypeSymbol> GetClassesWithBaseClass(this GeneratorExecutionContext context, INamedTypeSymbol baseClass)
         {
             return context.GetAllClasses("").Where(x=>x.BaseType == baseClass);
         }

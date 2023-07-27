@@ -25,9 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "src\Api\Api.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foundation.Crawler", "Foundation.Crawler\Foundation.Crawler.csproj", "{475DD62A-E4F7-41BE-A2D2-323DBE10D14E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Generator", "src\Generators\Api.Generator\Api.Generator.csproj", "{9A559D04-E0A4-45C4-B928-15324F56B22C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Generator", "src\Generators\Api.Generator\Api.Generator.csproj", "{9A559D04-E0A4-45C4-B928-15324F56B22C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foundation.Api", "src\Foundation.Api\Foundation.Api.csproj", "{ECB70FEB-8BB8-4BDA-B1DC-DD9E4716ED7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foundation.Api", "src\Foundation.Api\Foundation.Api.csproj", "{ECB70FEB-8BB8-4BDA-B1DC-DD9E4716ED7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "src\Shared\Shared.csproj", "{6388C5B9-846C-4AB8-A015-44A71BB16653}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,10 @@ Global
 		{ECB70FEB-8BB8-4BDA-B1DC-DD9E4716ED7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECB70FEB-8BB8-4BDA-B1DC-DD9E4716ED7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECB70FEB-8BB8-4BDA-B1DC-DD9E4716ED7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6388C5B9-846C-4AB8-A015-44A71BB16653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6388C5B9-846C-4AB8-A015-44A71BB16653}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6388C5B9-846C-4AB8-A015-44A71BB16653}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6388C5B9-846C-4AB8-A015-44A71BB16653}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

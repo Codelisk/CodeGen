@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
@@ -15,7 +15,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Foundation.Crawler\Foundation.Crawler.csproj" />
+    <ProjectReference Include="..\..\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\..\Foundation\Foundation.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
     <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
 

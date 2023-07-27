@@ -51,8 +51,8 @@ namespace Controller.Generator.Generators.CodeBuilders
         {
             var repoProperty = baseController.GetFieldsWithConstructedFromType(repoModel.Repo).First();
 
-            c.AddMethod(dto.DeleteMethodName(), Accessibility.Public)
-                .AddAttribute(dto.DeleteAttribute())
+            c.AddMethod(repoModel.Delete.MethodName(dto), Accessibility.Public)
+                .AddAttribute(repoModel.Delete.DeleteAttribute(dto))
                 .AddParameter(dto.Name, dto.Name.GetParameterName())
                 .WithReturnTypeTask()
                 .WithBody((x) =>
@@ -61,8 +61,8 @@ namespace Controller.Generator.Generators.CodeBuilders
                 });
 
 
-            c.AddMethod(dto.SaveMethodName(), Accessibility.Public)
-                .AddAttribute(dto.PostAttribute())
+            c.AddMethod(repoModel.Save.MethodName(dto), Accessibility.Public)
+                .AddAttribute(repoModel.Save.PostAttribute(dto))
                 .AddParameter(dto.Name, dto.Name.GetParameterName())
                 .WithReturnTypeTask(dto.Name)
                 .WithBody((x) =>
@@ -70,8 +70,8 @@ namespace Controller.Generator.Generators.CodeBuilders
                     x.AppendLine($"return {repoProperty.Name}.{repoModel.Save.Name}({dto.Name.GetParameterName()});");
                 });
 
-            c.AddMethod(dto.GetMethodName(), Accessibility.Public)
-                .AddAttribute(dto.GetAttribute())
+            c.AddMethod(repoModel.Get.MethodName(dto), Accessibility.Public)
+                .AddAttribute(repoModel.Get.GetAttribute(dto))
                 .AddParameter(dto.GetIdProperty().Type.Name, dto.GetIdProperty().Name.GetParameterName())
                 .WithReturnTypeTask(dto.Name)
                 .WithBody((x) =>
@@ -79,8 +79,8 @@ namespace Controller.Generator.Generators.CodeBuilders
                     x.AppendLine($"return {repoProperty.Name}.{repoModel.Get.Name}(id);");
                 });
 
-            c.AddMethod(dto.GetAllMethodName(), Accessibility.Public)
-                .AddAttribute(dto.GetAttribute(true))
+            c.AddMethod(repoModel.Get.MethodName(dto, true), Accessibility.Public)
+                .AddAttribute(repoModel.Get.GetAttribute(dto, true))
                 .WithReturnTypeTaskList(dto.Name)
                 .WithBody((x) =>
                 {
