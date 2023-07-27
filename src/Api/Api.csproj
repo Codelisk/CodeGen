@@ -1,5 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)generated</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Refit" />
@@ -11,11 +15,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Foundation.Crawler\Foundation.Crawler.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Generators\Api.Generator\Api.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Generators\Generators.Base\Generators.Base.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\Attributes\Attributes.csproj" ReferenceOutputAssembly="false"  OutputItemType="Analyzer" />
     <ProjectReference Include="..\Foundation.Api\Foundation.Api.csproj" />
     <ProjectReference Include="..\Foundation\Foundation.csproj" />
-    <ProjectReference Include="..\Generators\Api.Generator\Api.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\Generators\Generators.Base\Generators.Base.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 

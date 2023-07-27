@@ -1,4 +1,4 @@
-﻿using Foundation.Crawler;
+﻿using Foundation.Crawler.Extensions;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;

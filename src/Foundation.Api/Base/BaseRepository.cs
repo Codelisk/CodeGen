@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Polly.Retry;
 using Polly;
-using Refit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Attributes.ApiAttributes;
 using Foundation.Api.Services.Base;
+using Attributes.WebAttributes.Repository;
 
 namespace Foundation.Api.Base
 {
@@ -37,7 +37,7 @@ namespace Foundation.Api.Base
             _logger = baseRepositoryProvider.GetLogger();
 
             _refreshTokenPolicy = Policy
-                .HandleInner<ApiException>(ex => ex.StatusCode == HttpStatusCode.Unauthorized || ex.StatusCode == HttpStatusCode.Forbidden)
+                .HandleInner<Refit.ApiException>(ex => ex.StatusCode == HttpStatusCode.Unauthorized || ex.StatusCode == HttpStatusCode.Forbidden)
                 .RetryAsync(MAX_REFRESH_TOKEN_ATTEMPTS, RefreshAuthorizationAsync);
             _baseRepositoryProvider = baseRepositoryProvider;
         }
@@ -70,19 +70,22 @@ namespace Foundation.Api.Base
         /// <param name="func">Api request function</param>
         /// <param name="defaultValue">Default value</param>
         /// <returns>Request result or default value when exception handle</returns>
+        [Save]
+        [Get]
+        [GetAll]
         protected virtual async Task<T> TryRequest<T>(Func<Task<T>> func, T defaultValue = default(T))
         {
             try
             {
                 return await RequestWithPolicy(func).ConfigureAwait(false);
             }
-            catch (ApiException ex)
+            catch (Refit.ApiException ex)
             {
                 PrintExceptionMessage(ex);
                 throw ex;
             }
         }
-
+        [Delete]
         protected Task JustSend(Task task)
         {
             return task;
@@ -110,10 +113,10 @@ namespace Foundation.Api.Base
         /// </summary>
         /// <param name="ex">Api exception to get statuscode</param>
         /// <returns>True if we can do an attempt</returns>
-        private static bool StatusCodeFilter(ApiException ex) =>
+        private static bool StatusCodeFilter(Refit.ApiException ex) =>
             ex.StatusCode != HttpStatusCode.NotFound && ex.StatusCode != HttpStatusCode.Forbidden;
 
-        private static void PrintExceptionMessage(ApiException ex)
+        private static void PrintExceptionMessage(Refit.ApiException ex)
         {
             Debug.WriteLine("APIEXCEPTION");
             Debug.WriteLine(ex);

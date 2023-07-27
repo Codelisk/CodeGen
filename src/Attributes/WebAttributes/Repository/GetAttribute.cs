@@ -1,4 +1,5 @@
-﻿using Attributes.WebAttributes.Repository.Base;
+﻿using Attributes.WebAttributes.Dto;
+using Attributes.WebAttributes.Repository.Base;
 using Shared.Constants;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,10 @@ using System.Threading.Tasks;
 
 namespace Attributes.WebAttributes.Repository
 {
+    [Url(ApiUrls.Get)]
+    [IdQuery]
+    [Return(Shared.Models.ReturnKind.Object)]
     public class GetAttribute : BaseHttpAttribute
     {
-        public override string UrlPrefix => ApiUrls.Get;
     }
 }

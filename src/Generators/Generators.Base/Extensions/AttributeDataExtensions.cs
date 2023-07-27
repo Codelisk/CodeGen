@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Generators.Base.Extensions
@@ -14,6 +15,10 @@ namespace Generators.Base.Extensions
                 return attributeData.ConstructorArguments.FirstOrDefault().Value + string.Empty;
             }
             return null;
+        }
+        public static T GetFirstConstructorArgument<T>(this AttributeData attributeData) where T : Enum
+        {
+            return (T)attributeData.ConstructorArguments.FirstOrDefault().Value;
         }
         public static string GetAttributeName(this AttributeData attributeData)
         {

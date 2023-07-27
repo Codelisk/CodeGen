@@ -7,6 +7,10 @@ namespace Generators.Base.Extensions
 {
     public static class GeneratorExecutionContextExtensions
     {
+        public static INamedTypeSymbol GetClass(this GeneratorExecutionContext context, Type t, string assemblyName)
+        {
+            return context.GetAllClasses(assemblyName).Single(x => x.Name == t.Name);
+        }
         public static INamedTypeSymbol GetClass<T>(this GeneratorExecutionContext context, string assemblyName)
         {
             return context.GetAllClasses(assemblyName).Single(x=>x.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat).Equals(typeof(T).Name));

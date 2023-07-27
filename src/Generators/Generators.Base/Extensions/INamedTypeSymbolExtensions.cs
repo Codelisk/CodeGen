@@ -37,6 +37,10 @@ namespace Generators.Base.Extensions
                     .ToList();
             return result;
         }
+        public static AttributeData GetAttribute<TAttribut>(this INamedTypeSymbol classObject) where TAttribut : Attribute
+        {
+            return classObject.GetAttributes().Where(x => x.GetAttributeName().Equals(typeof(TAttribut).Name)).Single();
+        }
         public static IEnumerable<ISymbol> GetMembersWithAttribute(this INamedTypeSymbol classObject, string fullAttributeName)
         {
             var allMembers = classObject.GetMembers();

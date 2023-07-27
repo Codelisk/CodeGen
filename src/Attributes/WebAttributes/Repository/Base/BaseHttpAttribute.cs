@@ -7,7 +7,5 @@ namespace Attributes.WebAttributes.Repository.Base
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public abstract class BaseHttpAttribute : Attribute
     {
-        [Url]
-        public abstract string UrlPrefix { get; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CodeGenHelpers;
 using CodeGenHelpers.Internals;
 using Foundation.Crawler.Crawlers;
+using Foundation.Crawler.Extensions.Extensions;
 using Foundation.Crawler.Models;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
@@ -51,41 +52,26 @@ namespace Controller.Generator.Generators.CodeBuilders
         {
             var repoProperty = baseController.GetFieldsWithConstructedFromType(repoModel.Repo).First();
 
-            c.AddMethod(repoModel.Delete.MethodName(dto), Accessibility.Public)
-                .AddAttribute(repoModel.Delete.DeleteAttribute(dto))
-                .AddParameter(dto.Name, dto.Name.GetParameterName())
-                .WithReturnTypeTask()
-                .WithBody((x) =>
-                {
-                    x.AppendLine($"return {repoProperty.Name}.{repoModel.Delete.Name}({dto.Name.GetParameterName()});");
-                });
+            Dictionary<IMethodSymbol, string> properties = new Dictionary<IMethodSymbol, string>()
+            {
+                {repoModel.Delete, "HttpDelete" },
+                {repoModel.Get, "HttpGet" },
+                {repoModel.GetAll, "HttpGet" },
+                {repoModel.Save, "HttpPost" },
+            };
 
+            foreach (var item in properties)
+            {
+                var methodBuilder = c.AddMethod(item.Key.MethodName(dto), Accessibility.Public)
+                    .AddAttribute(item.Key.HttpControllerAttribute(dto, item.Value))
+                    .AddParametersForHttpMethod(item.Key.HttpAttribute(), dto)
+                    .WithReturnType(item.Key.ReturnType.Name);
 
-            c.AddMethod(repoModel.Save.MethodName(dto), Accessibility.Public)
-                .AddAttribute(repoModel.Save.PostAttribute(dto))
-                .AddParameter(dto.Name, dto.Name.GetParameterName())
-                .WithReturnTypeTask(dto.Name)
-                .WithBody((x) =>
+                methodBuilder.WithBody((x) =>
                 {
-                    x.AppendLine($"return {repoProperty.Name}.{repoModel.Save.Name}({dto.Name.GetParameterName()});");
+                    x.AppendLine($"return {repoProperty.Name}.{item.Key.MethodName(dto)}({methodBuilder.Parameters.Select(x=>x.Name.GetParameterName())});");
                 });
-
-            c.AddMethod(repoModel.Get.MethodName(dto), Accessibility.Public)
-                .AddAttribute(repoModel.Get.GetAttribute(dto))
-                .AddParameter(dto.GetIdProperty().Type.Name, dto.GetIdProperty().Name.GetParameterName())
-                .WithReturnTypeTask(dto.Name)
-                .WithBody((x) =>
-                {
-                    x.AppendLine($"return {repoProperty.Name}.{repoModel.Get.Name}(id);");
-                });
-
-            c.AddMethod(repoModel.Get.MethodName(dto, true), Accessibility.Public)
-                .AddAttribute(repoModel.Get.GetAttribute(dto, true))
-                .WithReturnTypeTaskList(dto.Name)
-                .WithBody((x) =>
-                {
-                    x.AppendLine($"return {repoProperty.Name}.{repoModel.GetAll.Name}();");
-                });
+            }
         }
 
     }

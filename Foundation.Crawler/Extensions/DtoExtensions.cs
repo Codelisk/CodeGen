@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Foundation.Crawler
+namespace Foundation.Crawler.Extensions
 {
-    public static class Extensions
+    public static class DtoExtensions
     {
         public static string ReplaceDtoSuffix(this INamedTypeSymbol dto, bool plural = false)
         {

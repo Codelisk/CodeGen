@@ -4,6 +4,7 @@ using Attributes.WebAttributes.Database;
 using Attributes.WebAttributes.Dto;
 using Attributes.WebAttributes.Repository;
 using Attributes.WebAttributes.Repository.Base;
+using Foundation.Crawler.Extensions;
 using Foundation.Crawler.Models;
 using Generators.Base;
 using Generators.Base.Extensions;
@@ -46,32 +47,28 @@ namespace Foundation.Crawler.Crawlers
             //var attribute = context.GetClassesWithAttribute(nameof(UrlAttribute)).OfType<TAttribute>().First();
             return $"{attributeValue}{dto.ReplaceDtoSuffix(plural)}";
         }
-        public static string AttributeUrl<TAttribute>(this GeneratorExecutionContext context, INamedTypeSymbol dto, bool plural = false) where TAttribute : BaseHttpAttribute
+        public static INamedTypeSymbol GetAttribute<TAttribute>(this GeneratorExecutionContext context) where TAttribute : Attribute
         {
             // Find the property with the Url attribute
-            var attributeSymobl = context.GetClass<TAttribute>(nameof(Attributes));
-            var urlProperty = attributeSymobl.GetMembers().OfType<IPropertySymbol>()
-                .FirstOrDefault(property => property.GetAttributes().Any(attr => attr.AttributeClass.Name == typeof(UrlAttribute).Name));
-            var test = attributeSymobl.GetMembers().OfType<IPropertySymbol>().Select(x => x).ToList();
-            if (urlProperty != null)
-            {
-                // Resolve the property's default value using the semantic model
-                var urlPropertyDeclaration = urlProperty.DeclaringSyntaxReferences.FirstOrDefault();
-                var urlDefaultValue = context.Compilation.GetSemanticModel(urlPropertyDeclaration.SyntaxTree).GetConstantValue(urlPropertyDeclaration.GetSyntax());
-
-                if (urlDefaultValue.HasValue)
-                {
-                    return urlDefaultValue.Value?.ToString().AttributeUrl(dto, plural);
-                }
-            }
-
-            return null; // If the Url property is not found or it doesn't have a default value.
+            return context.GetClass<TAttribute>(nameof(Attributes));
         }
-
-        public static string AttributeUrl<TAttribute>(this TAttribute attribute, INamedTypeSymbol dto, bool plural = false) where TAttribute : BaseHttpAttribute
+        public static string AttributeUrl(this GeneratorExecutionContext context, Type t, INamedTypeSymbol dto)
         {
-            //var attribute = context.GetClassesWithAttribute(nameof(UrlAttribute)).OfType<TAttribute>().First();
-            return AttributeUrl(attribute.UrlPrefix, dto, plural);
+            // Find the property with the Url attribute
+            var attributeSymobl = context.GetClass(t, nameof(Attributes));
+            return attributeSymobl.AttributeUrl(dto);
+        }
+        public static string AttributeUrl<TAttribute>(this GeneratorExecutionContext context, INamedTypeSymbol dto) where TAttribute : BaseHttpAttribute
+        {
+            // Find the property with the Url attribute
+            var attributeSymobl = context.GetAttribute<TAttribute>();
+            return attributeSymobl.AttributeUrl(dto);
+        }
+        public static string AttributeUrl(this INamedTypeSymbol attributeSymobl, INamedTypeSymbol dto)
+        {
+            var urlProperty = attributeSymobl.GetAttribute<UrlAttribute>();
+            bool plural = attributeSymobl.HasAttribute(nameof(PluralAttribute));
+            return urlProperty.GetFirstConstructorArgument().AttributeUrl(dto, plural);
         }
         public static INamedTypeSymbol BaseRepository(this GeneratorExecutionContext context)
         {

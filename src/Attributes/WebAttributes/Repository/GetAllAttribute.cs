@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Attributes.WebAttributes.Repository
 {
+    [Url(ApiUrls.GetAll)]
+    [Plural]
+    [Return(Shared.Models.ReturnKind.List)]
     public class GetAllAttribute : BaseHttpAttribute
     {
-        public override string UrlPrefix => ApiUrls.GetAll;
     }
 }

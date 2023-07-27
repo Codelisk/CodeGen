@@ -1,6 +1,9 @@
-﻿using Attributes.WebAttributes.Repository;
+﻿using Attributes.ApiAttributes;
+using Attributes.WebAttributes.Repository;
+using Attributes.WebAttributes.Repository.Base;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
+using Foundation.Crawler.Extensions.Extensions;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Extensions.Common;
@@ -22,27 +25,44 @@ namespace Api.Generator.Generators.CodeBuilders
         {
             var baseApi = context.BaseApi();
             var dtos = context.Dtos();
+            List<CodeBuilder> result = new();
+            foreach ( var d in dtos )
+            {
+                result.Add(BuildApi(context, d, baseApi));
+            }
 
-            return new() { BuildApi(context, dtos.First(), baseApi) };
+            return result;
         }
         private CodeBuilder BuildApi(GeneratorExecutionContext context, INamedTypeSymbol dto, INamedTypeSymbol baseApi)
         {
             var codeBuilder = CreateBuilder();
-            var c = codeBuilder.AddClass(dto.Name).WithAccessModifier(Accessibility.Public).OfType(TypeKind.Interface).Abstract(false)
+            var c = codeBuilder.AddClass(dto.ApiName()).WithAccessModifier(Accessibility.Public).OfType(TypeKind.Interface).Abstract(false)
                 .SetBaseClass(baseApi);
 
             Method(context, c, dto);
 
             return codeBuilder;
         }
-        private MethodBuilder Method(GeneratorExecutionContext context, ClassBuilder c, INamedTypeSymbol dto)
+        private ClassBuilder Method(GeneratorExecutionContext context, ClassBuilder c, INamedTypeSymbol dto)
         {
-            return c.AddMethod(context.AttributeUrl<GetAttribute>(dto), Accessibility.NotApplicable)
-                .AddAttribute(context.AttributeUrl<GetAttribute>(dto).AttributeWithConstructor("Get"))
-                .WithBody(x =>
-                {
-                    x.AppendLine("");
-                });
+            var typeAndRefitAttribute = new Dictionary<Type, string>
+            {
+                {typeof(GetAttribute), "Get" },
+                {typeof(GetAllAttribute), "Get" },
+                {typeof(SaveAttribute), "Post" },
+                {typeof(DeleteAttribute), "Delete" }
+            };
+
+            foreach (var attr in typeAndRefitAttribute)
+            {
+                var attributeUrl = context.AttributeUrl(attr.Key, dto);
+                var httpAttributeSymbol = context.GetClass(attr.Key, nameof(Attributes));
+                c.AddMethod(attributeUrl, Accessibility.Public).Abstract(true)
+                    .AddAttribute(attributeUrl.AttributeWithConstructor(attr.Value))
+                    .AddParametersForHttpMethod(httpAttributeSymbol, dto)
+                    .WithReturnTypeForHttpMethod(httpAttributeSymbol, dto);
+            }
+            return c;
         }
     }
 }

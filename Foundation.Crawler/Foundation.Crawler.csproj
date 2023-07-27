@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\src\Generators\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference Include="..\src\Shared\Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

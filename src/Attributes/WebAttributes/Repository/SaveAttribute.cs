@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Attributes.WebAttributes.Repository
 {
+    [Url(ApiUrls.Save)]
+    [DtoBody]
+    [Return(Shared.Models.ReturnKind.Object)]
     public class SaveAttribute : BaseHttpAttribute
     {
-        public override string UrlPrefix => ApiUrls.Save;
     }
 }
