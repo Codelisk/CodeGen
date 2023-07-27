@@ -12,17 +12,17 @@ using System.Threading.Tasks;
 
 namespace Controller.Generator.Generators
 {
-    //[Generator]
+    [Generator]
     public class MainControllerGenerator : BaseGenerator
     { 
         public override void Execute(GeneratorExecutionContext context)
-        {
+        { 
             //Debugger.Launch(); 
             var codeBuilder = new ControllerCodeBuilder().Get(context);
-               
+                        
             var moduleInitializerBuilder = new ControllerModuleInitializerBuilder(context.Compilation.AssemblyName).Get(context, codeBuilder);
             codeBuilder.AddRange(moduleInitializerBuilder);  
-                                              
+                                                         
             AddSource(context, "Controller", codeBuilder);
         }
     }  

@@ -42,7 +42,6 @@ namespace Foundation.Api.Base
             _baseRepositoryProvider = baseRepositoryProvider;
         }
 
-
         /// <summary>
         /// Here we refresh the current authorization token
         /// </summary>
@@ -86,9 +85,9 @@ namespace Foundation.Api.Base
             }
         }
         [Delete]
-        protected Task JustSend(Task task)
+        protected Task JustSend(Func<Task> task)
         {
-            return task;
+            return task.Invoke();
         }
 
         /// <summary>

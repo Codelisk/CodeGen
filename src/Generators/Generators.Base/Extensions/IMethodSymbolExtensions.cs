@@ -81,7 +81,7 @@ namespace Generators.Base.Extensions
         }
         public static AttributeData GetAttributeWithBaseType(this IMethodSymbol methodSymbol, Type type)
         {
-            return methodSymbol.GetAttributes().FirstOrDefault(x => x.GetType() == type);
+            return methodSymbol.GetAttributes().FirstOrDefault(x => x.AttributeClass.BaseType.Name == type.Name);
         }
         public static AttributeData GetAttributeByName(this IMethodSymbol methodSymbol, string attributeName)
         {

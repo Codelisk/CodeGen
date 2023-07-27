@@ -8,6 +8,10 @@ namespace Api.Generator
 {
     public static class Extensions
     {
+        public static string RepoName(this INamedTypeSymbol dto)
+        {
+            return dto.ReplaceDtoSuffix() + "Repository";
+        }
         public static string ApiName(this INamedTypeSymbol dto)
         {
             return "I" + dto.ReplaceDtoSuffix() + "Api";

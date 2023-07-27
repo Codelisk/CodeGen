@@ -17,7 +17,7 @@ namespace Generators.Base.Extensions
             var compilation = CSharpCompilation.Create("MyCompilation", new[] { syntaxTree });
 
             var root = syntaxTree.GetRoot();
-            var interfaceDeclarations = root.DescendantNodes().OfType<InterfaceDeclarationSyntax>();
+            var interfaceDeclarations = root.DescendantNodes().OfType<ClassDeclarationSyntax>();
 
             List<INamedTypeSymbol> result = new List<INamedTypeSymbol>();
 
@@ -36,5 +36,7 @@ namespace Generators.Base.Extensions
             }
             return result;
         }
+
+
     }
 }

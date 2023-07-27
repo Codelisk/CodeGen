@@ -13,6 +13,21 @@ namespace Foundation.Crawler.Extensions.Extensions
 {
     public static class GeneratorExtensions
     {
+
+        public static string GetParametersNamesForHttpMethod(this INamedTypeSymbol httpAttribute, INamedTypeSymbol dto)
+        {
+            if (httpAttribute.HasAttribute(nameof(IdQueryAttribute)))
+            {
+                return dto.GetIdProperty().Name.GetParameterName();
+            }
+
+            if (httpAttribute.HasAttribute(nameof(DtoBodyAttribute)))
+            {
+                return dto.Name.GetParameterName();
+            }
+
+            return string.Empty;
+        }
         public static MethodBuilder AddParametersForHttpMethod(this MethodBuilder methodBuilder, INamedTypeSymbol httpAttribute, INamedTypeSymbol dto)
         {
             if(httpAttribute.HasAttribute(nameof(IdQueryAttribute)))
@@ -31,8 +46,9 @@ namespace Foundation.Crawler.Extensions.Extensions
         {
             if (!httpAttribute.HasAttribute(nameof(ReturnAttribute)))
             {
-                return methodBuilder;
+                return methodBuilder.WithReturnTypeTask();
             }
+
             var returnAttribute = httpAttribute.GetAttribute<ReturnAttribute>();
 
             var returnAttributeValue = returnAttribute.GetFirstConstructorArgument<ReturnKind>();

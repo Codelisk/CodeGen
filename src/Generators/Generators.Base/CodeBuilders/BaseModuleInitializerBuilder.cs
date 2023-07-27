@@ -27,7 +27,14 @@ namespace Generators.Base.CodeBuilders
                         var serviceUsage = string.IsNullOrEmpty(service.serviceUsage) ? "AddTransient" : service.serviceUsage;
                         var serviceImplementation = service.serviceImplementation is null ? string.Empty : service.serviceImplementation;
 
-                        x.AppendLine($"services.{serviceUsage}<{service.serviceType}>({serviceImplementation});");
+                        if (!string.IsNullOrEmpty(serviceImplementation))
+                        {
+                            x.AppendLine($"services.{serviceUsage}<{service.serviceType},{serviceImplementation}>();");
+                        }
+                        else
+                        {
+                            x.AppendLine($"services.{serviceUsage}<{service.serviceType}>();");
+                        }
                     }
                 });
 

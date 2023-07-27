@@ -5,6 +5,7 @@ using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
+using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,14 @@ namespace Api.Generator.Generators.CodeBuilders
         public List<CodeBuilder> GenerateRepositories(GeneratorExecutionContext context, List<CodeBuilder> refitApiCodeBuilder)
         {
             var baseRepo = context.BaseRepository();
+
             var result = new List<CodeBuilder>();
-            //var baseApi = context.GetAllClasses("").Single(x => x.Name.Equals("IBaseApi"));
+
             foreach (var dto in context.Dtos())
             {
                 var codeBuilder = CreateBuilder();
-                var repoName = dto.RepositoryNameFromApi();
-                var repoClass = codeBuilder.AddClass(repoName).SetBaseClass(baseRepo.Construct(dto));
+                var repoName = dto.RepoName();
+                var repoClass = codeBuilder.AddClass(repoName).WithAccessModifier(Accessibility.Public).SetBaseClass($"{baseRepo.Construct(dto).Name}<{dto.ApiName()}>");
 
                 var constructor = repoClass.AddConstructor()
                     .WithBaseCall(baseRepo.InstanceConstructors.First().Parameters);
@@ -49,6 +51,11 @@ namespace Api.Generator.Generators.CodeBuilders
                         x.AppendLine($"return {baseRepoMethod.Name}(() => _repositoryApi.{httpAttribute.AttributeUrl(dto)}({string.Join(",", methodBuilder.Parameters.Select(x => x.Name.GetParameterName()))}));");
                     });
                 }
+
+                result.Add(codeBuilder.GetClasses().First().GenerateInterface(codeBuilder.Namespace));
+
+                repoClass.AddInterface("I" + repoName);
+
                 result.Add(codeBuilder);
 
                 //context.AddSource(dto.Name.Substring(1, dto.Name.Length - 1) + "Repository", refitApiCodeBuilder.Build());

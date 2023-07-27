@@ -20,6 +20,13 @@ namespace Generators.Base.Generators.Base
 
                 if (codeBuilder.Classes.Any())
                 {
+                    //Workaround because i cant make Interface methods
+                    if(codeBuilder.Classes.Any(x=>x.Kind == TypeKind.Interface))
+                    {
+                        code = code.Replace("abstract ", "");
+                        code = code.Replace("using <global namespace>;", "");
+                    }
+
                     try
                     {
                         context.AddSource(folderName + "/" + codeBuilder.Classes.First().Name + ".g.cs", code);

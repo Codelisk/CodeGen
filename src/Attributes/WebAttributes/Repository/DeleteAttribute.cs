@@ -7,7 +7,7 @@ using System.Text;
 namespace Attributes.WebAttributes.Repository
 {
     [Url(ApiUrls.Delete)]
-    [IdQuery]
+    [DtoBody]
     public class DeleteAttribute : BaseHttpAttribute
     {
     }

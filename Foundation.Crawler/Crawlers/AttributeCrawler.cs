@@ -37,7 +37,7 @@ namespace Foundation.Crawler.Crawlers
             var repo= context.GetClassesWithAttribute(nameof(DefaultRepositoryAttribute)).First();
 
             return new DefaultRepositoryModel(repo,
-                repo.GetMethodsWithAttribute(nameof(GetAttribute)).First(),
+                repo.GetMethodsWithAttribute(nameof(Attributes.WebAttributes.Repository.GetAttribute)).First(),
             repo.GetMethodsWithAttribute(nameof(GetAllAttribute)).First(),
             repo.GetMethodsWithAttribute(nameof(SaveAttribute)).First(),
             repo.GetMethodsWithAttribute(nameof(DeleteAttribute)).First());
@@ -45,7 +45,7 @@ namespace Foundation.Crawler.Crawlers
         public static string AttributeUrl(this string attributeValue, INamedTypeSymbol dto, bool plural = false)
         {
             //var attribute = context.GetClassesWithAttribute(nameof(UrlAttribute)).OfType<TAttribute>().First();
-            return $"{attributeValue}{dto.ReplaceDtoSuffix(plural)}";
+            return $"{attributeValue}";
         }
         public static INamedTypeSymbol GetAttribute<TAttribute>(this GeneratorExecutionContext context) where TAttribute : Attribute
         {

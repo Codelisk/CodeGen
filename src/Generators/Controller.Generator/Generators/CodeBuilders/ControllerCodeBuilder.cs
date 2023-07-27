@@ -1,4 +1,5 @@
-﻿using CodeGenHelpers;
+﻿using Attributes.WebAttributes.Repository.Base;
+using CodeGenHelpers;
 using CodeGenHelpers.Internals;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;
@@ -62,14 +63,15 @@ namespace Controller.Generator.Generators.CodeBuilders
 
             foreach (var item in properties)
             {
+                var httpAttribute = item.Key.HttpAttribute();
                 var methodBuilder = c.AddMethod(item.Key.MethodName(dto), Accessibility.Public)
                     .AddAttribute(item.Key.HttpControllerAttribute(dto, item.Value))
-                    .AddParametersForHttpMethod(item.Key.HttpAttribute(), dto)
-                    .WithReturnType(item.Key.ReturnType.Name);
+                    .WithReturnTypeForHttpMethod(httpAttribute, dto)
+                    .AddParametersForHttpMethod(httpAttribute, dto);
 
                 methodBuilder.WithBody((x) =>
                 {
-                    x.AppendLine($"return {repoProperty.Name}.{item.Key.MethodName(dto)}({methodBuilder.Parameters.Select(x=>x.Name.GetParameterName())});");
+                    x.AppendLine($"return {repoProperty.Name}.{item.Key.MethodName(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});");
                 });
             }
         }
