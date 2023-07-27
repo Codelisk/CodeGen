@@ -9,5 +9,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\Foundation\Foundation.csproj" />
+    <ProjectReference Include="..\Generators\Controller.Generator\Controller.Generator.csproj" />
+    <ProjectReference Include="..\Generators\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 </Project>

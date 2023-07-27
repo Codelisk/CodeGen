@@ -9,7 +9,7 @@ using Generators.Base.CodeBuilders;
 
 namespace Api.Generator.Generators
 {
-    //[Generator]
+    [Generator]
     public class WebApiGenerator : BaseGenerator, ISourceGenerator
     {
         public override void Execute(GeneratorExecutionContext context)

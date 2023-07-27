@@ -16,13 +16,13 @@ namespace Controller.Generator.Generators
     public class MainControllerGenerator : BaseGenerator
     { 
         public override void Execute(GeneratorExecutionContext context)
-        { 
-            //Debugger.Launch(); 
+        {
+            //Debugger.Launch();  
             var codeBuilder = new ControllerCodeBuilder().Get(context);
                         
             var moduleInitializerBuilder = new ControllerModuleInitializerBuilder(context.Compilation.AssemblyName).Get(context, codeBuilder);
             codeBuilder.AddRange(moduleInitializerBuilder);  
-                                                         
+                                                          
             AddSource(context, "Controller", codeBuilder);
         }
     }  
