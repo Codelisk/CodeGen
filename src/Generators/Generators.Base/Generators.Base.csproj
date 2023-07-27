@@ -12,5 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Attributes\Attributes.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.csproj" />
   </ItemGroup>
 </Project>

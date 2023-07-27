@@ -20,7 +20,7 @@
     <ProjectReference Include="..\Attributes\Attributes.csproj" ReferenceOutputAssembly="false"  OutputItemType="Analyzer" />
     <ProjectReference Include="..\Foundation.Api\Foundation.Api.csproj" />
     <ProjectReference Include="..\Foundation\Foundation.csproj" />
-    <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj"  ReferenceOutputAssembly="false"  OutputItemType="Analyzer" />
   </ItemGroup>
 
 </Project>
