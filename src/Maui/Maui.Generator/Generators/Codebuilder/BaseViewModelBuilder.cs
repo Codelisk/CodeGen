@@ -31,7 +31,7 @@ namespace Maui.Generator.Generators.Codebuilder
             {
                 var xamlExtract = File.ReadAllText(file.Path).GetAllBindings();
                 CodeBuilder codeBuilder = CodeBuilder.Create(context.Compilation.AssemblyName);
-                var myClass = codeBuilder.AddClass(xamlExtract.ClassName + ViewModelConstants.ViewModelSuffix).SetBaseClass(baseVm);
+                var myClass = codeBuilder.AddClass(xamlExtract.ClassName + ViewModelConstants.ViewModelSuffix).WithAccessModifier(Accessibility.Public).SetBaseClass(baseVm);
                 foreach (var item in xamlExtract.Bindings)
                 {
                     var propertyType = GetBindingTypeFromControl(classes, item);

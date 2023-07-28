@@ -17,14 +17,11 @@ namespace Maui.Generator.Generators
     public class BaseViewModelGenerator : BaseGenerator
     {
         public override void Execute(GeneratorExecutionContext context)
-        {
-            Debugger.Launch();
+        {   
+            //Debugger.Launch();
             var viewModels = new BaseViewModelBuilder(context.Compilation.AssemblyName).Get(context);
              
-            foreach (var model in viewModels)
-            {
-                var source = model.Build();
-            }
+            AddSource(context,"ViewModels",viewModels);
         }
 
     }
