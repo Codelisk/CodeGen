@@ -8,6 +8,35 @@ namespace Generators.Base.Extensions
 {
     public static class INamedTypeSymbolExtensions
     {
+        public static IPropertySymbol GetFirstPropertyByName(this INamedTypeSymbol classObject, string name, string nameSpace = null)
+        {
+            var properties = classObject.GetMembers().OfType<IPropertySymbol>();
+
+            var result = properties.FirstOrDefault(x => x.Name.Equals(name) && (nameSpace is null || x.ContainingNamespace.GetGloballyQualifiedTypeName().Equals(nameSpace)));
+
+            if (result is not null)
+            {
+                return result;
+            }
+
+            return classObject.GetFirstPropertyByNameInBaseClasses(name, nameSpace);
+        }
+        private static IPropertySymbol GetFirstPropertyByNameInBaseClasses(this INamedTypeSymbol classObject, string name, string nameSpace)
+        {
+            // Recursively add properties from base classes
+            INamedTypeSymbol baseType = classObject.BaseType;
+            while (baseType != null && baseType.SpecialType != SpecialType.System_Object)
+            {
+                var result = baseType.GetMembers().OfType<IPropertySymbol>().FirstOrDefault(x => x.Name.Equals(name) && (nameSpace is null || x.ContainingNamespace.GetGloballyQualifiedTypeName().Equals(nameSpace)));
+                if (result is not null)
+                {
+                    return result;
+                }
+                baseType = baseType.BaseType;
+            }
+
+            return null;
+        }
         public static IFieldSymbol GetFieldWithAttribute(this INamedTypeSymbol classObject, string attributeName)
         {
             return classObject.GetAllFields().Where(x => x.HasAttribute(attributeName)).First();

@@ -6,7 +6,7 @@ namespace Foundation.Web
 {
     [DefaultController]
     [Route("[controller]")]
-    public class BaseController<T> : Controller where T : BaseDto
+    public class BaseController<T> : Microsoft.AspNetCore.Mvc.Controller where T : BaseDto
     {
         protected readonly DefaultRepository<T> _repo;
 
