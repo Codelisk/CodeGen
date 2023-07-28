@@ -9,6 +9,20 @@ namespace MauiApp1
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UsePrism(prism => {
+                    prism.RegisterTypes(container =>
+                    {
+                        container.RegisterForNavigation<MainPage, MainPageViewModel>();
+                    });
+                    prism.OnAppStart(async navigationService =>
+                    {
+                        var result = await navigationService.NavigateAsync("MainPage");
+                        if (!result.Success)
+                        {
+                        }
+                    });
+                    // Register Services and setup initial Navigation
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

@@ -10,7 +10,7 @@ namespace Maui.Generator.Constants
         public const string BindingFinderPattern = @"{Binding\s+((Path=)?.*?)(,\s*(.*?))?\}";
         public const string DataTemplateNodeName = "DataTemplate";
         public const string DataTypeAttributeName = "DataType";
-        public const string BindingName = "Binding";
+        public const string BindingName = "{Binding ";
         public const string BindingBindingContextPrefix = "BindingContext.";
         public const string BindingPathPrefix = "Path=";
         public const string MauiControlsNamespace = "Microsoft.Maui.Controls";
