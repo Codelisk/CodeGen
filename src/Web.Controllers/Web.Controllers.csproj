@@ -18,7 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="obj\generated\Controller.Generator\Controller.Generator.Generators.MainControllerGenerator\Controller\" />
+    <Compile Include="obj\generated\Controller.Generator\Controller.Generator.Generators.MainControllerGenerator\Controller\*">
+    </Compile>
   </ItemGroup>
 
 
