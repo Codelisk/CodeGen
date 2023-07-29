@@ -13,4 +13,9 @@
     <ProjectReference Include="..\Generators\Generators.Base\Generators.Base.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Manager\" />
+  </ItemGroup>
 </Project>
