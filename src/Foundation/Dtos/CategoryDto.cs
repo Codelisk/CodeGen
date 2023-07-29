@@ -12,5 +12,6 @@ namespace Foundation.Dtos
     public partial class CategoryDto : BaseDto
     {
         public string Name { get; set; }
+        public List<ProductDto> Products { get; set; }
     }
 }
