@@ -16,7 +16,11 @@ namespace Generators.Base.Extensions
             }
             return null;
         }
-        public static T GetFirstConstructorArgument<T>(this AttributeData attributeData) where T : Enum
+        public static TypedConstant GetFirstConstructorArgumentAsTypedConstant(this AttributeData attributeData)
+        {
+            return attributeData.ConstructorArguments.FirstOrDefault();
+        }
+        public static T GetFirstConstructorArgumentEnum<T>(this AttributeData attributeData) where T : Enum
         {
             return (T)attributeData.ConstructorArguments.FirstOrDefault().Value;
         }

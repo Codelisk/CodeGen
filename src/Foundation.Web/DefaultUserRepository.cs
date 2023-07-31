@@ -12,7 +12,7 @@ namespace Foundation.Web
     [UserDto]
     public class DefaultUserRepository<T, TKey> : DefaultRepository<T, TKey> where T : class
     {
-        public DefaultUserRepository(BaseContext<T> context) : base(context)
+        public DefaultUserRepository(BaseContext context) : base(context)
         {
         }
     }

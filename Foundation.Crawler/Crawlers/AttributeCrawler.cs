@@ -1,6 +1,5 @@
 ﻿using Attributes;
 using Attributes.ApiAttributes;
-using Attributes.WebAttributes.Controller;
 using Attributes.WebAttributes.Database;
 using Attributes.WebAttributes.Dto;
 using Attributes.WebAttributes.HttpMethod;

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Attributes.WebAttributes.Controller
+namespace Attributes.WebAttributes.Repository
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    public class EntityAttribute : Attribute
+    public class BaseEntityAttribute : Attribute
     {
     }
 }

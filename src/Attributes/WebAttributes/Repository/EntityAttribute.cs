@@ -4,8 +4,12 @@ using System.Text;
 
 namespace Attributes.WebAttributes.Repository
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    public class EntityAttribute<T> : Attribute where T : class
+    public class EntityAttribute : BaseEntityAttribute
     {
+        public Type Type { get; set; }
+        public EntityAttribute(Type type)
+        {
+            Type = type;
+        }
     }
 }

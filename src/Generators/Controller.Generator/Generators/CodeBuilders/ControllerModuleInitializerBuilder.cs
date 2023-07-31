@@ -18,20 +18,20 @@ namespace Controller.Generator.Generators.CodeBuilders
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             Services = new List<(string, string, string)>();
-            AddDbContexts(context);
+            //AddDbContexts(context);
 
             return base.Get(context, codeBuilders);
         }
 
-        private void AddDbContexts(GeneratorExecutionContext context)
-        {
-            var baseContext = context.BaseContext();
-            var dtos = context.Dtos();
-            foreach (var dto in dtos)
-            {
-                Services.Add(("AddDbContext", baseContext.Construct(dto).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat), string.Empty));
-            }
-        }
+        //private void AddDbContexts(GeneratorExecutionContext context)
+        //{
+        //    var baseContext = context.BaseContext();
+        //    var dtos = context.Dtos();
+        //    foreach (var dto in dtos)
+        //    {
+        //        Services.Add(("AddDbContext", baseContext.Construct(dto).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat), string.Empty));
+        //    }
+        //}
 
         public override string ModuleName { get; set; } = "ControllerServices";
     }

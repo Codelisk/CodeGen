@@ -9,6 +9,8 @@ using Foundation.Crawler.Crawlers;
 using Generators.Base.Extensions.Common;
 using Generators.Base.Extensions;
 using Foundation.Crawler.Extensions;
+using Attributes.WebAttributes.Repository;
+using Foundation.Dtos.Base;
 
 namespace Controller.Generator
 {
@@ -48,19 +50,20 @@ namespace Controller.Generator
 
         public static INamedTypeSymbol ConstructFromDto(this INamedTypeSymbol symbol, INamedTypeSymbol dto, GeneratorExecutionContext context)
         {
+            var entity = context.GetClassesWithAttribute(nameof(EntityAttribute)).FirstOrDefault(x => (x.GetAttribute<EntityAttribute>().GetFirstConstructorArgumentAsTypedConstant().Value as INamedTypeSymbol).Name == dto.Name);
             var idProperty = dto.GetIdProperty();
 
             if(symbol.TypeArguments.Length == 3)
             {
-                return symbol.Construct(dto, idProperty.Type, dto);
+                return symbol.Construct(dto, idProperty.Type, entity);
             }
             else if(symbol.TypeArguments.Length == 2)
             {
-                return symbol.Construct(dto, idProperty.Type);
+                return symbol.Construct(entity, idProperty.Type);
             }
             else
             {
-                return symbol.Construct(dto);
+                return symbol.Construct(entity);
             }
         }
         public static string GetRealManagerName(this INamedTypeSymbol defaultManager, INamedTypeSymbol dto)

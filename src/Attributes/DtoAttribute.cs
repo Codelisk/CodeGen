@@ -3,6 +3,10 @@
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class DtoAttribute : Attribute
     {
-        public string Name { get; set; } = "Dto";
+        public DtoAttribute(string context = "BaseContext")
+        {
+            this.Context=context;
+        }
+        public string Context { get; set; }
     }
 }

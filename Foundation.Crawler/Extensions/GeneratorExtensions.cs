@@ -51,7 +51,7 @@ namespace Foundation.Crawler.Extensions.Extensions
 
             var returnAttribute = httpAttribute.GetAttribute<ReturnAttribute>();
 
-            var returnAttributeValue = returnAttribute.GetFirstConstructorArgument<ReturnKind>();
+            var returnAttributeValue = returnAttribute.GetFirstConstructorArgumentEnum<ReturnKind>();
 
             if(returnAttributeValue == ReturnKind.List)
             {

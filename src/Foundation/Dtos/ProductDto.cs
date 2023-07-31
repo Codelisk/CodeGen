@@ -11,5 +11,6 @@ namespace Foundation.Dtos
     [Dto]
     public class ProductDto : BaseDto
     {
+        public string ProductName { get; set; }
     }
 }

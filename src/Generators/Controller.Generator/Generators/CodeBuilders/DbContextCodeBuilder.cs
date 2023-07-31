@@ -1,4 +1,6 @@
-﻿using Attributes.GeneratorAttributes;
+﻿using Attributes;
+using Attributes.GeneratorAttributes;
+using Attributes.WebAttributes.Database;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Models;
@@ -21,25 +23,30 @@ namespace Controller.Generator.Generators.CodeBuilders
         private List<CodeBuilder?> Build(GeneratorExecutionContext context, IEnumerable<INamedTypeSymbol> dtos)
         {
             var result = new List<CodeBuilder?>();
-            foreach (var dto in dtos)
+            foreach (var groupedDtos in dtos.GroupBy(x=>x.GetAttribute<DtoAttribute>().GetFirstConstructorArgument()))
             {
                 var builder = CreateBuilder();
                 var baseContext = context.BaseContext();
-                Class(builder, dto, null, baseContext, context);
+                Class(builder, groupedDtos, null, baseContext, context);
                 result.Add(builder);
             }
 
             return result;
         }
-        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, ClassWithMethods repoModel, INamedTypeSymbol baseRepository, GeneratorExecutionContext context)
+        private ClassBuilder Class(CodeBuilder builder, IGrouping<string, INamedTypeSymbol> dtos, ClassWithMethods repoModel, INamedTypeSymbol baseContext, GeneratorExecutionContext context)
         {
-            var constructedBaseRepo = baseRepository.ConstructFromDto(dto, context);
-            return builder.AddClass(dto.DbContextNameFromDto()).WithAccessModifier(Accessibility.Public)
-                .SetBaseClass(constructedBaseRepo.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
+            var result = builder.AddClass(dtos.Key).WithAccessModifier(Accessibility.Public)
                 .AddAttribute(nameof(GeneratedDbContextAttribute))
                 .AddConstructor()
-                .BaseConstructorTypeParameterParameterBaseCall(constructedBaseRepo)
+                .WithBaseCall(baseContext.InstanceConstructors.First())
                 .Class;
+
+            foreach (var dto in dtos)
+            {
+                result.AddProperty(dto.Name.GetParameterName(), Accessibility.Public).SetType($"DbSet<{dto.Name}").UseAutoProps();
+            }
+
+            return result;
         }
 
     }

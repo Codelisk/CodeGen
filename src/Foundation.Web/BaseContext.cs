@@ -9,17 +9,16 @@ using System.Threading.Tasks;
 namespace Foundation.Web
 {
     [BaseContext]
-    public class BaseContext<T> : DbContext where T : class
+    public partial class BaseContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseInMemoryDatabase(nameof(T));
+            optionsBuilder.UseInMemoryDatabase("TEST");
         }
-        public BaseContext(DbContextOptions<BaseContext<T>> opt)
+        public BaseContext(DbContextOptions<BaseContext> opt)
         : base(opt)
         {
         }
-        public DbSet<T> Items { get; set; } = null!;
     }
 }

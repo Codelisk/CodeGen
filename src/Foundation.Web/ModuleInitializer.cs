@@ -12,7 +12,6 @@ namespace Foundation.Web
     {
         public static void AddFoundationWeb(this IServiceCollection Services)
         {
-            Services.AddTransient<BaseContext<CategoryDto>>();
         }
     }
 }

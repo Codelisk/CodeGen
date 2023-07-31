@@ -7,14 +7,15 @@ using System.Text;
 
 namespace Foundation.Entities
 {
-    [Entity<CategoryDto>]
+    [Entity(typeof(CategoryDto))]
     public partial class Category : BaseEntity
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public ICollection<Product> Product { get; set; }
     }
-    public partial class Product
+    [Entity(typeof(ProductDto))]
+    public partial class Product : BaseEntity
     {
         public int ProductId { get; set; }
         public Category Category { get; set; }

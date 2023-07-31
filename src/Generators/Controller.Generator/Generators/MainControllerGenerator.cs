@@ -17,7 +17,7 @@ namespace Controller.Generator.Generators
     {  
         public override void Execute(GeneratorExecutionContext context)
         {
-            //Debugger.Launch();    
+            Debugger.Launch();    
             var codeBuilder = new ControllerCodeBuilder().Get(context);
             var dbContextCodeBuilder = new DbContextCodeBuilder().Get(context);
             var repositoryBuilder = new RepositoryCodeBuilder().Get(context);
