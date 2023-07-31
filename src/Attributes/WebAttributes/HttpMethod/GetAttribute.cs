@@ -1,4 +1,5 @@
 ﻿using Attributes.WebAttributes.Dto;
+using Attributes.WebAttributes.Repository;
 using Attributes.WebAttributes.Repository.Base;
 using Shared.Constants;
 using System;
@@ -9,7 +10,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Attributes.WebAttributes.Repository
+namespace Attributes.WebAttributes.HttpMethod
 {
     [Url(ApiUrls.Get)]
     [IdQuery]

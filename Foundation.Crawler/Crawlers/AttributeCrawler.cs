@@ -1,7 +1,10 @@
 ﻿using Attributes;
 using Attributes.ApiAttributes;
+using Attributes.WebAttributes.Controller;
 using Attributes.WebAttributes.Database;
 using Attributes.WebAttributes.Dto;
+using Attributes.WebAttributes.HttpMethod;
+using Attributes.WebAttributes.Manager;
 using Attributes.WebAttributes.Repository;
 using Attributes.WebAttributes.Repository.Base;
 using Foundation.Crawler.Extensions;
@@ -32,15 +35,9 @@ namespace Foundation.Crawler.Crawlers
         {
             return context.GetClassesWithAttribute(nameof(DtoAttribute));
         }
-        public static DefaultRepositoryModel DefaultRepository(this GeneratorExecutionContext context)
+        public static INamedTypeSymbol DefaultApiRepository(this GeneratorExecutionContext context)
         {
-            var repo= context.GetClassesWithAttribute(nameof(DefaultRepositoryAttribute)).First();
-
-            return new DefaultRepositoryModel(repo,
-                repo.GetMethodsWithAttribute(nameof(Attributes.WebAttributes.Repository.GetAttribute)).First(),
-            repo.GetMethodsWithAttribute(nameof(GetAllAttribute)).First(),
-            repo.GetMethodsWithAttribute(nameof(SaveAttribute)).First(),
-            repo.GetMethodsWithAttribute(nameof(DeleteAttribute)).First());
+            return context.GetClassesWithAttribute(nameof(DefaultApiRepositoryAttribute)).First();
         }
         public static string AttributeUrl(this string attributeValue, INamedTypeSymbol dto, bool plural = false)
         {
@@ -70,17 +67,46 @@ namespace Foundation.Crawler.Crawlers
             bool plural = attributeSymobl.HasAttribute(nameof(PluralAttribute));
             return urlProperty.GetFirstConstructorArgument().AttributeUrl(dto, plural);
         }
-        public static INamedTypeSymbol BaseRepository(this GeneratorExecutionContext context)
+        public static INamedTypeSymbol Manager(this GeneratorExecutionContext context, INamedTypeSymbol dto)
         {
-            return context.GetClassesWithAttribute(nameof(BaseRepositoryAttribute)).First();
+            return UserOrDefault<DefaultManagerAttribute>(context, dto);
         }
-        public static INamedTypeSymbol BaseController(this GeneratorExecutionContext context)
+        public static INamedTypeSymbol Controller(this GeneratorExecutionContext context, INamedTypeSymbol dto)
         {
-            return context.GetClassesWithAttribute(nameof(DefaultControllerAttribute)).First();
+            return UserOrDefault<DefaultControllerAttribute>(context, dto);
+        }
+        public static INamedTypeSymbol Repository(this GeneratorExecutionContext context, INamedTypeSymbol dto)
+        {
+            return UserOrDefault<DefaultRepositoryAttribute>(context, dto);
+        }
+        //For caching
+        private static IEnumerable<INamedTypeSymbol> classSymbols;
+        private static INamedTypeSymbol UserOrDefault<TAttribute>(this GeneratorExecutionContext context, INamedTypeSymbol dto, bool isUser = false)
+            where TAttribute : Attribute
+        {
+            if(classSymbols is null)
+            {
+                classSymbols = context.GetAllClasses("");
+            }
+
+            var objectsWithAttribute = classSymbols.GetClassesWithAttribute(typeof(TAttribute).Name);
+            if (dto.HasAttribute(nameof(UserDtoAttribute)))
+            {
+                return objectsWithAttribute.FirstOrDefault(x => x.HasAttribute(nameof(UserDtoAttribute)));
+            }
+            else
+            {
+                return objectsWithAttribute.FirstOrDefault(x => !x.HasAttribute(nameof(UserDtoAttribute)));
+            }
         }
         public static IPropertySymbol GetIdProperty(this INamedTypeSymbol dto)
         {
             return dto.BaseType.GetPropertyWithAttribute(nameof(IdAttribute));
+        }
+
+        public static ClassWithMethods GetClassWithMethods(this INamedTypeSymbol classSymbol)
+        {
+            return new ClassWithMethods(classSymbol);
         }
     }
 }

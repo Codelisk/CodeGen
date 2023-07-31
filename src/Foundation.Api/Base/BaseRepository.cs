@@ -15,7 +15,7 @@ using Attributes.WebAttributes.Repository;
 
 namespace Foundation.Api.Base
 {
-    [BaseRepository]
+    [Attributes.ApiAttributes.DefaultApiRepository]
     public abstract class BaseRepository<TApi> where TApi : IBaseApi
     {
         private const int MAX_REFRESH_TOKEN_ATTEMPTS = 1;

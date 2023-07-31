@@ -16,14 +16,17 @@ namespace Generators.Base.CodeBuilders
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             List<string> serviceTypes=new List<string>();
-            foreach (var codeBuilder in codeBuilders)
+            if(codeBuilders is not null)
             {
-                foreach (var c in codeBuilder.Classes)
+                foreach (var codeBuilder in codeBuilders)
                 {
-                    var parameters = c.Constructors.First().Parameters;
-                    foreach (var parameter in parameters)
+                    foreach (var c in codeBuilder.Classes)
                     {
-                        serviceTypes.Add(parameter.Type);
+                        var parameters = c.Constructors.First().Parameters;
+                        foreach (var parameter in parameters)
+                        {
+                            serviceTypes.Add(parameter.Type);
+                        }
                     }
                 }
             }

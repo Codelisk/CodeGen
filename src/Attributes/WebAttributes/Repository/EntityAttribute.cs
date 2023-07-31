@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Attributes.WebAttributes.Dto
+namespace Attributes.WebAttributes.Repository
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    public class UserDtoAttribute : Attribute
+    public class EntityAttribute<T> : Attribute where T : class
     {
     }
 }

@@ -18,7 +18,7 @@ namespace Api.Generator.Generators.CodeBuilders.FromController
         }
         protected IEnumerable<INamedTypeSymbol> GetControllers(GeneratorExecutionContext context)
         {
-            return context.GetClassesWithBaseClass(context.BaseController());
+            return context.GetClassesWithBaseClass(context.DefaultController());
         }
     }
 }

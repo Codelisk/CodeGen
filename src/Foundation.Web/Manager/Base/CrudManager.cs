@@ -9,24 +9,24 @@
     using Microsoft.Extensions.Logging;
     using Foundation.Web.Repo.Base;
     using Foundation.Web.Extensions;
+    using Attributes.WebAttributes.Repository;
+    using Attributes.WebAttributes.Manager;
+    using Orderlyze.Service.DL.Base;
 
-    public abstract class CrudManager<T, TKey, TEntity, TRepo> : GetManager<T, TKey, TEntity, TRepo>, ICrudManager<T, TKey>
+    public abstract class CrudManager<T, TKey, TEntity> : GetManager<T, TKey, TEntity>, ICrudManager<T, TKey>
         where T : class
         where TEntity : class
         where TKey : IComparable
-        where TRepo : ICrudRepository<TEntity, TKey>
     {
         #region private /ctr
 
         private readonly TKey _minimumValue = default;
         private readonly IMapper _mapper;
         private readonly ICrudRepository<TEntity, TKey> _repository;
-        private readonly IUnitOfWork _unitOfWork;
 
-        protected CrudManager(IUnitOfWork unitOfWork, TRepo repository, IMapper mapper, ILogger logger)
+        protected CrudManager(ICrudRepository<TEntity, TKey> repository, IMapper mapper, ILogger logger)
             : base(repository, mapper, logger)
         {
-            _unitOfWork = unitOfWork;
             _repository = repository;
             _mapper = mapper;
         }
@@ -54,12 +54,13 @@
 
             _repository.AddRange(entities);
 
-            await Repo.SaveChangesAsync();
+            await _repository.SaveChangesAsync();
 
             return entities.Select(GetKey);
 
         }
 
+        [Save]
         public async Task<T> Set(T value)
         {
             await ValidateDto(value, ValidationType.SetValidation);
@@ -103,7 +104,7 @@
                     UpdateEntity(entityInDb, entity);
                 }
             }
-            await Repo.SaveChangesAsync();
+            await _repository.SaveChangesAsync();
             await Modified();
             return await DoWithLoggingAsyncT<T, TEntity>(() => Task.FromResult(entity));
         }
@@ -112,6 +113,7 @@
 
         #region Delete
 
+        [Delete]
         public async Task Delete(T value)
         {
             await Delete(new[] { value });
@@ -130,7 +132,7 @@
             }
 
             _repository.DeleteRange(entities);
-            await Repo.SaveChangesAsync();
+            await _repository.SaveChangesAsync();
 
         }
 
@@ -150,7 +152,7 @@
 
             _repository.DeleteRange(entities);
 
-            await Repo.SaveChangesAsync();
+            await _repository.SaveChangesAsync();
         }
 
         #endregion
@@ -171,7 +173,7 @@
             var entitiesInDb = await _repository.GetTracking(entities.Select(GetKey));
 
             await Update(myValues, entitiesInDb, entities);
-            await Repo.SaveChangesAsync();
+            await _repository.SaveChangesAsync();
         }
 
         protected async Task Update(IEnumerable<T> values, IList<TEntity> entitiesInDb, IEnumerable<TEntity> entities)

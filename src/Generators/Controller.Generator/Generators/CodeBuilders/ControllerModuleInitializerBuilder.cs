@@ -1,6 +1,7 @@
 ﻿using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Generators.Base.CodeBuilders;
+using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,19 @@ namespace Controller.Generator.Generators.CodeBuilders
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             Services = new List<(string, string, string)>();
+            AddDbContexts(context);
+
+            return base.Get(context, codeBuilders);
+        }
+
+        private void AddDbContexts(GeneratorExecutionContext context)
+        {
             var baseContext = context.BaseContext();
-            foreach (var dto in context.Dtos())
+            var dtos = context.Dtos();
+            foreach (var dto in dtos)
             {
                 Services.Add(("AddDbContext", baseContext.Construct(dto).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat), string.Empty));
             }
-
-            return base.Get(context, codeBuilders);
         }
 
         public override string ModuleName { get; set; } = "ControllerServices";

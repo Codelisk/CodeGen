@@ -6,13 +6,12 @@
     using System.Threading.Tasks;
     using Foundation.Web.Repo.Base;
     using Microsoft.EntityFrameworkCore;
-    public abstract class DbRepositoryBase<TContext, TModel> : IDbRepositoryBase<TModel>
-        where TContext : DbContextBase
+    public abstract class DbRepositoryBase<TModel> : IDbRepositoryBase<TModel>
         where TModel : class
     {
-        private readonly TContext _ctx;
+        private readonly DbContextBase<TModel> _ctx;
 
-        protected DbRepositoryBase(TContext context)
+        protected DbRepositoryBase(DbContextBase<TModel> context)
         {
             _ctx = context;
             _ctx.Database.CreateExecutionStrategy();

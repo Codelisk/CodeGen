@@ -2,7 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
 
-    public abstract class DbContextBase : DbContext
+    public abstract class DbContextBase<T> : DbContext where T : class
     {
         protected DbContextBase(DbContextOptions options) : base(options)
         {

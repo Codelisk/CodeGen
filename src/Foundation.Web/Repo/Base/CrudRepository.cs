@@ -2,15 +2,15 @@
 
 namespace Foundation.Web.Repo.Base
 {
+    using Attributes.WebAttributes.Repository;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public abstract class CrudRepository<TDbContext, TEntity, TKey> : GetRepository<TDbContext, TEntity, TKey>
-        where TDbContext : DbContextBase where TEntity : class
+    public abstract class CrudRepository<TEntity, TKey> : GetRepository<TEntity, TKey> where TEntity : class
     {
-        protected CrudRepository(TDbContext dbContext)
+        protected CrudRepository(DbContextBase<TEntity> dbContext)
             : base(dbContext)
         {
         }

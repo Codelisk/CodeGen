@@ -108,6 +108,12 @@ namespace Generators.Base.Extensions
             return symbol.GetMembers()
                          .OfType<IMethodSymbol>();
         }
+        public static IEnumerable<IMethodSymbol> GetMethodsWithAttributes(this INamedTypeSymbol symbol)
+        {
+            return symbol.GetMembers()
+                         .OfType<IMethodSymbol>()
+                         .Where(x=>x.GetAllAttributes().Any());
+        }
         public static string GetReturnTypeName(this ITypeSymbol returnType)
         {
             if(returnType is INamedTypeSymbol n && n.IsWellKnownSystemType())
@@ -169,5 +175,6 @@ namespace Generators.Base.Extensions
         {
             return typeSymbol.TypeArguments.FirstOrDefault();
         }
+
     }
 }

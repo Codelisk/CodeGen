@@ -29,7 +29,15 @@ namespace Generators.Base.Generators.Base
 
                     try
                     {
-                        context.AddSource(folderName + "/" + codeBuilder.Classes.First().Name + ".g.cs", code);
+                        var fileName = codeBuilder.Classes.First().Name + ".g.cs";
+                        if (string.IsNullOrEmpty(folderName))
+                        {
+                            context.AddSource(fileName, code);
+                        }
+                        else
+                        {
+                            context.AddSource(folderName + "/" + fileName, code);
+                        }
                     }
                     catch (Exception ex)
                     {

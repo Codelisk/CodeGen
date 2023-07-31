@@ -5,18 +5,19 @@ namespace Foundation.Web.Manager.Base
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Attributes.WebAttributes.HttpMethod;
+    using Attributes.WebAttributes.Repository;
     using AutoMapper;
     using Foundation.Web.Repo.Base;
     using Microsoft.Extensions.Logging;
 
-    public abstract class GetManager<T, TKey, TEntity, TRepo> : BaseManager<TRepo>, IGetManager<T, TKey>
+    public abstract class GetManager<T, TKey, TEntity> : BaseManager<IGetRepository<TEntity, TKey>>
         where T : class
         where TEntity : class
-        where TRepo : IGetRepository<TEntity, TKey>
     {
         private readonly IMapper _mapper;
 
-        protected GetManager(TRepo repository, IMapper mapper, ILogger logger)
+        protected GetManager(IGetRepository<TEntity, TKey> repository, IMapper mapper, ILogger logger)
             : base(repository, mapper, logger)
         {
             _mapper = mapper;
@@ -33,6 +34,7 @@ namespace Foundation.Web.Manager.Base
         {
             return await DoWithLoggingAsync(() => Repo.GetCount());
         }
+        [Get]
         public async Task<T> Get(TKey key)
         {
             return await DoWithLoggingAsyncT<T, TEntity>(() => Repo.Get(key));
@@ -43,6 +45,7 @@ namespace Foundation.Web.Manager.Base
             return await DoWithLoggingAsync<T, TEntity>(() => Repo.Get(keys));
         }
 
+        [GetAll]
         protected virtual async Task<IList<TEntity>> GetAllEntities()
         {
             return await Repo.GetAll();

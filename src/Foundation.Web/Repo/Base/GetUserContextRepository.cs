@@ -3,11 +3,11 @@
     using System.Linq;
     using Foundation.Web.Shared;
 
-    public abstract class GetUserContextRepository<TDbContext, TEntity, TKey> : GetRepository<TDbContext, TEntity, TKey>
-        where TDbContext : DbContextBase where TEntity : SellerBase
+    public abstract class GetUserContextRepository<TEntity, TKey> : GetRepository<TEntity, TKey>
+        where TEntity : SellerBase
     {
         protected IUserContext UserContext;
-        protected GetUserContextRepository(TDbContext dbContext, IUserContext userContext)
+        protected GetUserContextRepository(DbContextBase<TEntity> dbContext, IUserContext userContext)
             : base(dbContext)
         {
             UserContext = userContext;

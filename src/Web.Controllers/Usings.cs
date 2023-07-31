@@ -6,3 +6,4 @@ global using System.Threading.Tasks;
 global using Foundation.Dtos;
 global using Foundation.Web;
 global using Microsoft.AspNetCore.Mvc;
+global using Attributes.GeneratorAttributes;

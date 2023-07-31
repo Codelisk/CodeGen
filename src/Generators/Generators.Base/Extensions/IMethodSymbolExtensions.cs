@@ -87,6 +87,10 @@ namespace Generators.Base.Extensions
         {
             return methodSymbol.GetAttributes().FirstOrDefault(x => x.GetAttributeName().Equals(attributeName));
         }
+        public static bool HasAttribute(this IMethodSymbol methodSymbol, string attributeName)
+        {
+            return methodSymbol.GetAttributes().Any(x => x.GetAttributeName().Equals(attributeName));
+        }
         public static MethodDeclarationSyntax GetMethodDeclarationSyntax(this IMethodSymbol methodSymbol)
         {
             var methodSyntaxReferences = methodSymbol.DeclaringSyntaxReferences;

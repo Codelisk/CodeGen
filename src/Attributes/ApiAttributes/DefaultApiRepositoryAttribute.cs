@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Attributes.WebAttributes.Dto
+namespace Attributes.ApiAttributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    public class UserDtoAttribute : Attribute
+    public class DefaultApiRepositoryAttribute : Attribute
     {
     }
 }

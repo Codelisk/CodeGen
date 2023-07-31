@@ -1,4 +1,6 @@
-﻿using Attributes.WebAttributes.Repository.Base;
+﻿using Attributes.WebAttributes.HttpMethod;
+using Attributes.WebAttributes.Repository;
+using Attributes.WebAttributes.Repository.Base;
 using CodeGenHelpers;
 using CodeGenHelpers.Internals;
 using Foundation.Crawler.Crawlers;
@@ -19,49 +21,50 @@ namespace Controller.Generator.Generators.CodeBuilders
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             var dtos = context.Dtos().ToList();
-            var defaultRepository = context.DefaultRepository();
-            var baseController = context.BaseController();
-            return Build(dtos, defaultRepository, baseController);
+            return Build(context, dtos);
         }
 
-        private List<CodeBuilder?> Build(IEnumerable<INamedTypeSymbol> dtos, DefaultRepositoryModel repoModel, INamedTypeSymbol baseController)
+        private List<CodeBuilder?> Build(GeneratorExecutionContext context, IEnumerable<INamedTypeSymbol> dtos)
         {
             var result = new List<CodeBuilder?>();
             foreach (var dto in dtos)
             {
+                var manager = context.Manager(dto).GetClassWithMethods();
+                var baseController = context.Controller(dto);
                 var builder = CreateBuilder();
 
-                var c = Class(builder, dto, repoModel, baseController);
+                var c = Class(builder, dto, manager, baseController, context);
 
-                Methods(c, dto, baseController, repoModel);
+                Methods(c, dto, baseController, manager);
 
                 result.Add(builder);
             }
 
             return result;
         }
-        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, DefaultRepositoryModel repoModel, INamedTypeSymbol baseController)
+        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, ClassWithMethods managerWithMethods, INamedTypeSymbol baseController, GeneratorExecutionContext context)
         {
+            var constructedBaseController = baseController.ConstructFromDto(dto, context);
             return builder.AddClass(dto.ControllerNameFromDto()).WithAccessModifier(Accessibility.Public)
-                .SetBaseClass(baseController.Construct(dto).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
+                .SetBaseClass(constructedBaseController.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(Constants.ControllerAttribute)
                 .AddConstructor()
-                .WithBaseCall(new Dictionary<string, string> { { $"{repoModel.Repo.Name}<{dto.Name}>", repoModel.Repo.Name.GetParameterName() } })
+                .BaseConstructorParameterBaseCall(constructedBaseController, dto.ManagerNameFromDto())
                 .Class;
         }
-        private void Methods(ClassBuilder c, INamedTypeSymbol dto, INamedTypeSymbol baseController, DefaultRepositoryModel repoModel)
+        private void Methods(ClassBuilder c, INamedTypeSymbol dto, INamedTypeSymbol baseController, ClassWithMethods repoModel)
         {
-            var repoProperty = baseController.GetFieldsWithConstructedFromType(repoModel.Repo).First();
+            var repoProperty = baseController.GetFieldsWithConstructedFromType(repoModel.Class).First();
 
-            Dictionary<IMethodSymbol, string> properties = new Dictionary<IMethodSymbol, string>()
+            Dictionary<IMethodSymbol, string> methodsWithControllerAttributeName = new Dictionary<IMethodSymbol, string>()
             {
-                {repoModel.Delete, "HttpDelete" },
-                {repoModel.Get, "HttpGet" },
-                {repoModel.GetAll, "HttpGet" },
-                {repoModel.Save, "HttpPost" },
+                {repoModel.MethodFromAttribute<DeleteAttribute>(), "HttpDelete" },
+                {repoModel.MethodFromAttribute<GetAttribute>(), "HttpGet" },
+                {repoModel.MethodFromAttribute<GetAllAttribute>(), "HttpGet" },
+                {repoModel.MethodFromAttribute<SaveAttribute>(), "HttpPost" },
             };
 
-            foreach (var item in properties)
+            foreach (var item in methodsWithControllerAttributeName)
             {
                 var httpAttribute = item.Key.HttpAttribute();
                 var methodBuilder = c.AddMethod(item.Key.MethodName(dto), Accessibility.Public)

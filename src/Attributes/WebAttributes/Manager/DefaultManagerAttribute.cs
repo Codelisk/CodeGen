@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Attributes.ApiAttributes
+namespace Attributes.WebAttributes.Manager
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    public class BaseRepositoryAttribute : Attribute
+    public class DefaultManagerAttribute : Attribute
     {
     }
 }

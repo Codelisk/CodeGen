@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using AutoMapper;
     using Foundation.Web.Manager;
+    using Foundation.Web.Repo.Base;
     using Microsoft.Extensions.Logging;
     public class BaseManager<TRepo> : IManager
     {

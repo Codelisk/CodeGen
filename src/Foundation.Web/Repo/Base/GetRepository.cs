@@ -5,10 +5,9 @@
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
 
-    public abstract class GetRepository<TDbContext, TEntity, TKey> : DbRepositoryBase<TDbContext, TEntity>
-        where TDbContext : DbContextBase where TEntity : class
+    public abstract class GetRepository<TEntity, TKey> : DbRepositoryBase<TEntity> where TEntity : class
     {
-        protected GetRepository(TDbContext dbContext)
+        protected GetRepository(DbContextBase<TEntity> dbContext)
             : base(dbContext)
         {
         }

@@ -23,7 +23,7 @@ namespace Generators.Base.Extensions
         }
         public static IEnumerable<INamedTypeSymbol> GetClassesWithBaseClass(this GeneratorExecutionContext context, INamedTypeSymbol baseClass, string assemblyName = "")
         {
-            return context.GetAllClasses(assemblyName).Where(x=>x.BaseType == baseClass);
+            return context.GetAllClasses(assemblyName).Where(x=> SymbolEqualityComparer.Default.Equals(x.BaseType, baseClass));
         }
         public static IEnumerable<INamedTypeSymbol> GetClassesWithAttribute(this GeneratorExecutionContext context, string fullAttributeName, string assemblyName = "")
         {

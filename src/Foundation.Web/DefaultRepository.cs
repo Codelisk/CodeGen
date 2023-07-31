@@ -1,4 +1,5 @@
-﻿using Attributes.WebAttributes.Repository;
+﻿using Attributes.WebAttributes.HttpMethod;
+using Attributes.WebAttributes.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace Foundation.Web
 {
     [DefaultRepository]
-    public class DefaultRepository<T> where T : class
+    public class DefaultRepository<T, TKey> where T : class
     {
         private readonly BaseContext<T> _context;
 
@@ -26,7 +27,7 @@ namespace Foundation.Web
             return result.Entity;
         }
         [Get]
-        public async Task<T> Get(Guid id)
+        public async Task<T> Get(TKey id)
         {
             return await _context.Items.FirstAsync();
         }

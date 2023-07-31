@@ -6,11 +6,11 @@ namespace Orderlyze.Service.DL.Base
     using Foundation.Web.Repo.Base;
     using Foundation.Web.Shared;
 
-    public abstract class CrudUserContextRepository<TDbContext, TEntity, TKey> : CrudRepository<TDbContext, TEntity, TKey>
-        where TDbContext : DbContextBase where TEntity : SellerBase
+    public abstract class CrudUserContextRepository<TEntity, TKey> : CrudRepository<TEntity, TKey>
+        where TEntity : SellerBase
     {
         protected IUserContext UserContext;
-        protected CrudUserContextRepository(TDbContext dbContext, IUserContext userContext)
+        protected CrudUserContextRepository(DbContextBase<TEntity> dbContext, IUserContext userContext)
             : base(dbContext)
         {
             UserContext = userContext;

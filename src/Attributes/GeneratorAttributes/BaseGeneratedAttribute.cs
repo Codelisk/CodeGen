@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Attributes.WebAttributes.Repository
+namespace Attributes.GeneratorAttributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-    public class DefaultUserManagerAttribute : Attribute
+    public class BaseGeneratedAttribute : Attribute
     {
     }
 }
