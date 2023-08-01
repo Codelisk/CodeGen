@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.9" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0-preview.6.23329.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" />
+    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
+    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\..\Generators\Common\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference Include="..\..\..\Generators\Web\Controller.Generator\Controller.Generator.csproj" />
+  </ItemGroup>
+</Project>

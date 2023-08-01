@@ -59,9 +59,8 @@
     <ProjectReference Include="..\..\Foundation\Foundation.csproj" />
     <ProjectReference Include="..\..\Generators\Controller.Generator\Controller.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false">
     </ProjectReference>
-    <ProjectReference Include="..\..\Generators\Generators.Base\Generators.Base.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <ProjectReference Include="..\..\Generators\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
-    <ProjectReference Include="..\Foundation.Maui\Foundation.Maui.csproj" />
     <ProjectReference Include="..\Maui.Generator\Maui.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>
