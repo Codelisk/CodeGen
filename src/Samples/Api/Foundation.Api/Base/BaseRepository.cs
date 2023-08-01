@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Attributes.ApiAttributes;
 using Foundation.Api.Services.Base;
 using Attributes.WebAttributes.Repository;
+using Attributes.WebAttributes.HttpMethod;
 
 namespace Foundation.Api.Base
 {

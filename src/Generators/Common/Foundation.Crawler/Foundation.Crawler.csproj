@@ -5,13 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Attributes\Attributes.csproj" />
-    <ProjectReference Include="..\src\Generators\Generators.Base\Generators.Base.csproj" />
-    <ProjectReference Include="..\src\Shared\Shared.csproj" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers"  />
+    <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" />
+    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" />
+    <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
 </Project>

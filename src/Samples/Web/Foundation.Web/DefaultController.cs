@@ -1,4 +1,5 @@
-﻿using Attributes.WebAttributes.Repository;
+﻿using Attributes.WebAttributes.Controller;
+using Attributes.WebAttributes.Repository;
 using Foundation.Dtos.Base;
 using Foundation.Web.Interfaces;
 using Foundation.Web.Manager.Base;

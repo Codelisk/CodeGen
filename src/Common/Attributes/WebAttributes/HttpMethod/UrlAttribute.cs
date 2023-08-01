@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Attributes.WebAttributes.Repository.Base
+namespace Attributes.WebAttributes.HttpMethod
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class UrlAttribute : Attribute

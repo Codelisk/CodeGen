@@ -1,5 +1,6 @@
-﻿using Attributes.WebAttributes.Repository;
-using Attributes.WebAttributes.Repository.Base;
+﻿using Attributes.WebAttributes.Dto;
+using Attributes.WebAttributes.HttpMethod;
+using Attributes.WebAttributes.Repository;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Generators.Base.Extensions;

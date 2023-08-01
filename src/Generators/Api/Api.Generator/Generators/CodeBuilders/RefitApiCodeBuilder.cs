@@ -1,6 +1,6 @@
 ﻿using Attributes.ApiAttributes;
+using Attributes.WebAttributes.HttpMethod;
 using Attributes.WebAttributes.Repository;
-using Attributes.WebAttributes.Repository.Base;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;

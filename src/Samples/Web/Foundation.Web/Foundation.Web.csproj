@@ -11,7 +11,5 @@
     <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
     <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" />
-    <ProjectReference Include="..\..\..\Generators\Common\Generators.Base\Generators.Base.csproj" />
-    <ProjectReference Include="..\..\..\Generators\Web\Controller.Generator\Controller.Generator.csproj" />
   </ItemGroup>
 </Project>

@@ -9,11 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Foundation.Crawler\Foundation.Crawler.csproj" />
-    <ProjectReference Include="..\..\Attributes\Attributes.csproj" />
-    <ProjectReference Include="..\..\Foundation\Foundation.csproj" />
-    <ProjectReference Include="..\..\Generators\Generators.Base\Generators.Base.csproj" />
-    <ProjectReference Include="..\..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" />
     <ProjectReference Include="..\WebGenerator.Base\WebGenerator.Base.csproj" />
   </ItemGroup>
 

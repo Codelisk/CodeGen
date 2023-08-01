@@ -5,15 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Foundation.Crawler\Foundation.Crawler.csproj" />
-    <ProjectReference Include="..\..\Attributes\Attributes.csproj" />
-    <ProjectReference Include="..\..\Foundation\Foundation.csproj" />
-    <ProjectReference Include="..\..\Generators\Generators.Base\Generators.Base.csproj" />
-    <ProjectReference Include="..\..\Shared\Shared.csproj" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" />
+    <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" />
+    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
+    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" />
+    <ProjectReference Include="..\..\Common\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
 </Project>

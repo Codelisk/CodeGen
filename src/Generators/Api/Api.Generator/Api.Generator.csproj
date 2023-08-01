@@ -10,18 +10,17 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers"  />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Foundation.Crawler\Foundation.Crawler.csproj" />
-    <ProjectReference Include="..\..\Attributes\Attributes.csproj" />
-    <ProjectReference Include="..\..\Foundation\Foundation.csproj" />
-    <ProjectReference Include="..\..\Shared\Shared.csproj" />
-    <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Generators\Base\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" />
+    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
+    <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" />
+    <ProjectReference Include="..\..\Common\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
 </Project>

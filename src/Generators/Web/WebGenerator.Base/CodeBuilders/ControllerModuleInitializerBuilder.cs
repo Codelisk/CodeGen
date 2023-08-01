@@ -1,5 +1,4 @@
 ﻿using CodeGenHelpers;
-using Foundation.Crawler.Crawlers;
 using Generators.Base.CodeBuilders;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;

@@ -13,6 +13,7 @@
     using Attributes.WebAttributes.Manager;
     using Orderlyze.Service.DL.Base;
     using Foundation.Web.Repo;
+    using Attributes.WebAttributes.HttpMethod;
 
     public abstract class CrudManager<T, TKey, TEntity> : GetManager<T, TKey, TEntity>, ICrudManager<T, TKey>
         where T : class

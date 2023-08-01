@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Attributes.WebAttributes.Repository
+namespace Attributes.WebAttributes.Dto
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class PluralAttribute : Attribute

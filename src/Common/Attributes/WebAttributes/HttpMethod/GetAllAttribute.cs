@@ -1,5 +1,5 @@
-﻿using Attributes.WebAttributes.Repository;
-using Attributes.WebAttributes.Repository.Base;
+﻿using Attributes.WebAttributes.Dto;
+using Attributes.WebAttributes.Repository;
 using Shared.Constants;
 using System;
 using System.Collections.Generic;

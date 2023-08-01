@@ -1,4 +1,5 @@
-﻿using Attributes.WebAttributes.Repository.Base;
+﻿
+using Attributes.WebAttributes.HttpMethod;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using System;
