@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web
 {
-    [BaseContext]
     public partial class BaseContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

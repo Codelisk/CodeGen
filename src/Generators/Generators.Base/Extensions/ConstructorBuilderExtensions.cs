@@ -1,4 +1,5 @@
 ﻿using CodeGenHelpers;
+using CodeGenHelpers.Internals;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Generators.Base.Extensions
 
             return c;
         }
-        public static ConstructorBuilder BaseConstructorParameterBaseCall(this ConstructorBuilder c, INamedTypeSymbol baseClass, string? replaceTypeName = null)
+        public static ConstructorBuilder BaseConstructorParameterBaseCall(this ConstructorBuilder c, INamedTypeSymbol baseClass, (INamedTypeSymbol, string)? replaceTypeName = null)
         {
             var baseConstructor = baseClass.InstanceConstructors.First();
             Dictionary<string, string> typeParameters = new Dictionary<string, string>();
@@ -32,14 +33,12 @@ namespace Generators.Base.Extensions
             {
                 var typeName = parameter.Type.Name;
                 string name = parameter.Type.Name.GetParameterName();
-                if (replaceTypeName is not null)
+                if (replaceTypeName is not null && parameter.Type.Name.Equals(replaceTypeName.Value.Item1.Name))
                 {
-                    typeName = typeName.Replace(parameter.Type.Name, replaceTypeName);
+                    typeName = typeName.Replace(parameter.Type.Name, replaceTypeName.Value.Item2);
+                    name = replaceTypeName.Value.Item2.GetParameterName();
                 }
-                if(replaceTypeName is not null)
-                {
-                    name = replaceTypeName.GetParameterName();
-                }
+
                 typeParameters.Add(typeName, name);
             }
 

@@ -4,14 +4,15 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Foundation.Web.Repo;
     using Foundation.Web.Repo.Base;
     using Microsoft.EntityFrameworkCore;
     public abstract class DbRepositoryBase<TModel> : IDbRepositoryBase<TModel>
         where TModel : class
     {
-        private readonly DbContextBase<TModel> _ctx;
+        private readonly DbContextBase _ctx;
 
-        protected DbRepositoryBase(DbContextBase<TModel> context)
+        protected DbRepositoryBase(DbContextBase context)
         {
             _ctx = context;
             _ctx.Database.CreateExecutionStrategy();

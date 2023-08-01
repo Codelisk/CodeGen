@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
 
-namespace Orderlyze.Service.DL.Base
+namespace Foundation.Web.Repo
 {
     using System.Linq;
-    using Foundation.Web.Repo.Base;
+    using Attributes.WebAttributes.Dto;
+    using Attributes.WebAttributes.Repository;
     using Foundation.Web.Shared;
 
     public abstract class CrudUserContextRepository<TEntity, TKey> : CrudRepository<TEntity, TKey>
         where TEntity : SellerBase
     {
         protected IUserContext UserContext;
-        protected CrudUserContextRepository(DbContextBase<TEntity> dbContext, IUserContext userContext)
+        protected CrudUserContextRepository(DbContextBase dbContext, IUserContext userContext)
             : base(dbContext)
         {
             UserContext = userContext;
@@ -46,7 +47,7 @@ namespace Orderlyze.Service.DL.Base
 
         protected override void AssignValuesGraph(TEntity trackingEntity, TEntity values)
         {
-            if (values.SellerId == 0 && UserContext.SellerId !=0)
+            if (values.SellerId == 0 && UserContext.SellerId != 0)
             {
                 values.SellerId = UserContext.SellerId;
             }

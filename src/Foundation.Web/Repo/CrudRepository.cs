@@ -1,8 +1,9 @@
 ﻿using Orderlyze.Service.DL.Base;
 
-namespace Foundation.Web.Repo.Base
+namespace Foundation.Web.Repo
 {
     using Attributes.WebAttributes.Repository;
+    using Foundation.Web.Repo.Base;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -10,7 +11,7 @@ namespace Foundation.Web.Repo.Base
 
     public abstract class CrudRepository<TEntity, TKey> : GetRepository<TEntity, TKey> where TEntity : class
     {
-        protected CrudRepository(DbContextBase<TEntity> dbContext)
+        protected CrudRepository(DbContextBase dbContext)
             : base(dbContext)
         {
         }

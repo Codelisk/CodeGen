@@ -12,6 +12,7 @@
     using Attributes.WebAttributes.Repository;
     using Attributes.WebAttributes.Manager;
     using Orderlyze.Service.DL.Base;
+    using Foundation.Web.Repo;
 
     public abstract class CrudManager<T, TKey, TEntity> : GetManager<T, TKey, TEntity>, ICrudManager<T, TKey>
         where T : class
@@ -22,9 +23,9 @@
 
         private readonly TKey _minimumValue = default;
         private readonly IMapper _mapper;
-        private readonly ICrudRepository<TEntity, TKey> _repository;
+        private readonly CrudRepository<TEntity, TKey> _repository;
 
-        protected CrudManager(ICrudRepository<TEntity, TKey> repository, IMapper mapper, ILogger logger)
+        protected CrudManager(CrudRepository<TEntity, TKey> repository, IMapper mapper, ILogger logger)
             : base(repository, mapper, logger)
         {
             _repository = repository;

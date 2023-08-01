@@ -1,6 +1,7 @@
 ﻿using Attributes.WebAttributes.HttpMethod;
 using Attributes.WebAttributes.Manager;
 using Attributes.WebAttributes.Repository;
+using Foundation.Web.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web
 {
-    [DefaultManager]
-    public class DefaultManager<T, TKey, TEntity> where T : class
+    public class DefaultManager<T, TKey, TEntity> : IDefaultManager<T,TKey,TEntity> where T : class
     {
         private readonly DefaultRepository<T, TKey> _repo;
 

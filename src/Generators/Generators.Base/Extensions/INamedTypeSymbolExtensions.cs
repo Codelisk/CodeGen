@@ -43,6 +43,7 @@ namespace Generators.Base.Extensions
         }
         public static List<IFieldSymbol> GetFieldsWithConstructedFromType(this INamedTypeSymbol classObject, INamedTypeSymbol type)
         {
+            var xyz = classObject.GetAllFields().ToList();
             return classObject.GetAllFields().Where(x => SymbolEqualityComparer.Default.Equals((x.Type as INamedTypeSymbol).ConstructedFrom, type.ConstructedFrom)).ToList();
         }
         public static IPropertySymbol GetPropertyWithAttribute(this INamedTypeSymbol classObject, string attributeName)
@@ -108,10 +109,26 @@ namespace Generators.Base.Extensions
             return symbol.GetMembers()
                          .OfType<IMethodSymbol>();
         }
+        public static List<IMethodSymbol> GetMethodsIncludingBaseTypes(this INamedTypeSymbol symbol) 
+        { 
+            List<IMethodSymbol> methods = new List<IMethodSymbol>();
+            while(symbol is not null)
+            {
+                methods.AddRange(symbol.GetMethods());
+                symbol = symbol.BaseType;
+            }
+
+            return methods;
+        }
+
+        public static IEnumerable<IMethodSymbol> GetMethodsWithAttributesIncludingBaseTypes(this INamedTypeSymbol symbol)
+        {
+            return symbol.GetMethodsIncludingBaseTypes()
+                         .Where(x => x.GetAllAttributes().Any());
+        }
         public static IEnumerable<IMethodSymbol> GetMethodsWithAttributes(this INamedTypeSymbol symbol)
         {
-            return symbol.GetMembers()
-                         .OfType<IMethodSymbol>()
+            return symbol.GetMethods()
                          .Where(x=>x.GetAllAttributes().Any());
         }
         public static string GetReturnTypeName(this ITypeSymbol returnType)

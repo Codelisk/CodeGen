@@ -29,27 +29,27 @@ namespace Controller.Generator.Generators.CodeBuilders
             var result = new List<CodeBuilder?>();
             foreach (var dto in dtos)
             {
-                var manager = context.Manager(dto).GetClassWithMethods();
+                var manager = context.Manager(dto);
                 var baseController = context.Controller(dto);
                 var builder = CreateBuilder();
 
                 var c = Class(builder, dto, manager, baseController, context);
 
-                Methods(c, dto, baseController, manager);
+                Methods(c, dto, baseController, manager.GetClassWithMethods());
 
                 result.Add(builder);
             }
 
             return result;
         }
-        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, ClassWithMethods managerWithMethods, INamedTypeSymbol baseController, GeneratorExecutionContext context)
+        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol manager, INamedTypeSymbol baseController, GeneratorExecutionContext context)
         {
             var constructedBaseController = baseController.ConstructFromDto(dto, context);
             return builder.AddClass(dto.ControllerNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .SetBaseClass(constructedBaseController.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(Constants.ControllerAttribute)
                 .AddConstructor()
-                .BaseConstructorParameterBaseCall(constructedBaseController, dto.ManagerNameFromDto())
+                .BaseConstructorParameterBaseCall(constructedBaseController, (manager, dto.ManagerNameFromDto()))
                 .Class;
         }
         private void Methods(ClassBuilder c, INamedTypeSymbol dto, INamedTypeSymbol baseController, ClassWithMethods repoModel)
@@ -74,7 +74,7 @@ namespace Controller.Generator.Generators.CodeBuilders
 
                 methodBuilder.WithBody((x) =>
                 {
-                    x.AppendLine($"return {repoProperty.Name}.{item.Key.MethodName(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});");
+                    x.AppendLine($"return {repoProperty.Name}.{item.Key.Name}({httpAttribute.GetParametersNamesForHttpMethod(dto)});");
                 });
             }
         }

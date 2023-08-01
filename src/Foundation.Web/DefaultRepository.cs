@@ -1,5 +1,6 @@
 ﻿using Attributes.WebAttributes.HttpMethod;
 using Attributes.WebAttributes.Repository;
+using Foundation.Web.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,8 +11,7 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web
 {
-    [DefaultRepository]
-    public class DefaultRepository<T, TKey> where T : class
+    public class DefaultRepository<T, TKey> : IDefaultRepository<T, TKey> where T : class
     {
         private readonly BaseContext _context;
 

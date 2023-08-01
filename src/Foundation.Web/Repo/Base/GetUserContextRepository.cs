@@ -1,13 +1,14 @@
 ﻿namespace Orderlyze.Service.DL.Base
 {
     using System.Linq;
+    using Foundation.Web.Repo;
     using Foundation.Web.Shared;
 
     public abstract class GetUserContextRepository<TEntity, TKey> : GetRepository<TEntity, TKey>
         where TEntity : SellerBase
     {
         protected IUserContext UserContext;
-        protected GetUserContextRepository(DbContextBase<TEntity> dbContext, IUserContext userContext)
+        protected GetUserContextRepository(DbContextBase dbContext, IUserContext userContext)
             : base(dbContext)
         {
             UserContext = userContext;

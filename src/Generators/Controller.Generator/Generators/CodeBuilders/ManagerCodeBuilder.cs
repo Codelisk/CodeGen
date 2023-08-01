@@ -28,20 +28,20 @@ namespace Controller.Generator.Generators.CodeBuilders
             {
                 var builder = CreateBuilder();
                 var baseManager = context.Manager(dto);
-                Class(builder, dto, null, baseManager, context);
+                Class(builder, dto, context.Repository(dto), baseManager, context);
                 result.Add(builder);
             }
 
             return result;
         }
-        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, ClassWithMethods repoModel, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
+        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
         {
             var constructedBaseManager = baseManager.ConstructFromDto(dto, context);
             return builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(nameof(GeneratedManagerAttribute))
                 .AddConstructor()
-                .BaseConstructorParameterBaseCall(constructedBaseManager, dto.RepositoryNameFromDto())
+                .BaseConstructorParameterBaseCall(constructedBaseManager, (baseRepo, dto.RepositoryNameFromDto()))
                 .Class;
         }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Attributes.WebAttributes.Repository
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = true, Inherited = true)]
     public class DefaultRepositoryAttribute : Attribute
     {
     }

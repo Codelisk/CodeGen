@@ -38,7 +38,7 @@ namespace Controller.Generator.Generators.CodeBuilders
                 .SetBaseClass(constructedBaseRepo.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(nameof(GeneratedRepositoryAttribute))
                 .AddConstructor()
-                .BaseConstructorParameterBaseCall(constructedBaseRepo, dto.DbContextNameFromDto())
+                .BaseConstructorParameterBaseCall(constructedBaseRepo)
                 .Class;
         }
 

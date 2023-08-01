@@ -1,8 +1,9 @@
-﻿namespace Orderlyze.Service.DL.Base
+﻿namespace Foundation.Web.Repo
 {
+    using Attributes.WebAttributes.Database;
     using Microsoft.EntityFrameworkCore;
 
-    public abstract class DbContextBase<T> : DbContext where T : class
+    public abstract class DbContextBase : DbContext
     {
         protected DbContextBase(DbContextOptions options) : base(options)
         {
@@ -13,7 +14,7 @@
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {        
+        {
         }
     }
 }

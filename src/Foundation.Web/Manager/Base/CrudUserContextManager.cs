@@ -8,16 +8,17 @@
     using Foundation.Web.Repo.Base;
     using Attributes.WebAttributes.Repository;
     using Attributes.WebAttributes.Manager;
+    using Attributes.WebAttributes.Dto;
+    using Foundation.Web.Repo;
 
-    public abstract class CrudUserContextManager<T, TKey, TEntity, TRepo> : CrudManager<T, TKey, TEntity>
+    public abstract class CrudUserContextManager<T, TKey, TEntity> : CrudManager<T, TKey, TEntity>
         where T : class
         where TEntity : class
         where TKey : IComparable
-        where TRepo : ICrudRepository<TEntity, TKey>
     {
         //public  ISellerManager SellerManager;
         protected CrudUserContextManager(
-            TRepo repository,
+            CrudRepository<TEntity, TKey> repository,
             IMapper mapper,
             ILogger logger
             //,ISellerManager sellerManager

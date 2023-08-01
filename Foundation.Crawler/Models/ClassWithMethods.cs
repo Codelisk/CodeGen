@@ -13,7 +13,7 @@ namespace Foundation.Crawler.Models
         {
             Class = c;
 
-            Methods = c.GetMethodsWithAttributes().ToList();
+            Methods = c.GetMethodsWithAttributesIncludingBaseTypes().ToList();
         }
 
         public INamedTypeSymbol Class { get; set; }

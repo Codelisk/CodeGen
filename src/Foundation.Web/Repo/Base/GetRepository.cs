@@ -3,11 +3,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Foundation.Web.Repo;
     using Microsoft.EntityFrameworkCore;
 
     public abstract class GetRepository<TEntity, TKey> : DbRepositoryBase<TEntity> where TEntity : class
     {
-        protected GetRepository(DbContextBase<TEntity> dbContext)
+        protected GetRepository(DbContextBase dbContext)
             : base(dbContext)
         {
         }

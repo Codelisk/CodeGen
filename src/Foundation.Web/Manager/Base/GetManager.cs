@@ -8,16 +8,17 @@ namespace Foundation.Web.Manager.Base
     using Attributes.WebAttributes.HttpMethod;
     using Attributes.WebAttributes.Repository;
     using AutoMapper;
+    using Foundation.Web.Repo;
     using Foundation.Web.Repo.Base;
     using Microsoft.Extensions.Logging;
 
-    public abstract class GetManager<T, TKey, TEntity> : BaseManager<IGetRepository<TEntity, TKey>>
+    public abstract class GetManager<T, TKey, TEntity> : BaseManager<CrudRepository<TEntity, TKey>>
         where T : class
         where TEntity : class
     {
         private readonly IMapper _mapper;
 
-        protected GetManager(IGetRepository<TEntity, TKey> repository, IMapper mapper, ILogger logger)
+        protected GetManager(CrudRepository<TEntity, TKey> repository, IMapper mapper, ILogger logger)
             : base(repository, mapper, logger)
         {
             _mapper = mapper;

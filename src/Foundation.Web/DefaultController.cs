@@ -1,5 +1,6 @@
 ﻿using Attributes.WebAttributes.Repository;
 using Foundation.Dtos.Base;
+using Foundation.Web.Interfaces;
 using Foundation.Web.Manager.Base;
 using Foundation.Web.Repo.Base;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,9 @@ namespace Foundation.Web
         where TEntity : class
         where TKey : IComparable
     {
-        protected readonly DefaultManager<T, TKey, TEntity> _manager;
+        protected readonly IDefaultManager<T, TKey, TEntity> _manager;
 
-        public DefaultController(DefaultManager<T, TKey, TEntity> manager)
+        public DefaultController(IDefaultManager<T, TKey, TEntity> manager)
         {
             _manager = manager;
         }
