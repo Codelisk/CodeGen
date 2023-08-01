@@ -3,17 +3,23 @@ using Attributes.GeneratorAttributes;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Models;
+using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
 using System;
+using WebGenerator.Base;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Controller.Generator.Generators.CodeBuilders
+namespace WebRepositories.Generator.CodeBuilders
 {
-    public class RepositoryCodeBuilder : BaseControllerCodeBuilder
+    public class RepositoryCodeBuilder : BaseCodeBuilder
     {
+        public RepositoryCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
+        {
+        }
+
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             var dtos = context.Dtos().ToList();

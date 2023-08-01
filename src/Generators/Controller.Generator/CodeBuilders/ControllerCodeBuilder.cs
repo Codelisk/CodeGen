@@ -6,6 +6,7 @@ using CodeGenHelpers.Internals;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;
 using Foundation.Crawler.Models;
+using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using System;
@@ -14,10 +15,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Controller.Generator.Generators.CodeBuilders
+namespace Controller.Generator.CodeBuilders
 {
-    public class ControllerCodeBuilder : BaseControllerCodeBuilder
+    public class ControllerCodeBuilder : BaseCodeBuilder
     {
+        public ControllerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
+        {
+        }
+
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             var dtos = context.Dtos().ToList();

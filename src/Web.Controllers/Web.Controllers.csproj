@@ -15,6 +15,9 @@
     </ProjectReference>
     <ProjectReference Include="..\Generators\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\Shared\Shared.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\Web\WebDbContext.Generator\WebDbContext.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"  />
+    <ProjectReference Include="..\Web\WebManager.Generator\WebManager.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"  />
+    <ProjectReference Include="..\Web\WebRepositories.Generator\WebRepositories.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"  />
   </ItemGroup>
 
 

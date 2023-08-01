@@ -6,17 +6,23 @@ using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;
 using Foundation.Crawler.Models;
+using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
 using System;
+using WebGenerator.Base;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Controller.Generator.Generators.CodeBuilders
+namespace WebManager.Generator.CodeBuilders
 {
-    public class ManagerCodeBuilder : BaseControllerCodeBuilder
+    public class ManagerCodeBuilder : BaseCodeBuilder
     {
+        public ManagerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
+        {
+        }
+
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             var dtos = context.Dtos().ToList();
@@ -40,7 +46,7 @@ namespace Controller.Generator.Generators.CodeBuilders
         {
             var constructedBaseManager = baseManager.ConstructFromDto(dto, context);
             var result = builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
-                .AddInterface("I"+ dto.ManagerNameFromDto())
+                .AddInterface("I" + dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(nameof(GeneratedManagerAttribute))
                 .AddConstructor()

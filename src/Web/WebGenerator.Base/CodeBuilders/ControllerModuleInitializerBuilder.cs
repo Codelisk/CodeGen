@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Controller.Generator.Generators.CodeBuilders
+namespace WebGenerator.Base.CodeBuilders
 {
     public class ControllerModuleInitializerBuilder : ClassServicesModuleInitializerBuilder
     {

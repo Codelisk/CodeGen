@@ -5,16 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Foundation.Crawler\Foundation.Crawler.csproj" />
     <ProjectReference Include="..\..\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\..\Foundation\Foundation.csproj" />
+    <ProjectReference Include="..\..\Generators\Generators.Base\Generators.Base.csproj" />
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
-    <ProjectReference Include="..\..\Web\WebGenerator.Base\WebGenerator.Base.csproj" />
-    <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
 
   <ItemGroup>

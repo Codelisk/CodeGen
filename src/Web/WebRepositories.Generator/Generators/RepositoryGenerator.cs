@@ -1,18 +1,19 @@
-﻿using Controller.Generator.Generators.CodeBuilders;
-using Generators.Base.Generators.Base;
+﻿using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using WebRepositories.Generator.CodeBuilders;
 
-namespace Controller.Generator.Generators
+namespace WebRepositories.Generator.Generators
 {
     [Generator]
     public class RepositoryGenerator : BaseGenerator
     {
         public override void Execute(GeneratorExecutionContext context)
         {
-            var repositoryBuilder = new RepositoryCodeBuilder().Get(context);
+            var repositoryBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
             AddSource(context, "Repositories", repositoryBuilder);
         }
     }

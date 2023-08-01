@@ -1,4 +1,5 @@
-﻿using Controller.Generator.Generators.CodeBuilders;
+﻿
+using Controller.Generator.CodeBuilders;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using System;
@@ -12,7 +13,7 @@ namespace Controller.Generator.Generators
     {
         public override void Execute(GeneratorExecutionContext context)
         {
-            var codeBuilder = new ControllerCodeBuilder().Get(context);
+            var codeBuilder = new ControllerCodeBuilder(context.Compilation.AssemblyName).Get(context);
             AddSource(context, "Controller", codeBuilder);
         }
     }

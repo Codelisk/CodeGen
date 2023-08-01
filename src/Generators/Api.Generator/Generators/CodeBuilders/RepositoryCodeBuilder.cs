@@ -26,7 +26,7 @@ namespace Api.Generator.Generators.CodeBuilders
         }
         public List<CodeBuilder> GenerateRepositories(GeneratorExecutionContext context, List<CodeBuilder> refitApiCodeBuilder)
         {
-            var baseRepo = context.DefaultRepository();
+            var baseRepo = context.DefaultApiRepository();
 
             var result = new List<CodeBuilder>();
 

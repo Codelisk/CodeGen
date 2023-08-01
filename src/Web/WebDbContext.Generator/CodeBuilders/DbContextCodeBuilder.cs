@@ -5,6 +5,7 @@ using Attributes.WebAttributes.Database;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Models;
+using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
@@ -12,10 +13,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Controller.Generator.Generators.CodeBuilders
+namespace WebDbContext.Generator.CodeBuilders
 {
-    public class DbContextCodeBuilder : BaseControllerCodeBuilder
+    public class DbContextCodeBuilder : BaseCodeBuilder
     {
+        public DbContextCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
+        {
+        }
+
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             var dtos = context.Dtos().ToList();
@@ -25,7 +30,7 @@ namespace Controller.Generator.Generators.CodeBuilders
         private List<CodeBuilder?> Build(GeneratorExecutionContext context, IEnumerable<INamedTypeSymbol> dtos)
         {
             var result = new List<CodeBuilder?>();
-            foreach (var groupedDtos in dtos.GroupBy(x=>x.GetAttribute<DtoAttribute>().GetFirstConstructorArgument()))
+            foreach (var groupedDtos in dtos.GroupBy(x => x.GetAttribute<DtoAttribute>().GetFirstConstructorArgument()))
             {
                 var builder = CreateBuilder();
                 var baseContext = context.BaseContext();
