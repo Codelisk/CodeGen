@@ -44,7 +44,22 @@ namespace Generators.Base.Extensions
         public static List<IFieldSymbol> GetFieldsWithConstructedFromType(this INamedTypeSymbol classObject, INamedTypeSymbol type)
         {
             var xyz = classObject.GetAllFields().ToList();
-            return classObject.GetAllFields().Where(x => SymbolEqualityComparer.Default.Equals((x.Type as INamedTypeSymbol).ConstructedFrom, type.ConstructedFrom)).ToList();
+            return classObject.GetAllFields().Where(x => {
+                if(SymbolEqualityComparer.Default.Equals((x.Type as INamedTypeSymbol).ConstructedFrom, type.ConstructedFrom))
+                {
+                    return true;
+                }
+
+                foreach (var i in type.ConstructedFrom.AllInterfaces)
+                {
+                    if(SymbolEqualityComparer.Default.Equals((x.Type as INamedTypeSymbol).ConstructedFrom, i.ConstructedFrom))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+                }).ToList();
         }
         public static IPropertySymbol GetPropertyWithAttribute(this INamedTypeSymbol classObject, string attributeName)
         {

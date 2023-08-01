@@ -22,7 +22,7 @@ namespace Generators.Base.CodeBuilders
 
             foreach (var codeBuilder in codeBuilders)
             {
-                foreach (var c in codeBuilder.GetClasses())
+                foreach (var c in codeBuilder.GetClasses(context))
                 {
                     Services.Add(("AddSingleton", c.Interfaces.First().Name, c.Name));
                 }

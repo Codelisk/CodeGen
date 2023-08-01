@@ -10,11 +10,12 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web
 {
+    [DefaultManager]
     public class DefaultManager<T, TKey, TEntity> : IDefaultManager<T,TKey,TEntity> where T : class
     {
-        private readonly DefaultRepository<T, TKey> _repo;
+        private readonly IDefaultRepository<T, TKey> _repo;
 
-        public DefaultManager(DefaultRepository<T, TKey> Repo)
+        public DefaultManager(IDefaultRepository<T, TKey> Repo)
         {
             _repo = Repo;
         }

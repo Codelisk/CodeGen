@@ -1,4 +1,5 @@
-﻿using Attributes.GeneratorAttributes;
+﻿using Attributes.GeneralAttributes.Registration;
+using Attributes.GeneratorAttributes;
 using Attributes.WebAttributes.HttpMethod;
 using Attributes.WebAttributes.Repository;
 using CodeGenHelpers;
@@ -6,6 +7,7 @@ using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;
 using Foundation.Crawler.Models;
 using Generators.Base.Extensions;
+using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -34,15 +36,18 @@ namespace Controller.Generator.Generators.CodeBuilders
 
             return result;
         }
-        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
+        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
         {
             var constructedBaseManager = baseManager.ConstructFromDto(dto, context);
-            return builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
+            var result = builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
+                .AddInterface("I"+ dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(nameof(GeneratedManagerAttribute))
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseManager, (baseRepo, dto.RepositoryNameFromDto()))
                 .Class;
+
+            return builder.GenerateInterface<RegisterTransient>(context).Classes;
         }
 
     }

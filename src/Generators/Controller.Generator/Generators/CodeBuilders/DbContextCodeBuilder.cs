@@ -1,10 +1,12 @@
 ﻿using Attributes;
+using Attributes.GeneralAttributes.Registration;
 using Attributes.GeneratorAttributes;
 using Attributes.WebAttributes.Database;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Models;
 using Generators.Base.Extensions;
+using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -33,7 +35,7 @@ namespace Controller.Generator.Generators.CodeBuilders
 
             return result;
         }
-        private ClassBuilder Class(CodeBuilder builder, IGrouping<string, INamedTypeSymbol> dtos, ClassWithMethods repoModel, INamedTypeSymbol baseContext, GeneratorExecutionContext context)
+        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IGrouping<string, INamedTypeSymbol> dtos, ClassWithMethods repoModel, INamedTypeSymbol baseContext, GeneratorExecutionContext context)
         {
             var result = builder.AddClass(dtos.Key).WithAccessModifier(Accessibility.Public)
                 .AddAttribute(nameof(GeneratedDbContextAttribute))
@@ -46,7 +48,7 @@ namespace Controller.Generator.Generators.CodeBuilders
                 result.AddProperty(dto.Name.GetParameterName(), Accessibility.Public).SetType($"DbSet<{dto.Name}").UseAutoProps();
             }
 
-            return result;
+            return builder.GenerateInterface<RegisterTransient>(context).Classes;
         }
 
     }

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web.Interfaces
 {
-    [DefaultManager]
     public interface IDefaultManager<T, TKey, TEntity> where T : class
     {
         [Delete]

@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Controller.Generator.Generators
 {
-    [Generator]
     public class MainControllerGenerator : BaseGenerator
     {  
         public override void Execute(GeneratorExecutionContext context)

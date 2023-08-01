@@ -33,10 +33,18 @@ namespace Generators.Base.Extensions
             {
                 var typeName = parameter.Type.Name;
                 string name = parameter.Type.Name.GetParameterName();
-                if (replaceTypeName is not null && parameter.Type.Name.Equals(replaceTypeName.Value.Item1.Name))
+                if (replaceTypeName is not null)
                 {
-                    typeName = typeName.Replace(parameter.Type.Name, replaceTypeName.Value.Item2);
-                    name = replaceTypeName.Value.Item2.GetParameterName();
+                    if (parameter.Type.Name.Equals(replaceTypeName.Value.Item1.Name))
+                    {
+                        typeName = typeName.Replace(parameter.Type.Name, replaceTypeName.Value.Item2);
+                        name = replaceTypeName.Value.Item2.GetParameterName();
+                    }
+                    else if (parameter.Type.Name.Equals("I" + replaceTypeName.Value.Item1.Name))
+                    {
+                        typeName = "I" + typeName.Replace(parameter.Type.Name, replaceTypeName.Value.Item2);
+                        name = replaceTypeName.Value.Item2.GetParameterName();
+                    }
                 }
 
                 typeParameters.Add(typeName, name);

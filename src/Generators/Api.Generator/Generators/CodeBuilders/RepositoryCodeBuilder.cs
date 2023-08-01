@@ -1,4 +1,5 @@
-﻿using Attributes.WebAttributes.Repository.Base;
+﻿using Attributes.GeneralAttributes.Registration;
+using Attributes.WebAttributes.Repository.Base;
 using CodeGenHelpers;
 using CodeGenHelpers.Internals;
 using Foundation.Crawler.Crawlers;
@@ -52,9 +53,7 @@ namespace Api.Generator.Generators.CodeBuilders
                     });
                 }
 
-                result.Add(codeBuilder.GetClasses().First().GenerateInterface(codeBuilder.Namespace));
-
-                repoClass.AddInterface("I" + repoName);
+                codeBuilder.GenerateInterface<RegisterSingleton>(context);
 
                 result.Add(codeBuilder);
 

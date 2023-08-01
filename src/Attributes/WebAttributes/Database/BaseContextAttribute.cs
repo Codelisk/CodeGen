@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Attributes.WebAttributes.Database
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = true, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class BaseContextAttribute : Attribute
     {
     }
