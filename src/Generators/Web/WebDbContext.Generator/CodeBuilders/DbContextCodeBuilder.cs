@@ -34,13 +34,13 @@ namespace WebDbContext.Generator.CodeBuilders
             {
                 var builder = CreateBuilder();
                 var baseContext = context.BaseContext();
-                Class(builder, groupedDtos, null, baseContext, context);
+                Class(builder, groupedDtos, baseContext, context);
                 result.Add(builder);
             }
 
             return result;
         }
-        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IGrouping<string, INamedTypeSymbol> dtos, ClassWithMethods repoModel, INamedTypeSymbol baseContext, GeneratorExecutionContext context)
+        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IGrouping<string, INamedTypeSymbol> dtos, INamedTypeSymbol baseContext, GeneratorExecutionContext context)
         {
             var result = builder.AddClass(dtos.Key).WithAccessModifier(Accessibility.Public)
                 .AddAttribute(nameof(GeneratedDbContextAttribute))
@@ -53,7 +53,7 @@ namespace WebDbContext.Generator.CodeBuilders
                 result.AddProperty(dto.Name.GetParameterName(), Accessibility.Public).SetType($"DbSet<{dto.Name}").UseAutoProps();
             }
 
-            return builder.GenerateInterface<RegisterTransient>(context).Classes;
+            return builder.Classes;
         }
 
     }
