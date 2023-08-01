@@ -30,7 +30,6 @@ namespace Generators.Base.CodeBuilders
                 {
                     foreach (var c in codeBuilder.GetClasses(context))
                     {
-                        var test = c.GetAttributes();
                         var registerAttribute = c.GetAttributes().FirstOrDefault(x => nameof(RegisterTransient).Equals(x.AttributeClass.Name));
 
                         if (registerAttribute is not null)
@@ -38,11 +37,11 @@ namespace Generators.Base.CodeBuilders
                             var type = registerAttribute.GetFirstConstructorArgumentAsTypedConstant().Value as Type;
                             if (type is not null)
                             {
-                                Services.Add((null, type.Name, c.Name));
+                                Services.Add(("AddTransient", type.Name, c.Name));
                             }
                             else
                             {
-                                Services.Add((null, c.Interfaces.FirstOrDefault()?.Name, c.Name));
+                                Services.Add(("AddTransient", c.Interfaces.FirstOrDefault()?.Name, c.Name));
                             }
                         }
                     }
@@ -55,6 +54,33 @@ namespace Generators.Base.CodeBuilders
             }
 
             return base.Get(context);
+        }
+        private void Add<TAttribute>(INamedTypeSymbol c) where TAttribute : BaseRegisterAttribute
+        {
+            var attribute = c.GetAttributes().FirstOrDefault(x => typeof(TAttribute).Name.Equals(x.AttributeClass.Name));
+            string implementationType = "AddSingleton";
+            if(attribute is RegisterTransient)
+            {
+                implementationType = "AddTransient";
+            }
+            else if(attribute is RegisterSingleton)
+            {
+
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            var type = attribute.GetFirstConstructorArgumentAsTypedConstant().Value as Type;
+            if (type is not null)
+            {
+                Services.Add((implementationType, type.Name, c.Name));
+            }
+            else
+            {
+                Services.Add((implementationType, c.Interfaces.FirstOrDefault()?.Name, c.Name));
+            }
         }
     }
 }

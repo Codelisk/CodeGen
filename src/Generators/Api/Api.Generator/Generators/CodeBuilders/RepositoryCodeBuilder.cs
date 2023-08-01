@@ -1,5 +1,5 @@
 ﻿using Attributes.GeneralAttributes.Registration;
-using Attributes.WebAttributes.Repository.Base;
+using Attributes.WebAttributes.HttpMethod;
 using CodeGenHelpers;
 using CodeGenHelpers.Internals;
 using Foundation.Crawler.Crawlers;

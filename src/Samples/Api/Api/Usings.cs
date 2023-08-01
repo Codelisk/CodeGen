@@ -8,3 +8,4 @@ global using Polly;
 global using Microsoft.Extensions.Logging;
 global using Foundation.Dtos;
 global using Foundation.Api.Base;
+global using Attributes.GeneralAttributes.Registration;
