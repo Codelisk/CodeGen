@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Text;
 using Generators.Base;
 using System.Xml.Linq;
-using Attributes.WebAttributes.Repository.Base;
 using Foundation.Crawler.Crawlers;
 using Generators.Base.Extensions.Common;
 using Generators.Base.Extensions;
 using Foundation.Crawler.Extensions;
 using Attributes.WebAttributes.Repository;
 using Foundation.Dtos.Base;
+using Attributes.WebAttributes.HttpMethod;
 
 namespace Controller.Generator
 {
