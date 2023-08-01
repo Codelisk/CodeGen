@@ -12,8 +12,8 @@ namespace WebDbContext.Generator.Generators
     public class DbContextGenerator : BaseGenerator
     {
         public override void Execute(GeneratorExecutionContext context)
-        {
-            Debugger.Launch();
+        {  
+            //Debugger.Launch(); 
             var dbContextCodeBuilder = new DbContextCodeBuilder(context.Compilation.AssemblyName).Get(context);
             AddSource(context, "DbContexts", dbContextCodeBuilder);
         }

@@ -42,15 +42,12 @@ namespace WebDbContext.Generator.CodeBuilders
         }
         private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IGrouping<string, INamedTypeSymbol> dtos, INamedTypeSymbol baseContext, GeneratorExecutionContext context)
         {
-            var result = builder.AddClass(dtos.Key).WithAccessModifier(Accessibility.Public)
-                .AddAttribute(nameof(GeneratedDbContextAttribute))
-                .AddConstructor()
-                .WithBaseCall(baseContext.InstanceConstructors.First())
-                .Class;
+            var result = builder.AddClass(dtos.Key).WithAccessModifier(Accessibility.Public).AddNamespaceImport("Microsoft.EntityFrameworkCore")
+                .AddAttribute(nameof(GeneratedDbContextAttribute));
 
             foreach (var dto in dtos)
             {
-                result.AddProperty(dto.Name.GetParameterName(), Accessibility.Public).SetType($"DbSet<{dto.Name}").UseAutoProps();
+                result.AddProperty(dto.Name.GetParameterName(), Accessibility.Public).SetType($"DbSet<{dto.Name}>").UseAutoProps();
             }
 
             return builder.Classes;
