@@ -10,10 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" />
-    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
-    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" />
-    <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" />
-    <ProjectReference Include="..\..\Common\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj"  OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj"  OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj"  OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\..\Common\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 </Project>
