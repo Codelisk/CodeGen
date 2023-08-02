@@ -11,6 +11,7 @@ using System;
 using WebGenerator.Base;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace WebRepositories.Generator.CodeBuilders
 {
