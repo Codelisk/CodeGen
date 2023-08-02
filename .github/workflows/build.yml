@@ -34,7 +34,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-     - name: Clone Codelisk.NugetPublish
+    - name: Clone Codelisk.NugetPublish
       run: git clone --recursive https://github.com/Codelisk/Codelisk.NugetPublish.git
       
     - name: Checkout
