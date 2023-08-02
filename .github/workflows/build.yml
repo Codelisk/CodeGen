@@ -48,7 +48,9 @@ jobs:
           dotnet-version: '7.0.x'
 
     - name: Build
-      run: dotnet run --project src/Submodules/Codelisk.NugetPublish/build/Codelisk.NugetPublish.csproj
+      run: |
+      cd src/Submodules/Codelisk.NugetPublish/build
+      dotnet run --project src/Submodules/Codelisk.NugetPublish/build/Codelisk.NugetPublish.csproj
 
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
