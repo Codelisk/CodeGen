@@ -35,7 +35,7 @@ jobs:
 
     steps:
     - name: Clone Codelisk.NugetPublish
-      run: git clone --recursive https://github.com/Codelisk/Codelisk.NugetPublish.git
+      run: git clone --recursive https://github.com/Codelisk/Codelisk.NugetPublish.git src/Submodules/Codelisk.NugetPublish/build
       
     - name: Checkout
       uses: actions/checkout@v2
