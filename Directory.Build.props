@@ -1,10 +1,25 @@
 <Project>
 <PropertyGroup>
+<Authors>Codelisk</Authors>
   <TargetFramework>net8.0</TargetFramework>
   <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release</Configurations>
+	<Description>CodeGen</Description>
 	<GeneratorTargetFramework>netstandard2.0</GeneratorTargetFramework>
+	<Product>$(AssemblyName) ($(TargetFramework))</Product>
+	<RepositoryType>git</RepositoryType>
+	<CI Condition="'$(GITHUB_ACTIONS)' == 'true'">true</CI>
+        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
+  
+   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+        <IncludeSource>True</IncludeSource>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PublishRepositoryUrl>True</PublishRepositoryUrl>
+        <EmbedUntrackedSources>True</EmbedUntrackedSources>
+    </PropertyGroup>
 </Project>
