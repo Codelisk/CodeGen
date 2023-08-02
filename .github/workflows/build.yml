@@ -35,7 +35,10 @@ jobs:
 
     steps:
     - name: Clone Codelisk.NugetPublish
-      run: git clone --recursive https://github.com/Codelisk/Codelisk.NugetPublish.git src/Submodules/Codelisk.NugetPublish/build
+      run: git clone --recursive https://github.com/Codelisk/Codelisk.NugetPublish.git src/Submodules/Codelisk.NugetPublish
+      
+    - name: List Directory Contents
+      run: ls src/Submodules/Codelisk.NugetPublish
       
     - name: Checkout
       uses: actions/checkout@v2
@@ -50,7 +53,7 @@ jobs:
     - name: Build
       run: |
         cd src/Submodules/Codelisk.NugetPublish/build
-        dotnet run --project src/Submodules/Codelisk.NugetPublish/build/Codelisk.NugetPublish.csproj
+        dotnet run --project Codelisk.NugetPublish.csproj
 
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
