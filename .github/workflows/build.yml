@@ -47,9 +47,6 @@ jobs:
       with:
           dotnet-version: '7.0.x'
 
-    - name: Add .NET Workloads
-      run: dotnet workload install maui-ios maui-android maui-maccatalyst maui-windows
-
     - name: Build
       run: dotnet run --project src/Submodules/Codelisk.NugetPublish/build/Codelisk.NugetPublish.csproj
 
