@@ -42,18 +42,16 @@ namespace WebManager.Generator.CodeBuilders
 
             return result;
         }
-        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
+        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
         {
             var constructedBaseManager = baseManager.ConstructFromDto(dto, context);
-            var result = builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
+            return builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(nameof(GeneratedManagerAttribute))
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseManager, (baseRepo, dto.RepositoryNameFromDto()))
                 .Class;
-
-            return builder.GenerateInterface<RegisterTransient>(context).Classes;
         }
 
     }

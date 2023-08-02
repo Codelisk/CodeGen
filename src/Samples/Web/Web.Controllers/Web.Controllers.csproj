@@ -13,10 +13,11 @@
     <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
     <ProjectReference Include="..\..\..\Generators\Web\Controller.Generator\Controller.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\..\Generators\Web\WebManager.Contract.Generator\WebManager.Contract.Generator.csproj" />
     <ProjectReference Include="..\..\..\Generators\Web\WebManager.Generator\WebManager.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\..\..\Generators\Web\WebRepositories.Contract.Generator\WebRepositories.Contract.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <ProjectReference Include="..\..\..\Generators\Web\WebRepositories.Contract.Generator\WebRepositories.Contract.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\..\Generators\Web\WebRepositories.Generator\WebRepositories.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\Foundation.Web\Foundation.Web.csproj" />
+    <ProjectReference Include="..\Foundation.Web\Foundation.Web.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
   </ItemGroup>
 
   <!--<ItemGroup>-->
