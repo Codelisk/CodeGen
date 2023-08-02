@@ -10,6 +10,11 @@ namespace Generators.Base.Helpers
 {
     public static class InterfaceGenerator
     {
+        public static CodeBuilder GenerateSeperateInterfaceCodeBuilder<TRegisterAttribute>(this CodeBuilder c, GeneratorExecutionContext context) where TRegisterAttribute : BaseRegisterAttribute
+        {
+            return c.GetClasses(context).Last().GenerateInterface(CodeBuilder.Create(context.Compilation.AssemblyName), context);
+        }
+
         public static CodeBuilder GenerateInterface<TRegisterAttribute>(this CodeBuilder codeBuilder, GeneratorExecutionContext context) where TRegisterAttribute : BaseRegisterAttribute
         {
             var lastClass = codeBuilder.Classes.Last();

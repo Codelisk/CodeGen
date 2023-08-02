@@ -40,19 +40,15 @@ namespace WebRepositories.Generator.CodeBuilders
 
             return result;
         }
-        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepository, GeneratorExecutionContext context)
+        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepository, GeneratorExecutionContext context)
         {
             var constructedBaseRepo = baseRepository.ConstructFromDto(dto, context);
-            var result = builder.AddClass(dto.RepositoryNameFromDto()).WithAccessModifier(Accessibility.Public)
+            return builder.AddClass(dto.RepositoryNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .SetBaseClass(constructedBaseRepo.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(nameof(GeneratedRepositoryAttribute))
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseRepo)
                 .Class;
-
-
-            return builder.GenerateInterface<RegisterTransient>(context).Classes;
         }
-
     }
 }
