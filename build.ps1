@@ -1,2 +1,2 @@
-dotnet run --project build/ShinyBuild.csproj -- $args
+dotnet run --project src/Submodules/Codelisk.NugetPublish/build/Codelisk.NugetPublish.csproj -- $args
 exit $LASTEXITCODE;

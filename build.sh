@@ -1,1 +1,1 @@
-dotnet run --project ./build/ShinyBuild.csproj -- "$@"
+dotnet run --project ./src/Submodules/Codelisk.NugetPublish/build/Codelisk.NugetPublish.csproj -- "$@"

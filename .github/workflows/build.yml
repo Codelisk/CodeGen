@@ -48,7 +48,7 @@ jobs:
       run: dotnet workload install maui-ios maui-android maui-maccatalyst maui-windows
 
     - name: Build
-      run: dotnet run --project build/ShinyBuild.csproj
+      run: dotnet run --project src/Submodules/Codelisk.NugetPublish/build/Codelisk.NugetPublish.csproj
 
     - name: Publish Artifacts
       uses: actions/upload-artifact@v2
