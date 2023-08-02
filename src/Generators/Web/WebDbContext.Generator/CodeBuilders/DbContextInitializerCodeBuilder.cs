@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebDbContext.Generator.CodeBuilders
 {
-    public class DbContextInitializerCodeBuilder : BaseModuleInitializerBuilder
+    public class DbContextInitializerCodeBuilder : ClassServicesModuleInitializerBuilder
     {
         public DbContextInitializerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {

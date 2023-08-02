@@ -8,7 +8,7 @@ using System.Text;
 
 namespace WebManager.Generator.CodeBuilders
 {
-    public class ManagerInitializerCodeBuilder : BaseModuleInitializerBuilder
+    public class ManagerInitializerCodeBuilder : ClassServicesModuleInitializerBuilder
     {
         public ManagerInitializerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {

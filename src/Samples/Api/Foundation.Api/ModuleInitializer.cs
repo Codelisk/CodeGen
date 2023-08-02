@@ -10,7 +10,7 @@ using Foundation.Api.Services.Base;
 
 namespace Foundation.Api
 {
-    public static class ModuleInitializer
+    public static partial class ModuleInitializer
     {
         public static void SetupOrderlyzeApi(this IServiceCollection services)
         {

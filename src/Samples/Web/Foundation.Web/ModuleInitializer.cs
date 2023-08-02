@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web
 {
-    public static class ModuleInitializer
+    public static partial class ModuleInitializer
     {
         public static void AddFoundationWeb(this IServiceCollection Services)
         {

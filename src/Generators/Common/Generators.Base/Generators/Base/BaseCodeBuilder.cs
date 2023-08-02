@@ -16,9 +16,16 @@ namespace Generator.Foundation.Generators.Base
             this.CodeBuilderNamespace = codeBuilderNamespace;
         }
         public abstract List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null);
-        public CodeBuilder CreateBuilder()
+        public CodeBuilder CreateBuilder(string ns = null)
         {
-            return CodeBuilder.Create(CodeBuilderNamespace);
+            if(ns is null)
+            {
+                return CodeBuilder.Create(CodeBuilderNamespace);
+            }
+            else
+            {
+                return CodeBuilder.Create(ns);
+            }
         }
     }
 }

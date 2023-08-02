@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web.Interfaces
 {
-    public interface IDefaultManager<T, TKey, TEntity> where T : class
+    public interface IDefaultManager<TDto, TKey, TEntity> where TDto : class where TEntity : class
     {
         [Delete]
-        Task Delete(T t);
+        Task Delete(TDto t);
         [Get]
-        Task<T> Get(TKey id);
+        Task<TDto> Get(TKey id);
         [GetAll]
-        Task<List<T>> GetAll();
+        Task<List<TDto>> GetAll();
         [Save]
-        Task<T> Save(T t);
+        Task<TDto> Save(TDto t);
     }
 }

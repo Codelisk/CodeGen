@@ -14,7 +14,7 @@ namespace Controller.Generator.Generators
         public override void Execute(GeneratorExecutionContext context)
         {
             var codeBuilder = new ControllerCodeBuilder(context.Compilation.AssemblyName).Get(context);
-            var initializerBuilder = new ControllerInitializerBuilder(context.Compilation.AssemblyName).Get(context);
+            var initializerBuilder = new ControllerInitializerBuilder(context.Compilation.AssemblyName).Get(context, codeBuilder);
             AddSource(context, "Controller", codeBuilder);
             AddSource(context, "", initializerBuilder);
         }

@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web.Interfaces
 {
-    public interface IDefaultRepository<T, TKey> where T : class
+    public interface IDefaultRepository<TEntity, TKey> where TEntity : class
     {
         [Delete]
-        Task Delete(T t);
+        Task Delete(TEntity t);
         [Get]
-        Task<T> Get(TKey id);
+        Task<TEntity> Get(TKey id);
         [GetAll]
-        Task<List<T>> GetAll();
+        Task<List<TEntity>> GetAll();
         [Save]
-        Task<T> Save(T t);
+        Task<TEntity> Save(TEntity t);
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebRepositories.Generator.CodeBuilders
 {
-    public class RepositoryInitializerCodeBuilder : BaseModuleInitializerBuilder
+    public class RepositoryInitializerCodeBuilder : ClassServicesModuleInitializerBuilder
     {
         public RepositoryInitializerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {

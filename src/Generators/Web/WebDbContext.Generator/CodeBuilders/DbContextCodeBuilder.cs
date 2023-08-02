@@ -32,8 +32,8 @@ namespace WebDbContext.Generator.CodeBuilders
             var result = new List<CodeBuilder?>();
             foreach (var groupedDtos in dtos.GroupBy(x => x.GetAttribute<DtoAttribute>().GetFirstConstructorArgument()))
             {
-                var builder = CreateBuilder();
                 var baseContext = context.BaseContext();
+                var builder = CreateBuilder(baseContext.ContainingNamespace.ToString());
                 Class(builder, groupedDtos, baseContext, context);
                 result.Add(builder);
             }

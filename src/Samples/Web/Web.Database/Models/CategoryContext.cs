@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Web.Database.Models
 {
-    public class CategoryContext : BaseContext<CategoryDto>
+    public class CategoryContext : BaseContext
     {
-        public CategoryContext(DbContextOptions<BaseContext<CategoryDto>> options)
+        public CategoryContext(DbContextOptions<BaseContext> options)
         : base(options)
         {
         }

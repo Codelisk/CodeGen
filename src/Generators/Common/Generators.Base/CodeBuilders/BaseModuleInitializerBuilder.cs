@@ -13,7 +13,7 @@ namespace Generators.Base.CodeBuilders
         {
         }
         public abstract string ModuleName { get; set; }
-        public virtual List<(string serviceUsage, string serviceType, string serviceImplementation)> Services { get; set; }
+        public virtual List<(string serviceUsage, string serviceType, string serviceImplementation)> Services { get; set; } = new List<(string serviceUsage, string serviceType, string serviceImplementation)>();
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             var builder = CreateBuilder();

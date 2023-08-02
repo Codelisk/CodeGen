@@ -12,10 +12,9 @@ namespace WebDbContext.Generator.Generators
     public class DbContextGenerator : BaseGenerator
     {
         public override void Execute(GeneratorExecutionContext context)
-        {  
-            //Debugger.Launch(); 
+        {   
             var dbContextCodeBuilder = new DbContextCodeBuilder(context.Compilation.AssemblyName).Get(context);
-            var initializerBuilder = new DbContextInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context);
+            var initializerBuilder = new DbContextInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, dbContextCodeBuilder);
             AddSource(context, "DbContexts", dbContextCodeBuilder);
             AddSource(context, "", initializerBuilder);
         }

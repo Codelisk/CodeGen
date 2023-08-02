@@ -1,5 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)generated</CompilerGeneratedFilesOutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="7.0.9" />
@@ -11,5 +16,6 @@
     <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
     <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\..\Generators\Web\WebDbContext.Generator\WebDbContext.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 </Project>
