@@ -1,0 +1,58 @@
+﻿name: Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+  push:
+    branches:
+    - master
+    - main
+    - dev
+    - preview
+    - v*
+
+env:
+  NugetApiKey: ${{secrets.NUGETAPIKEY}}
+  TwitterConsumerKey: ${{secrets.TWITTER_CONSUMER_KEY}}
+  TwitterConsumerSecret: ${{secrets.TWITTER_CONSUMER_SECRET}}
+  TwitterAccessToken: ${{secrets.TWITTER_ACCESS_TOKEN}}
+  TwitterAccessTokenSecret: ${{secrets.TWITTER_ACCESS_TOKEN_SECRET}}
+  DiscordToken: ${{secrets.DISCORD_TOKEN}}
+  DiscordGuildId: '679761126598115336'
+  DiscordChannelId: '803717285986566174'
+  MastodonClientId: ${{secrets.MASTODON_CLIENT_ID}}
+  MastodonClientSecret: ${{secrets.MASTODON_CLIENT_SECRET}}
+  MastodonInstance: 'dotnet.social'
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+          fetch-depth: 0
+
+    - name: Setup .NET 7.0
+      uses: actions/setup-dotnet@v1
+      with:
+          dotnet-version: '7.0.x'
+
+    - name: Add .NET Workloads
+      run: dotnet workload install maui-ios maui-android maui-maccatalyst maui-windows
+
+    - name: Build
+      run: dotnet run --project build/ShinyBuild.csproj
+
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: nugets
+        path: ${{ github.workspace }}/artifacts
+        retention-days: 5
