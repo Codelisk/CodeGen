@@ -8,13 +8,23 @@ using Microsoft.CodeAnalysis;
 using Shared.Models;
 using System;
 using System.Collections.Generic;
+using Foundation.Crawler.Crawlers;
 using System.Text;
 
 namespace Foundation.Crawler.Extensions.Extensions
 {
     public static class GeneratorExtensions
     {
+        public static ClassBuilder AddDtoUsing(this ClassBuilder classBuilder, GeneratorExecutionContext context)
+        {
+            var namespaces = context.Dtos().Select(x => x.GetNamespace()).Distinct();
+            foreach (var n in namespaces)
+            {
+                classBuilder.AddNamespaceImport(n);
+            }
 
+            return classBuilder;
+        }
         public static string GetParametersNamesForHttpMethod(this INamedTypeSymbol httpAttribute, INamedTypeSymbol dto)
         {
             if (httpAttribute.HasAttribute(nameof(IdQueryAttribute)))

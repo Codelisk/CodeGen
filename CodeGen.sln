@@ -61,7 +61,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebGenerator.Base", "src\Ge
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebRepositories.Contract.Generator", "src\Generators\Web\WebRepositories.Contract.Generator\WebRepositories.Contract.Generator.csproj", "{7B4D2F18-FCE7-476B-9ED0-58E455D6BD55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebManager.Contract.Generator", "src\Generators\Web\WebManager.Contract.Generator\WebManager.Contract.Generator.csproj", "{530433CA-B91D-4BEB-809C-C017CC1688B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebManager.Contract.Generator", "src\Generators\Web\WebManager.Contract.Generator\WebManager.Contract.Generator.csproj", "{530433CA-B91D-4BEB-809C-C017CC1688B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAutoMapperProfile.Generator", "src\Generators\Web\WebAutoMapperProfile.Generator\WebAutoMapperProfile.Generator.csproj", "{9F0362C9-348E-4527-9983-CB692F4B5483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -145,6 +147,10 @@ Global
 		{530433CA-B91D-4BEB-809C-C017CC1688B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{530433CA-B91D-4BEB-809C-C017CC1688B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{530433CA-B91D-4BEB-809C-C017CC1688B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F0362C9-348E-4527-9983-CB692F4B5483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F0362C9-348E-4527-9983-CB692F4B5483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F0362C9-348E-4527-9983-CB692F4B5483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F0362C9-348E-4527-9983-CB692F4B5483}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -176,6 +182,7 @@ Global
 		{8201538C-37E4-4D06-BD0A-BA7792B68607} = {BDD623F4-00B9-400C-BB81-416FD6DEFD7B}
 		{7B4D2F18-FCE7-476B-9ED0-58E455D6BD55} = {F3051289-022E-4E71-A7A9-D12E08ECC79C}
 		{530433CA-B91D-4BEB-809C-C017CC1688B9} = {F3051289-022E-4E71-A7A9-D12E08ECC79C}
+		{9F0362C9-348E-4527-9983-CB692F4B5483} = {F3051289-022E-4E71-A7A9-D12E08ECC79C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {077D68B2-E4F9-47C8-BD23-66121BD01E40}

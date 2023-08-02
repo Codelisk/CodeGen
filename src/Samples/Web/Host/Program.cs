@@ -12,7 +12,7 @@ var mapperConfig = new MapperConfiguration(
                 cfg =>
                 {
                     cfg.AllowNullCollections = true;
-                    cfg.AddProfile<AutoMapperProfile>();
+                    cfg.AddProfile<DtoEntityProfile>();
                 });
 var mapper = mapperConfig.CreateMapper();
 

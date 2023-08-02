@@ -28,27 +28,34 @@ namespace Generators.Base.Helpers
 
             var result = codeBuilder.AddClass("I" + c.Name).OfType(TypeKind.Interface).WithAccessModifier(Accessibility.Public);
 
+            List<string> nameSpacesFromUsedTypes = new List<string>();
             foreach (var publicMethod in publicMethods)
             {
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
                     .WithReturnType(publicMethod.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                     .Abstract(true);
+
+                nameSpacesFromUsedTypes.Add(publicMethod.ReturnType.GetNamespace());
+                nameSpacesFromUsedTypes.AddRange(publicMethod.Parameters.Select(x => x.Type.GetNamespace()));
             }
+
 
             if (c.BaseType is not null)
             {
                 var baseType = context.GetClassByName(c.BaseType.Name, "");
                 foreach (var item1 in baseType.AllInterfaces)
                 {
-                    var finalInterface = item1;
+                    nameSpacesFromUsedTypes.Add(item1.GetNamespace());
                     if(item1.TypeArguments.Length > 0)
                     {
+                        nameSpacesFromUsedTypes.AddRange(item1.TypeArguments.Select(x => x.GetNamespace()));
                         result.AddInterface(item1.OriginalDefinition.Construct(c.BaseType.TypeArguments.ToArray()).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
                     }
-                   // result.AddInterface(item1.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
                 }
             }
+
+            nameSpacesFromUsedTypes.Distinct().ToList().ForEach(x => result.AddNamespaceImport(x));
 
             return codeBuilder;
         }
