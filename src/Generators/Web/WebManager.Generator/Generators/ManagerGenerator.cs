@@ -11,7 +11,7 @@ namespace WebManager.Generator.Generators
     public class ManagerGenerator : BaseGenerator
     {
         public override void Execute(GeneratorExecutionContext context)
-        {
+        { 
             var managerCodeBuilder = new ManagerCodeBuilder(context.Compilation.AssemblyName).Get(context);
             var initializerBuilder = new ManagerInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, managerCodeBuilder);
             AddSource(context, "Manager", managerCodeBuilder);

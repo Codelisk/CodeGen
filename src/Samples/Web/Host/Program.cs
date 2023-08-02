@@ -3,12 +3,24 @@ using Foundation.Web;
 using Microsoft.EntityFrameworkCore;
 using Web.Database.Models;
 using Web.Controllers;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var mapperConfig = new MapperConfiguration(
+                cfg =>
+                {
+                    cfg.AllowNullCollections = true;
+                    cfg.AddProfile<AutoMapperProfile>();
+                });
+var mapper = mapperConfig.CreateMapper();
+
+builder.Services.AddSingleton(mapper);
 builder.Services.AddControllers();
 builder.Services.AddManager();
+builder.Services.AddRepositories();
+builder.Services.AddDbContext<BaseContext>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
