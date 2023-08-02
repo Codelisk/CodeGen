@@ -1,0 +1,3 @@
+[submodule "src/Submodules/Codelisk.NugetPublish"]
+	path = src/Submodules/Codelisk.NugetPublish
+	url = https://github.com/Codelisk/Codelisk.NugetPublish.git
