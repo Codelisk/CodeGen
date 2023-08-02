@@ -2,19 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
-    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
-    <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
-    <RunAnalyzers>false</RunAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <Analyzer Remove="@(Analyzer)"/>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\Common\Generators.Base\Generators.Base.csproj"  OutputItemType="Analyzer"/>
     <ProjectReference Include="..\WebGenerator.Base\WebGenerator.Base.csproj" OutputItemType="Analyzer" />
     <ProjectReference Include="..\WebRepositories.Generator\WebRepositories.Generator.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
