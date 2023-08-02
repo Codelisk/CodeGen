@@ -3,15 +3,12 @@ using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using CodeGenHelpers.Internals;
 
 namespace Generators.Base.Extensions
 {
     public static class ITypeSymbolExtensions
     {
-        public static string GetNamespace(this ITypeSymbol namedTypeSymbol)
-        {
-            return namedTypeSymbol.ContainingNamespace.ToDisplayString();
-        }
         public static bool IsListType(this ITypeSymbol typeSymbol)
         {
             // Get all the base types of the type

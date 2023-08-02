@@ -8,6 +8,18 @@ namespace Generators.Base.Extensions
 {
     public static class ISymbolExtensions
     {
+        public static string GetNamespace(this ISymbol namedTypeSymbol)
+        {
+            if(namedTypeSymbol.ContainingNamespace.IsGlobalNamespace)
+            {
+                return null;
+            }
+            try
+            {
+                return namedTypeSymbol.ContainingNamespace.ToDisplayString();
+            }
+            catch (Exception) { return null; }
+        }
         public static bool HasAttributeWithoutBaseClass(this ISymbol symbol, string fullAttributeName) => symbol.GetAttributes().Any(x => x?.AttributeClass is not null &&
                                                                                                                 x.AttributeClass.Name ==
                                                                                                                 fullAttributeName);

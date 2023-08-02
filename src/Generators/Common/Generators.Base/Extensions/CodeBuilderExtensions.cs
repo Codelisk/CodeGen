@@ -10,10 +10,19 @@ namespace Generators.Base.Extensions
 {
     public static class CodeBuilderExtensions
     {
+        public static List<INamedTypeSymbol> GetClasses(this ClassBuilder classBuilder, GeneratorExecutionContext context)
+        {
+            return classBuilder.Build().GetClasses(context);
+        }
+
         public static List<INamedTypeSymbol> GetClasses(this CodeBuilder codeBuilder, GeneratorExecutionContext context)
         {
-            var test = codeBuilder.Build();
-            var syntaxTree = CSharpSyntaxTree.ParseText(codeBuilder.Build());
+            return codeBuilder.Build().GetClasses(context);
+        }
+
+        private static List<INamedTypeSymbol> GetClasses(this string code, GeneratorExecutionContext context)
+        {
+            var syntaxTree = CSharpSyntaxTree.ParseText(code);
             var compilation = CSharpCompilation.Create(context.Compilation.AssemblyName, new[] { syntaxTree });
 
             var root = syntaxTree.GetRoot();
@@ -31,12 +40,10 @@ namespace Generators.Base.Extensions
                     // Get the symbol representing the class
                     var classSymbol = semanticModel.GetDeclaredSymbol(i) as INamedTypeSymbol;
                     result.Add(classSymbol);
-                    var test4 = classSymbol.GetAttributes();
                 }
             }
             return result;
         }
-
 
     }
 }

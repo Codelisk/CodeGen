@@ -1,4 +1,5 @@
 ﻿using CodeGenHelpers;
+using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Generators.Base.Generators.Base
         {
             foreach (var codeBuilder in codeBuilders)
             {
+                codeBuilder.AddMissingNamespaceImports(context);
                 string code = codeBuilder.Build();
                 if(replace.HasValue)
                 {
