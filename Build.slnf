@@ -1,0 +1,6 @@
+{
+	"solution": {
+		"path": "CodeGen.sln",
+		"projects": ["src\\Generators\\Api\\Api.Generator\\Api.Generator.csproj"]
+	}
+}
