@@ -46,7 +46,7 @@ jobs:
           dotnet-version: '7.0.x'
 
     - name: List Directory Contents
-      run: ls
+      run: dir
       
     - name: Build
       run: |
