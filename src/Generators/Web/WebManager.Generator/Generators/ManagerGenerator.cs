@@ -17,7 +17,6 @@ namespace WebManager.Generator.Generators
             {
                 return;
             }
-            Debugger.Launch();
             var managerCodeBuilder = new ManagerCodeBuilder(context.Compilation.AssemblyName).Get(context);
             var initializerBuilder = new ManagerInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, managerCodeBuilder);
             AddSource(context, "Manager", managerCodeBuilder);
