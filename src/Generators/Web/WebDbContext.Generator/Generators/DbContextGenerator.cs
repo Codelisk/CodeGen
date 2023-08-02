@@ -15,7 +15,9 @@ namespace WebDbContext.Generator.Generators
         {  
             //Debugger.Launch(); 
             var dbContextCodeBuilder = new DbContextCodeBuilder(context.Compilation.AssemblyName).Get(context);
+            var initializerBuilder = new DbContextInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context);
             AddSource(context, "DbContexts", dbContextCodeBuilder);
+            AddSource(context, "", initializerBuilder);
         }
     }
 }
