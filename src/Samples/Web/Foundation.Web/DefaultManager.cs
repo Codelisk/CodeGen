@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web
 {
+    [DefaultManager]
     public class DefaultManager<TDto, TKey, TEntity> : IDefaultManager<TDto,TKey,TEntity> where TDto : class where TEntity : class
     {
         private readonly IDefaultRepository<TEntity, TKey> _repo;
