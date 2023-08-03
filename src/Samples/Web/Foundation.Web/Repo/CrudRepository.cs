@@ -9,7 +9,8 @@ namespace Foundation.Web.Repo
     using System.Linq;
     using System.Threading.Tasks;
 
-    public abstract class CrudRepository<TEntity, TKey> : GetRepository<TEntity, TKey> where TEntity : class
+    [DefaultRepository]
+    public abstract class CrudRepository<TEntity, TKey> : GetRepository<TEntity, TKey>, ICrudRepository<TEntity, TKey> where TEntity : class
     {
         protected CrudRepository(DbContextBase dbContext)
             : base(dbContext)

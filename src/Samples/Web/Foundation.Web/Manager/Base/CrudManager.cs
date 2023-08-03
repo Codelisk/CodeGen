@@ -15,6 +15,7 @@
     using Foundation.Web.Repo;
     using Attributes.WebAttributes.HttpMethod;
 
+    [DefaultManager]
     public abstract class CrudManager<T, TKey, TEntity> : GetManager<T, TKey, TEntity>, ICrudManager<T, TKey>
         where T : class
         where TEntity : class

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web
 {
-    [DefaultRepository]
     public class DefaultRepository<T, TKey> : IDefaultRepository<T, TKey> where T : class
     {
         private readonly BaseContext _context;

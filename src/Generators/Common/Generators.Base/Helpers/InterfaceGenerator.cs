@@ -44,13 +44,28 @@ namespace Generators.Base.Helpers
             if (c.BaseType is not null)
             {
                 var baseType = context.GetClassByName(c.BaseType.Name, "");
-                foreach (var item1 in baseType.AllInterfaces)
+                var interFace= baseType.Interfaces.FirstOrDefault();
+                if(interFace is not null)
                 {
-                    nameSpacesFromUsedTypes.Add(item1.GetNamespace());
-                    if(item1.TypeArguments.Length > 0)
+                    nameSpacesFromUsedTypes.Add(interFace.GetNamespace());
+                    if(interFace.TypeArguments.Length > 0 && interFace.TypeArguments.Length == c.BaseType.TypeArguments.Length)
                     {
-                        nameSpacesFromUsedTypes.AddRange(item1.TypeArguments.Select(x => x.GetNamespace()));
-                        result.AddInterface(item1.OriginalDefinition.Construct(c.BaseType.TypeArguments.ToArray()).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
+                        nameSpacesFromUsedTypes.AddRange(interFace.TypeArguments.Select(x => x.GetNamespace()));
+                        result.AddInterface(interFace.OriginalDefinition.Construct(c.BaseType.TypeArguments.ToArray()).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
+                    }
+                    else if(interFace.TypeArguments.Length > 0)
+                    {
+                        List<ITypeSymbol> types = new List<ITypeSymbol>();
+                        for (int i = 0; i < interFace.TypeArguments.Length; i++)
+                        {
+                            types.Add(c.BaseType.TypeArguments[i]);
+                        }
+
+                        result.AddInterface(interFace.OriginalDefinition.Construct(types.ToArray()).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
+                    }
+                    else
+                    {
+                        result.AddInterface(interFace);
                     }
                 }
             }

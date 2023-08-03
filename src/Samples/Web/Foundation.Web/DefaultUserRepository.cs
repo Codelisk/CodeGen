@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Foundation.Web
 {
+    [DefaultRepository]
+    [UserDto]
     public class DefaultUserRepository<T, TKey> : DefaultRepository<T, TKey> where T : class
     {
         public DefaultUserRepository(BaseContext context) : base(context)

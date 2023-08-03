@@ -9,7 +9,6 @@ using Orderlyze.Service.BL;
 
 namespace Foundation.Web
 {
-    [DefaultController]
     [Route("[controller]")]
     public class DefaultController<T, TKey, TEntity> : Microsoft.AspNetCore.Mvc.Controller
         where T : BaseDto

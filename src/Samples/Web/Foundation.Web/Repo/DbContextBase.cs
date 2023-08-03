@@ -3,6 +3,7 @@
     using Attributes.WebAttributes.Database;
     using Microsoft.EntityFrameworkCore;
 
+    [BaseContext]
     public abstract class DbContextBase : DbContext
     {
         protected DbContextBase(DbContextOptions options) : base(options)
