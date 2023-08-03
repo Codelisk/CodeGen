@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Generators.Base.Extensions.Common
+﻿namespace Generators.Base.Extensions.Common
 {
     public static class StringExtensions
     {

@@ -1,15 +1,10 @@
 ﻿using Attributes.WebAttributes.Dto;
 using Attributes.WebAttributes.HttpMethod;
-using Attributes.WebAttributes.Repository;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using Shared.Models;
-using System;
-using System.Collections.Generic;
-using Foundation.Crawler.Crawlers;
-using System.Text;
 
 namespace Foundation.Crawler.Extensions.Extensions
 {
@@ -41,7 +36,7 @@ namespace Foundation.Crawler.Extensions.Extensions
         }
         public static MethodBuilder AddParametersForHttpMethod(this MethodBuilder methodBuilder, INamedTypeSymbol httpAttribute, INamedTypeSymbol dto)
         {
-            if(httpAttribute.HasAttribute(nameof(IdQueryAttribute)))
+            if (httpAttribute.HasAttribute(nameof(IdQueryAttribute)))
             {
                 methodBuilder.AddParameter(dto.GetIdProperty().Type.Name, dto.GetIdProperty().Name.GetParameterName());
             }
@@ -64,7 +59,7 @@ namespace Foundation.Crawler.Extensions.Extensions
 
             var returnAttributeValue = returnAttribute.GetFirstConstructorArgumentEnum<ReturnKind>();
 
-            if(returnAttributeValue == ReturnKind.List)
+            if (returnAttributeValue == ReturnKind.List)
             {
                 methodBuilder.WithReturnTypeTaskList(dto.Name);
             }

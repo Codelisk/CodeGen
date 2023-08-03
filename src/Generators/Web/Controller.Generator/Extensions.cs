@@ -1,16 +1,10 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Generators.Base;
-using System.Xml.Linq;
-using Foundation.Crawler.Crawlers;
-using Generators.Base.Extensions.Common;
-using Generators.Base.Extensions;
-using Foundation.Crawler.Extensions;
+﻿using Attributes.WebAttributes.HttpMethod;
 using Attributes.WebAttributes.Repository;
-using Foundation.Dtos.Base;
-using Attributes.WebAttributes.HttpMethod;
+using Foundation.Crawler.Crawlers;
+using Foundation.Crawler.Extensions;
+using Generators.Base.Extensions;
+using Generators.Base.Extensions.Common;
+using Microsoft.CodeAnalysis;
 
 namespace Controller.Generator
 {
@@ -53,11 +47,11 @@ namespace Controller.Generator
             var entity = context.GetClassesWithAttribute(nameof(EntityAttribute)).FirstOrDefault(x => (x.GetAttribute<EntityAttribute>().GetFirstConstructorArgumentAsTypedConstant().Value as INamedTypeSymbol).Name == dto.Name);
             var idProperty = dto.GetIdProperty();
 
-            if(symbol.TypeArguments.Length == 3)
+            if (symbol.TypeArguments.Length == 3)
             {
                 return symbol.Construct(dto, idProperty.Type, entity);
             }
-            else if(symbol.TypeArguments.Length == 2)
+            else if (symbol.TypeArguments.Length == 2)
             {
                 return symbol.Construct(entity, idProperty.Type);
             }

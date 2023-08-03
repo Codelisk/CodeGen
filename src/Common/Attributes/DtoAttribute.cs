@@ -5,7 +5,7 @@
     {
         public DtoAttribute(string context = "BaseContext")
         {
-            this.Context=context;
+            Context = context;
         }
         public string Context { get; set; }
     }

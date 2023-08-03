@@ -1,9 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Generators.Base.Extensions
 {
@@ -33,14 +30,14 @@ namespace Generators.Base.Extensions
                         {
                             var result = elementType.GetEnumerableElementType();
 
-                            if(result is not null)
+                            if (result is not null)
                             {
                                 return result;
                             }
                         }
                     }
 
-                    if(genericTypeArgument is not null)
+                    if (genericTypeArgument is not null)
                     {
                         return genericTypeArgument;
                     }

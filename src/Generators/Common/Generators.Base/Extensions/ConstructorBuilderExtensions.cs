@@ -1,9 +1,5 @@
 ﻿using CodeGenHelpers;
-using CodeGenHelpers.Internals;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Generators.Base.Extensions
 {

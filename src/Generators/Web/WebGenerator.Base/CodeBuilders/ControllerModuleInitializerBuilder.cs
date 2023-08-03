@@ -1,17 +1,13 @@
 ﻿using CodeGenHelpers;
 using Generators.Base.CodeBuilders;
-using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace WebGenerator.Base.CodeBuilders
 {
     public class ControllerModuleInitializerBuilder : ClassServicesModuleInitializerBuilder
     {
         public ControllerModuleInitializerBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
-        { 
+        {
         }
 
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)

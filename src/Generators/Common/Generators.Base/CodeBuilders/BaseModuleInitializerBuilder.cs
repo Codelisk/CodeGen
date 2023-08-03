@@ -1,9 +1,6 @@
 ﻿using CodeGenHelpers;
 using Generator.Foundation.Generators.Base;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Generators.Base.CodeBuilders
 {

@@ -6,17 +6,9 @@ using Attributes.WebAttributes.Dto;
 using Attributes.WebAttributes.HttpMethod;
 using Attributes.WebAttributes.Manager;
 using Attributes.WebAttributes.Repository;
-using Foundation.Crawler.Extensions;
 using Foundation.Crawler.Models;
-using Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Foundation.Crawler.Crawlers
 {
@@ -83,7 +75,7 @@ namespace Foundation.Crawler.Crawlers
         private static INamedTypeSymbol UserOrDefault<TAttribute>(this GeneratorExecutionContext context, INamedTypeSymbol dto, bool isUser = false)
             where TAttribute : Attribute
         {
-            if(classSymbols is null)
+            if (classSymbols is null)
             {
                 classSymbols = context.GetAllClasses("");
             }

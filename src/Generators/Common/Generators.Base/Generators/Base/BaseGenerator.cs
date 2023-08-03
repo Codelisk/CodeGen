@@ -1,9 +1,6 @@
 ﻿using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Generators.Base.Generators.Base
 {
@@ -15,7 +12,7 @@ namespace Generators.Base.Generators.Base
             {
                 codeBuilder.AddMissingNamespaceImports(context);
                 string code = codeBuilder.Build();
-                if(replace.HasValue)
+                if (replace.HasValue)
                 {
                     code = code.Replace(replace.Value.Item1, replace.Value.Item2);
                 }
@@ -23,7 +20,7 @@ namespace Generators.Base.Generators.Base
                 if (codeBuilder.Classes.Any())
                 {
                     //Workaround because i cant make Interface methods
-                    if(codeBuilder.Classes.Any(x=>x.Kind == TypeKind.Interface))
+                    if (codeBuilder.Classes.Any(x => x.Kind == TypeKind.Interface))
                     {
                         code = code.Replace("abstract ", "");
                         code = code.Replace("using <global namespace>;", "");
@@ -41,7 +38,7 @@ namespace Generators.Base.Generators.Base
                             context.AddSource(folderName + "/" + fileName, code);
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
 
                     }

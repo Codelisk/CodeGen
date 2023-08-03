@@ -1,8 +1,5 @@
 ﻿using Foundation.Crawler.Extensions;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Api.Generator
 {

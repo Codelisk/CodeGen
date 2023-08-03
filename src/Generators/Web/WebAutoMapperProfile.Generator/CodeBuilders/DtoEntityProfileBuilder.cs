@@ -1,12 +1,9 @@
 ﻿using CodeGenHelpers;
+using Foundation.Crawler.Crawlers;
+using Foundation.Crawler.Extensions.Extensions;
 using Generator.Foundation.Generators.Base;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Foundation.Crawler.Crawlers;
 using WebGenerator.Base;
-using Foundation.Crawler.Extensions.Extensions;
 
 namespace WebAutoMapperProfile.Generator.CodeBuilders
 {
@@ -29,7 +26,7 @@ namespace WebAutoMapperProfile.Generator.CodeBuilders
                 {
                     foreach (var d in dtos)
                     {
-                          x.AppendLine($"{Constants.AutoMapperCreateMap}<{d.Name}, {d.EntityFromDto(context).Name}>().{Constants.AutoMapperReverseMap}();");
+                        x.AppendLine($"{Constants.AutoMapperCreateMap}<{d.Name}, {d.EntityFromDto(context).Name}>().{Constants.AutoMapperReverseMap}();");
                     }
                 });
 

@@ -1,9 +1,5 @@
 ﻿using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using WebRepositories.Generator.CodeBuilders;
 
 namespace WebRepositories.Generator.Generators

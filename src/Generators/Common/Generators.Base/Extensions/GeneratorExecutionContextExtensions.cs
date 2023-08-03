@@ -1,8 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace Generators.Base.Extensions
 {
@@ -18,16 +14,16 @@ namespace Generators.Base.Extensions
         }
         public static INamedTypeSymbol GetClass<T>(this GeneratorExecutionContext context, string assemblyName)
         {
-            return context.GetAllClasses(assemblyName).Single(x=>x.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat).Equals(typeof(T).Name));
+            return context.GetAllClasses(assemblyName).Single(x => x.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat).Equals(typeof(T).Name));
         }
         public static IEnumerable<INamedTypeSymbol> GetClassesWithBaseClass<T>(this GeneratorExecutionContext context, string assemblyName = "")
         {
             var name = typeof(T).Name;
-            return context.GetAllClasses(assemblyName).Where(x =>x.BaseType?.Name is not null &&  x.BaseType.Name.Equals(name));
+            return context.GetAllClasses(assemblyName).Where(x => x.BaseType?.Name is not null && x.BaseType.Name.Equals(name));
         }
         public static IEnumerable<INamedTypeSymbol> GetClassesWithBaseClass(this GeneratorExecutionContext context, INamedTypeSymbol baseClass, string assemblyName = "")
         {
-            return context.GetAllClasses(assemblyName).Where(x=> SymbolEqualityComparer.Default.Equals(x.BaseType, baseClass));
+            return context.GetAllClasses(assemblyName).Where(x => SymbolEqualityComparer.Default.Equals(x.BaseType, baseClass));
         }
         public static IEnumerable<INamedTypeSymbol> GetClassesWithAttribute(this GeneratorExecutionContext context, string fullAttributeName, string assemblyName = "")
         {

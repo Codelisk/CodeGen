@@ -1,11 +1,8 @@
 ﻿using Attributes.GeneralAttributes.Registration;
 using CodeGenHelpers;
 using Generator.Foundation.Generators.Base;
-using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Generators.Base.Helpers;
+using Microsoft.CodeAnalysis;
 using WebRepositories.Generator.CodeBuilders;
 
 namespace WebRepositories.Contract.Generator.CodeBuilders

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Attributes.WebAttributes.HttpMethod
+﻿namespace Attributes.WebAttributes.HttpMethod
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class UrlAttribute : Attribute
     {
-        public string Url { get;}
+        public string Url { get; }
         public UrlAttribute(string url)
         {
-            this.Url = url;
+            Url = url;
         }
     }
 }

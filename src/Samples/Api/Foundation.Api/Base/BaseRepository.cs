@@ -1,18 +1,11 @@
-﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using Polly.Retry;
-using Polly;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Attributes.ApiAttributes;
+﻿using Attributes.WebAttributes.HttpMethod;
 using Foundation.Api.Services.Base;
-using Attributes.WebAttributes.Repository;
-using Attributes.WebAttributes.HttpMethod;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Polly;
+using Polly.Retry;
+using System.Diagnostics;
+using System.Net;
 
 namespace Foundation.Api.Base
 {

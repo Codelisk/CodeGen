@@ -1,18 +1,10 @@
 ﻿using Attributes.WebAttributes.HttpMethod;
 using Attributes.WebAttributes.Manager;
-using Attributes.WebAttributes.Repository;
-using AutoMapper;
-using Foundation.Web.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Foundation.Web
 {
     [DefaultManager]
-    public class DefaultManager<TDto, TKey, TEntity> : IDefaultManager<TDto,TKey,TEntity> where TDto : class where TEntity : class
+    public class DefaultManager<TDto, TKey, TEntity> : IDefaultManager<TDto, TKey, TEntity> where TDto : class where TEntity : class
     {
         private readonly IDefaultRepository<TEntity, TKey> _repo;
         private readonly IMapper _mapper;

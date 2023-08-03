@@ -1,12 +1,5 @@
 ﻿using Attributes.WebAttributes.Dto;
 using Attributes.WebAttributes.Manager;
-using AutoMapper;
-using Foundation.Web.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Foundation.Web
 {

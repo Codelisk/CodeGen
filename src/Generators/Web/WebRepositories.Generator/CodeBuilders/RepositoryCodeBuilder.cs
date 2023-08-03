@@ -2,16 +2,10 @@
 using Attributes.GeneratorAttributes;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
-using Foundation.Crawler.Models;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
-using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
-using System;
 using WebGenerator.Base;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 
 namespace WebRepositories.Generator.CodeBuilders
 {

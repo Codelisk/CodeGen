@@ -1,14 +1,9 @@
-﻿using CodeGenHelpers;
+﻿using Attributes.GeneralAttributes.Registration;
+using CodeGenHelpers;
 using Generator.Foundation.Generators.Base;
-using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebManager.Generator.CodeBuilders;
 using Generators.Base.Helpers;
-using Attributes.GeneralAttributes.Registration;
+using Microsoft.CodeAnalysis;
+using WebManager.Generator.CodeBuilders;
 
 namespace WebManager.Contract.Generator.CodeBuilders
 {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Shared.Constants
+﻿namespace Shared.Constants
 {
     public static class ApiUrls
     {

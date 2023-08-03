@@ -1,11 +1,6 @@
 ﻿using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using WebRepositories.Contract.Generator.CodeBuilders;
-using WebRepositories.Generator.CodeBuilders;
 
 namespace WebRepositories.Contract.Generator.Generators
 {

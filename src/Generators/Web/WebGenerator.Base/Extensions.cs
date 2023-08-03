@@ -1,17 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Generators.Base;
-using System.Xml.Linq;
-using Generators.Base.Extensions.Common;
-using Generators.Base.Extensions;
+﻿using Attributes.WebAttributes.HttpMethod;
 using Attributes.WebAttributes.Repository;
-using Foundation.Dtos.Base;
-using Foundation.Crawler.Extensions;
-using Attributes.WebAttributes.HttpMethod;
-using Foundation.Crawler.Crawlers;
 using CodeGenHelpers;
+using Foundation.Crawler.Crawlers;
+using Foundation.Crawler.Extensions;
+using Generators.Base.Extensions;
+using Generators.Base.Extensions.Common;
+using Microsoft.CodeAnalysis;
 
 namespace WebGenerator.Base
 {

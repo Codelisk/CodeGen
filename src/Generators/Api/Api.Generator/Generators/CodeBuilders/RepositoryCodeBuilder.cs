@@ -1,16 +1,12 @@
 ﻿using Attributes.GeneralAttributes.Registration;
 using Attributes.WebAttributes.HttpMethod;
 using CodeGenHelpers;
-using CodeGenHelpers.Internals;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Api.Generator.Generators.CodeBuilders
 {

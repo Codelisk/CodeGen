@@ -2,9 +2,6 @@
 using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Generators.Base.Helpers
 {
@@ -47,16 +44,16 @@ namespace Generators.Base.Helpers
             if (c.BaseType is not null)
             {
                 var baseType = context.GetClassByName(c.BaseType.Name, "");
-                var interFace= baseType.Interfaces.FirstOrDefault();
-                if(interFace is not null)
+                var interFace = baseType.Interfaces.FirstOrDefault();
+                if (interFace is not null)
                 {
                     nameSpacesFromUsedTypes.Add(interFace.GetNamespace());
-                    if(interFace.TypeArguments.Length > 0 && interFace.TypeArguments.Length == c.BaseType.TypeArguments.Length)
+                    if (interFace.TypeArguments.Length > 0 && interFace.TypeArguments.Length == c.BaseType.TypeArguments.Length)
                     {
                         nameSpacesFromUsedTypes.AddRange(interFace.TypeArguments.Select(x => x.GetNamespace()));
                         result.AddInterface(interFace.OriginalDefinition.Construct(c.BaseType.TypeArguments.ToArray()).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
                     }
-                    else if(interFace.TypeArguments.Length > 0)
+                    else if (interFace.TypeArguments.Length > 0)
                     {
                         List<ITypeSymbol> types = new List<ITypeSymbol>();
                         for (int i = 0; i < interFace.TypeArguments.Length; i++)

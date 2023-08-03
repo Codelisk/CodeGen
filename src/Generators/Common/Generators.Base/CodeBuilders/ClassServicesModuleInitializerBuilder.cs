@@ -1,12 +1,7 @@
 ﻿using Attributes.GeneralAttributes.Registration;
 using CodeGenHelpers;
-using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Text;
 
 namespace Generators.Base.CodeBuilders
 {
@@ -23,8 +18,8 @@ namespace Generators.Base.CodeBuilders
                 Services = new List<(string, string, string)>();
             }
 
-            List<string> serviceTypes=new List<string>();
-            if(codeBuilders is not null)
+            List<string> serviceTypes = new List<string>();
+            if (codeBuilders is not null)
             {
                 foreach (var codeBuilder in codeBuilders)
                 {
@@ -59,11 +54,11 @@ namespace Generators.Base.CodeBuilders
         {
             var attribute = c.GetAttributes().FirstOrDefault(x => typeof(TAttribute).Name.Equals(x.AttributeClass.Name));
             string implementationType = "AddSingleton";
-            if(attribute is RegisterTransient)
+            if (attribute is RegisterTransient)
             {
                 implementationType = "AddTransient";
             }
-            else if(attribute is RegisterSingleton)
+            else if (attribute is RegisterSingleton)
             {
 
             }

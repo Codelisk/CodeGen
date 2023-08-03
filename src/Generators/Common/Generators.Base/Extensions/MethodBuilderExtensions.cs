@@ -1,7 +1,4 @@
 ﻿using CodeGenHelpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Generators.Base.Extensions
 {
@@ -9,7 +6,7 @@ namespace Generators.Base.Extensions
     {
         public static MethodBuilder WithReturnTypeTask(this MethodBuilder methodBuilder, string returnType = null)
         {
-            if(returnType is null)
+            if (returnType is null)
             {
                 return methodBuilder.WithReturnType("Task");
             }

@@ -1,9 +1,6 @@
 ﻿using Attributes.WebAttributes.Repository;
 using Foundation.Dtos;
 using Foundation.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Foundation.Entities
 {

@@ -1,11 +1,4 @@
 ﻿using Attributes.WebAttributes.HttpMethod;
-using Attributes.WebAttributes.Manager;
-using Attributes.WebAttributes.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Foundation.Web.Interfaces
 {

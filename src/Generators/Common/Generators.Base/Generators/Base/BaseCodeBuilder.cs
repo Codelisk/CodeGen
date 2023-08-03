@@ -1,10 +1,5 @@
 ﻿using CodeGenHelpers;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Generator.Foundation.Generators.Base
 {
@@ -13,12 +8,12 @@ namespace Generator.Foundation.Generators.Base
         private readonly string CodeBuilderNamespace;
         public BaseCodeBuilder(string codeBuilderNamespace)
         {
-            this.CodeBuilderNamespace = codeBuilderNamespace;
+            CodeBuilderNamespace = codeBuilderNamespace;
         }
         public abstract List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null);
         public CodeBuilder CreateBuilder(string ns = null)
         {
-            if(ns is null)
+            if (ns is null)
             {
                 return CodeBuilder.Create(CodeBuilderNamespace);
             }

@@ -1,19 +1,11 @@
 ﻿using Attributes.GeneralAttributes.Registration;
 using Attributes.GeneratorAttributes;
-using Attributes.WebAttributes.HttpMethod;
-using Attributes.WebAttributes.Repository;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
-using Foundation.Crawler.Extensions.Extensions;
-using Foundation.Crawler.Models;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
-using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
-using System;
 using WebGenerator.Base;
-using System.Collections.Generic;
-using System.Text;
 
 namespace WebManager.Generator.CodeBuilders
 {

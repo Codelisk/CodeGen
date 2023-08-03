@@ -1,10 +1,4 @@
-﻿using CodeGenHelpers;
-using Generator.Foundation.Generators.Base;
-using Generators.Base.CodeBuilders;
-using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Generators.Base.CodeBuilders;
 
 namespace WebManager.Generator.CodeBuilders
 {

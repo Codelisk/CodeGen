@@ -1,11 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
-using Api.Generator.Generators.CodeBuilders;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
+﻿using Api.Generator.Generators.CodeBuilders;
 using Generators.Base.Generators.Base;
-using Generators.Base.CodeBuilders;
+using Microsoft.CodeAnalysis;
 
 namespace Api.Generator.Generators
 {
@@ -13,11 +8,11 @@ namespace Api.Generator.Generators
     public class WebApiGenerator : BaseGenerator, ISourceGenerator
     {
         public override void Execute(GeneratorExecutionContext context)
-        { 
+        {
             var refitApiCodeBuilder = new RefitApiCodeBuilder(context.Compilation.AssemblyName).Get(context);
             var repositoriesCodeBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
             var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(context.Compilation.AssemblyName).Get(context, repositoriesCodeBuilder);
-                  
+
             AddSource(context, "Repositories", repositoriesCodeBuilder, ("abstract partial", "partial"));
             AddSource(context, "Apis", refitApiCodeBuilder, ("abstract partial", "partial"));
             AddSource(context, "", classServicesModuleInitializerBuilder);

@@ -1,7 +1,4 @@
 ﻿using Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Attributes.WebAttributes.HttpMethod
 {
@@ -11,7 +8,7 @@ namespace Attributes.WebAttributes.HttpMethod
         public ReturnKind ReturnKind { get; set; }
         public ReturnAttribute(ReturnKind returnKind)
         {
-            this.ReturnKind = returnKind;
+            ReturnKind = returnKind;
         }
     }
 }

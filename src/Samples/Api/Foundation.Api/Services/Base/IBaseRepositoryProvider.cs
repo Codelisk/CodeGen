@@ -1,9 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using Foundation.Api.Services.Auth;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Foundation.Api.Services.Auth;
+using Microsoft.Extensions.Logging;
 
 namespace Foundation.Api.Services.Base
 {

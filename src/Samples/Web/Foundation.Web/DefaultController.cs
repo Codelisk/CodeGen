@@ -1,5 +1,4 @@
 ﻿using Attributes.WebAttributes.Controller;
-using Attributes.WebAttributes.Repository;
 using Foundation.Dtos.Base;
 
 namespace Foundation.Web

@@ -1,9 +1,6 @@
-using Foundation.Dtos;
-using Foundation.Web;
-using Microsoft.EntityFrameworkCore;
-using Web.Database.Models;
-using Web.Controllers;
 using AutoMapper;
+using Foundation.Web;
+using Web.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +24,6 @@ builder.Services.AddDbContext<BaseContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddFoundationWeb();
 
 var app = builder.Build();
 

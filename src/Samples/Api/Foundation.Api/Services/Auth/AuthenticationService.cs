@@ -1,9 +1,4 @@
-﻿using Foundation.Api;
-using Foundation.Api.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Foundation.Api.Models;
 
 namespace Foundation.Api.Services.Auth
 {

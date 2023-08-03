@@ -1,8 +1,5 @@
 ﻿using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using WebAutoMapperProfile.Generator.CodeBuilders;
 
 namespace WebAutoMapperProfile.Generator.Generators

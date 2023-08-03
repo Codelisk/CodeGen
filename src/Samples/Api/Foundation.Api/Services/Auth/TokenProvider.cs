@@ -1,10 +1,4 @@
-﻿using Foundation.Api.Services.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Foundation.Api.Services.Auth
+﻿namespace Foundation.Api.Services.Auth
 {
     public class TokenProvider : ITokenProvider
     {
@@ -22,8 +16,8 @@ namespace Foundation.Api.Services.Auth
 
         public void UpdateCurrentToken(string newToken, string newRefreshToken)
         {
-            this.AccessToken = newToken;
-            this.RefreshToken = newRefreshToken;
+            AccessToken = newToken;
+            RefreshToken = newRefreshToken;
         }
     }
 }

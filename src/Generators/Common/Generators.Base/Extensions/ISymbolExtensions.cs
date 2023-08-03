@@ -1,8 +1,4 @@
-﻿using CodeGenHelpers.Internals;
-using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.CodeAnalysis;
 
 namespace Generators.Base.Extensions
 {
@@ -10,7 +6,7 @@ namespace Generators.Base.Extensions
     {
         public static string GetNamespace(this ISymbol namedTypeSymbol)
         {
-            if(namedTypeSymbol.ContainingNamespace.IsGlobalNamespace)
+            if (namedTypeSymbol.ContainingNamespace.IsGlobalNamespace)
             {
                 return null;
             }

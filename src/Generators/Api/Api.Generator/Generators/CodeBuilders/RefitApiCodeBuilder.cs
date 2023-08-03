@@ -1,6 +1,4 @@
-﻿using Attributes.ApiAttributes;
-using Attributes.WebAttributes.HttpMethod;
-using Attributes.WebAttributes.Repository;
+﻿using Attributes.WebAttributes.HttpMethod;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;
@@ -8,10 +6,6 @@ using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Extensions.Common;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace Api.Generator.Generators.CodeBuilders
 {
@@ -26,7 +20,7 @@ namespace Api.Generator.Generators.CodeBuilders
             var baseApi = context.BaseApi();
             var dtos = context.Dtos();
             List<CodeBuilder> result = new();
-            foreach ( var d in dtos )
+            foreach (var d in dtos)
             {
                 result.Add(BuildApi(context, d, baseApi));
             }

@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Refit;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Foundation.Api.Services.Base
 {

@@ -2,9 +2,6 @@
 using Attributes.WebAttributes.HttpMethod;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Foundation.Crawler.Models
 {

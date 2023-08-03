@@ -1,8 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 
 namespace Generators.Base.Extensions
 {
@@ -10,7 +6,7 @@ namespace Generators.Base.Extensions
     {
         public static string GetFirstConstructorArgument(this AttributeData attributeData)
         {
-            if(attributeData.ConstructorArguments.Any())
+            if (attributeData.ConstructorArguments.Any())
             {
                 return attributeData.ConstructorArguments.FirstOrDefault().Value + string.Empty;
             }
@@ -30,7 +26,7 @@ namespace Generators.Base.Extensions
         }
         public static AttributeData GetAttributeWithName(this IEnumerable<AttributeData> attributeData, string name)
         {
-            return attributeData.FirstOrDefault(x=>GetAttributeName(x).Equals(name));
+            return attributeData.FirstOrDefault(x => GetAttributeName(x).Equals(name));
         }
         public static string GetAttributePropertyDefaultValue<T>(AttributeData attributeData) where T : Attribute
         {

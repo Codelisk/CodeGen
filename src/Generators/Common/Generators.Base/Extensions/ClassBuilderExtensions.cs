@@ -1,8 +1,5 @@
 ﻿using CodeGenHelpers;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Generators.Base.Extensions
 {
@@ -23,7 +20,7 @@ namespace Generators.Base.Extensions
         //}
         public static void AddMissingNamespaceImports(this CodeBuilder codeBuilder, GeneratorExecutionContext context)
         {
-            List<string> imports= new List<string>();
+            List<string> imports = new List<string>();
             var classes = codeBuilder.GetClasses(context);
 
             foreach (var clazz in classes)
@@ -33,10 +30,10 @@ namespace Generators.Base.Extensions
                     var namespaceName = typeMember.GetNamespace();
                     imports.Add(namespaceName);
                 });
-                if(clazz.BaseType is not null)
+                if (clazz.BaseType is not null)
                 {
                     imports.Add(clazz.BaseType.GetNamespace());
-                    if(clazz.BaseType.TypeArguments.Length > 0)
+                    if (clazz.BaseType.TypeArguments.Length > 0)
                     {
                         imports.AddRange(clazz.BaseType.TypeArguments.Select(x => x.GetNamespace()));
                     }
@@ -44,7 +41,7 @@ namespace Generators.Base.Extensions
 
                 foreach (var import in imports)
                 {
-                    if(import is not null)
+                    if (import is not null)
                     {
                         codeBuilder.AddNamespaceImport(import);
                     }

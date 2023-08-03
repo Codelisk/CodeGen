@@ -1,12 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Foundation.Api.Services;
-using Foundation.Api.Services.Auth;
+﻿using Foundation.Api.Services.Auth;
 using Foundation.Api.Services.Base;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Foundation.Api
 {

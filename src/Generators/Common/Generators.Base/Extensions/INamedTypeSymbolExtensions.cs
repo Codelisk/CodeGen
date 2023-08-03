@@ -1,8 +1,5 @@
 ﻿using CodeGenHelpers.Internals;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Generators.Base.Extensions
 {
@@ -43,22 +40,23 @@ namespace Generators.Base.Extensions
         }
         public static List<IFieldSymbol> GetFieldsWithConstructedFromType(this INamedTypeSymbol classObject, INamedTypeSymbol type)
         {
-            return classObject.GetAllFields().Where(x => {
-                if(SymbolEqualityComparer.Default.Equals((x.Type as INamedTypeSymbol).ConstructedFrom, type.ConstructedFrom))
+            return classObject.GetAllFields().Where(x =>
+            {
+                if (SymbolEqualityComparer.Default.Equals((x.Type as INamedTypeSymbol).ConstructedFrom, type.ConstructedFrom))
                 {
                     return true;
                 }
 
                 foreach (var i in type.ConstructedFrom.AllInterfaces)
                 {
-                    if(SymbolEqualityComparer.Default.Equals((x.Type as INamedTypeSymbol).ConstructedFrom, i.ConstructedFrom))
+                    if (SymbolEqualityComparer.Default.Equals((x.Type as INamedTypeSymbol).ConstructedFrom, i.ConstructedFrom))
                     {
                         return true;
                     }
                 }
 
                 return false;
-                }).ToList();
+            }).ToList();
         }
         public static IPropertySymbol GetPropertyWithAttribute(this INamedTypeSymbol classObject, string attributeName)
         {
@@ -123,10 +121,10 @@ namespace Generators.Base.Extensions
             return symbol.GetMembers()
                          .OfType<IMethodSymbol>();
         }
-        public static List<IMethodSymbol> GetMethodsIncludingBaseTypes(this INamedTypeSymbol symbol) 
-        { 
+        public static List<IMethodSymbol> GetMethodsIncludingBaseTypes(this INamedTypeSymbol symbol)
+        {
             List<IMethodSymbol> methods = new List<IMethodSymbol>();
-            while(symbol is not null)
+            while (symbol is not null)
             {
                 methods.AddRange(symbol.GetMethods());
                 symbol = symbol.BaseType;
@@ -143,11 +141,11 @@ namespace Generators.Base.Extensions
         public static IEnumerable<IMethodSymbol> GetMethodsWithAttributes(this INamedTypeSymbol symbol)
         {
             return symbol.GetMethods()
-                         .Where(x=>x.GetAllAttributes().Any());
+                         .Where(x => x.GetAllAttributes().Any());
         }
         public static string GetReturnTypeName(this ITypeSymbol returnType)
         {
-            if(returnType is INamedTypeSymbol n && n.IsWellKnownSystemType())
+            if (returnType is INamedTypeSymbol n && n.IsWellKnownSystemType())
             {
                 return returnType.ToDisplayString();
             }
@@ -162,14 +160,14 @@ namespace Generators.Base.Extensions
                 throw new ArgumentNullException();
 
             return symbol.GetMethods()
-                         .Where(method => method.GetAttributes().Any(attr => 
+                         .Where(method => method.GetAttributes().Any(attr =>
                          {
                              return attr.GetAttributeName().Equals(attributeFullName);
-                             }));
+                         }));
         }// Check if a given TypeSymbol is a well-known type from the System namespace or other system namespaces
         public static bool IsWellKnownSystemType(this INamedTypeSymbol typeSymbol)
         {
-            if(typeSymbol is null)
+            if (typeSymbol is null)
             {
                 return false;
             }
