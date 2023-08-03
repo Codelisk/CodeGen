@@ -19,17 +19,20 @@ Add your Dtos:
     }```
 
 Add your Entities
-```[Entity(typeof(CategoryDto))]
+```
+[Entity(typeof(CategoryDto))]
 public partial class Category : BaseEntity
 {
     public int CategoryId { get; set; }
     public string CategoryName { get; set; }
     public ICollection<Product> Product { get; set; }
-}```
+}
+```
 
 Declare your [BaseContext]:
 
-```[BaseContext]
+```
+[BaseContext]
 public partial class BaseContext : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -41,11 +44,13 @@ public partial class BaseContext : DbContext
     : base(opt)
     {
     }
-}```
+}
+```
 
 Declare your [DefaultController]:
 
-```[DefaultController]
+```
+[DefaultController]
 [Route("[controller]")]
 public class DefaultController<T, TKey, TEntity> : Microsoft.AspNetCore.Mvc.Controller
     where T : BaseDto
@@ -58,11 +63,13 @@ public class DefaultController<T, TKey, TEntity> : Microsoft.AspNetCore.Mvc.Cont
     {
         _manager = manager;
     }
-}```
+}
+```
 
 Declare your [DefaultController] [Delete] [GetAll] [Save] [Get]:
 
-```[DefaultManager]
+```
+[DefaultManager]
 public class DefaultManager<TDto, TKey, TEntity> : IDefaultManager<TDto,TKey,TEntity> where TDto : class where TEntity : class
 {
     private readonly IDefaultRepository<TEntity, TKey> _repo;
@@ -93,11 +100,13 @@ public class DefaultManager<TDto, TKey, TEntity> : IDefaultManager<TDto,TKey,TEn
     {
         return _mapper.Map<TDto>(await _repo.Get(id));
     }
-}```
+}
+```
 
 Declare your [DefaultRepository] [Delete] [GetAll] [Save] [Get]:
 
-```[DefaultRepository]
+```
+[DefaultRepository]
 public class DefaultRepository<T, TKey> : IDefaultRepository<T, TKey> where T : class
 {
     private readonly BaseContext _context;
@@ -129,10 +138,12 @@ public class DefaultRepository<T, TKey> : IDefaultRepository<T, TKey> where T : 
         _context.Remove(t);
         await _context.SaveChangesAsync();
     }
-}```
+}
+```
 
 Declare your [DefaultRepository] [UserDto]:
-```[DefaultController]
+```
+[DefaultController]
 [UserDto]
 public class DefaultUserController<T, TKey, TEntity> : DefaultController<T, TKey, TEntity>
     where T : BaseDto
@@ -142,25 +153,30 @@ public class DefaultUserController<T, TKey, TEntity> : DefaultController<T, TKey
     public DefaultUserController(IDefaultManager<T, TKey, TEntity> manager) : base(manager)
     {
     }
-}```
+}
+```
 
 
 Declare your [DefaultManager] [UserDto]:
-```[DefaultManager]
+```
+[DefaultManager]
 [UserDto]
 public class DefaultUserManager<TDto, TKey, TEntity> : DefaultManager<TDto, TKey, TEntity> where TDto : class where TEntity : class
 {
     public DefaultUserManager(IDefaultRepository<TEntity, TKey> repo, IMapper mapper) : base(repo, mapper)
     {
     }
-}```
+}
+```
 
 Declare your [DefaultRepository] [UserDto]:
-```[DefaultRepository]
+```
+[DefaultRepository]
 [UserDto]
 public class DefaultUserRepository<T, TKey> : DefaultRepository<T, TKey> where T : class
 {
     public DefaultUserRepository(BaseContext context) : base(context)
     {
     }
-}```
+}
+```
