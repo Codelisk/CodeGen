@@ -6,7 +6,7 @@ Declare your [Id]:
 {
     [Id]
     public Guid Id { get; set; }
-}```
+}``` 
 
 Add your Dtos:
 
