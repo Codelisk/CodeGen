@@ -2,12 +2,13 @@
 
 Declare your [Id]:
 
- ```public class BaseDto
+```csharp
+public class BaseDto
 {
     [Id]
     public Guid Id { get; set; }
-}``` 
-
+}
+``` 
 Add your Dtos:
 
     ```[Dto]
