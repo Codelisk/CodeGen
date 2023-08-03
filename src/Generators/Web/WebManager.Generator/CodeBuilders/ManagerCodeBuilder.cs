@@ -49,6 +49,7 @@ namespace WebManager.Generator.CodeBuilders
                 .AddInterface("I" + dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(nameof(GeneratedManagerAttribute))
+                .AddAttribute(nameof(RegisterTransient))
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseManager, (baseRepo, dto.RepositoryNameFromDto()))
                 .Class;

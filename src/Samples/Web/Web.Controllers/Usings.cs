@@ -14,4 +14,4 @@ global using AutoMapper;
 global using Foundation.Web.Repo;
 global using Foundation.Web.Manager.Base;
 global using Orderlyze.Service.DL.Base;
-gl
+global using Microsoft.Extensions.Logging;

@@ -12,6 +12,9 @@ namespace Generators.Base.Helpers
     {
         public static CodeBuilder GenerateSeperateInterfaceCodeBuilder<TRegisterAttribute>(this CodeBuilder c, GeneratorExecutionContext context) where TRegisterAttribute : BaseRegisterAttribute
         {
+            //var lastClass = c.Classes.Last();
+            //lastClass.AddAttribute(typeof(TRegisterAttribute).Name);
+
             return c.GetClasses(context).Last().GenerateInterface(CodeBuilder.Create(context.Compilation.AssemblyName), context);
         }
 

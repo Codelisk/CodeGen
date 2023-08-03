@@ -44,8 +44,10 @@ namespace WebRepositories.Generator.CodeBuilders
         {
             var constructedBaseRepo = baseRepository.ConstructFromDto(dto, context);
             return builder.AddClass(dto.RepositoryNameFromDto()).WithAccessModifier(Accessibility.Public)
+                .AddInterface("I" + dto.RepositoryNameFromDto())
                 .SetBaseClass(constructedBaseRepo.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(nameof(GeneratedRepositoryAttribute))
+                .AddAttribute(nameof(RegisterTransient))
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseRepo)
                 .Class;

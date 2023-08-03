@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\..\Generators\Web\WebRepositories.Contract.Generator\WebRepositories.Contract.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\..\Generators\Web\WebRepositories.Generator\WebRepositories.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\Foundation.Web\Foundation.Web.csproj" />
+    <ProjectReference Include="..\..\..\Generators\Web\WebDbContext.Generator\WebDbContext.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <!--<ItemGroup>-->
