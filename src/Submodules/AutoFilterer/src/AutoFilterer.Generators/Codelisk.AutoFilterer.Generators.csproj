@@ -18,6 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AutoFilterer\AutoFilterer.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\AutoFilterer\Codelisk.AutoFilterer.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 </Project>

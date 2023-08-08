@@ -79,7 +79,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.AutoFilterer.Gener
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoFilterer.Swagger", "src\Submodules\AutoFilterer\src\AutoFilterer.Swagger\AutoFilterer.Swagger.csproj", "{B3B0F82B-40D9-4460-812A-C09EE7206B0C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoFilterer", "src\Submodules\AutoFilterer\src\AutoFilterer\AutoFilterer.csproj", "{8802D23D-469C-4C23-AF07-778AB55BB7A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.AutoFilterer", "src\Submodules\AutoFilterer\src\AutoFilterer\Codelisk.AutoFilterer.csproj", "{8802D23D-469C-4C23-AF07-778AB55BB7A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

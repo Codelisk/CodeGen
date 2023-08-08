@@ -5,11 +5,6 @@
   <PropertyGroup>
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
     <PackageTags>netstandard, EntityFramework, netcore, aspnetcore, auto filter, filtering, sorting, ordering, pagination</PackageTags>
-    <PackageIconUrl />
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
