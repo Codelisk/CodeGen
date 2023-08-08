@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageTags>netstandard, EntityFramework, netcore, aspnetcore, auto filter, filtering, sorting, ordering, pagination</PackageTags>
+    <PackageReleaseNotes>Fix inner objects documenting at Swagger UI</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AutoFilterer\AutoFilterer.csproj" />
+  </ItemGroup>
+
+</Project>
