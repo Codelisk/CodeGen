@@ -17,7 +17,6 @@
 		<RepositoryUrl>https://github.com/patrickklaeren/AutoRegisterInject</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>source generator;dependency injection;dependencies;registration;extensions;ioc</PackageTags>
-		<Version>1.2.1</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
