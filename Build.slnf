@@ -9,6 +9,8 @@
 		"src\\Generators\\Web\\WebManager.Contract.Generator\\WebManager.Contract.Generator.csproj",
 		"src\\Generators\\Web\\WebManager.Generator\\WebManager.Generator.csproj",
 		"src\\Generators\\Web\\WebRepositories.Contract.Generator\\WebRepositories.Contract.Generator.csproj",
+		"src\\Submodules\\AutoFilterer\\src\\AutoFilterer.Generators\\AutoFilterer.Generators.csproj",
+		"src\\Submodules\\AutoRegisterInject\\src\\AutoRegisterInject\\AutoRegisterInject.csproj",
 		"src\\Generators\\Web\\WebRepositories.Generator\\WebRepositories.Generator.csproj"
 		]
 	}
