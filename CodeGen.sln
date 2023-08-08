@@ -71,6 +71,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.NugetPublish", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoRegisterInject", "src\Submodules\AutoRegisterInject\src\AutoRegisterInject\AutoRegisterInject.csproj", "{07025339-FF24-4F4A-8D4E-83A8F5722134}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutoFilterer", "AutoFilterer", "{5FCC8998-A9B4-4B09-9F23-A50E797FCC0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoFilterer.Dynamics", "src\Submodules\AutoFilterer\src\AutoFilterer.Dynamics\AutoFilterer.Dynamics.csproj", "{6F8B8F6A-07F1-4D6D-BCE8-2C80B61B6053}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoFilterer.Generators", "src\Submodules\AutoFilterer\src\AutoFilterer.Generators\AutoFilterer.Generators.csproj", "{7AFA65BD-AE5C-41D9-AFCC-E95F58D5C8D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoFilterer.Swagger", "src\Submodules\AutoFilterer\src\AutoFilterer.Swagger\AutoFilterer.Swagger.csproj", "{B3B0F82B-40D9-4460-812A-C09EE7206B0C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoFilterer", "src\Submodules\AutoFilterer\src\AutoFilterer\AutoFilterer.csproj", "{8802D23D-469C-4C23-AF07-778AB55BB7A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +175,22 @@ Global
 		{07025339-FF24-4F4A-8D4E-83A8F5722134}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07025339-FF24-4F4A-8D4E-83A8F5722134}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07025339-FF24-4F4A-8D4E-83A8F5722134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F8B8F6A-07F1-4D6D-BCE8-2C80B61B6053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F8B8F6A-07F1-4D6D-BCE8-2C80B61B6053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F8B8F6A-07F1-4D6D-BCE8-2C80B61B6053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F8B8F6A-07F1-4D6D-BCE8-2C80B61B6053}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AFA65BD-AE5C-41D9-AFCC-E95F58D5C8D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AFA65BD-AE5C-41D9-AFCC-E95F58D5C8D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AFA65BD-AE5C-41D9-AFCC-E95F58D5C8D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AFA65BD-AE5C-41D9-AFCC-E95F58D5C8D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3B0F82B-40D9-4460-812A-C09EE7206B0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3B0F82B-40D9-4460-812A-C09EE7206B0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3B0F82B-40D9-4460-812A-C09EE7206B0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3B0F82B-40D9-4460-812A-C09EE7206B0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8802D23D-469C-4C23-AF07-778AB55BB7A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8802D23D-469C-4C23-AF07-778AB55BB7A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8802D23D-469C-4C23-AF07-778AB55BB7A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8802D23D-469C-4C23-AF07-778AB55BB7A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,6 +225,11 @@ Global
 		{9F0362C9-348E-4527-9983-CB692F4B5483} = {F3051289-022E-4E71-A7A9-D12E08ECC79C}
 		{C68230B5-37A6-4CF0-8BBA-F1A84303C3BC} = {7D9DEFC2-E5EE-46FC-B2E4-A8BDEAA13955}
 		{07025339-FF24-4F4A-8D4E-83A8F5722134} = {7D9DEFC2-E5EE-46FC-B2E4-A8BDEAA13955}
+		{5FCC8998-A9B4-4B09-9F23-A50E797FCC0F} = {7D9DEFC2-E5EE-46FC-B2E4-A8BDEAA13955}
+		{6F8B8F6A-07F1-4D6D-BCE8-2C80B61B6053} = {5FCC8998-A9B4-4B09-9F23-A50E797FCC0F}
+		{7AFA65BD-AE5C-41D9-AFCC-E95F58D5C8D4} = {5FCC8998-A9B4-4B09-9F23-A50E797FCC0F}
+		{B3B0F82B-40D9-4460-812A-C09EE7206B0C} = {5FCC8998-A9B4-4B09-9F23-A50E797FCC0F}
+		{8802D23D-469C-4C23-AF07-778AB55BB7A5} = {5FCC8998-A9B4-4B09-9F23-A50E797FCC0F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {077D68B2-E4F9-47C8-BD23-66121BD01E40}
