@@ -69,6 +69,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submodules", "Submodules", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.NugetPublish", "src\Submodules\Codelisk.NugetPublish\build\Codelisk.NugetPublish.csproj", "{C68230B5-37A6-4CF0-8BBA-F1A84303C3BC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoRegisterInject", "src\Submodules\AutoRegisterInject\src\AutoRegisterInject\AutoRegisterInject.csproj", "{07025339-FF24-4F4A-8D4E-83A8F5722134}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,10 @@ Global
 		{C68230B5-37A6-4CF0-8BBA-F1A84303C3BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C68230B5-37A6-4CF0-8BBA-F1A84303C3BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C68230B5-37A6-4CF0-8BBA-F1A84303C3BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07025339-FF24-4F4A-8D4E-83A8F5722134}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07025339-FF24-4F4A-8D4E-83A8F5722134}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07025339-FF24-4F4A-8D4E-83A8F5722134}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07025339-FF24-4F4A-8D4E-83A8F5722134}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -192,6 +198,7 @@ Global
 		{530433CA-B91D-4BEB-809C-C017CC1688B9} = {F3051289-022E-4E71-A7A9-D12E08ECC79C}
 		{9F0362C9-348E-4527-9983-CB692F4B5483} = {F3051289-022E-4E71-A7A9-D12E08ECC79C}
 		{C68230B5-37A6-4CF0-8BBA-F1A84303C3BC} = {7D9DEFC2-E5EE-46FC-B2E4-A8BDEAA13955}
+		{07025339-FF24-4F4A-8D4E-83A8F5722134} = {7D9DEFC2-E5EE-46FC-B2E4-A8BDEAA13955}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {077D68B2-E4F9-47C8-BD23-66121BD01E40}

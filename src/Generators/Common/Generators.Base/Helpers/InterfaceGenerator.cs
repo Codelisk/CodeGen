@@ -15,10 +15,10 @@ namespace Generators.Base.Helpers
             return c.GetClasses(context).Last().GenerateInterface(CodeBuilder.Create(context.Compilation.AssemblyName), context);
         }
 
-        public static CodeBuilder GenerateInterface<TRegisterAttribute>(this CodeBuilder codeBuilder, GeneratorExecutionContext context) where TRegisterAttribute : BaseRegisterAttribute
+        public static CodeBuilder GenerateInterface<TRegisterAttribute>(this CodeBuilder codeBuilder, GeneratorExecutionContext context) where TRegisterAttribute : Attribute
         {
             var lastClass = codeBuilder.Classes.Last();
-            lastClass.AddInterface("I" + lastClass.Name).AddAttribute(typeof(TRegisterAttribute).Name);
+            lastClass.AddInterface("I" + lastClass.Name).AddAttribute(typeof(RegisterTransient).Name);
             codeBuilder.GetClasses(context).Last().GenerateInterface(codeBuilder, context);
             return codeBuilder;
         }

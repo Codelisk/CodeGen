@@ -6,27 +6,26 @@ using System.Text;
 using System.Collections.Immutable;
 using System.Collections.Generic;
 using System;
+using System.Diagnostics;
+using AutoRegisterInject.Constants;
 
 namespace AutoRegisterInject;
 
 [Generator]
 public class Generator : IIncrementalGenerator
 {
-    private const string SCOPED_ATTRIBUTE_NAME = "RegisterScopedAttribute";
-    private const string SINGLETON_ATTRIBUTE_NAME = "RegisterSingletonAttribute";
-    private const string TRANSIENT_ATTRIBUTE_NAME = "RegisterTransientAttribute";
-    private const string HOSTED_SERVICE_ATTRIBUTE_NAME = "RegisterHostedServiceAttribute";
 
     private static readonly Dictionary<string, AutoRegistrationType> RegistrationTypes = new()
     {
-        [SCOPED_ATTRIBUTE_NAME] = AutoRegistrationType.Scoped,
-        [SINGLETON_ATTRIBUTE_NAME] = AutoRegistrationType.Singleton,
-        [TRANSIENT_ATTRIBUTE_NAME] = AutoRegistrationType.Transient,
-        [HOSTED_SERVICE_ATTRIBUTE_NAME] = AutoRegistrationType.Hosted,
+        [RegisterAttributeContants.SCOPED_ATTRIBUTE_NAME] = AutoRegistrationType.Scoped,
+        [RegisterAttributeContants.SINGLETON_ATTRIBUTE_NAME] = AutoRegistrationType.Singleton,
+        [RegisterAttributeContants.TRANSIENT_ATTRIBUTE_NAME] = AutoRegistrationType.Transient,
+        [RegisterAttributeContants.HOSTED_SERVICE_ATTRIBUTE_NAME] = AutoRegistrationType.Hosted,
     };
 
     public void Initialize(IncrementalGeneratorInitializationContext initialisationContext)
     {
+        Debugger.Launch();
         initialisationContext.RegisterPostInitializationOutput((i) =>
         {
             i.AddSource("AutoRegisterInject.Attributes.g.cs",
