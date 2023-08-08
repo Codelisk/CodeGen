@@ -3,7 +3,7 @@
   <Import Project="..\..\common.props" />
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
     <PackageTags>netstandard, EntityFramework, netcore, aspnetcore, auto filter, filtering, sorting, ordering, pagination</PackageTags>
   </PropertyGroup>
 

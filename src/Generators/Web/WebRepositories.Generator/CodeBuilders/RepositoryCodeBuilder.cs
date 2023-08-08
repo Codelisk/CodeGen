@@ -41,7 +41,7 @@ namespace WebRepositories.Generator.CodeBuilders
                 .AddInterface("I" + dto.RepositoryNameFromDto())
                 .SetBaseClass(constructedBaseRepo.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(nameof(GeneratedRepositoryAttribute))
-                .AddAttribute(nameof(RegisterTransient))
+                .AddAttribute(AutoRegisterInject.Constants.RegisterAttributeContants.TRANSIENT_ATTRIBUTE_NAME)
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseRepo)
                 .Class;

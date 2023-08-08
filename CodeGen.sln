@@ -69,13 +69,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Submodules", "Submodules", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.NugetPublish", "src\Submodules\Codelisk.NugetPublish\build\Codelisk.NugetPublish.csproj", "{C68230B5-37A6-4CF0-8BBA-F1A84303C3BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoRegisterInject", "src\Submodules\AutoRegisterInject\src\AutoRegisterInject\AutoRegisterInject.csproj", "{07025339-FF24-4F4A-8D4E-83A8F5722134}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.AutoRegisterInject.Generator", "src\Submodules\AutoRegisterInject\src\AutoRegisterInject\Codelisk.AutoRegisterInject.Generator.csproj", "{07025339-FF24-4F4A-8D4E-83A8F5722134}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AutoFilterer", "AutoFilterer", "{5FCC8998-A9B4-4B09-9F23-A50E797FCC0F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoFilterer.Dynamics", "src\Submodules\AutoFilterer\src\AutoFilterer.Dynamics\AutoFilterer.Dynamics.csproj", "{6F8B8F6A-07F1-4D6D-BCE8-2C80B61B6053}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoFilterer.Generators", "src\Submodules\AutoFilterer\src\AutoFilterer.Generators\AutoFilterer.Generators.csproj", "{7AFA65BD-AE5C-41D9-AFCC-E95F58D5C8D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.AutoFilterer.Generators", "src\Submodules\AutoFilterer\src\AutoFilterer.Generators\Codelisk.AutoFilterer.Generators.csproj", "{7AFA65BD-AE5C-41D9-AFCC-E95F58D5C8D4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoFilterer.Swagger", "src\Submodules\AutoFilterer\src\AutoFilterer.Swagger\AutoFilterer.Swagger.csproj", "{B3B0F82B-40D9-4460-812A-C09EE7206B0C}"
 EndProject
