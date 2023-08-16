@@ -2,6 +2,7 @@
 	"solution": {
 		"path": "CodeGen.sln",
 		"projects": [
+		"src\\Common\\Attributes\\Attributes.csproj",
 		"src\\Generators\\Api\\Api.Generator\\Api.Generator.csproj",
 		"src\\Generators\\Web\\Controller.Generator\\Controller.Generator.csproj",
 		"src\\Generators\\Web\\WebAutoMapperProfile.Generator\\WebAutoMapperProfile.Generator.csproj",
