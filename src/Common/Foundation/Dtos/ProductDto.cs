@@ -1,4 +1,4 @@
-﻿using Attributes;
+﻿using Codelisk.GeneratorAttributes;
 using Foundation.Dtos.Base;
 
 namespace Foundation.Dtos

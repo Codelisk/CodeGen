@@ -1,4 +1,4 @@
-﻿using Attributes;
+﻿using Codelisk.GeneratorAttributes;
 using Codelisk.GeneratorAttributes.ApiAttributes;
 using Codelisk.GeneratorAttributes.WebAttributes.Controller;
 using Codelisk.GeneratorAttributes.WebAttributes.Database;

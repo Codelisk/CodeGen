@@ -1,4 +1,4 @@
-﻿using Attributes;
+﻿using Codelisk.GeneratorAttributes;
 using Codelisk.GeneratorAttributes.GeneratorAttributes;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Attributes\Codelisk.GeneratorAttributes.csproj" />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
     <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
     <ProjectReference Include="..\..\..\Generators\Web\Controller.Generator\Controller.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\..\Generators\Web\WebAutoMapperProfile.Generator\WebAutoMapperProfile.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />

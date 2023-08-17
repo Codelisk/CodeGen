@@ -10,7 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Submodules\AutoFilterer\src\AutoFilterer.Generators\Codelisk.AutoFilterer.Generators.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\Attributes\Codelisk.GeneratorAttributes.csproj" />
+    <ProjectReference Include="..\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
