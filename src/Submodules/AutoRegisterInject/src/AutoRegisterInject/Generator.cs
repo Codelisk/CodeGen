@@ -25,7 +25,7 @@ public class Generator : IIncrementalGenerator
 
     public void Initialize(IncrementalGeneratorInitializationContext initialisationContext)
     {
-        Debugger.Launch();
+        //Debugger.Launch();
         initialisationContext.RegisterPostInitializationOutput((i) =>
         {
             i.AddSource("AutoRegisterInject.Attributes.g.cs",
