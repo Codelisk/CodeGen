@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Attributes\Attributes.csproj" />
+    <ProjectReference Include="..\..\..\Common\Attributes\Codelisk.GeneratorAttributes.csproj" />
     <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
     <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" />
     <ProjectReference Include="..\..\..\Generators\Web\WebDbContext.Generator\WebDbContext.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
