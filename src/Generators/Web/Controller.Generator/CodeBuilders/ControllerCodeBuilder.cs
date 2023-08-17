@@ -1,4 +1,4 @@
-﻿using Attributes.WebAttributes.HttpMethod;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;

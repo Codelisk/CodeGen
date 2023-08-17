@@ -1,4 +1,4 @@
-﻿using Attributes.WebAttributes.HttpMethod;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using Foundation.Api.Services.Base;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

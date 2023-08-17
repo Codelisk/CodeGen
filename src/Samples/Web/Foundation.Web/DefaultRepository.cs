@@ -1,5 +1,5 @@
-﻿using Attributes.WebAttributes.HttpMethod;
-using Attributes.WebAttributes.Repository;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+using Codelisk.GeneratorAttributes.WebAttributes.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Foundation.Web

@@ -1,5 +1,5 @@
-﻿using Attributes.WebAttributes.HttpMethod;
-using Attributes.WebAttributes.Manager;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+using Codelisk.GeneratorAttributes.WebAttributes.Manager;
 
 namespace Foundation.Web
 {

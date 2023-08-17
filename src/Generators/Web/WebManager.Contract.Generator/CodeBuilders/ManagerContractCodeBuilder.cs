@@ -1,4 +1,4 @@
-﻿using Attributes.GeneralAttributes.Registration;
+﻿using Codelisk.GeneratorAttributes.GeneralAttributes.Registration;
 using CodeGenHelpers;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Helpers;

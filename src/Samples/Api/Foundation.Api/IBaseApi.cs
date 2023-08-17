@@ -1,4 +1,4 @@
-﻿using Attributes.ApiAttributes;
+﻿using Codelisk.GeneratorAttributes.ApiAttributes;
 
 namespace Foundation.Api
 {

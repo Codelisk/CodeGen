@@ -1,5 +1,5 @@
 ﻿
-using Attributes.WebAttributes.HttpMethod;
+using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 

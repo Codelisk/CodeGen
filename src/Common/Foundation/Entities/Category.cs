@@ -1,4 +1,4 @@
-﻿using Attributes.WebAttributes.Repository;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.Repository;
 using Foundation.Dtos;
 using Foundation.Entities.Base;
 

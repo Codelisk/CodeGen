@@ -1,5 +1,5 @@
 ﻿using Attributes;
-using Attributes.GeneratorAttributes;
+using Codelisk.GeneratorAttributes.GeneratorAttributes;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Generator.Foundation.Generators.Base;

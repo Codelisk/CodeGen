@@ -1,4 +1,4 @@
-﻿using Attributes.GeneralAttributes.Registration;
+﻿using Codelisk.GeneratorAttributes.GeneralAttributes.Registration;
 using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;

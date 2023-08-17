@@ -1,5 +1,5 @@
-﻿using Attributes.WebAttributes.Dto;
-using Attributes.WebAttributes.HttpMethod;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.Dto;
+using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Generators.Base.Extensions;

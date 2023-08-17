@@ -1,4 +1,4 @@
-﻿using Attributes.WebAttributes.Dto;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 
 namespace Foundation.Dtos.Base
 {

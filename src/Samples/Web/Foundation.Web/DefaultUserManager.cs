@@ -1,5 +1,5 @@
-﻿using Attributes.WebAttributes.Dto;
-using Attributes.WebAttributes.Manager;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.Dto;
+using Codelisk.GeneratorAttributes.WebAttributes.Manager;
 
 namespace Foundation.Web
 {

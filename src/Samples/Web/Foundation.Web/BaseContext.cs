@@ -1,4 +1,4 @@
-﻿using Attributes.WebAttributes.Database;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Foundation.Web

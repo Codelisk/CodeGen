@@ -1,5 +1,5 @@
-﻿using Attributes.WebAttributes.HttpMethod;
-using Attributes.WebAttributes.Repository;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+using Codelisk.GeneratorAttributes.WebAttributes.Repository;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions;
 using Generators.Base.Extensions;

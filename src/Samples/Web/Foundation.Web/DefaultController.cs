@@ -1,4 +1,4 @@
-﻿using Attributes.WebAttributes.Controller;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.Controller;
 using Foundation.Dtos.Base;
 
 namespace Foundation.Web

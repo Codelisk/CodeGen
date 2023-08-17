@@ -1,4 +1,4 @@
-﻿using Attributes.WebAttributes.HttpMethod;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 
 namespace Foundation.Web.Interfaces
 {
