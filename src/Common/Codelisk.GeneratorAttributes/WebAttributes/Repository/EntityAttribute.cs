@@ -1,4 +1,4 @@
-﻿namespace Attributes.WebAttributes.Repository
+﻿namespace Codelisk.GeneratorAttributes.WebAttributes.Repository
 {
     public class EntityAttribute : BaseEntityAttribute
     {

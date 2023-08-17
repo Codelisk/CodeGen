@@ -1,7 +1,7 @@
-﻿using Attributes.WebAttributes.Dto;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Shared.Constants;
 
-namespace Attributes.WebAttributes.HttpMethod
+namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 {
     [Url(ApiUrls.Get)]
     [IdQuery]

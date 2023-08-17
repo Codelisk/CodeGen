@@ -1,4 +1,4 @@
-﻿namespace Attributes.GeneralAttributes.Registration
+﻿namespace Codelisk.GeneratorAttributes.GeneralAttributes.Registration
 {
     public class RegisterTransient : BaseRegisterAttribute
     {

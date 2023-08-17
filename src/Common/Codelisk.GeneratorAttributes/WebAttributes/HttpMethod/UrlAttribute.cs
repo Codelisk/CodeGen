@@ -1,4 +1,4 @@
-﻿namespace Attributes.WebAttributes.HttpMethod
+﻿namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class UrlAttribute : Attribute

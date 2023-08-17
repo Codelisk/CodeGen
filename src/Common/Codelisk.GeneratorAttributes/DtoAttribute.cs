@@ -1,4 +1,4 @@
-﻿namespace Attributes
+﻿namespace Codelisk.GeneratorAttributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class DtoAttribute : Attribute

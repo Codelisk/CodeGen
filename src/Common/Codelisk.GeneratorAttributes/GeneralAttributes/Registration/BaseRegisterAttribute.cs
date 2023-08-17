@@ -1,4 +1,4 @@
-﻿namespace Attributes.GeneralAttributes.Registration
+﻿namespace Codelisk.GeneratorAttributes.GeneralAttributes.Registration
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
     public class BaseRegisterAttribute : Attribute
