@@ -9,7 +9,7 @@ using System.Net;
 
 namespace Foundation.Api.Base
 {
-    [Attributes.ApiAttributes.DefaultApiRepository]
+    [Codelisk.GeneratorAttributes.ApiAttributes.DefaultApiRepository]
     public abstract class BaseRepository<TApi> where TApi : IBaseApi
     {
         private const int MAX_REFRESH_TOKEN_ATTEMPTS = 1;

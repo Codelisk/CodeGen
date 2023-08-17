@@ -38,12 +38,12 @@ namespace Foundation.Crawler.Crawlers
         public static INamedTypeSymbol GetAttribute<TAttribute>(this GeneratorExecutionContext context) where TAttribute : Attribute
         {
             // Find the property with the Url attribute
-            return context.GetClass<TAttribute>(nameof(Attributes));
+            return context.GetClass<TAttribute>(nameof(Codelisk.GeneratorAttributes));
         }
         public static string AttributeUrl(this GeneratorExecutionContext context, Type t, INamedTypeSymbol dto)
         {
             // Find the property with the Url attribute
-            var attributeSymobl = context.GetClass(t, nameof(Attributes));
+            var attributeSymobl = context.GetClass(t, nameof(Codelisk.GeneratorAttributes));
             return attributeSymobl.AttributeUrl(dto);
         }
         public static string AttributeUrl<TAttribute>(this GeneratorExecutionContext context, INamedTypeSymbol dto) where TAttribute : BaseHttpAttribute

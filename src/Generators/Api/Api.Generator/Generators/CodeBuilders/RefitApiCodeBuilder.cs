@@ -50,7 +50,7 @@ namespace Api.Generator.Generators.CodeBuilders
             foreach (var attr in typeAndRefitAttribute)
             {
                 var attributeUrl = context.AttributeUrl(attr.Key, dto);
-                var httpAttributeSymbol = context.GetClass(attr.Key, nameof(Attributes));
+                var httpAttributeSymbol = context.GetClass(attr.Key, nameof(Codelisk.GeneratorAttributes));
                 c.AddMethod(attributeUrl, Accessibility.Public).Abstract(true)
                     .AddAttribute(attributeUrl.AttributeWithConstructor(attr.Value))
                     .AddParametersForHttpMethod(httpAttributeSymbol, dto)
