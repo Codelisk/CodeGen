@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\Common\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" />
+    <ProjectReference  PrivateAssets="All"  Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" />
+    <ProjectReference  PrivateAssets="All"  Include="..\..\..\Common\Foundation\Foundation.csproj" OutputItemType="Analyzer" />
+    <ProjectReference  PrivateAssets="All"  Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" />
+    <ProjectReference  PrivateAssets="All"  Include="..\..\Common\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 </Project>
