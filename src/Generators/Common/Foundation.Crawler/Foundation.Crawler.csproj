@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
+    <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
   </ItemGroup>
 </Project>

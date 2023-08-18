@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
-    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
-    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" />
-    <ProjectReference Include="..\..\..\Generators\Web\WebDbContext.Generator\WebDbContext.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\Generators\Web\WebDbContext.Generator\WebDbContext.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
   </ItemGroup>
 </Project>

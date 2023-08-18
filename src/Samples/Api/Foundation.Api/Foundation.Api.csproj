@@ -10,8 +10,8 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
-    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

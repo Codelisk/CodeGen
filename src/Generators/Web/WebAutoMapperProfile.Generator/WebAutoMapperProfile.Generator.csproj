@@ -9,8 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\WebGenerator.Base\WebGenerator.Base.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
+    <ProjectReference Include="..\WebGenerator.Base\WebGenerator.Base.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>

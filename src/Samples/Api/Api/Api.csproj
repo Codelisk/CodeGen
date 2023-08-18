@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" />
-    <ProjectReference Include="..\..\..\Generators\Api\Api.Generator\Api.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\Foundation.Api\Foundation.Api.csproj" />
+    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\Generators\Api\Api.Generator\Api.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
+    <ProjectReference Include="..\Foundation.Api\Foundation.Api.csproj" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
