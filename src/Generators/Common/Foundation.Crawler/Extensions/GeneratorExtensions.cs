@@ -55,9 +55,7 @@ namespace Foundation.Crawler.Extensions.Extensions
                 return methodBuilder.WithReturnTypeTask();
             }
 
-            var returnAttribute = httpAttribute.GetAttribute<ReturnAttribute>();
-
-            var returnAttributeValue = returnAttribute.GetFirstConstructorArgumentEnum<ReturnKind>();
+            var returnAttributeValue = httpAttribute.GetRealAttributeFromAttribute<ReturnAttribute>()?.ReturnKind;
 
             if (returnAttributeValue == ReturnKind.List)
             {

@@ -1,11 +1,40 @@
 ﻿using CodeGenHelpers.Internals;
 using Microsoft.CodeAnalysis;
+using System.Reflection;
 
 namespace Generators.Base.Extensions
 {
     public static class INamedTypeSymbolExtensions
     {
-        public static IPropertySymbol GetFirstPropertyByName(this INamedTypeSymbol classObject, string name, string nameSpace = null)
+        public static Type ToReflectionType(this INamedTypeSymbol namedTypeSymbol)
+        {
+            if (namedTypeSymbol == null)
+            {
+                throw new ArgumentNullException(nameof(namedTypeSymbol));
+            }
+
+            if (namedTypeSymbol.TypeKind == TypeKind.Class)
+            {
+                string assemblyQualifiedName = namedTypeSymbol.GetAssemblyQualifiedName();
+                Assembly assembly = Assembly.Load(new AssemblyName(namedTypeSymbol.ContainingAssembly.Name));
+                Type type = assembly.GetType(assemblyQualifiedName);
+
+                return type;
+            }
+
+            return null;
+        }
+
+        private static string GetAssemblyQualifiedName(this INamedTypeSymbol namedTypeSymbol)
+        {
+            var namespaceParts = namedTypeSymbol.ContainingNamespace.ToDisplayString().Split('.');
+            var typeName = namedTypeSymbol.Name;
+            var assemblyName = namedTypeSymbol.ContainingAssembly.Name;
+
+            return $"{string.Join(".", namespaceParts)}.{typeName}, {assemblyName}";
+        }
+
+    public static IPropertySymbol GetFirstPropertyByName(this INamedTypeSymbol classObject, string name, string nameSpace = null)
         {
             var properties = classObject.GetMembers().OfType<IPropertySymbol>();
 

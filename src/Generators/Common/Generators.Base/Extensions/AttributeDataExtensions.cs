@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+using Microsoft.CodeAnalysis;
 
 namespace Generators.Base.Extensions
 {
@@ -19,6 +20,14 @@ namespace Generators.Base.Extensions
         public static T GetFirstConstructorArgumentEnum<T>(this AttributeData attributeData) where T : Enum
         {
             return (T)attributeData.ConstructorArguments.FirstOrDefault().Value;
+        }
+        public static TCustomAttr GetRealAttributeFromAttribute<TCustomAttr>(this INamedTypeSymbol attr)
+        {
+            var result = attr.ToReflectionType().GetCustomAttributes(true)
+                                      .OfType<TCustomAttr>()
+                                      .FirstOrDefault();
+
+            return result;
         }
         public static string GetAttributeName(this AttributeData attributeData)
         {
