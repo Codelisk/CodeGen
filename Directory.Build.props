@@ -15,11 +15,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <Version>2.13.17</Version>
-    <IncludeSource>True</IncludeSource>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PublishRepositoryUrl>True</PublishRepositoryUrl>
-    <EmbedUntrackedSources>True</EmbedUntrackedSources>
   </PropertyGroup>
 </Project>
