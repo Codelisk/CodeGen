@@ -35,17 +35,25 @@ namespace Api.Generator.Generators.CodeBuilders
                 var constructor = repoClass.AddConstructor()
                     .WithBaseCall(baseRepo.InstanceConstructors.First().Parameters);
 
-                var httpAttributes = context.GetClassesWithAttribute(nameof(UrlAttribute));
-                foreach (var httpAttribute in httpAttributes)
-                {
-                    var methodBuilder = repoClass.AddMethod(httpAttribute.AttributeUrl(dto), Accessibility.Public)
-                        .WithReturnTypeForHttpMethod(httpAttribute, dto)
-                        .AddParametersForHttpMethod(httpAttribute, dto);
 
-                    var baseRepoMethod = baseRepo.GetMethodsWithAttribute(httpAttribute.Name).First();
+                var attrs = new Dictionary<Type, string>
+            {
+                {typeof(GetAttribute), "Get" },
+                {typeof(GetAllAttribute), "Get" },
+                {typeof(SaveAttribute), "Post" },
+                {typeof(DeleteAttribute), "Delete" }
+            };
+                foreach (var attr in attrs)
+                {
+                    var httpAttributeSymbol = context.GetClass(attr.Key, "Codelisk.GeneratorAttributes");
+                    var methodBuilder = repoClass.AddMethod(httpAttributeSymbol.AttributeUrl(dto), Accessibility.Public)
+                        .WithReturnTypeForHttpMethod(attr.Key, dto)
+                        .AddParametersForHttpMethod(httpAttributeSymbol, dto);
+
+                    var baseRepoMethod = baseRepo.GetMethodsWithAttribute(httpAttributeSymbol.Name).First();
                     methodBuilder.WithBody((x) =>
                     {
-                        x.AppendLine($"return {baseRepoMethod.Name}(() => _repositoryApi.{httpAttribute.AttributeUrl(dto)}({string.Join(",", methodBuilder.Parameters.Select(x => x.Name.GetParameterName()))}));");
+                        x.AppendLine($"return {baseRepoMethod.Name}(() => _repositoryApi.{httpAttributeSymbol.AttributeUrl(dto)}({string.Join(",", methodBuilder.Parameters.Select(x => x.Name.GetParameterName()))}));");
                     });
                 }
 

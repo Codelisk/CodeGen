@@ -53,20 +53,21 @@ namespace Controller.Generator.CodeBuilders
         {
             var repoProperty = baseController.GetFieldsWithConstructedFromType(repoModel.Class).First();
 
-            Dictionary<IMethodSymbol, string> methodsWithControllerAttributeName = new Dictionary<IMethodSymbol, string>()
+            Dictionary<Type, string> methodsWithControllerAttributeName = new ()
             {
-                {repoModel.MethodFromAttribute<DeleteAttribute>(), "HttpDelete" },
-                {repoModel.MethodFromAttribute<GetAttribute>(), "HttpGet" },
-                {repoModel.MethodFromAttribute<GetAllAttribute>(), "HttpGet" },
-                {repoModel.MethodFromAttribute<SaveAttribute>(), "HttpPost" },
+                {typeof(DeleteAttribute), "HttpDelete" },
+                {typeof(GetAttribute), "HttpGet" },
+                {typeof(GetAllAttribute), "HttpGet" },
+                {typeof(SaveAttribute), "HttpPost" },
             };
 
             foreach (var item in methodsWithControllerAttributeName)
             {
-                var httpAttribute = item.Key.HttpAttribute();
-                var methodBuilder = c.AddMethod(item.Key.MethodName(dto), Accessibility.Public)
-                    .AddAttribute(item.Key.HttpControllerAttribute(dto, item.Value))
-                    .WithReturnTypeForHttpMethod(httpAttribute, dto)
+                var method = repoModel.MethodFromAttribute(item.Key);
+                var httpAttribute = method.HttpAttribute();
+                var methodBuilder = c.AddMethod(method.MethodName(dto), Accessibility.Public)
+                    .AddAttribute(method.HttpControllerAttribute(dto, item.Value))
+                    .WithReturnTypeForHttpMethod(item.Key, dto)
                     .AddParametersForHttpMethod(httpAttribute, dto);
 
                 methodBuilder.WithBody((x) =>

@@ -54,7 +54,7 @@ namespace Api.Generator.Generators.CodeBuilders
                 c.AddMethod(attributeUrl, Accessibility.Public).Abstract(true)
                     .AddAttribute(attributeUrl.AttributeWithConstructor(attr.Value))
                     .AddParametersForHttpMethod(httpAttributeSymbol, dto)
-                    .WithReturnTypeForHttpMethod(httpAttributeSymbol, dto);
+                    .WithReturnTypeForHttpMethod(attr.Key, dto);
             }
             return c;
         }

@@ -21,9 +21,9 @@ namespace Generators.Base.Extensions
         {
             return (T)attributeData.ConstructorArguments.FirstOrDefault().Value;
         }
-        public static TCustomAttr GetRealAttributeFromAttribute<TCustomAttr>(this INamedTypeSymbol attr)
+        public static TCustomAttr GetRealAttributeFromAttribute<TCustomAttr>(this Type t)
         {
-            var result = attr.ToReflectionType().GetCustomAttributes(true)
+            var result = t.GetCustomAttributes(true)
                                       .OfType<TCustomAttr>()
                                       .FirstOrDefault();
 

@@ -48,14 +48,14 @@ namespace Foundation.Crawler.Extensions.Extensions
 
             return methodBuilder;
         }
-        public static MethodBuilder WithReturnTypeForHttpMethod(this MethodBuilder methodBuilder, INamedTypeSymbol httpAttribute, INamedTypeSymbol dto)
+        public static MethodBuilder WithReturnTypeForHttpMethod(this MethodBuilder methodBuilder, Type httpAttribute, INamedTypeSymbol dto)
         {
-            if (!httpAttribute.HasAttribute(nameof(ReturnAttribute)))
+            var returnAttributeValue = httpAttribute.GetRealAttributeFromAttribute<ReturnAttribute>()?.ReturnKind;
+
+            if(returnAttributeValue is null)
             {
                 return methodBuilder.WithReturnTypeTask();
             }
-
-            var returnAttributeValue = httpAttribute.GetRealAttributeFromAttribute<ReturnAttribute>()?.ReturnKind;
 
             if (returnAttributeValue == ReturnKind.List)
             {

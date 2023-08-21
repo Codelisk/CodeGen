@@ -34,7 +34,7 @@ namespace Generators.Base.Extensions
             return $"{string.Join(".", namespaceParts)}.{typeName}, {assemblyName}";
         }
 
-    public static IPropertySymbol GetFirstPropertyByName(this INamedTypeSymbol classObject, string name, string nameSpace = null)
+        public static IPropertySymbol GetFirstPropertyByName(this INamedTypeSymbol classObject, string name, string nameSpace = null)
         {
             var properties = classObject.GetMembers().OfType<IPropertySymbol>();
 

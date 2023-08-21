@@ -29,5 +29,17 @@ namespace Foundation.Crawler.Models
 
             return null;
         }
+        public IMethodSymbol MethodFromAttribute(Type attrType)
+        {
+            foreach (var method in Methods)
+            {
+                if (method.HasAttribute(attrType.Name))
+                {
+                    return method;
+                }
+            }
+
+            return null;
+        }
     }
 }
