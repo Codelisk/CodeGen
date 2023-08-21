@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Shared.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\Shared\Shared.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
