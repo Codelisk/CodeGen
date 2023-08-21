@@ -31,6 +31,7 @@ namespace Api.Generator.Generators.CodeBuilders
         {
             var codeBuilder = CreateBuilder();
             var c = codeBuilder.AddClass(dto.ApiName()).WithAccessModifier(Accessibility.Public).OfType(TypeKind.Interface).Abstract(false)
+                .AddNamespaceImport(Constants.Constants.RefitNamespaceImport)
                 .SetBaseClass(baseApi);
 
             Method(context, c, dto);

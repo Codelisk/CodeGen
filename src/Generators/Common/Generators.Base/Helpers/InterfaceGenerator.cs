@@ -18,7 +18,7 @@ namespace Generators.Base.Helpers
         public static CodeBuilder GenerateInterface<TRegisterAttribute>(this CodeBuilder codeBuilder, GeneratorExecutionContext context) where TRegisterAttribute : Attribute
         {
             var lastClass = codeBuilder.Classes.Last();
-            lastClass.AddInterface("I" + lastClass.Name).AddAttribute(typeof(RegisterTransient).Name);
+            lastClass.AddInterface("I" + lastClass.Name).AddAttribute(typeof(TRegisterAttribute).FullName);
             codeBuilder.GetClasses(context).Last().GenerateInterface(codeBuilder, context);
             return codeBuilder;
         }
