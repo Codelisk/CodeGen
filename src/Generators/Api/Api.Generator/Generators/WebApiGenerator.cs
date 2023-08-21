@@ -1,6 +1,7 @@
 ﻿using Api.Generator.Generators.CodeBuilders;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
+using System.Diagnostics;
 
 namespace Api.Generator.Generators
 {
@@ -9,6 +10,7 @@ namespace Api.Generator.Generators
     {
         public override void Execute(GeneratorExecutionContext context)
         {
+            //Debugger.Launch();
             var refitApiCodeBuilder = new RefitApiCodeBuilder(context.Compilation.AssemblyName).Get(context);
             var repositoriesCodeBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
             var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(context.Compilation.AssemblyName).Get(context, repositoriesCodeBuilder);
