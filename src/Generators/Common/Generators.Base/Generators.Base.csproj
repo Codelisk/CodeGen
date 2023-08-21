@@ -2,7 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
+    <IsRoslynComponent>true</IsRoslynComponent>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
 
    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <IncludeSource>False</IncludeSource>
@@ -14,15 +19,15 @@
     </PropertyGroup>
 	
   <ItemGroup>
-    <PackageReference Include="AvantiPoint.CodeGenHelpers" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference PrivateAssets="All" Include="AvantiPoint.CodeGenHelpers" />
+    <PackageReference PrivateAssets="All" Include="Microsoft.CodeAnalysis.CSharp" />
+    <PackageReference PrivateAssets="All" Include="Microsoft.CodeAnalysis.Analyzers" />
+    <PackageReference PrivateAssets="All" Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\..\Submodules\AutoRegisterInject\src\AutoRegisterInject\Codelisk.AutoRegisterInject.Generator.csproj" OutputItemType="Analyzer" />
+    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" />
+    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Shared\Shared.csproj" OutputItemType="Analyzer" />
+    <ProjectReference PrivateAssets="All" Include="..\..\..\Submodules\AutoRegisterInject\src\AutoRegisterInject\Codelisk.AutoRegisterInject.Generator.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
 </Project>
