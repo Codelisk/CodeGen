@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\Submodules\AutoRegisterInject\src\AutoRegisterInject\Codelisk.AutoRegisterInject.Generator.csproj" />
     <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
     <ProjectReference Include="..\WebGenerator.Base\WebGenerator.Base.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
   </ItemGroup>
