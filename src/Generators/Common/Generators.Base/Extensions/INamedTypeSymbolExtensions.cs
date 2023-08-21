@@ -87,9 +87,9 @@ namespace Generators.Base.Extensions
                 return false;
             }).ToList();
         }
-        public static IPropertySymbol GetPropertyWithAttribute(this INamedTypeSymbol classObject, string attributeName)
+        public static IPropertySymbol? GetPropertyWithAttribute(this INamedTypeSymbol classObject, string attributeName)
         {
-            return classObject.GetAllProperties().Where(x => x.HasAttribute(attributeName)).First();
+            return classObject.GetAllProperties().Where(x => x.HasAttribute(attributeName)).FirstOrDefault();
         }
         public static List<IPropertySymbol> GetPropertiesWithType(this INamedTypeSymbol classObject, ITypeSymbol type)
         {

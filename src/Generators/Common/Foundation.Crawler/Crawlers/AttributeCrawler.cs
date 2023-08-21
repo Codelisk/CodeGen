@@ -91,7 +91,18 @@ namespace Foundation.Crawler.Crawlers
         }
         public static IPropertySymbol GetIdProperty(this INamedTypeSymbol dto)
         {
-            return dto.BaseType.GetPropertyWithAttribute(nameof(IdAttribute));
+            INamedTypeSymbol baseType = dto.BaseType;
+            while (baseType is not null)
+            {
+                var result = baseType.GetPropertyWithAttribute(nameof(IdAttribute));
+                if (result is not null)
+                {
+                    return result;
+                }
+
+                baseType = baseType.BaseType;
+            }
+            return null;
         }
 
         public static ClassWithMethods GetClassWithMethods(this INamedTypeSymbol classSymbol)
