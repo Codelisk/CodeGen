@@ -15,6 +15,7 @@
   <ItemGroup>
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
+
   <ItemGroup>
     <None Include="$(OutputPath)\Generators.Base.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\Foundation.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
@@ -27,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj"  OutputItemType="Analyzer"/>
+    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="true"/>
     <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Foundation\Foundation.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference PrivateAssets="All" Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference PrivateAssets="All" Include="..\..\Common\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
