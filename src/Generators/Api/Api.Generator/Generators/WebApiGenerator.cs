@@ -10,7 +10,8 @@ namespace Api.Generator.Generators
     {
         public override void Execute(GeneratorExecutionContext context)
         {
-            //Debugger.Launch();
+            context.AddSource("Test.cs", "TEST");
+            return;
             var refitApiCodeBuilder = new RefitApiCodeBuilder(context.Compilation.AssemblyName).Get(context);
             var repositoriesCodeBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
             var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(context.Compilation.AssemblyName).Get(context, repositoriesCodeBuilder);
