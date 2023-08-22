@@ -2,17 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
-    <IsRoslynComponent>true</IsRoslynComponent>
   </PropertyGroup>
-  
-   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <IncludeSource>False</IncludeSource>
-        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-        <GenerateDocumentationFile>False</GenerateDocumentationFile>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PublishRepositoryUrl>False</PublishRepositoryUrl>
-        <EmbedUntrackedSources>False</EmbedUntrackedSources>
-    </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
@@ -20,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
-    <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference OutputItemType="Analyzer"  Include="..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
+    <ProjectReference OutputItemType="Analyzer"  Include="..\..\Common\Shared\Shared.csproj" />
+    <ProjectReference OutputItemType="Analyzer"  Include="..\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
 </Project>

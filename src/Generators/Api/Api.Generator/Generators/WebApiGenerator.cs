@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace Api.Generator.Generators
 {
     [Generator]
-    public class WebApiGenerator : BaseGenerator, ISourceGenerator
+    public class WebApiGenerator : BaseGenerator
     {
         public override void Execute(GeneratorExecutionContext context)
         {

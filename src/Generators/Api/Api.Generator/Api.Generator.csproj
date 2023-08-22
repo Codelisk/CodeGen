@@ -7,9 +7,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Foundation\Foundation.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
-    <ProjectReference PrivateAssets="All" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
-    <ProjectReference PrivateAssets="All" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" ReferenceOutputAssembly="true" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
+    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" ReferenceOutputAssembly="true" Include="..\..\..\Common\Foundation\Foundation.csproj" />
+    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" ReferenceOutputAssembly="true" Include="..\..\..\Common\Shared\Shared.csproj" />
+    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
+    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
 </Project>
