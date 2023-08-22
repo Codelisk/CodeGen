@@ -10,16 +10,27 @@ namespace Api.Generator.Generators
     {
         public override void Execute(GeneratorExecutionContext context)
         {
-            context.AddSource("Test.cs", "TEST");
-            return;
-            var refitApiCodeBuilder = new RefitApiCodeBuilder(context.Compilation.AssemblyName).Get(context);
-            var repositoriesCodeBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
-            var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(context.Compilation.AssemblyName).Get(context, repositoriesCodeBuilder);
+            int line=0;
+            try
+            {
+                var refitApiCodeBuilder = new RefitApiCodeBuilder(context.Compilation.AssemblyName).Get(context);
+                line = 1;
+                var repositoriesCodeBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
+                line = 2;
+                var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(context.Compilation.AssemblyName).Get(context, repositoriesCodeBuilder);
 
-            AddSource(context, "Repositories", repositoriesCodeBuilder, ("abstract partial", "partial"));
-            AddSource(context, "Apis", refitApiCodeBuilder, ("abstract partial", "partial"));
-            AddSource(context, "", classServicesModuleInitializerBuilder);
-            //AddSource(context, "Repositories", repositoriesCodeBuilder);
+                line = 3;
+                AddSource(context, "Repositories", repositoriesCodeBuilder, ("abstract partial", "partial"));
+                line = 4;
+                AddSource(context, "Apis", refitApiCodeBuilder, ("abstract partial", "partial"));
+                line = 5;
+                AddSource(context, "", classServicesModuleInitializerBuilder);
+                //AddSource(context, "Repositories", repositoriesCodeBuilder);
+            }
+            catch (Exception ex)
+            {
+                context.AddSource("Test.cs", "LINE " + line + ex.Message + " INNER:" + ex.InnerException?.Message);
+            }
         }
     }
 }
