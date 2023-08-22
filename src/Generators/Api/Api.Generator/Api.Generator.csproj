@@ -19,17 +19,18 @@
     <None Include="$(OutputPath)\Generators.Base.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\Foundation.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\Foundation.Crawler.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\Codelisk.GeneratorAttributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Codelisk.GeneratorAttributes" Version="2.13.34" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true"/>
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Foundation\Foundation.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true"/>
-    <ProjectReference PrivateAssets="All" Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true"/>
-    <ProjectReference PrivateAssets="All" Include="..\..\Common\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true"/>
+    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Foundation\Foundation.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    <ProjectReference PrivateAssets="All" Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    <ProjectReference PrivateAssets="All" Include="..\..\Common\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
   </ItemGroup>
 </Project>
