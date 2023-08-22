@@ -1,0 +1,11 @@
+<Project>
+<Import Project="..\..\Directory.Build.props" />
+  <PropertyGroup>
+  <IsRoslynComponent>true</IsRoslynComponent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!-- Do not include the generator as a lib dependency -->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+  </PropertyGroup>
+</Project>

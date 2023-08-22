@@ -10,13 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
-    <ProjectReference Include="..\WebGenerator.Base\WebGenerator.Base.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
-    <ProjectReference Include="..\WebRepositories.Generator\WebRepositories.Generator.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="All" />
+    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\WebRepositories.Generator\WebRepositories.Generator.csproj" />
   </ItemGroup>
 </Project>

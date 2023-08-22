@@ -20,10 +20,9 @@
     <PackageReference PrivateAssets="All" Include="Microsoft.CodeAnalysis.Analyzers" />
     <PackageReference PrivateAssets="All" Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
-
+	
   <ItemGroup>
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" />
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Shared\Shared.csproj" OutputItemType="Analyzer" />
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Submodules\AutoRegisterInject\src\AutoRegisterInject\Codelisk.AutoRegisterInject.Generator.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\..\Common\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\Submodules\AutoRegisterInject\src\AutoRegisterInject\Codelisk.AutoRegisterInject.Generator.csproj" />
   </ItemGroup>
 </Project>

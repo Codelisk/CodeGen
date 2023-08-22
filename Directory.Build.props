@@ -15,12 +15,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <Version>2.13.37</Version>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PublishRepositoryUrl>True</PublishRepositoryUrl>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <!-- Do not include the generator as a lib dependency -->
   </PropertyGroup>
+  
+   <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" 
+        PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
 </Project>
