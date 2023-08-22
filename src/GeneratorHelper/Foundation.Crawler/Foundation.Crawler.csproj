@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
+    <ProjectReference Include="..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
+    <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
 </Project>

@@ -1,22 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
-    <IsRoslynComponent>true</IsRoslynComponent>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\Submodules\AutoRegisterInject\src\AutoRegisterInject\Codelisk.AutoRegisterInject.Generator.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj"/>
     <ProjectReference Include="..\WebGenerator.Base\WebGenerator.Base.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="All" />
-  </ItemGroup>
 </Project>
