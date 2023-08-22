@@ -1,15 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
-    <IsRoslynComponent>true</IsRoslynComponent>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" PrivateAssets="All" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All"  Include="..\WebRepositories.Generator\WebRepositories.Generator.csproj" />
   </ItemGroup>
