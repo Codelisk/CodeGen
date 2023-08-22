@@ -8,9 +8,9 @@ namespace Api.Generator.Generators
     [Generator]
     public class WebApiGenerator : BaseGenerator
     {
+        public static int line = 0;
         public override void Execute(GeneratorExecutionContext context)
         {
-            int line=0;
             try
             {
                 var refitApiCodeBuilder = new RefitApiCodeBuilder(context.Compilation.AssemblyName).Get(context);

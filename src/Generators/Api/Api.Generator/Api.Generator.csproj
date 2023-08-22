@@ -6,6 +6,12 @@
     <None Include="$(OutputPath)\Foundation.Crawler.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\Codelisk.GeneratorAttributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\Shared.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\Codelisk.AutoFilterer.Generators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\Codelisk.AutoRegisterInject.Generator.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-preview.7.23375.6" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,5 +20,7 @@
     <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\Common\Shared\Shared.csproj" />
     <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
     <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" ReferenceOutputAssembly="true" Include="..\..\..\Submodules\AutoFilterer\src\AutoFilterer.Generators\Codelisk.AutoFilterer.Generators.csproj" />
+    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" ReferenceOutputAssembly="true" Include="..\..\..\Submodules\AutoRegisterInject\src\AutoRegisterInject\Codelisk.AutoRegisterInject.Generator.csproj" />
   </ItemGroup>
 </Project>
