@@ -1,10 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.14</Version>
-  </PropertyGroup>
-
   <ItemGroup>
     <None Include="$(OutputPath)\Generators.Base.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\Foundation.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
