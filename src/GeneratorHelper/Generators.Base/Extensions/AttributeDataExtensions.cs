@@ -1,4 +1,4 @@
-﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+﻿
 using Microsoft.CodeAnalysis;
 
 namespace Generators.Base.Extensions
