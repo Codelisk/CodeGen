@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
     <IsRoslynComponent>true</IsRoslynComponent>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
