@@ -25,9 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" />
-    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Foundation\Foundation.csproj" OutputItemType="Analyzer" />
-    <ProjectReference PrivateAssets="All" Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" />
-    <ProjectReference PrivateAssets="All" Include="..\..\Common\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" />
+    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="False"/>
+    <ProjectReference PrivateAssets="All" Include="..\..\..\Common\Foundation\Foundation.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="False"/>
+    <ProjectReference PrivateAssets="All" Include="..\..\Common\Foundation.Crawler\Foundation.Crawler.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="False"/>
+    <ProjectReference PrivateAssets="All" Include="..\..\Common\Generators.Base\Generators.Base.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="False"/>
   </ItemGroup>
 </Project>
