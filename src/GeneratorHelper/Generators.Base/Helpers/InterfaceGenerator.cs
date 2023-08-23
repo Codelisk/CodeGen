@@ -78,7 +78,14 @@ namespace Generators.Base.Helpers
                 }
             }
 
-            nameSpacesFromUsedTypes.Distinct().ToList().ForEach(x => result.AddNamespaceImport(x));
+            try
+            {
+                nameSpacesFromUsedTypes.Distinct().ToList().ForEach(x => result.AddNamespaceImport(x));
+            }
+            catch(Exception ex)
+            {
+                TestLog.Add(ex.Message + " INNER" + ex.InnerException?.Message);
+            }
 
             return codeBuilder;
         }
