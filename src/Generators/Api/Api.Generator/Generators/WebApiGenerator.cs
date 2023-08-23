@@ -29,7 +29,7 @@ namespace Api.Generator.Generators
             }
             catch (Exception ex)
             {
-                context.AddSource("Test.cs", "LINE " + line + ex.Message + " INNER:" + ex.InnerException?.Message);
+                context.AddSource("Test.cs", "LINE " + line + ex.Message + " INNER:" + ex.InnerException?.Message + "\n" + ex.StackTrace.ToString());
             }
         }
     }
