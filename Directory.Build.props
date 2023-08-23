@@ -14,6 +14,6 @@
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <Version>2.13.52</Version>
+    <Version>2.13.53</Version>
   </PropertyGroup>
 </Project>
