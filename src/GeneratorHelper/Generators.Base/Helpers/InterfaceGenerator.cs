@@ -18,36 +18,42 @@ namespace Generators.Base.Helpers
         public static CodeBuilder GenerateInterface<TRegisterAttribute>(this CodeBuilder codeBuilder, GeneratorExecutionContext context) where TRegisterAttribute : Attribute
         {
             var lastClass = codeBuilder.Classes.Last();
-            
+            TestLog.Add("Adding " + lastClass.Name);
             lastClass.AddInterface("I" + lastClass.Name).AddAttribute(typeof(TRegisterAttribute).FullName);
             codeBuilder.GetClasses(context).Last().GenerateInterface(codeBuilder, context);
             return codeBuilder;
         }
         public static CodeBuilder GenerateInterface(this INamedTypeSymbol c, CodeBuilder codeBuilder, GeneratorExecutionContext context)
         {
+            TestLog.Add("Start Generate");
             var publicMethods = c.GetMethods().Where(x => x.DeclaredAccessibility == Accessibility.Public && !x.Name.Equals(".ctor"));
 
+            TestLog.Add("I" + c.Name);
             var result = codeBuilder.AddClass("I" + c.Name).OfType(TypeKind.Interface).WithAccessModifier(Accessibility.Public);
 
             List<string> nameSpacesFromUsedTypes = new List<string>();
             foreach (var publicMethod in publicMethods)
             {
+                TestLog.Add("Method:" + publicMethod.Name);
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
                     .WithReturnType(publicMethod.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                     .Abstract(true);
 
+                TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
                 nameSpacesFromUsedTypes.Add(publicMethod.ReturnType.GetNamespace());
                 nameSpacesFromUsedTypes.AddRange(publicMethod.Parameters.Select(x => x.Type.GetNamespace()));
             }
 
 
+            TestLog.Add("c.BaseType" + c.BaseType);
             if (c.BaseType is not null)
             {
                 var baseType = context.GetClassByName(c.BaseType.Name, "");
                 var interFace = baseType.Interfaces.FirstOrDefault();
                 if (interFace is not null)
                 {
+                    TestLog.Add("nameSpacesFromUsedTypes.Add(interFace.GetNamespace());");
                     nameSpacesFromUsedTypes.Add(interFace.GetNamespace());
                     if (interFace.TypeArguments.Length > 0 && interFace.TypeArguments.Length == c.BaseType.TypeArguments.Length)
                     {
@@ -68,6 +74,7 @@ namespace Generators.Base.Helpers
                     {
                         result.AddInterface(interFace);
                     }
+                    TestLog.Add("NICE");
                 }
             }
 

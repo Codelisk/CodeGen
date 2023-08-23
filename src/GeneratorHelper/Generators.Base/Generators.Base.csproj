@@ -14,6 +14,5 @@
   <ItemGroup>
     <ProjectReference OutputItemType="Analyzer" Include="..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
     <ProjectReference OutputItemType="Analyzer" Include="..\..\Common\Shared\Shared.csproj" />
-    <ProjectReference OutputItemType="Analyzer" Include="..\..\Submodules\AutoRegisterInject\src\AutoRegisterInject\Codelisk.AutoRegisterInject.Generator.csproj" />
   </ItemGroup>
 </Project>

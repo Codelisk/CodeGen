@@ -7,6 +7,7 @@ using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
+using Generators.Base;
 
 namespace Api.Generator.Generators.CodeBuilders
 {
@@ -56,13 +57,10 @@ namespace Api.Generator.Generators.CodeBuilders
                         x.AppendLine($"return {baseRepoMethod.Name}(() => _repositoryApi.{httpAttributeSymbol.AttributeUrl(dto)}({string.Join(",", methodBuilder.Parameters.Select(x => x.Name.GetParameterName()))}));");
                     });
                 }
-                WebApiGenerator.line = "10";
 
-                var lastClass = codeBuilder.Classes.Last();
-                WebApiGenerator.line = lastClass.Name;
+                TestLog.Add("Start");
                 codeBuilder.GenerateInterface<RegisterSingleton>(context);
 
-                WebApiGenerator.line = "11";
                 result.Add(codeBuilder);
 
                 //context.AddSource(dto.Name.Substring(1, dto.Name.Length - 1) + "Repository", refitApiCodeBuilder.Build());
