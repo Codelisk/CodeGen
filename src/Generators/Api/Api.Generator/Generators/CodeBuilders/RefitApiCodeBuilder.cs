@@ -6,6 +6,7 @@ using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Extensions.Common;
 using Microsoft.CodeAnalysis;
+using Foundation.Crawler.Extensions;
 
 namespace Api.Generator.Generators.CodeBuilders
 {
@@ -53,7 +54,7 @@ namespace Api.Generator.Generators.CodeBuilders
                 var attributeUrl = context.AttributeUrl(attr.Key, dto);
                 var httpAttributeSymbol = context.GetClass(attr.Key, "Codelisk.GeneratorAttributes");
                 c.AddMethod(attributeUrl, Accessibility.Public).Abstract(true)
-                    .AddAttribute(attributeUrl.AttributeWithConstructor("/" + attr.Value))
+                    .AddAttribute(attributeUrl.AttributeWithConstructor($"/{dto.ReplaceDtoSuffix()}/{attr.Value}"))
                     .AddParametersForHttpMethod(httpAttributeSymbol, dto)
                     .WithReturnTypeForHttpMethod(attr.Key, dto);
             }
