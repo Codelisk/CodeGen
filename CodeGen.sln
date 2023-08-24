@@ -81,8 +81,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Foundation.Crawler", "src\G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generators.Base", "src\GeneratorHelper\Generators.Base\Generators.Base.csproj", "{A182F743-B52E-4323-B9C2-69B84EC7208B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "src\Samples\IntegrationTest\TestProject1\TestProject1.csproj", "{D763D0EE-51BB-44B9-A25F-BC7A2AF96023}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -193,10 +191,6 @@ Global
 		{A182F743-B52E-4323-B9C2-69B84EC7208B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A182F743-B52E-4323-B9C2-69B84EC7208B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A182F743-B52E-4323-B9C2-69B84EC7208B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D763D0EE-51BB-44B9-A25F-BC7A2AF96023}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D763D0EE-51BB-44B9-A25F-BC7A2AF96023}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D763D0EE-51BB-44B9-A25F-BC7A2AF96023}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D763D0EE-51BB-44B9-A25F-BC7A2AF96023}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -235,7 +229,6 @@ Global
 		{F93D38DD-C45A-47F0-9F9E-A8C84F7117F0} = {A87C58D3-7F29-4FEF-8CCF-A05A10BEE6AC}
 		{3BC62A65-B38C-4C92-A205-251FF58F9E74} = {0F721182-9BE8-464F-8C03-E08FDD165F56}
 		{A182F743-B52E-4323-B9C2-69B84EC7208B} = {0F721182-9BE8-464F-8C03-E08FDD165F56}
-		{D763D0EE-51BB-44B9-A25F-BC7A2AF96023} = {4407A70B-2CAB-47A3-810B-AFEB415D1A57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {077D68B2-E4F9-47C8-BD23-66121BD01E40}
