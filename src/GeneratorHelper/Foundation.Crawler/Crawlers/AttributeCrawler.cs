@@ -57,7 +57,7 @@ namespace Foundation.Crawler.Crawlers
         {
             var urlProperty = attributeSymobl.GetAttribute<UrlAttribute>();
             bool plural = attributeSymobl.HasAttribute(nameof(PluralAttribute));
-            return urlProperty.GetFirstConstructorArgument().AttributeUrl(dto, plural);
+            return urlProperty.GetFirstConstructorArgument().AttributeUrl(dto);
         }
         public static INamedTypeSymbol Manager(this GeneratorExecutionContext context, INamedTypeSymbol dto)
         {
