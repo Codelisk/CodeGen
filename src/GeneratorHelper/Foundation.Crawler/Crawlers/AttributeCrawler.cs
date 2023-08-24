@@ -6,6 +6,7 @@ using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using Codelisk.GeneratorAttributes.WebAttributes.Manager;
 using Codelisk.GeneratorAttributes.WebAttributes.Repository;
+using Foundation.Crawler.Extensions;
 using Foundation.Crawler.Models;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
@@ -30,10 +31,10 @@ namespace Foundation.Crawler.Crawlers
         {
             return context.GetClassesWithAttribute(nameof(DefaultApiRepositoryAttribute)).First();
         }
-        public static string AttributeUrl(this string attributeValue, INamedTypeSymbol dto, bool plural = false)
+        public static string AttributeUrl(this string attributeValue, INamedTypeSymbol dto)
         {
             //var attribute = context.GetClassesWithAttribute(nameof(UrlAttribute)).OfType<TAttribute>().First();
-            return $"{attributeValue}";
+            return $"/{dto.ReplaceDtoSuffix()}/{attributeValue}";
         }
         public static INamedTypeSymbol GetAttribute<TAttribute>(this GeneratorExecutionContext context) where TAttribute : Attribute
         {

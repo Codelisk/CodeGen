@@ -54,7 +54,7 @@ namespace Api.Generator.Generators.CodeBuilders
                 var attributeUrl = context.AttributeUrl(attr.Key, dto);
                 var httpAttributeSymbol = context.GetClass(attr.Key, "Codelisk.GeneratorAttributes");
                 c.AddMethod(attributeUrl, Accessibility.NotApplicable).Abstract(true)
-                    .AddAttribute(attributeUrl.AttributeWithConstructor($"/{dto.ReplaceDtoSuffix()}/{attr.Value}"))
+                    .AddAttribute(attributeUrl.AttributeWithConstructor($"{attr.Value}"))
                     .AddParametersForHttpMethod(httpAttributeSymbol, dto)
                     .WithReturnTypeForHttpMethod(attr.Key, dto);
             }
