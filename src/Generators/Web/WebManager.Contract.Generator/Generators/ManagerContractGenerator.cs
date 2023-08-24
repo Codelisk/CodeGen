@@ -9,6 +9,10 @@ namespace WebManager.Contract.Generator.Generators
     {
         public override void Execute(GeneratorExecutionContext context)
         {
+            if (context.Compilation.AssemblyName.Contains("Generator"))
+            {
+                return;
+            }
             AddSource(context, "ManagerContracts", new ManagerContractCodeBuilder(context.Compilation.AssemblyName).Get(context));
         }
     }

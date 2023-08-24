@@ -9,6 +9,10 @@ namespace WebRepositories.Contract.Generator.Generators
     {
         public override void Execute(GeneratorExecutionContext context)
         {
+            if (context.Compilation.AssemblyName.Contains("Generator"))
+            {
+                return;
+            }
             AddSource(context, "RepositoryContracts", new RepositoryContractCodeBuilder(context.Compilation.AssemblyName).Get(context));
         }
     }
