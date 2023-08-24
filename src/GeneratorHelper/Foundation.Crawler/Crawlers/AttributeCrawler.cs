@@ -92,7 +92,7 @@ namespace Foundation.Crawler.Crawlers
         }
         public static IPropertySymbol GetIdProperty(this INamedTypeSymbol dto)
         {
-            INamedTypeSymbol baseType = dto.BaseType;
+            INamedTypeSymbol baseType = dto;
             while (baseType is not null)
             {
                 var result = baseType.GetPropertyWithAttribute(nameof(IdAttribute));
