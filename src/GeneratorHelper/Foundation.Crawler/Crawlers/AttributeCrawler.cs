@@ -34,7 +34,7 @@ namespace Foundation.Crawler.Crawlers
         public static string AttributeUrl(this string attributeValue, INamedTypeSymbol dto)
         {
             //var attribute = context.GetClassesWithAttribute(nameof(UrlAttribute)).OfType<TAttribute>().First();
-            return $"/{dto.ReplaceDtoSuffix()}/{attributeValue}";
+            return $"{attributeValue}";
         }
         public static INamedTypeSymbol GetAttribute<TAttribute>(this GeneratorExecutionContext context) where TAttribute : Attribute
         {

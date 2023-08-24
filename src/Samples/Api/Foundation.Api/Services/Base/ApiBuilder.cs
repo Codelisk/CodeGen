@@ -20,8 +20,7 @@ namespace Foundation.Api.Services.Base
         {
             return new RefitSettings
             {
-                ContentSerializer = new NewtonsoftJsonContentSerializer(_jsonSettings),
-                AuthorizationHeaderValueGetter = AuthorizationHeaderValueGetter
+                ContentSerializer = new NewtonsoftJsonContentSerializer(_jsonSettings)
             };
         }
 

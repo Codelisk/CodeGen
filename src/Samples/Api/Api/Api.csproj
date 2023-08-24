@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Codelisk.GeneratorAttributes" Version="2.13.49" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-preview.7.23375.6" />
     <PackageReference Include="Refit" />
     <PackageReference Include="Polly" />
     <PackageReference Include="Refit.Newtonsoft.Json" />
@@ -14,7 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" PrivateAssets="All" />
-    <ProjectReference Include="..\..\..\Generators\Api\Api.Generator\Api.Generator.csproj" OutputItemType="Analyzer" PrivateAssets="All" />
+    <ProjectReference Include="..\..\..\Generators\Api\Api.Generator\Api.Generator.csproj" OutputItemType="Analyzer" />
+    <!--<ProjectReference Include="..\..\..\Generators\Api\Api.Generator\Api.Generator.csproj" OutputItemType="Analyzer" />-->
     <ProjectReference Include="..\Foundation.Api\Foundation.Api.csproj" PrivateAssets="All" />
   </ItemGroup>
 
