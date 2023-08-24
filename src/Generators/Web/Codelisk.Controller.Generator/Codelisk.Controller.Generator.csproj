@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <ItemGroup>
+    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All"  Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
+    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All"  Include="..\WebGenerator.Base\WebGenerator.Base.csproj" />
+  </ItemGroup>
+</Project>
