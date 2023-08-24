@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" PrivateAssets="All" />
-    <ProjectReference Include="..\..\..\Generators\Api\Api.Generator\Api.Generator.csproj" OutputItemType="Analyzer" />
     <!--<ProjectReference Include="..\..\..\Generators\Api\Api.Generator\Api.Generator.csproj" OutputItemType="Analyzer" />-->
     <ProjectReference Include="..\Foundation.Api\Foundation.Api.csproj" PrivateAssets="All" />
   </ItemGroup>
