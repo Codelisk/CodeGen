@@ -9,6 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference PrivateAssets="All" Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-preview.7.23375.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\WebGenerator.Base\WebGenerator.Base.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
