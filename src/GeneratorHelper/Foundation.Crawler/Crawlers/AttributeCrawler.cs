@@ -76,10 +76,7 @@ namespace Foundation.Crawler.Crawlers
         private static INamedTypeSymbol UserOrDefault<TAttribute>(this GeneratorExecutionContext context, INamedTypeSymbol dto, bool isUser = false)
             where TAttribute : Attribute
         {
-            if (classSymbols is null)
-            {
-                classSymbols = context.GetAllClasses("");
-            }
+            classSymbols = context.GetAllClasses("");
             var objectsWithAttribute = classSymbols.GetClassesWithAttribute(typeof(TAttribute).Name);
             if (dto.HasAttribute(nameof(UserDtoAttribute)))
             {

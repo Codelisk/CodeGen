@@ -10,7 +10,8 @@ namespace Controller.Generator.Generators
     public class ControllerGenerator : BaseGenerator
     {
         public override void Execute(GeneratorExecutionContext context)
-        {
+        { 
+            //Debugger.Launch();
             if (context.Compilation.AssemblyName.Contains("Generator"))
             {
                 return;
