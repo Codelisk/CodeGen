@@ -40,7 +40,7 @@ namespace WebManager.Generator.CodeBuilders
             return builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
-                .AddAttribute(nameof(GeneratedManagerAttribute))
+                .AddAttribute(typeof(GeneratedManagerAttribute).FullName)
                 .AddAttribute(AutoRegisterInject.Constants.RegisterAttributeContants.TRANSIENT_ATTRIBUTE_NAME)
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseManager, (baseRepo, dto.RepositoryNameFromDto()))

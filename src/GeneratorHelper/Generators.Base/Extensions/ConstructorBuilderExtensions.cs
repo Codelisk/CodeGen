@@ -39,7 +39,7 @@ namespace Generators.Base.Extensions
                     }
                     else if (parameter.Type.Name.Equals("I" + replaceTypeName.Value.Item1.Name))
                     {
-                        typeName = "I" + typeName.Replace(parameter.Type.Name, replaceTypeName.Value.Item2);
+                        typeName = typeName.Replace(parameter.Type.Name, "I" + replaceTypeName.Value.Item2);
                         name = replaceTypeName.Value.Item2.GetParameterName();
                     }
                 }

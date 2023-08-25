@@ -55,10 +55,10 @@ namespace Controller.Generator.CodeBuilders
 
             Dictionary<Type, string> methodsWithControllerAttributeName = new ()
             {
-                {typeof(DeleteAttribute), "HttpDelete" },
-                {typeof(GetAttribute), "HttpGet" },
-                {typeof(GetAllAttribute), "HttpGet" },
-                {typeof(SaveAttribute), "HttpPost" },
+                {typeof(DeleteAttribute), Constants.HttpDeleteAttribute },
+                {typeof(GetAttribute), Constants.HttpGetAttribute },
+                {typeof(GetAllAttribute), Constants.HttpGetAttribute },
+                {typeof(SaveAttribute), Constants.HttpPostAttribute },
             };
 
             foreach (var item in methodsWithControllerAttributeName)

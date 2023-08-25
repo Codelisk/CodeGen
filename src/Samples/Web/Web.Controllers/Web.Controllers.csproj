@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--<Compile Include="obj/generated/**"/>-->
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
   </ItemGroup>

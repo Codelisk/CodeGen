@@ -40,7 +40,7 @@ namespace WebRepositories.Generator.CodeBuilders
             return builder.AddClass(dto.RepositoryNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.RepositoryNameFromDto())
                 .SetBaseClass(constructedBaseRepo.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
-                .AddAttribute(nameof(GeneratedRepositoryAttribute))
+                .AddAttribute(typeof(GeneratedRepositoryAttribute).FullName)
                 .AddAttribute(AutoRegisterInject.Constants.RegisterAttributeContants.TRANSIENT_ATTRIBUTE_NAME)
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseRepo)

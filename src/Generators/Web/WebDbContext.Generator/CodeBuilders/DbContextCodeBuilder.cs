@@ -36,7 +36,7 @@ namespace WebDbContext.Generator.CodeBuilders
         private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IGrouping<string, INamedTypeSymbol> dtos, INamedTypeSymbol baseContext, GeneratorExecutionContext context)
         {
             var result = builder.AddClass(dtos.Key).WithAccessModifier(Accessibility.Public).AddNamespaceImport("Microsoft.EntityFrameworkCore")
-                .AddAttribute(nameof(GeneratedDbContextAttribute));
+                .AddAttribute(typeof(GeneratedDbContextAttribute).FullName);
 
             foreach (var dto in dtos)
             {

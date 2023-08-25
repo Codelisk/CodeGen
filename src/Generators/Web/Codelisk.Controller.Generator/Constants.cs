@@ -2,11 +2,11 @@
 {
     public static class Constants
     {
-        public const string NameSpace = "Web.Controllers";
-        public const string ControllerAttribute = "ApiController";
+        private const string MvcNamespace = "Microsoft.AspNetCore.Mvc.";
+        public const string ControllerAttribute = MvcNamespace + "ApiController";
 
-        public const string HttpPostAttribute = "HttpPost";
-        public const string HttpGetAttribute = "HttpGet";
-        public const string HttpDeleteAttribute = "HttpDelete";
+        public const string HttpPostAttribute = MvcNamespace + "HttpPost";
+        public const string HttpGetAttribute = MvcNamespace + "HttpGet";
+        public const string HttpDeleteAttribute = MvcNamespace + "HttpDelete";
     }
 }
