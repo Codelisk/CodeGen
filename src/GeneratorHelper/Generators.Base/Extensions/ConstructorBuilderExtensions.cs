@@ -28,7 +28,7 @@ namespace Generators.Base.Extensions
             Dictionary<string, string> typeParameters = new Dictionary<string, string>();
             foreach (var parameter in baseConstructor.Parameters)
             {
-                var typeName = parameter.Type.GetFullName();
+                var typeName = parameter.Type.Name;
                 string name = parameter.Type.Name.GetParameterName();
                 if (replaceTypeName is not null)
                 {
