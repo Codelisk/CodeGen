@@ -1,4 +1,5 @@
 ﻿using CodeGenHelpers;
+using CodeGenHelpers.Internals;
 using Microsoft.CodeAnalysis;
 
 namespace Generators.Base.Extensions
@@ -27,7 +28,7 @@ namespace Generators.Base.Extensions
             Dictionary<string, string> typeParameters = new Dictionary<string, string>();
             foreach (var parameter in baseConstructor.Parameters)
             {
-                var typeName = parameter.Type.Name;
+                var typeName = parameter.Type.GetFullName();
                 string name = parameter.Type.Name.GetParameterName();
                 if (replaceTypeName is not null)
                 {
