@@ -72,7 +72,7 @@ namespace Controller.Generator.CodeBuilders
 
                 methodBuilder.WithBody((x) =>
                 {
-                    x.AppendLine($"return {repoProperty.Name}.{item.Key.Name}({httpAttribute.GetParametersNamesForHttpMethod(dto)});");
+                    x.AppendLine($"return {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});");
                 });
             }
         }
