@@ -1,14 +1,17 @@
-﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
-using CodeGenHelpers;
+﻿using CodeGenHelpers;
+using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using Foundation.Crawler.Crawlers;
-using Foundation.Crawler.Extensions.Extensions;
+using Foundation.Crawler.Extensions;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Extensions.Common;
 using Microsoft.CodeAnalysis;
-using Foundation.Crawler.Extensions;
+using System;
+using System.Collections.Generic;
+using Foundation.Crawler.Extensions.Extensions;
+using System.Text;
 
-namespace Api.Generator.Generators.CodeBuilders
+namespace Api.RefitApis.Generator.CodeBuilders
 {
     public class RefitApiCodeBuilder : BaseCodeBuilder
     {
@@ -32,7 +35,7 @@ namespace Api.Generator.Generators.CodeBuilders
         {
             var codeBuilder = CreateBuilder();
             var c = codeBuilder.AddClass(dto.ApiName()).WithAccessModifier(Accessibility.Public).OfType(TypeKind.Interface).Abstract(false)
-                .AddNamespaceImport(Constants.Constants.RefitNamespaceImport)
+                .AddNamespaceImport(Constants.RefitNamespaceImport)
                 .SetBaseClass(baseApi);
 
             Method(context, c, dto);
@@ -50,7 +53,7 @@ namespace Api.Generator.Generators.CodeBuilders
             };
 
             foreach (var attr in typeAndRefitAttribute)
-            { 
+            {
                 var attributeUrl = context.AttributeUrl(attr.Key, dto);
                 var httpAttributeSymbol = context.GetClass(attr.Key, "Codelisk.GeneratorAttributes");
                 c.AddMethod(attributeUrl, Accessibility.NotApplicable).Abstract(true)
