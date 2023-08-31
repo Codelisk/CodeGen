@@ -17,6 +17,6 @@
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <Version>2.13.88</Version>
+    <Version>2.13.89</Version>
   </PropertyGroup>
 </Project>
