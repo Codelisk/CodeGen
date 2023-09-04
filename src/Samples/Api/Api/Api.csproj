@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Codelisk.GeneratorAttributes" Version="2.13.84" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0-preview.7.23375.6" />
+    <PackageReference Include="Codelisk.GeneratorAttributes"  />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
     <PackageReference Include="Orderlyze.BuildTools" Version="1.0.16" />
     <PackageReference Include="Refit" />
     <PackageReference Include="Polly" />
