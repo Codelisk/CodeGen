@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Orderlyze.BuildTools" Version="1.0.16" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.2.3" />
   </ItemGroup>
 

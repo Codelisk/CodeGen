@@ -9,6 +9,11 @@
     <None Include="$(OutputPath)\Shared.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <PackageReference Include="Orderlyze.BuildTools" Version="1.0.16" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\Common\Shared\Shared.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
