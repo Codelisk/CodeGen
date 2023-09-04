@@ -7,8 +7,7 @@
 
   <ItemGroup>
     <!--<Compile Include="obj/generated/**"/>-->
-    <PackageReference Include="Orderlyze.BuildTools" Version="1.0.16" />
-    <PackageReference Include="Swashbuckle.AspNetCore"  />
+    <PackageReference Include="Swashbuckle.AspNetCore" />
     <PackageReference Include="AutoMapper" />
   </ItemGroup>
 

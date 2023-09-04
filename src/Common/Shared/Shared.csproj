@@ -8,8 +8,4 @@
   <ItemGroup>
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Orderlyze.BuildTools" Version="1.0.16" />
-  </ItemGroup>
 </Project>

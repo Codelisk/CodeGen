@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Orderlyze.BuildTools" Version="1.0.16" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AutoFilterer\Codelisk.AutoFilterer.csproj" PrivateAssets="All" />
   </ItemGroup>
 

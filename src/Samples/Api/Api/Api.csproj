@@ -6,9 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Codelisk.GeneratorAttributes"  />
+    <PackageReference Include="Codelisk.GeneratorAttributes" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-    <PackageReference Include="Orderlyze.BuildTools" Version="1.0.16" />
     <PackageReference Include="Refit" />
     <PackageReference Include="Polly" />
     <PackageReference Include="Refit.Newtonsoft.Json" />
