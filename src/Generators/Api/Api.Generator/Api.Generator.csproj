@@ -8,11 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" ReferenceOutputAssembly="true" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
+    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
     <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\Common\Shared\Shared.csproj" />
     <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
     <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
