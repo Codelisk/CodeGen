@@ -11,8 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Shared.csproj" PrivateAssets="All" />
-    <None Include="$(OutputPath)\Shared.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <ProjectReference Include="..\Shared\Shared.csproj"  />
   </ItemGroup>
 
   <ItemGroup>
