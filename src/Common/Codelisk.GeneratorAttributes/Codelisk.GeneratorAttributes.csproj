@@ -11,10 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\Shared.csproj"  />
+    <Folder Include="GeneralAttributes\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GeneralAttributes\" />
+    <ProjectReference Include="..\Shared\Shared.csproj" PrivateAssets="all"/>
   </ItemGroup>
 </Project>
