@@ -2,6 +2,7 @@
 using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
+using System.Diagnostics;
 
 namespace Generators.Base.Helpers
 {
@@ -45,6 +46,7 @@ namespace Generators.Base.Helpers
                 nameSpacesFromUsedTypes.AddRange(publicMethod.Parameters.Select(x => x.Type.GetNamespace()));
             }
 
+            //Debugger.Launch();
 
             TestLog.Add("c.BaseType" + c.BaseType);
             if (c.BaseType is not null)

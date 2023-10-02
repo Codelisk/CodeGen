@@ -7,6 +7,7 @@
     <None Include="$(OutputPath)\Codelisk.GeneratorAttributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\Shared.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(OutputPath)\Foundation.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\Codelisk.AutoFilterer.Generators.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,6 +15,7 @@
     <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\Common\Foundation\Foundation.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\Common\Shared\Shared.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
+    <ProjectReference Include="..\..\..\Submodules\AutoFilterer\src\AutoFilterer.Generators\Codelisk.AutoFilterer.Generators.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\WebGenerator.Base\WebGenerator.Base.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>

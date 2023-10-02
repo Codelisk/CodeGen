@@ -6,6 +6,7 @@ using Foundation.Crawler.Models;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
+using System.Diagnostics;
 
 namespace Controller.Generator.CodeBuilders
 {
@@ -41,6 +42,7 @@ namespace Controller.Generator.CodeBuilders
         }
         private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol manager, INamedTypeSymbol baseController, GeneratorExecutionContext context)
         {
+            //Debugger.Launch();
             var constructedBaseController = baseController.ConstructFromDto(dto, context);
             return builder.AddClass(dto.ControllerNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .SetBaseClass(constructedBaseController.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))

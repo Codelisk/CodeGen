@@ -6,6 +6,7 @@ using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using WebGenerator.Base;
+using System.Diagnostics;
 
 namespace WebManager.Generator.CodeBuilders
 {
@@ -37,6 +38,7 @@ namespace WebManager.Generator.CodeBuilders
         private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
         {
             var constructedBaseManager = baseManager.ConstructFromDto(dto, context);
+            //Debugger.Launch();
             return builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
