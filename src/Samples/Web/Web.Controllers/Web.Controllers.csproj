@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
@@ -15,7 +15,6 @@
     <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\..\..\Generators\Web\Codelisk.Controller.Generator\Codelisk.Controller.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
-    <ProjectReference Include="..\..\..\Generators\Web\WebAutoMapperProfile.Generator\WebAutoMapperProfile.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <ProjectReference Include="..\..\..\Generators\Web\WebManager.Contract.Generator\WebManager.Contract.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <ProjectReference Include="..\..\..\Generators\Web\WebManager.Generator\WebManager.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <ProjectReference Include="..\..\..\Generators\Web\WebRepositories.Contract.Generator\WebRepositories.Contract.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />

@@ -22,9 +22,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\sandbox\WebApplication.API\WebApplication.API.csproj" />
-    <ProjectReference Include="..\AutoFilterer.Tests.Core\AutoFilterer.Tests.Core.csproj" />
-  </ItemGroup>
-
 </Project>
