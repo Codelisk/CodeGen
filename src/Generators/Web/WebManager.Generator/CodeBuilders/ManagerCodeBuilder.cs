@@ -1,4 +1,4 @@
-﻿using Codelisk.GeneratorAttributes.GeneralAttributes.Registration;
+using Codelisk.GeneratorAttributes.GeneralAttributes.Registration;
 using Codelisk.GeneratorAttributes.GeneratorAttributes;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
@@ -41,7 +41,7 @@ namespace WebManager.Generator.CodeBuilders
                 .AddInterface("I" + dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(typeof(GeneratedManagerAttribute).FullName)
-                .AddAttribute(AutoRegisterInject.Constants.RegisterAttributeContants.TRANSIENT_ATTRIBUTE_NAME)
+                .AddAttribute(typeof(RegisterTransient).FullName)
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseManager, (baseRepo, dto.RepositoryNameFromDto()))
                 .Class;

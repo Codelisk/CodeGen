@@ -19,4 +19,12 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <Version>2.13.99</Version>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <OrderlyzeFoundationVersion>3.0.10</OrderlyzeFoundationVersion>
+    <CodeliskVersion>2.13.99</CodeliskVersion>
+    <MicrosoftAspNetCore>8.0.0-rc.2.23480.2</MicrosoftAspNetCore>
+    <MicrosoftEntityFrameworkCore>8.0.0-rc.2.23480.1</MicrosoftEntityFrameworkCore>
+    <MicrosoftExtensionsVersion>8.0.0-rc.2.23479.6</MicrosoftExtensionsVersion>
+  </PropertyGroup>
 </Project>

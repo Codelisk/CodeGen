@@ -4,8 +4,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Foundation.Web\Foundation.Web.csproj" PrivateAssets="All" />
-  </ItemGroup>
-
 </Project>
