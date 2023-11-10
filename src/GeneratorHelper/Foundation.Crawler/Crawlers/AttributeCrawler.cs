@@ -1,4 +1,4 @@
-﻿using Codelisk.GeneratorAttributes;
+using Codelisk.GeneratorAttributes;
 using Codelisk.GeneratorAttributes.ApiAttributes;
 using Codelisk.GeneratorAttributes.WebAttributes.Controller;
 using Codelisk.GeneratorAttributes.WebAttributes.Database;
@@ -26,6 +26,10 @@ namespace Foundation.Crawler.Crawlers
         public static IEnumerable<INamedTypeSymbol> Dtos(this GeneratorExecutionContext context)
         {
             return context.GetClassesWithAttribute(nameof(DtoAttribute));
+        }
+        public static IEnumerable<INamedTypeSymbol> Entities(this GeneratorExecutionContext context)
+        {
+            return context.GetClassesWithAttribute(nameof(EntityAttribute));
         }
         public static INamedTypeSymbol DefaultApiRepository(this GeneratorExecutionContext context)
         {
