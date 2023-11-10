@@ -1,4 +1,4 @@
-﻿using Generators.Base.Generators.Base;
+using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebRepositories.Generator.CodeBuilders;
 
@@ -13,10 +13,17 @@ namespace WebRepositories.Generator.Generators
             {
                 return;
             }
-            var repositoryBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
-            var initializerBuilder = new RepositoryInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, repositoryBuilder);
-            AddSource(context, "Repositories", repositoryBuilder);
-            AddSource(context, "", initializerBuilder);
+            try
+            {
+                var repositoryBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
+                var initializerBuilder = new RepositoryInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, repositoryBuilder);
+                AddSource(context, "Repositories", repositoryBuilder);
+                AddSource(context, "", initializerBuilder);
+            }
+            catch(Exception ex)
+            {
+                context.AddSource("Error", $"//{ex.Message} \n\n {ex.StackTrace}");
+            }
         }
     }
 }

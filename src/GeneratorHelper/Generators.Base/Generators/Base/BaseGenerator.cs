@@ -1,4 +1,5 @@
-﻿using CodeGenHelpers;
+using System.Runtime.InteropServices.ComTypes;
+using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 
@@ -38,9 +39,9 @@ namespace Generators.Base.Generators.Base
                             context.AddSource(folderName + "/" + fileName, code);
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-
+                        context.AddSource(folderName + "/Failed", ex.Message + " \n\nStacktrace:"  +ex.StackTrace);
                     }
                 }
             }
