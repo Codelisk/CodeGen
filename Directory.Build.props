@@ -27,4 +27,9 @@
     <MicrosoftEntityFrameworkCore>8.0.0-rc.2.23480.1</MicrosoftEntityFrameworkCore>
     <MicrosoftExtensionsVersion>8.0.0-rc.2.23479.6</MicrosoftExtensionsVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="tools\**" Pack="true" PackagePath="" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
 </Project>
