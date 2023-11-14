@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\..\..\Common\Foundation\Foundation.csproj" OutputItemType="Analyzer" />
     <ProjectReference Include="..\..\..\Common\Shared\Shared.csproj" OutputItemType="Analyzer" />
     <ProjectReference Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
     <ProjectReference Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />

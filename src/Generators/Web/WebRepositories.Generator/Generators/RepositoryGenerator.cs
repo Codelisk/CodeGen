@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebRepositories.Generator.CodeBuilders;

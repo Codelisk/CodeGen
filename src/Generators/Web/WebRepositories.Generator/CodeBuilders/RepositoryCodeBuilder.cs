@@ -6,6 +6,7 @@ using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using WebGenerator.Base;
+using System.Diagnostics;
 
 namespace WebRepositories.Generator.CodeBuilders
 {
@@ -13,6 +14,7 @@ namespace WebRepositories.Generator.CodeBuilders
     {
         public RepositoryCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {
+
         }
 
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
