@@ -1,4 +1,4 @@
-﻿using Api.Generator.Generators.CodeBuilders;
+using Api.Generator.Generators.CodeBuilders;
 using Generators.Base;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
@@ -13,6 +13,10 @@ namespace Api.Generator.Generators
         {
             try
             {
+                if (context.Compilation.AssemblyName.Contains("Generator"))
+                {
+                    return;
+                }
                 //Debugger.Launch();
                 var repositoriesCodeBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
                 var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(context.Compilation.AssemblyName).Get(context, repositoriesCodeBuilder);

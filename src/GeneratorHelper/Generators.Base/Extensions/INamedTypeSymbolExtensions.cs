@@ -162,6 +162,13 @@ namespace Generators.Base.Extensions
             return methods;
         }
 
+        public static IEnumerable<IMethodSymbol> GetMethodsWithAttributesIncludingBaseTypes(this INamedTypeSymbol symbol, string attributeFullName)
+        {
+            return GetMethodsWithAttributesIncludingBaseTypes(symbol).Where(x => x.GetAttributes().Any(attr =>
+            {
+                return attr.GetAttributeName().Equals(attributeFullName);
+            }));
+        }
         public static IEnumerable<IMethodSymbol> GetMethodsWithAttributesIncludingBaseTypes(this INamedTypeSymbol symbol)
         {
             return symbol.GetMethodsIncludingBaseTypes()

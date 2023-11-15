@@ -51,7 +51,7 @@ namespace Api.Generator.Generators.CodeBuilders
                         .WithReturnTypeForHttpMethod(attr.Key, dto)
                         .AddParametersForHttpMethod(httpAttributeSymbol, dto);
 
-                    var baseRepoMethod = baseRepo.GetMethodsWithAttribute(httpAttributeSymbol.Name).First();
+                    var baseRepoMethod = baseRepo.GetMethodsWithAttributesIncludingBaseTypes(httpAttributeSymbol.Name).First();
                     methodBuilder.WithBody((x) =>
                     {
                         x.AppendLine($"return {baseRepoMethod.Name}(() => _repositoryApi.{httpAttributeSymbol.AttributeUrl(dto)}({string.Join(",", methodBuilder.Parameters.Select(x => x.Name.GetParameterName()))}));");
