@@ -19,7 +19,7 @@ namespace Api.Generator.Generators
                 }
                 //Debugger.Launch();
                 var repositoriesCodeBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
-                var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(context.Compilation.AssemblyName).Get(context, repositoriesCodeBuilder);
+                var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(context.Compilation.AssemblyName, "AddApis").Get(context, repositoriesCodeBuilder);
 
                 AddSource(context, "Repositories", repositoriesCodeBuilder, ("abstract partial", "partial"));
                 AddSource(context, "", classServicesModuleInitializerBuilder);

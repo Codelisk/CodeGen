@@ -1,4 +1,4 @@
-﻿using CodeGenHelpers;
+using CodeGenHelpers;
 using Generator.Foundation.Generators.Base;
 using Microsoft.CodeAnalysis;
 
@@ -14,7 +14,7 @@ namespace Generators.Base.CodeBuilders
         public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
         {
             var builder = CreateBuilder();
-            builder.AddClass("ModuleInitializer").AddNamespaceImport("Microsoft.Extensions.DependencyInjection").WithAccessModifier(Accessibility.Public).MakeStaticClass()
+            builder.AddClass("ModuleInitializerHelper").AddNamespaceImport("Microsoft.Extensions.DependencyInjection").WithAccessModifier(Accessibility.Public).MakeStaticClass()
                 .AddMethod("Add" + ModuleName).WithAccessModifier(Accessibility.Public).MakeStaticMethod()
                 .AddParameter("this IServiceCollection", "services")
                 .WithBody(x =>

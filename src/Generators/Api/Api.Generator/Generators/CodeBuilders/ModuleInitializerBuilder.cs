@@ -1,10 +1,10 @@
-﻿using Generators.Base.CodeBuilders;
+using Generators.Base.CodeBuilders;
 
 namespace Api.Generator.Generators.CodeBuilders
 {
     public class ModuleInitializerBuilder : ServicesModuleInitializerBuilder
     {
-        public ModuleInitializerBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
+        public ModuleInitializerBuilder(string codeBuilderNamespace, string overrideMethodeName) : base(codeBuilderNamespace, overrideMethodeName)
         {
         }
 
