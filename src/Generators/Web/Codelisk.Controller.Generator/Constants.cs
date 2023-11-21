@@ -1,4 +1,4 @@
-﻿namespace Controller.Generator
+namespace Controller.Generator
 {
     public static class Constants
     {
@@ -8,5 +8,6 @@
         public const string HttpPostAttribute = MvcNamespace + "HttpPost";
         public const string HttpGetAttribute = MvcNamespace + "HttpGet";
         public const string HttpDeleteAttribute = MvcNamespace + "HttpDelete";
+        public const string AllowAnonymousAttribute = "Microsoft.AspNetCore.Authorization.AllowAnonymous";
     }
 }

@@ -1,4 +1,4 @@
-﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions.Extensions;
@@ -6,6 +6,7 @@ using Foundation.Crawler.Models;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
+using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 
 namespace Controller.Generator.CodeBuilders
 {
@@ -61,6 +62,11 @@ namespace Controller.Generator.CodeBuilders
                 {typeof(SaveAttribute), Constants.HttpPostAttribute },
             };
 
+            if(dto.HasAttribute(nameof(RemoveGetAll)))
+            {
+                methodsWithControllerAttributeName.Remove(typeof(GetAllAttribute));
+            }
+
             foreach (var item in methodsWithControllerAttributeName)
             {
                 var method = repoModel.MethodFromAttribute(item.Key);
@@ -69,6 +75,18 @@ namespace Controller.Generator.CodeBuilders
                     .AddAttribute(method.HttpControllerAttribute(dto, item.Value))
                     .WithReturnTypeForHttpMethod(item.Key, dto)
                     .AddParametersForHttpMethod(httpAttribute, dto);
+
+                if (item.Key == typeof(GetAllAttribute))
+                {
+                    if (dto.HasAttribute(nameof(CustomizeGetAll)))
+                    {
+                        bool anonymous = dto.GetAttribute<CustomizeGetAll>().NamedArguments.Any(x => x.Key.Equals("AllowAnonymous"));
+                        if (anonymous)
+                        {
+                            methodBuilder.AddAttribute(Constants.AllowAnonymousAttribute);
+                        }
+                    }
+                }
 
                 methodBuilder.WithBody((x) =>
                 {
