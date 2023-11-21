@@ -8,6 +8,6 @@ namespace Api.Generator.Generators.CodeBuilders
         {
         }
 
-        public override string ModuleName { get; set; } = "AddRepositories";
+        public override string ModuleName { get; set; } = "Repositories";
     }
 }

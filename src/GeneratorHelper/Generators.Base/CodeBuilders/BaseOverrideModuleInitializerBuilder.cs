@@ -35,7 +35,7 @@ namespace Generators.Base.CodeBuilders
 
 
             var builder = CreateBuilder();
-            builder.AddClass("ModuleInitializer").WithAccessModifier(Accessibility.Public).AddMethod(_overrideMethodeName, Accessibility.Public).Override().AddParameter("IServiceCollection","services").WithBody(x =>
+            builder.AddClass("ModuleInitializer").WithAccessModifier(Accessibility.Internal).AddMethod(_overrideMethodeName, Accessibility.Public).Override().AddParameter("Microsoft.Extensions.DependencyInjection.IServiceCollection", "services").WithBody(x =>
             {
                 x.AppendLine($"base.{_overrideMethodeName}(services);");
                 x.AppendLine($"services.Add{ModuleName}();");
