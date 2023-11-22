@@ -13,10 +13,17 @@ namespace WebDbContext.Generator.Generators
             {
                 return;
             }
-            var dbContextCodeBuilder = new DbContextCodeBuilder(context.Compilation.AssemblyName).Get(context);
-            var initializerBuilder = new DbContextInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, dbContextCodeBuilder);
-            AddSource(context, "DbContexts", dbContextCodeBuilder);
-            AddSource(context, "", initializerBuilder);
+            try
+            {
+                var dbContextCodeBuilder = new DbContextCodeBuilder(context.Compilation.AssemblyName).Get(context);
+                var initializerBuilder = new DbContextInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, dbContextCodeBuilder);
+                AddSource(context, "DbContexts", dbContextCodeBuilder);
+                AddSource(context, "", initializerBuilder);
+            }
+            catch (Exception ex)
+            {
+                context.AddSource("ErrorDbContextGenerator", $"//{ex.Message} \n\n {ex.StackTrace}");
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ namespace WebRepositories.Generator.Generators
             }
             catch(Exception ex)
             {
-                context.AddSource("Error", $"//{ex.Message} \n\n {ex.StackTrace}");
+                context.AddSource("ErrorRepositoryGenerator", $"//{ex.Message} \n\n {ex.StackTrace}");
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using Generators.Base.Generators.Base;
+using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebManager.Generator.CodeBuilders;
 
@@ -13,10 +13,17 @@ namespace WebManager.Generator.Generators
             {
                 return;
             }
-            var managerCodeBuilder = new ManagerCodeBuilder(context.Compilation.AssemblyName).Get(context);
-            var initializerBuilder = new ManagerInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, managerCodeBuilder);
-            AddSource(context, "Manager", managerCodeBuilder);
-            AddSource(context, "", initializerBuilder);
+            try
+            {
+                var managerCodeBuilder = new ManagerCodeBuilder(context.Compilation.AssemblyName).Get(context);
+                var initializerBuilder = new ManagerInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, managerCodeBuilder);
+                AddSource(context, "Manager", managerCodeBuilder);
+                AddSource(context, "", initializerBuilder);
+            }
+            catch(Exception ex)
+            {
+                context.AddSource("ErrorManagerGenerator", $"//{ex.Message} \n\n {ex.StackTrace}");
+            }
         }
     }
 }

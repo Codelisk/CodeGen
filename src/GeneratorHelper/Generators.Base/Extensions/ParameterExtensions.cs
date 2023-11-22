@@ -1,4 +1,6 @@
-﻿namespace Generators.Base.Extensions
+using Microsoft.CodeAnalysis;
+
+namespace Generators.Base.Extensions
 {
     public static class ParameterExtensions
     {

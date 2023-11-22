@@ -6,6 +6,8 @@ using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using WebGenerator.Base;
+using Shared.Constants;
+using Foundation.Crawler.Extensions;
 
 namespace WebManager.Generator.CodeBuilders
 {
@@ -36,7 +38,7 @@ namespace WebManager.Generator.CodeBuilders
         }
         private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
         {
-            var dtoPropertiesWithForeignKey = dto.GetAllProperties().Where(x => x.GetAllAttributes().Any(x=>x.AttributeClass.Name.Contains("Foreig")) || x.HasAttribute("System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute"));
+            var dtoPropertiesWithForeignKey = dto.GetAllProperties().Where(x => x.GetAllAttributes().Any(x=> x.AttributeClass.Name.Equals(AttributeNames.ForeignKey)));
             var constructedBaseManager = baseManager.ConstructFromDto(dto, context);
 
             var constructor = builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
@@ -46,16 +48,16 @@ namespace WebManager.Generator.CodeBuilders
                 .AddAttribute(typeof(RegisterTransient).FullName)
                 .AddConstructor();
 
-            List<(string, string)> foreignRepos = new();
+            List<(string repoType, string repoName, IPropertySymbol propertySymbol)> foreignRepos = new();
             foreach (var dtoProperty in dtoPropertiesWithForeignKey)
             {
-                var foreignKeyName = dtoProperty.GetAllAttributes().First(x => x.AttributeClass.Name.Contains("Foreig")).ConstructorArguments.First().Value.ToString();
+                var foreignKeyName = dtoProperty.GetAllAttributes().First(x => x.AttributeClass.Name.Equals(AttributeNames.ForeignKey)).ConstructorArguments.First().Value.ToString();
                 var foreignKeyDto = context.Dtos().First(x => x.Name == foreignKeyName);
                 string repoType = "I" + foreignKeyDto.RepositoryNameFromDto();
                 string repoName = foreignKeyDto.RepositoryNameFromDto().GetParameterName();
-                if(!foreignRepos.Contains((repoType, repoName)))
+                if(!foreignRepos.Any(x=>x.repoType.Equals(repoType)))
                 {
-                    foreignRepos.Add((repoType, repoName));
+                    foreignRepos.Add((repoType, repoName, dtoProperty));
                 }
             }
             
@@ -78,7 +80,23 @@ namespace WebManager.Generator.CodeBuilders
 
             foreach (var repo in foreignRepos)
             {
-                result.AddProperty($"_{repo.Item2}").SetType(repo.Item1).WithReadonlyValue()
+                result.AddProperty($"_{repo.Item2}").SetType(repo.Item1).WithReadonlyValue();
+            }
+
+            if (foreignRepos.Any())
+            {
+                var getMethode = baseRepo.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAttribute)).First();
+                result.AddMethod(ApiUrls.GetAllFull).WithReturnTypeTask(dto.GetFullModelName()).MakeAsync().AddParameter(dto).WithBody(x =>
+                {
+                    x.AppendLine($"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ();");
+                    foreach (var repo in foreignRepos)
+                    {
+                        string managerParametervalue = repo.propertySymbol.NullableAnnotation == NullableAnnotation.Annotated ? repo.propertySymbol.Name + ".Value" : repo.propertySymbol.Name;
+                        x.AppendLine($"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = await _{repo.repoName}.{getMethode.Name}({dto.Name.GetParameterName()}.{managerParametervalue});");
+                    }
+
+                    x.AppendLine($"return {dto.GetFullModelName()};");
+                });
             }
 
             return result;

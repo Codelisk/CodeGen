@@ -1,4 +1,4 @@
-﻿using Generators.Base.Generators.Base;
+using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebRepositories.Contract.Generator.CodeBuilders;
 
@@ -13,7 +13,14 @@ namespace WebRepositories.Contract.Generator.Generators
             {
                 return;
             }
-            AddSource(context, "RepositoryContracts", new RepositoryContractCodeBuilder(context.Compilation.AssemblyName).Get(context));
+            try
+            {
+                AddSource(context, "RepositoryContracts", new RepositoryContractCodeBuilder(context.Compilation.AssemblyName).Get(context));
+            }
+            catch(Exception ex)
+            {
+                context.AddSource("ErrorRepositoryContractGenerator", $"//{ex.Message} \n\n {ex.StackTrace}");
+            }
         }
     }
 }
