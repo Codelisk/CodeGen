@@ -36,15 +36,52 @@ namespace WebManager.Generator.CodeBuilders
         }
         private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
         {
+            var dtoPropertiesWithForeignKey = dto.GetAllProperties().Where(x => x.GetAllAttributes().Any(x=>x.AttributeClass.Name.Contains("Foreig")) || x.HasAttribute("System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute"));
             var constructedBaseManager = baseManager.ConstructFromDto(dto, context);
-            return builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
+
+            var constructor = builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                 .AddAttribute(typeof(GeneratedManagerAttribute).FullName)
                 .AddAttribute(typeof(RegisterTransient).FullName)
-                .AddConstructor()
+                .AddConstructor();
+
+            List<(string, string)> foreignRepos = new();
+            foreach (var dtoProperty in dtoPropertiesWithForeignKey)
+            {
+                var foreignKeyName = dtoProperty.GetAllAttributes().First(x => x.AttributeClass.Name.Contains("Foreig")).ConstructorArguments.First().Value.ToString();
+                var foreignKeyDto = context.Dtos().First(x => x.Name == foreignKeyName);
+                string repoType = "I" + foreignKeyDto.RepositoryNameFromDto();
+                string repoName = foreignKeyDto.RepositoryNameFromDto().GetParameterName();
+                foreignRepos.Add((repoType, repoName));
+            }
+            
+            foreach (var repo in foreignRepos)
+            {
+                constructor.AddParameter(repo.Item1, repo.Item2);
+            }
+
+            constructor.WithBody(x =>
+            {
+                foreach (var repo in foreignRepos)
+                {
+                    /*result.AddProperty($"_{repo.Item2}").SetType(repo.Item1).WithReadonlyValue()
+                        .WithAccessModifier(Accessibility.Private);*/
+                    x.AppendLine($"_{repo.Item2} = {repo.Item2};");
+                }
+            });
+            
+            var result = constructor
                 .BaseConstructorParameterBaseCall(constructedBaseManager, (baseRepo, dto.RepositoryNameFromDto()))
                 .Class;
+
+            foreach (var repo in foreignRepos)
+            {
+                result.AddProperty($"_{repo.Item2}").SetType(repo.Item1).WithReadonlyValue()
+                    .WithAccessModifier(Accessibility.Private);
+            }
+
+            return result;
         }
 
     }
