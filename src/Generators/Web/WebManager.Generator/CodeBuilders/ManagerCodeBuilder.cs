@@ -53,7 +53,10 @@ namespace WebManager.Generator.CodeBuilders
                 var foreignKeyDto = context.Dtos().First(x => x.Name == foreignKeyName);
                 string repoType = "I" + foreignKeyDto.RepositoryNameFromDto();
                 string repoName = foreignKeyDto.RepositoryNameFromDto().GetParameterName();
-                foreignRepos.Add((repoType, repoName));
+                if(!foreignRepos.Contains((repoType, repoName)))
+                {
+                    foreignRepos.Add((repoType, repoName));
+                }
             }
             
             foreach (var repo in foreignRepos)
@@ -65,12 +68,10 @@ namespace WebManager.Generator.CodeBuilders
             {
                 foreach (var repo in foreignRepos)
                 {
-                    /*result.AddProperty($"_{repo.Item2}").SetType(repo.Item1).WithReadonlyValue()
-                        .WithAccessModifier(Accessibility.Private);*/
                     x.AppendLine($"_{repo.Item2} = {repo.Item2};");
                 }
             });
-            
+
             var result = constructor
                 .BaseConstructorParameterBaseCall(constructedBaseManager, (baseRepo, dto.RepositoryNameFromDto()))
                 .Class;
@@ -78,7 +79,6 @@ namespace WebManager.Generator.CodeBuilders
             foreach (var repo in foreignRepos)
             {
                 result.AddProperty($"_{repo.Item2}").SetType(repo.Item1).WithReadonlyValue()
-                    .WithAccessModifier(Accessibility.Private);
             }
 
             return result;
