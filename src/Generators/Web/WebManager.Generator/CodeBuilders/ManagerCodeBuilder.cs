@@ -94,9 +94,10 @@ namespace WebManager.Generator.CodeBuilders
                 {
                     x.AppendLine($"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ();");
                     x.AppendLine($"var {dto.Name.GetParameterName()} = await {getMethode.Name}({dto.GetIdProperty().Name.GetParameterName()});");
+                    x.AppendLine($"{dto.GetFullModelName()}.{dto.Name.GetParameterName()} = {dto.Name.GetParameterName()};");
                     foreach (var repo in foreignRepos)
                     {
-                        string managerParametervalue = dto.GetIdPropertyMethodeName();
+                        string managerParametervalue = repo.propertySymbol.NullableAnnotation == NullableAnnotation.Annotated ? repo.propertySymbol.Name + ".Value" : repo.propertySymbol.Name;
                         x.AppendLine($"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = await _{repo.repoName}.{getMethode.Name}({dto.Name.GetParameterName()}.{managerParametervalue});");
                     }
 
