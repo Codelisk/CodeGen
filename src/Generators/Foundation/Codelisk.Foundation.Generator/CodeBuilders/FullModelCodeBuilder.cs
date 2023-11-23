@@ -48,7 +48,7 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
                 var foreignKeyName = dtoProperty.GetPropertyAttributeValue(AttributeNames.ForeignKey);
                 var foreignKeyDto = context.Dtos().First(x => x.Name == foreignKeyName);
                 
-                result.AddProperty(dtoProperty.GetFullModelNameFromProperty(), Accessibility.Public).SetType(foreignKeyDto.Name).UseAutoProps();
+                result.AddProperty(dtoProperty.GetFullModelNameFromProperty(), Accessibility.Public).SetType(foreignKeyDto.GetFullModelName()).UseAutoProps();
                 
             }
 

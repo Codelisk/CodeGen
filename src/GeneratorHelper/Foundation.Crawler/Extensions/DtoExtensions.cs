@@ -14,7 +14,7 @@ namespace Foundation.Crawler.Extensions
         }
         public static IEnumerable<IPropertySymbol> DtoForeignProperties(this INamedTypeSymbol dto)
         {
-            var result = dto.GetAllProperties().Where(x => x.GetAllAttributes().Any(x => x.AttributeClass.Name.Equals(AttributeNames.ForeignKey)));
+            var result = dto.GetAllProperties(true).Where(x => x.GetAllAttributes().Any(x => x.AttributeClass.Name.Equals(AttributeNames.ForeignKey)));
             return result;
         }
         public static string GetFullModelNameFromProperty(this IPropertySymbol foreignKeyProperty)

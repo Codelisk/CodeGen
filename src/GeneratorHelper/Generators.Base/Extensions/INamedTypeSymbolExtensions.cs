@@ -1,4 +1,4 @@
-﻿using CodeGenHelpers.Internals;
+using CodeGenHelpers.Internals;
 using Microsoft.CodeAnalysis;
 using System.Reflection;
 
@@ -95,11 +95,26 @@ namespace Generators.Base.Extensions
         {
             return classObject.GetAllProperties().Where(x => SymbolEqualityComparer.Default.Equals(x.Type, type)).ToList();
         }
-        public static List<IPropertySymbol> GetAllProperties(this INamedTypeSymbol classObject)
+        public static List<IPropertySymbol> GetAllProperties(this INamedTypeSymbol classObject, bool withBaseType=false)
         {
-            return classObject.GetMembers()
+            var result = classObject.GetMembers()
                     .OfType<IPropertySymbol>()
                     .ToList();
+
+            if (withBaseType)
+            {
+                classObject = classObject.BaseType;
+                while(classObject is not null && classObject.SpecialType != SpecialType.System_Object)
+                {
+                    result.AddRange(classObject.GetMembers()
+                    .OfType<IPropertySymbol>()
+                    .ToList());
+
+                    classObject = classObject.BaseType;
+                }
+            }
+
+            return result;
         }
         public static List<IFieldSymbol> GetAllFields(this INamedTypeSymbol classObject)
         {
@@ -195,11 +210,22 @@ namespace Generators.Base.Extensions
             if (symbol == null || string.IsNullOrEmpty(attributeFullName))
                 throw new ArgumentNullException();
 
-            return symbol.GetMethods()
+            var result = symbol.GetMethods()
                          .Where(method => method.GetAttributes().Any(attr =>
                          {
                              return attr.GetAttributeName().Equals(attributeFullName);
                          }));
+
+            if(!result.Any() && symbol.BaseType is not null)
+            {
+                return symbol.BaseType.GetMethods()
+                         .Where(method => method.GetAttributes().Any(attr =>
+                         {
+                             return attr.GetAttributeName().Equals(attributeFullName);
+                         }));
+            }
+
+            return result;
         }// Check if a given TypeSymbol is a well-known type from the System namespace or other system namespaces
         public static bool IsWellKnownSystemType(this INamedTypeSymbol typeSymbol)
         {

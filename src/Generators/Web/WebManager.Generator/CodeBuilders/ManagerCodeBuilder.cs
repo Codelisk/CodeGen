@@ -50,16 +50,16 @@ namespace WebManager.Generator.CodeBuilders
                 .AddAttribute(typeof(RegisterTransient).FullName)
                 .AddConstructor();
 
-            List<(string repoType, string repoName, IPropertySymbol propertySymbol)> foreignRepos = new();
+            List<(string repoType, string repoName, IPropertySymbol propertySymbol, INamedTypeSymbol foreignKeyDto)> foreignRepos = new();
             foreach (var dtoProperty in dtoPropertiesWithForeignKey)
             {
                 var foreignKeyName = dtoProperty.GetPropertyAttributeValue(AttributeNames.ForeignKey);
                 var foreignKeyDto = context.Dtos().First(x => x.Name == foreignKeyName);
-                string repoType = "I" + foreignKeyDto.RepositoryNameFromDto();
-                string repoName = foreignKeyDto.RepositoryNameFromDto().GetParameterName();
+                string repoType = "I" + foreignKeyDto.ManagerNameFromDto();
+                string repoName = foreignKeyDto.ManagerNameFromDto().GetParameterName();
                 if(!foreignRepos.Any(x=>x.repoType.Equals(repoType)))
                 {
-                    foreignRepos.Add((repoType, repoName, dtoProperty));
+                    foreignRepos.Add((repoType, repoName, dtoProperty, foreignKeyDto));
                 }
             }
             
@@ -85,12 +85,13 @@ namespace WebManager.Generator.CodeBuilders
                 result.AddProperty($"_{repo.Item2}").SetType(repo.Item1).WithReadonlyValue();
             }
 
-            if (foreignRepos.Any())
-            {
+            //if (foreignRepos.Any())
+            //{
                 //Generate GetFull methode
-                { 
-                var getMethode = baseRepo.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAttribute)).First();
-                result.AddMethod(ApiUrls.GetFull, Accessibility.Public).Override().WithReturnTypeTask("object").MakeAsync().AddParametersForHttpMethod(getMethode.HttpAttribute(), dto).WithBody(x =>
+                {
+                    var getMethode = baseRepo.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAttribute)).First();
+                    var getMethodeFull = baseManager.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetFullAttribute)).First();
+                    result.AddMethod(ApiUrls.GetFull, Accessibility.Public).Override().WithReturnTypeTask("object").MakeAsync().AddParametersForHttpMethod(getMethode.HttpAttribute(), dto).WithBody(x =>
                 {
                     x.AppendLine($"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ();");
                     x.AppendLine($"var {dto.Name.GetParameterName()} = await {getMethode.Name}({dto.GetIdProperty().Name.GetParameterName()});");
@@ -99,7 +100,7 @@ namespace WebManager.Generator.CodeBuilders
                     {
                         bool isPropertyNullable = repo.propertySymbol.NullableAnnotation == NullableAnnotation.Annotated;
                         string managerParametervalue = isPropertyNullable ? repo.propertySymbol.Name + ".Value" : repo.propertySymbol.Name;
-                        string returnLine = $"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = await _{repo.repoName}.{getMethode.Name}({dto.Name.GetParameterName()}.{managerParametervalue});";
+                        string returnLine = $"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = ({repo.foreignKeyDto.GetFullModelName()})await _{repo.repoName}.{getMethodeFull.Name}({dto.Name.GetParameterName()}.{managerParametervalue});";
                         if (isPropertyNullable)
                         {
                             x.If($"{dto.Name.GetParameterName()}.{repo.propertySymbol.Name}.HasValue").WithBody(x =>
@@ -133,7 +134,7 @@ namespace WebManager.Generator.CodeBuilders
                         x.AppendLine($"return {returnName};");
                     }).AddAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetFullAttribute));
                 }
-            }
+            //}
 
             return result;
         }
