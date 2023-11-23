@@ -1,4 +1,4 @@
-﻿using CodeGenHelpers;
+using CodeGenHelpers;
 using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions;
@@ -47,7 +47,9 @@ namespace Api.RefitApis.Generator.CodeBuilders
             var typeAndRefitAttribute = new Dictionary<Type, string>
             {
                 {typeof(GetAttribute), "Get" },
+                {typeof(GetFullAttribute), "Get" },
                 {typeof(GetAllAttribute), "Get" },
+                {typeof(GetAllFullAttribute), "Get" },
                 {typeof(SaveAttribute), "Post" },
                 {typeof(DeleteAttribute), "Delete" }
             };

@@ -40,12 +40,17 @@ namespace Api.Generator.Generators.CodeBuilders
                 var attrs = new Dictionary<Type, string>
             {
                 {typeof(GetAttribute), "Get" },
+                {typeof(GetFullAttribute), "Get" },
                 {typeof(GetAllAttribute), "Get" },
+                {typeof(GetAllFullAttribute), "Get" },
                 {typeof(SaveAttribute), "Post" },
                 {typeof(DeleteAttribute), "Delete" }
             };
                 foreach (var attr in attrs)
                 {
+                    try
+                    {
+
                     var httpAttributeSymbol = context.GetClass(attr.Key, "Codelisk.GeneratorAttributes");
                     var methodBuilder = repoClass.AddMethod(httpAttributeSymbol.AttributeUrl(dto), Accessibility.Public)
                         .WithReturnTypeForHttpMethod(attr.Key, dto)
@@ -56,6 +61,8 @@ namespace Api.Generator.Generators.CodeBuilders
                     {
                         x.AppendLine($"return {baseRepoMethod.Name}(() => _repositoryApi.{httpAttributeSymbol.AttributeUrl(dto)}({string.Join(",", methodBuilder.Parameters.Select(x => x.Name.GetParameterName()))}));");
                     });
+                    }
+                    catch(Exception ex) { }
                 }
 
                 TestLog.Add("Start");

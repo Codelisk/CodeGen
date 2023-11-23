@@ -97,8 +97,20 @@ namespace WebManager.Generator.CodeBuilders
                     x.AppendLine($"{dto.GetFullModelName()}.{dto.Name.GetParameterName()} = {dto.Name.GetParameterName()};");
                     foreach (var repo in foreignRepos)
                     {
-                        string managerParametervalue = repo.propertySymbol.NullableAnnotation == NullableAnnotation.Annotated ? repo.propertySymbol.Name + ".Value" : repo.propertySymbol.Name;
-                        x.AppendLine($"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = await _{repo.repoName}.{getMethode.Name}({dto.Name.GetParameterName()}.{managerParametervalue});");
+                        bool isPropertyNullable = repo.propertySymbol.NullableAnnotation == NullableAnnotation.Annotated;
+                        string managerParametervalue = isPropertyNullable ? repo.propertySymbol.Name + ".Value" : repo.propertySymbol.Name;
+                        string returnLine = $"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = await _{repo.repoName}.{getMethode.Name}({dto.Name.GetParameterName()}.{managerParametervalue});";
+                        if (isPropertyNullable)
+                        {
+                            x.If($"{dto.Name.GetParameterName()}.{repo.propertySymbol.Name}.HasValue").WithBody(x =>
+                            {
+                                x.AppendLine(returnLine);
+                            }).EndIf();
+                        }
+                        else
+                        {
+                            x.AppendLine(returnLine);
+                        }
                     }
 
                     x.AppendLine($"return {dto.GetFullModelName()};");
