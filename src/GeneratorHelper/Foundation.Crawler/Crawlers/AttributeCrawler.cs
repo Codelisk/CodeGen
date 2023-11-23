@@ -91,6 +91,21 @@ namespace Foundation.Crawler.Crawlers
                 return objectsWithAttribute.FirstOrDefault(x => !x.HasAttribute(nameof(UserDtoAttribute)));
             }
         }
+        public static string GetIdPropertyMethodeName(this INamedTypeSymbol dto)
+        {
+            INamedTypeSymbol baseType = dto;
+            while (baseType is not null)
+            {
+                var result = baseType.GetMethodsWithAttribute(nameof(GetIdAttribute)).FirstOrDefault();
+                if (result is not null)
+                {
+                    return result.Name+"()";
+                }
+
+                baseType = baseType.BaseType;
+            }
+            return null;
+        }
         public static IPropertySymbol GetIdProperty(this INamedTypeSymbol dto)
         {
             INamedTypeSymbol baseType = dto;

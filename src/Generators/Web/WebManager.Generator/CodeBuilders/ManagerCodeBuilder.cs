@@ -40,7 +40,7 @@ namespace WebManager.Generator.CodeBuilders
         }
         private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
         {
-            var dtoPropertiesWithForeignKey = dto.GetAllProperties().Where(x => x.GetAllAttributes().Any(x=> x.AttributeClass.Name.Equals(AttributeNames.ForeignKey)));
+            var dtoPropertiesWithForeignKey = dto.DtoForeignProperties();
             var constructedBaseManager = baseManager.ConstructFromDto(dto, context);
 
             var constructor = builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
@@ -53,7 +53,7 @@ namespace WebManager.Generator.CodeBuilders
             List<(string repoType, string repoName, IPropertySymbol propertySymbol)> foreignRepos = new();
             foreach (var dtoProperty in dtoPropertiesWithForeignKey)
             {
-                var foreignKeyName = dtoProperty.GetAllAttributes().First(x => x.AttributeClass.Name.Equals(AttributeNames.ForeignKey)).ConstructorArguments.First().Value.ToString();
+                var foreignKeyName = dtoProperty.GetPropertyAttributeValue(AttributeNames.ForeignKey);
                 var foreignKeyDto = context.Dtos().First(x => x.Name == foreignKeyName);
                 string repoType = "I" + foreignKeyDto.RepositoryNameFromDto();
                 string repoName = foreignKeyDto.RepositoryNameFromDto().GetParameterName();
@@ -90,13 +90,13 @@ namespace WebManager.Generator.CodeBuilders
                 //Generate GetFull methode
                 { 
                 var getMethode = baseRepo.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAttribute)).First();
-                result.AddMethod(ApiUrls.GetFull, Accessibility.Public).WithReturnTypeTask(dto.GetFullModelName()).MakeAsync().AddParametersForHttpMethod(getMethode.HttpAttribute(), dto).WithBody(x =>
+                result.AddMethod(ApiUrls.GetFull, Accessibility.Public).Override().WithReturnTypeTask(dto.GetFullModelName()).MakeAsync().AddParametersForHttpMethod(getMethode.HttpAttribute(), dto).WithBody(x =>
                 {
                     x.AppendLine($"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ();");
+                    x.AppendLine($"var {dto.Name.GetParameterName()} = await {getMethode.Name}({dto.GetIdProperty().Name.GetParameterName()});");
                     foreach (var repo in foreignRepos)
                     {
-                        string managerParametervalue = repo.propertySymbol.NullableAnnotation == NullableAnnotation.Annotated ? repo.propertySymbol.Name + ".Value" : repo.propertySymbol.Name;
-                        x.AppendLine($"var {dto.Name.GetParameterName()} = await {getMethode.Name}({dto.GetIdProperty().Name.GetParameterName()});");
+                        string managerParametervalue = dto.GetIdPropertyMethodeName();
                         x.AppendLine($"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = await _{repo.repoName}.{getMethode.Name}({dto.Name.GetParameterName()}.{managerParametervalue});");
                     }
 
@@ -108,12 +108,13 @@ namespace WebManager.Generator.CodeBuilders
                     string returnName= dto.GetFullModelName().GetParameterName() + "s";
                     //Generate GetAllFull methode
                     var getAllMethode = baseRepo.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAllAttribute)).First();
-                    result.AddMethod(ApiUrls.GetAllFull, Accessibility.Public).WithReturnTypeTaskList(dto.GetFullModelName()).MakeAsync().WithBody(x =>
+                    result.AddMethod(ApiUrls.GetAllFull, Accessibility.Public).Override().WithReturnTypeTaskList(dto.GetFullModelName()).MakeAsync().WithBody(x =>
                     {
                         x.AppendLine($"List<{dto.GetFullModelName()}> {returnName} = new ();");
+                        x.AppendLine($"var {dto.Name.GetParameterName()}s = await {getAllMethode.Name}();");
                         x.ForEach($"var {dto.Name.GetParameterName()}", $"{dto.Name.GetParameterName()}s").WithBody(x =>
                         {
-                            x.AppendLine($"{returnName}.Add(await {ApiUrls.GetFull}({dto.Name.GetParameterName()}.{dto.GetIdProperty().Name.GetParameterName()}));");
+                            x.AppendLine($"{returnName}.Add(await {ApiUrls.GetFull}({dto.Name.GetParameterName()}.{dto.GetIdPropertyMethodeName()}));");
                         });
 
                         x.AppendLine($"return {returnName};");

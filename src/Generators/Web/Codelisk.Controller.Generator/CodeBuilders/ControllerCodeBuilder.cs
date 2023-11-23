@@ -8,6 +8,7 @@ using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Shared.Constants;
+using Foundation.Crawler.Extensions;
 
 namespace Controller.Generator.CodeBuilders
 {
@@ -59,6 +60,7 @@ namespace Controller.Generator.CodeBuilders
             {
                 {typeof(DeleteAttribute), Constants.HttpDeleteAttribute },
                 {typeof(GetAttribute), Constants.HttpGetAttribute },
+                {typeof(GetFullAttribute), Constants.HttpGetAttribute },
                 {typeof(GetAllAttribute), Constants.HttpGetAttribute },
                 {typeof(SaveAttribute), Constants.HttpPostAttribute },
                 {typeof(GetAllFullAttribute), Constants.HttpGetAttribute },
@@ -71,12 +73,11 @@ namespace Controller.Generator.CodeBuilders
 
             foreach (var item in methodsWithControllerAttributeName)
             {
-                var method = repoModel.MethodFromAttribute(item.Key);
-
-                if (!dto.HasAttribute(AttributeNames.ForeignKey))
+                if((item.Key == typeof(GetFullAttribute) || item.Key == typeof(GetAllFullAttribute)) && !dto.DtoHasForeignKeyAttribute())
                 {
                     continue;
                 }
+                var method = repoModel.MethodFromAttribute(item.Key);
 
                 var httpAttribute = method.HttpAttribute();
                 var methodBuilder = c.AddMethod(method.MethodName(dto), Accessibility.Public)

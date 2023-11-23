@@ -41,11 +41,11 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
             var result = builder.AddClass(dto.GetFullModelName()).WithAccessModifier(Accessibility.Public);
 
             result.AddProperty(dto.Name.GetParameterName(), Accessibility.Public).SetType(dto.Name).UseAutoProps();
-            var dtoPropertiesWithForeignKey = dto.GetAllProperties().Where(x => x.GetAllAttributes().Any(x => x.AttributeClass.Name.Equals(AttributeNames.ForeignKey)));
+            var dtoPropertiesWithForeignKey = dto.DtoForeignProperties();
 
             foreach (var dtoProperty in dtoPropertiesWithForeignKey)
             {
-                var foreignKeyName = dtoProperty.GetAllAttributes().First(x => x.AttributeClass.Name.Equals(AttributeNames.ForeignKey)).ConstructorArguments.First().Value.ToString();
+                var foreignKeyName = dtoProperty.GetPropertyAttributeValue(AttributeNames.ForeignKey);
                 var foreignKeyDto = context.Dtos().First(x => x.Name == foreignKeyName);
                 
                 result.AddProperty(dtoProperty.GetFullModelNameFromProperty(), Accessibility.Public).SetType(foreignKeyDto.Name).UseAutoProps();
