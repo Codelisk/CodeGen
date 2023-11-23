@@ -1,4 +1,4 @@
-﻿using Codelisk.GeneratorAttributes.WebAttributes.Dto;
+using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
@@ -61,9 +61,21 @@ namespace Foundation.Crawler.Extensions.Extensions
             {
                 methodBuilder.WithReturnTypeTaskList(dto.Name);
             }
-            else
+            else if(returnAttributeValue == ReturnKind.Model)
             {
                 methodBuilder.WithReturnTypeTask(dto.Name);
+            }
+            else if (returnAttributeValue == ReturnKind.ListFull)
+            {
+                methodBuilder.WithReturnTypeTask($"List<{dto.GetFullModelName()}>");
+            }
+            else if(returnAttributeValue == ReturnKind.ModelFull)
+            {
+                methodBuilder.WithReturnTypeTask($"{dto.GetFullModelName()}");
+            }
+            else
+            {
+                return methodBuilder.WithReturnTypeTask();
             }
 
             return methodBuilder;

@@ -9,7 +9,7 @@ namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 
     [Url(ApiUrls.GetFull)]
     [IdQuery]
-    [Return(Shared.Models.ReturnKind.Object)]
+    [Return(Shared.Models.ReturnKind.ModelFull)]
     public class GetFullAttribute : BaseHttpAttribute
     {
     }

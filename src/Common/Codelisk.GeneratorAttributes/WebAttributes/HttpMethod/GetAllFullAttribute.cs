@@ -8,7 +8,7 @@ namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 {
     [Url(ApiUrls.GetAllFull)]
     [Plural]
-    [Return(Shared.Models.ReturnKind.List)]
+    [Return(Shared.Models.ReturnKind.ListFull)]
     public class GetAllFullAttribute : BaseHttpAttribute
     {
     }

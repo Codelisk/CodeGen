@@ -1,8 +1,10 @@
-﻿namespace Shared.Models
+namespace Shared.Models
 {
     public enum ReturnKind
     {
         List,
-        Object
+        ListFull,
+        Model,
+        ModelFull
     }
 }

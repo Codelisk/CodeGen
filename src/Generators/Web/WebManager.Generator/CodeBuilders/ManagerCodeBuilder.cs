@@ -90,7 +90,7 @@ namespace WebManager.Generator.CodeBuilders
                 //Generate GetFull methode
                 { 
                 var getMethode = baseRepo.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAttribute)).First();
-                result.AddMethod(ApiUrls.GetFull, Accessibility.Public).Override().WithReturnTypeTask(dto.GetFullModelName()).MakeAsync().AddParametersForHttpMethod(getMethode.HttpAttribute(), dto).WithBody(x =>
+                result.AddMethod(ApiUrls.GetFull, Accessibility.Public).Override().WithReturnTypeTask("object").MakeAsync().AddParametersForHttpMethod(getMethode.HttpAttribute(), dto).WithBody(x =>
                 {
                     x.AppendLine($"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ();");
                     x.AppendLine($"var {dto.Name.GetParameterName()} = await {getMethode.Name}({dto.GetIdProperty().Name.GetParameterName()});");
@@ -108,9 +108,9 @@ namespace WebManager.Generator.CodeBuilders
                     string returnName= dto.GetFullModelName().GetParameterName() + "s";
                     //Generate GetAllFull methode
                     var getAllMethode = baseRepo.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAllAttribute)).First();
-                    result.AddMethod(ApiUrls.GetAllFull, Accessibility.Public).Override().WithReturnTypeTaskList(dto.GetFullModelName()).MakeAsync().WithBody(x =>
+                    result.AddMethod(ApiUrls.GetAllFull, Accessibility.Public).Override().WithReturnTypeTaskList("object").MakeAsync().WithBody(x =>
                     {
-                        x.AppendLine($"List<{dto.GetFullModelName()}> {returnName} = new ();");
+                        x.AppendLine($"List<object> {returnName} = new ();");
                         x.AppendLine($"var {dto.Name.GetParameterName()}s = await {getAllMethode.Name}();");
                         x.ForEach($"var {dto.Name.GetParameterName()}", $"{dto.Name.GetParameterName()}s").WithBody(x =>
                         {

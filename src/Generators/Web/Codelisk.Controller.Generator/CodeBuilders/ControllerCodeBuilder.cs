@@ -85,6 +85,11 @@ namespace Controller.Generator.CodeBuilders
                     .WithReturnTypeForHttpMethod(item.Key, dto)
                     .AddParametersForHttpMethod(httpAttribute, dto);
 
+                if(item.Key == typeof(GetAllFullAttribute) || item.Key == typeof(GetFullAttribute))
+                {
+                    methodBuilder.MakeAsync();
+                }
+
                 if (item.Key == typeof(GetAllAttribute) || item.Key == typeof(GetAllFullAttribute))
                 {
                     if (dto.HasAttribute(nameof(CustomizeGetAll)))
@@ -99,6 +104,18 @@ namespace Controller.Generator.CodeBuilders
 
                 methodBuilder.WithBody((x) =>
                 {
+                    if(item.Key == typeof(GetAllFullAttribute))
+                    {
+                        x.AppendLine($"var result = await {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});");
+                        x.AppendLine($"return result.Cast<{dto.GetFullModelName()}>().ToList();");
+                        return;
+                    }
+                    else if(item.Key == typeof(GetFullAttribute))
+                    {
+                        x.AppendLine($"return (await {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)})) as {dto.GetFullModelName()};");
+                        return;
+                    }
+
                     x.AppendLine($"return {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});");
                 });
             }
