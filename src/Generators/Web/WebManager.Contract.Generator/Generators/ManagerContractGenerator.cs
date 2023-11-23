@@ -1,4 +1,4 @@
-﻿using Generators.Base.Generators.Base;
+using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebManager.Contract.Generator.CodeBuilders;
 

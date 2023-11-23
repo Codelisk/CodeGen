@@ -1,4 +1,4 @@
-﻿
+
 using Controller.Generator.CodeBuilders;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
@@ -16,6 +16,7 @@ namespace Controller.Generator.Generators
             {
                 return;
             }
+            //Debugger.Launch();
             var codeBuilder = new ControllerCodeBuilder(context.Compilation.AssemblyName).Get(context);
             var initializerBuilder = new ControllerInitializerBuilder(context.Compilation.AssemblyName).Get(context, codeBuilder);
             AddSource(context, "Controller", codeBuilder);

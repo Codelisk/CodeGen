@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis;
 using WebGenerator.Base;
 using Shared.Constants;
 using Foundation.Crawler.Extensions;
+using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 
 namespace WebManager.Generator.CodeBuilders
 {
@@ -96,7 +97,7 @@ namespace WebManager.Generator.CodeBuilders
                     }
 
                     x.AppendLine($"return {dto.GetFullModelName()};");
-                });
+                }).AddAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAllFullAttribute));
             }
 
             return result;
