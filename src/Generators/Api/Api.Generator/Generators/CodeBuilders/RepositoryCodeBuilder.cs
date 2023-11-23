@@ -1,4 +1,4 @@
-﻿using Codelisk.GeneratorAttributes.GeneralAttributes.Registration;
+using Codelisk.GeneratorAttributes.GeneralAttributes.Registration;
 using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;

@@ -9,6 +9,7 @@ using WebGenerator.Base;
 using Shared.Constants;
 using Foundation.Crawler.Extensions;
 using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+using Foundation.Crawler.Extensions.Extensions;
 
 namespace WebManager.Generator.CodeBuilders
 {
@@ -86,18 +87,38 @@ namespace WebManager.Generator.CodeBuilders
 
             if (foreignRepos.Any())
             {
+                //Generate GetFull methode
+                { 
                 var getMethode = baseRepo.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAttribute)).First();
-                result.AddMethod(ApiUrls.GetAllFull).WithReturnTypeTask(dto.GetFullModelName()).MakeAsync().AddParameter(dto).WithBody(x =>
+                result.AddMethod(ApiUrls.GetFull, Accessibility.Public).WithReturnTypeTask(dto.GetFullModelName()).MakeAsync().AddParametersForHttpMethod(getMethode.HttpAttribute(), dto).WithBody(x =>
                 {
                     x.AppendLine($"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ();");
                     foreach (var repo in foreignRepos)
                     {
                         string managerParametervalue = repo.propertySymbol.NullableAnnotation == NullableAnnotation.Annotated ? repo.propertySymbol.Name + ".Value" : repo.propertySymbol.Name;
+                        x.AppendLine($"var {dto.Name.GetParameterName()} = await {getMethode.Name}({dto.GetIdProperty().Name.GetParameterName()});");
                         x.AppendLine($"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = await _{repo.repoName}.{getMethode.Name}({dto.Name.GetParameterName()}.{managerParametervalue});");
                     }
 
                     x.AppendLine($"return {dto.GetFullModelName()};");
-                }).AddAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAllFullAttribute));
+                }).AddAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetFullAttribute));
+                }
+
+                {
+                    string returnName= dto.GetFullModelName().GetParameterName() + "s";
+                    //Generate GetAllFull methode
+                    var getAllMethode = baseRepo.GetMethodsWithAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetAllAttribute)).First();
+                    result.AddMethod(ApiUrls.GetAllFull, Accessibility.Public).WithReturnTypeTaskList(dto.GetFullModelName()).MakeAsync().WithBody(x =>
+                    {
+                        x.AppendLine($"List<{dto.GetFullModelName()}> {returnName} = new ();");
+                        x.ForEach($"var {dto.Name.GetParameterName()}", $"{dto.Name.GetParameterName()}s").WithBody(x =>
+                        {
+                            x.AppendLine($"{returnName}.Add(await {ApiUrls.GetFull}({dto.Name.GetParameterName()}.{dto.GetIdProperty().Name.GetParameterName()}));");
+                        });
+
+                        x.AppendLine($"return {returnName};");
+                    }).AddAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetFullAttribute));
+                }
             }
 
             return result;
