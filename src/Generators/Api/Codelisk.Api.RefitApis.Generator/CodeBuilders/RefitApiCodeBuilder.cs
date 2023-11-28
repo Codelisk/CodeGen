@@ -51,6 +51,7 @@ namespace Api.RefitApis.Generator.CodeBuilders
                 {typeof(GetAllAttribute), "Get" },
                 {typeof(GetAllFullAttribute), "Get" },
                 {typeof(SaveAttribute), "Post" },
+                {typeof(AddAttribute), "Post" },
                 {typeof(DeleteAttribute), "Delete" }
             };
 

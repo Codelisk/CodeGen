@@ -63,6 +63,7 @@ namespace Controller.Generator.CodeBuilders
                 {typeof(GetFullAttribute), Constants.HttpGetAttribute },
                 {typeof(GetAllAttribute), Constants.HttpGetAttribute },
                 {typeof(SaveAttribute), Constants.HttpPostAttribute },
+                {typeof(AddAttribute), Constants.HttpPostAttribute },
                 {typeof(GetAllFullAttribute), Constants.HttpGetAttribute },
             };
 
