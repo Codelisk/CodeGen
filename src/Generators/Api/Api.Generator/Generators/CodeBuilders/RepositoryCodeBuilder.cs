@@ -8,6 +8,7 @@ using Generators.Base.Extensions;
 using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
 using Generators.Base;
+using Codelisk.GeneratorAttributes.Helper;
 
 namespace Api.Generator.Generators.CodeBuilders
 {
@@ -37,16 +38,7 @@ namespace Api.Generator.Generators.CodeBuilders
                     .WithBaseCall(baseRepo.InstanceConstructors.First().Parameters);
 
 
-                var attrs = new Dictionary<Type, string>
-            {
-                {typeof(GetAttribute), "Get" },
-                {typeof(GetFullAttribute), "Get" },
-                {typeof(GetAllAttribute), "Get" },
-                {typeof(GetAllFullAttribute), "Get" },
-                {typeof(SaveAttribute), "Post" },
-                {typeof(AddAttribute), "Post" },
-                {typeof(DeleteAttribute), "Delete" }
-            };
+                var attrs = AttributeHelper.AllAttributesMethodeHeaderDictionary();
                 foreach (var attr in attrs)
                 {
                     try

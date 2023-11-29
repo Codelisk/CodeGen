@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using Foundation.Crawler.Extensions.Extensions;
 using System.Text;
+using Codelisk.GeneratorAttributes.Helper;
 
 namespace Api.RefitApis.Generator.CodeBuilders
 {
@@ -44,16 +45,7 @@ namespace Api.RefitApis.Generator.CodeBuilders
         }
         private ClassBuilder Method(GeneratorExecutionContext context, ClassBuilder c, INamedTypeSymbol dto)
         {
-            var typeAndRefitAttribute = new Dictionary<Type, string>
-            {
-                {typeof(GetAttribute), "Get" },
-                {typeof(GetFullAttribute), "Get" },
-                {typeof(GetAllAttribute), "Get" },
-                {typeof(GetAllFullAttribute), "Get" },
-                {typeof(SaveAttribute), "Post" },
-                {typeof(AddAttribute), "Post" },
-                {typeof(DeleteAttribute), "Delete" }
-            };
+            var typeAndRefitAttribute = AttributeHelper.AllAttributesMethodeHeaderDictionary();
 
             foreach (var attr in typeAndRefitAttribute)
             {

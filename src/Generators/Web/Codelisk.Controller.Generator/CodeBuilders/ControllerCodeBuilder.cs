@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis;
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Shared.Constants;
 using Foundation.Crawler.Extensions;
+using Codelisk.GeneratorAttributes.Helper;
 
 namespace Controller.Generator.CodeBuilders
 {
@@ -56,16 +57,7 @@ namespace Controller.Generator.CodeBuilders
         {
             var repoProperty = baseController.GetFieldsWithConstructedFromType(repoModel.Class).First();
 
-            Dictionary<Type, string> methodsWithControllerAttributeName = new ()
-            {
-                {typeof(DeleteAttribute), Constants.HttpDeleteAttribute },
-                {typeof(GetAttribute), Constants.HttpGetAttribute },
-                {typeof(GetFullAttribute), Constants.HttpGetAttribute },
-                {typeof(GetAllAttribute), Constants.HttpGetAttribute },
-                {typeof(SaveAttribute), Constants.HttpPostAttribute },
-                {typeof(AddAttribute), Constants.HttpPostAttribute },
-                {typeof(GetAllFullAttribute), Constants.HttpGetAttribute },
-            };
+            Dictionary<Type, string> methodsWithControllerAttributeName = AttributeHelper.AllAttributesMethodeHeaderDictionary(Constants.HttpDeleteAttribute, Constants.HttpGetAttribute, Constants.HttpPostAttribute);
 
             if(dto.HasAttribute(nameof(RemoveGetAll)))
             {

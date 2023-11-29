@@ -8,6 +8,7 @@ namespace Shared.Constants
         public const string GetAllFull = "GetAllFull";
         public const string Save = "Save";
         public const string Add = "Add";
+        public const string AddRange = "AddRange";
         public const string Delete = "Delete";
     }
 }
