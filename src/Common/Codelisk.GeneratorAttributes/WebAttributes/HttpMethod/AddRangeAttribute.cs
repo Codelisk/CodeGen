@@ -7,7 +7,7 @@ using Shared.Constants;
 namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 {
     [Url(ApiUrls.AddRange)]
-    [DtoBody]
+    [DtoBodyList]
     public class AddRangeAttribute : BaseHttpAttribute
     {
     }

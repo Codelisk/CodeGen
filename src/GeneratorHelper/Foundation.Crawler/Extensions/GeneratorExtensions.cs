@@ -31,6 +31,10 @@ namespace Foundation.Crawler.Extensions.Extensions
             {
                 return dto.Name.GetParameterName();
             }
+            else if(httpAttribute.HasAttribute(nameof(DtoBodyListAttribute)))
+            {
+                return dto.Name.GetParameterName(true);
+            }
 
             return string.Empty;
         }
@@ -44,6 +48,11 @@ namespace Foundation.Crawler.Extensions.Extensions
             if (httpAttribute.HasAttribute(nameof(DtoBodyAttribute)))
             {
                 methodBuilder.AddParameter(dto.Name, dto.Name.GetParameterName());
+            }
+
+            if (httpAttribute.HasAttribute(nameof(DtoBodyListAttribute)))
+            {
+                methodBuilder.AddParameter($"List<{dto.Name}>", dto.Name.GetParameterName(true));
             }
 
             return methodBuilder;
