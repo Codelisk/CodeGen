@@ -12,6 +12,7 @@ namespace Codelisk.GeneratorAttributes.Helper
             return new Dictionary<Type, string>
             {
                 {typeof(GetAttribute), get },
+                {typeof(GetLastAttribute), get },
                 {typeof(GetFullAttribute), get },
                 {typeof(GetAllAttribute), get },
                 {typeof(GetAllFullAttribute), get },
