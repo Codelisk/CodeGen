@@ -52,11 +52,12 @@ namespace Foundation.Crawler.Extensions.Extensions
 
             if (httpAttribute.HasAttribute(nameof(DtoBodyListAttribute)))
             {
-                methodBuilder.AddParameter($"List<{dto.Name}>", dto.Name.GetParameterName(true));
+                methodBuilder.AddParameter($"System.Collections.Generic.List<{dto.Name}>", dto.Name.GetParameterName(true));
             }
 
             return methodBuilder;
         }
+        
         public static MethodBuilder WithReturnTypeForHttpMethod(this MethodBuilder methodBuilder, Type httpAttribute, INamedTypeSymbol dto)
         {
             var returnAttributeValue = httpAttribute.GetRealAttributeFromAttribute<ReturnAttribute>()?.ReturnKind;
