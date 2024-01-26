@@ -9,6 +9,7 @@ using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
 using Generators.Base;
 using Codelisk.GeneratorAttributes.Helper;
+using Foundation.Crawler.Extensions;
 
 namespace Api.Generator.Generators.CodeBuilders
 {
@@ -22,13 +23,15 @@ namespace Api.Generator.Generators.CodeBuilders
         {
             return GenerateRepositories(context, codeBuilders);
         }
+        
         public List<CodeBuilder> GenerateRepositories(Compilation context, List<CodeBuilder> refitApiCodeBuilder)
         {
-            var baseRepo = context.DefaultApiRepository();
+            var crawler = new AttributeCompilationCrawler(context);
+            var baseRepo = crawler.DefaultApiRepository();
 
             var result = new List<CodeBuilder>();
 
-            foreach (var dto in context.Dtos())
+            foreach (var dto in crawler.Dtos())
             {
                 var codeBuilder = CreateBuilder();
                 var repoName = dto.RepoName();

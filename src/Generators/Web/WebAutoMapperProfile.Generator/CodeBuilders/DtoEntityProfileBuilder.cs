@@ -15,12 +15,13 @@ namespace WebAutoMapperProfile.Generator.CodeBuilders
 
         public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
         {
-            var dtos = context.Dtos().ToList();
+            var attributeCompilationCrawler = new AttributeCompilationCrawler(context);
+            var dtos = attributeCompilationCrawler.Dtos().ToList();
             var result = CreateBuilder();
             result.AddClass(Constants.ProfileName).WithAccessModifier(Accessibility.Public).SetBaseClass(Constants.AutoMapperProfileBaseClass)
                 .AddNamespaceImport(Constants.AutoMapperNamespaceImport)
-                .AddDtoUsing(context)
-                .AddEntityUsing(context)
+                .AddDtoUsing(attributeCompilationCrawler)
+                .AddEntityUsing(attributeCompilationCrawler, context)
                 .AddConstructor()
                 .WithBody(x =>
                 {

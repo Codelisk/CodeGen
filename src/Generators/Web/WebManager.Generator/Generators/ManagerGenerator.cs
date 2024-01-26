@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using CodeGenHelpers;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebManager.Generator.CodeBuilders;
@@ -8,24 +9,24 @@ namespace WebManager.Generator.Generators
     [Generator]
     public class ManagerGenerator : BaseGenerator
     {
-        public override void Execute(Compilation compilation)
+        public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            if (compilation.AssemblyName.Contains("Generator"))
+            var result = context.CompilationProvider.Select(static (compilation, _) =>
             {
-                return;
-            }
-            try
-            {
-                //Debugger.Launch();
-                var managerCodeBuilder = new ManagerCodeBuilder(compilation.AssemblyName).Get(compilation);
-                var initializerBuilder = new ManagerInitializerCodeBuilder(compilation.AssemblyName).Get(compilation, managerCodeBuilder);
-                AddSource(compilation, "Manager", managerCodeBuilder);
-                AddSource(compilation, "", initializerBuilder);
-            }
-            catch(Exception ex)
-            {
-                context.AddSource("ErrorManagerGenerator", $"//{ex.Message} \n\n {ex.StackTrace}");
-            }
+                var codeBuilder = new ManagerCodeBuilder(compilation.AssemblyName).Get(compilation);
+                var initializerBuilder = new ManagerInitializerCodeBuilder(compilation.AssemblyName).Get(compilation, codeBuilder);
+
+
+                var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+                {
+                    (codeBuilder, "Manager", null),
+                    (initializerBuilder, null, null)
+                };
+
+                return result;
+            });
+
+            AddSource(context, result);
         }
     }
 }

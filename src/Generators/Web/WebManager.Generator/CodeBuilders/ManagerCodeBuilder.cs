@@ -19,29 +19,30 @@ namespace WebManager.Generator.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null)
         {
-            var dtos = context.Dtos().ToList();
-            return Build(context, dtos);
+            var attributeCompilationCrawler = new AttributeCompilationCrawler(compilation);
+            var dtos = attributeCompilationCrawler.Dtos().ToList();
+            return Build(attributeCompilationCrawler, compilation, dtos);
         }
 
-        private List<CodeBuilder?> Build(Compilation context, IEnumerable<INamedTypeSymbol> dtos)
+        private List<CodeBuilder?> Build(AttributeCompilationCrawler context, Compilation compilation, IEnumerable<INamedTypeSymbol> dtos)
         {
             var result = new List<CodeBuilder?>();
             foreach (var dto in dtos)
             {
                 var builder = CreateBuilder();
                 var baseManager = context.Manager(dto);
-                Class(builder, dto, context.Repository(dto), baseManager, context);
+                Class(builder, dto, context.Repository(dto), baseManager, context, compilation);
                 result.Add(builder);
             }
 
             return result;
         }
-        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, Compilation context)
+        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, AttributeCompilationCrawler context, Compilation compilation)
         {
             var dtoPropertiesWithForeignKey = dto.DtoForeignProperties();
-            var constructedBaseManager = baseManager.ConstructFromDto(dto, context);
+            var constructedBaseManager = baseManager.ConstructFromDto(dto, compilation);
 
             var constructor = builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.ManagerNameFromDto())

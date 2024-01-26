@@ -11,9 +11,9 @@ namespace WebGenerator.Base
 {
     public static class Extensions
     {
-        public static ClassBuilder AddEntityUsing(this ClassBuilder classBuilder, Compilation context)
+        public static ClassBuilder AddEntityUsing(this ClassBuilder classBuilder, AttributeCompilationCrawler attributeCompilationCrawler, Compilation compilation)
         {
-            var namespaces = context.Dtos().Select(x => x.EntityFromDto(context).GetNamespace()).Distinct();
+            var namespaces = attributeCompilationCrawler.Dtos().Select(x => x.EntityFromDto(compilation).GetNamespace()).Distinct();
             foreach (var n in namespaces)
             {
                 classBuilder.AddNamespaceImport(n);

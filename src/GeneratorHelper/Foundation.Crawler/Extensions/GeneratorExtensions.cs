@@ -10,7 +10,7 @@ namespace Foundation.Crawler.Extensions.Extensions
 {
     public static class GeneratorExtensions
     {
-        public static ClassBuilder AddDtoUsing(this ClassBuilder classBuilder, Compilation context)
+        public static ClassBuilder AddDtoUsing(this ClassBuilder classBuilder, AttributeCompilationCrawler context)
         {
             var namespaces = context.Dtos().Select(x => x.GetNamespace()).Distinct();
             foreach (var n in namespaces)

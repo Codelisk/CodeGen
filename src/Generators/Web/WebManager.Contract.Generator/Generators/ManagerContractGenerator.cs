@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using CodeGenHelpers;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebManager.Contract.Generator.CodeBuilders;
@@ -8,14 +9,21 @@ namespace WebManager.Contract.Generator.Generators
     [Generator]
     public class ManagerContractGenerator : BaseGenerator
     {
-        public override void Execute(GeneratorExecutionContext context)
+        public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            if (context.Compilation.AssemblyName.Contains("Generator"))
+            var result = context.CompilationProvider.Select(static (compilation, _) =>
             {
-                return;
-            }
-            //Debugger.Launch();
-            AddSource(context, "ManagerContracts", new ManagerContractCodeBuilder(context.Compilation.AssemblyName).Get(context));
+                var repositoryContractCodeBuilder = new ManagerContractCodeBuilder(compilation.AssemblyName).Get(compilation);
+
+                var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+                {
+                    (repositoryContractCodeBuilder, "ManagerContracts", null),
+                };
+
+                return result;
+            });
+
+            AddSource(context, result);
         }
     }
 }

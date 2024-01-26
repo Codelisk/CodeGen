@@ -1,3 +1,4 @@
+using CodeGenHelpers;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using System.Diagnostics;
@@ -8,17 +9,21 @@ namespace WebAutoMapperProfile.Generator.Generators
     [Generator]
     public class DtoEntityProfileGenerator : BaseGenerator
     {
-        public override void Execute(GeneratorExecutionContext context)
+        public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            try
+            var result = context.CompilationProvider.Select(static (compilation, _) =>
             {
-                var dtoEntityProfileBuilder = new DtoEntityProfileBuilder(context.Compilation.AssemblyName).Get(context);
-                AddSource(context, "AutoMapper", dtoEntityProfileBuilder);
-            }
-            catch(Exception ex)
-            {
-                context.AddSource("Failed", ex.Message + " \n\nStacktrace:" + ex.StackTrace);
-            }
+                var repositoryContractCodeBuilder = new DtoEntityProfileBuilder(compilation.AssemblyName).Get(compilation);
+
+                var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+                {
+                    (repositoryContractCodeBuilder, "AutoMapper", null)
+                };
+
+                return result;
+            });
+
+            AddSource(context, result);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using CodeGenHelpers;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebRepositories.Generator.CodeBuilders;
@@ -8,23 +9,24 @@ namespace WebRepositories.Generator.Generators
     [Generator]
     public class RepositoryGenerator : BaseGenerator
     {
-        public override void Execute(GeneratorExecutionContext context)
+        public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            if (context.Compilation.AssemblyName.Contains("Generator"))
+            var result = context.CompilationProvider.Select(static (compilation, _) =>
             {
-                return;
-            }
-            try
-            {
-                var repositoryBuilder = new RepositoryCodeBuilder(context.Compilation.AssemblyName).Get(context);
-                var initializerBuilder = new RepositoryInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, repositoryBuilder);
-                AddSource(context, "Repositories", repositoryBuilder);
-                AddSource(context, "", initializerBuilder);
-            }
-            catch(Exception ex)
-            {
-                context.AddSource("ErrorRepositoryGenerator", $"//{ex.Message} \n\n {ex.StackTrace}");
-            }
+                var codeBuilder = new RepositoryCodeBuilder(compilation.AssemblyName).Get(compilation);
+                var initializerBuilder = new RepositoryInitializerCodeBuilder(compilation.AssemblyName).Get(compilation, codeBuilder);
+                
+
+                var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+                {
+                    (codeBuilder, "Repositories", null),
+                    (initializerBuilder, null, null)
+                };
+
+                return result;
+            });
+
+            AddSource(context, result);
         }
     }
 }

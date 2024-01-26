@@ -1,3 +1,4 @@
+using CodeGenHelpers;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebDbContext.Generator.CodeBuilders;
@@ -9,21 +10,22 @@ namespace WebDbContext.Generator.Generators
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            if (context.Compilation.AssemblyName.Contains("Generator"))
+            var result = context.CompilationProvider.Select(static (compilation, _) =>
             {
-                return;
-            }
-            try
-            {
-                var dbContextCodeBuilder = new DbContextCodeBuilder(context.Compilation.AssemblyName).Get(context);
-                var initializerBuilder = new DbContextInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, dbContextCodeBuilder);
-                AddSource(context, "DbContexts", dbContextCodeBuilder);
-                AddSource(context, "", initializerBuilder);
-            }
-            catch (Exception ex)
-            {
-                context.AddSource("ErrorDbContextGenerator", $"//{ex.Message} \n\n {ex.StackTrace}");
-            }
+                var codeBuilder = new DbContextCodeBuilder(compilation.AssemblyName).Get(compilation);
+                var initializerBuilder = new DbContextInitializerCodeBuilder(compilation.AssemblyName).Get(compilation, codeBuilder);
+
+
+                var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+                {
+                    (codeBuilder, "DbContexts", null),
+                    (initializerBuilder, null, null)
+                };
+
+                return result;
+            });
+
+            AddSource(context, result);
         }
     }
 }

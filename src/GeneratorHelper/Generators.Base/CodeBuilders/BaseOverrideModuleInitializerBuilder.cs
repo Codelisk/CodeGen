@@ -25,13 +25,13 @@ namespace Generators.Base.CodeBuilders
 
             foreach (var codeBuilder in codeBuilders)
             {
-                foreach (var c in codeBuilder.GetClasses(context))
+                foreach (var c in codeBuilder.GetClasses(compilation))
                 {
                     Services.Add(("AddSingleton", c.Interfaces.First().Name, c.Name));
                 }
             }
 
-            var result = base.Get(context);
+            var result = base.Get(compilation);
 
 
             var builder = CreateBuilder();

@@ -21,17 +21,18 @@ namespace Controller.Generator.CodeBuilders
 
         public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
         {
-            var dtos = context.Dtos().ToList();
-            return Build(context, dtos);
+            var attributeCompilationCrawler = new AttributeCompilationCrawler(context);
+            var dtos = attributeCompilationCrawler.Dtos().ToList();
+            return Build(attributeCompilationCrawler, context, dtos);
         }
 
-        private List<CodeBuilder?> Build(Compilation context, IEnumerable<INamedTypeSymbol> dtos)
+        private List<CodeBuilder?> Build(AttributeCompilationCrawler attributeCompilationCrawler, Compilation context, IEnumerable<INamedTypeSymbol> dtos)
         {
             var result = new List<CodeBuilder?>();
             foreach (var dto in dtos)
             {
-                var manager = context.Manager(dto);
-                var baseController = context.Controller(dto);
+                var manager = attributeCompilationCrawler.Manager(dto);
+                var baseController = attributeCompilationCrawler.Controller(dto);
                 var builder = CreateBuilder();
 
                 var c = Class(builder, dto, manager, baseController, context);

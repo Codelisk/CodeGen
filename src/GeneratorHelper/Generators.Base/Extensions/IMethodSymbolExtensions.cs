@@ -43,7 +43,7 @@ namespace Generators.Base.Extensions
                 }
             }
 
-            return context.Compilation.GetSpecialType(SpecialType.System_String); // Return null if the DoWithLoggingAsync<int>() method call is not found or if the return type is not available
+            return compilation.GetSpecialType(SpecialType.System_String); // Return null if the DoWithLoggingAsync<int>() method call is not found or if the return type is not available
         }
         public static string GetPropertyOfAttribute<TAttribute, TPropertyAttribute>(this IMethodSymbol methodSymbol) where TAttribute : Attribute where TPropertyAttribute : Attribute
         {

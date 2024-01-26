@@ -1,4 +1,5 @@
 
+using CodeGenHelpers;
 using Controller.Generator.CodeBuilders;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
@@ -9,18 +10,24 @@ namespace Controller.Generator.Generators
     [Generator]
     public class ControllerGenerator : BaseGenerator
     {
-        public override void Execute(GeneratorExecutionContext context)
-        { 
-            //Debugger.Launch();
-            if (context.Compilation.AssemblyName.Contains("Generator"))
+        public override void Initialize(IncrementalGeneratorInitializationContext context)
+        {
+            var result = context.CompilationProvider.Select(static (compilation, _) =>
             {
-                return;
-            }
-            //Debugger.Launch();
-            var codeBuilder = new ControllerCodeBuilder(context.Compilation.AssemblyName).Get(context);
-            var initializerBuilder = new ControllerInitializerBuilder(context.Compilation.AssemblyName).Get(context, codeBuilder);
-            AddSource(context, "Controller", codeBuilder);
-            AddSource(context, "", initializerBuilder);
+                var codeBuilder = new ControllerCodeBuilder(compilation.AssemblyName).Get(compilation);
+                var initializerBuilder = new ControllerInitializerBuilder(compilation.AssemblyName).Get(compilation, codeBuilder);
+
+
+                var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+                {
+                    (codeBuilder, "Controller", null),
+                    (initializerBuilder, null, null)
+                };
+
+                return result;
+            });
+
+            AddSource(context, result);
         }
     }
 }

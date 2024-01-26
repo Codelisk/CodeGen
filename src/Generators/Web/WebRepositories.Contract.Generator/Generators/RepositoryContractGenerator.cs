@@ -1,3 +1,4 @@
+using CodeGenHelpers;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebRepositories.Contract.Generator.CodeBuilders;
@@ -7,20 +8,21 @@ namespace WebRepositories.Contract.Generator.Generators
     [Generator]
     public class RepositoryContractGenerator : BaseGenerator
     {
-        public override void Execute(GeneratorExecutionContext context)
+        public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            if (context.Compilation.AssemblyName.Contains("Generator"))
+            var result = context.CompilationProvider.Select(static (compilation, _) =>
             {
-                return;
-            }
-            try
-            {
-                AddSource(context, "RepositoryContracts", new RepositoryContractCodeBuilder(context.Compilation.AssemblyName).Get(context));
-            }
-            catch(Exception ex)
-            {
-                context.AddSource("ErrorRepositoryContractGenerator", $"//{ex.Message} \n\n {ex.StackTrace}");
-            }
+                var repositoryContractCodeBuilder = new RepositoryContractCodeBuilder(compilation.AssemblyName).Get(compilation);
+
+                var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+                {
+                    (repositoryContractCodeBuilder, "RepositoryContracts", null),
+                };
+
+                return result;
+            });
+
+            AddSource(context, result);
         }
     }
 }

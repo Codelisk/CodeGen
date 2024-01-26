@@ -9,53 +9,54 @@ namespace Generators.Base.Generators.Base
     {
         public abstract void Initialize(IncrementalGeneratorInitializationContext context);
 
-        protected void AddSource(IncrementalGeneratorInitializationContext context, Compilation compilation, string folderName, List<CodeBuilder> codeBuilders, (string, string)? replace = null)
+
+        protected void AddSource(IncrementalGeneratorInitializationContext context, IncrementalValueProvider<List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>> codeBuildersProvider)
         {
-            foreach (var codeBuilder in codeBuilders)
+            context.RegisterSourceOutput(codeBuildersProvider, static (sourceProductionContext, codeBuildersTuples) =>
             {
-                codeBuilder.AddMissingNamespaceImports(compilation);
-                string code = codeBuilder.Build();
-                if (replace.HasValue)
+                foreach (var codeBuilderTuple in codeBuildersTuples)
                 {
-                    code = code.Replace(replace.Value.Item1, replace.Value.Item2);
-                }
+                    var codeBuilders = codeBuilderTuple.Item1;
+                    string? folderName = codeBuilderTuple.Item2;
+                    var replace = codeBuilderTuple.Item3;
 
-                if (codeBuilder.Classes.Any())
-                {
-                    //Workaround because i cant make Interface methods
-                    if (codeBuilder.Classes.Any(x => x.Kind == TypeKind.Interface))
+                    foreach (var codeBuilder in codeBuilders)
                     {
-                        code = code.Replace("abstract ", "");
-                        code = code.Replace("using <global namespace>;", "");
-                    }
+                        string code = codeBuilder.Build();
+                        if (replace.HasValue)
+                        {
+                            code = code.Replace(replace.Value.Item1, replace.Value.Item2);
+                        }
 
-                    try
-                    {
-                        var fileName = codeBuilder.Classes.First().Name + ".g.cs";
-                        if (string.IsNullOrEmpty(folderName))
+                        if (codeBuilder.Classes.Any())
                         {
-                            context.RegisterPostInitializationOutput((c) =>
+                            //Workaround because i cant make Interface methods
+                            if (codeBuilder.Classes.Any(x => x.Kind == TypeKind.Interface))
                             {
-                                c.AddSource(fileName, code);
-                            });
-                        }
-                        else
-                        {
-                            context.RegisterPostInitializationOutput((c) =>
+                                code = code.Replace("abstract ", "");
+                                code = code.Replace("using <global namespace>;", "");
+                            }
+
+                            try
                             {
-                                c.AddSource(folderName + "/" + fileName, code);
-                            });
+                                var fileName = codeBuilder.Classes.First().Name + ".g.cs";
+                                if (string.IsNullOrEmpty(folderName))
+                                {
+                                    sourceProductionContext.AddSource(fileName, code);
+                                }
+                                else
+                                {
+                                    sourceProductionContext.AddSource(folderName + "/" + fileName, code);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                sourceProductionContext.AddSource(folderName + "/Failed", ex.Message + " \n\nStacktrace:" + ex.StackTrace);
+                            }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        context.RegisterPostInitializationOutput((c) =>
-                        {
-                            c.AddSource(folderName + "/Failed", ex.Message + " \n\nStacktrace:" + ex.StackTrace);
-                        });
                     }
                 }
-            }
+            });
         }
     }
 }

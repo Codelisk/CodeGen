@@ -17,21 +17,22 @@ namespace WebDbContext.Generator.CodeBuilders
 
         public override List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null)
         {
-            var dtos = context.Entities().ToList();
-            return Build(context, dtos);
+            var attributeCompilationCrawler = new AttributeCompilationCrawler(compilation);
+            var dtos = attributeCompilationCrawler.Entities().ToList();
+            return Build(attributeCompilationCrawler, dtos);
         }
 
-        private List<CodeBuilder?> Build(Compilation context, IEnumerable<INamedTypeSymbol> entities)
+        private List<CodeBuilder?> Build(AttributeCompilationCrawler context, IEnumerable<INamedTypeSymbol> entities)
         {
             var result = new List<CodeBuilder?>();
             var baseContext = context.BaseContext();
             var builder = CreateBuilder(baseContext.ContainingNamespace.ToString());
-            Class(builder, entities, baseContext, context);
+            Class(builder, entities, baseContext);
             result.Add(builder);
 
             return result;
         }
-        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IEnumerable<INamedTypeSymbol> entities, INamedTypeSymbol baseContext, Compilation context)
+        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IEnumerable<INamedTypeSymbol> entities, INamedTypeSymbol baseContext)
         {
             var result = builder.AddClass(baseContext.Name).WithAccessModifier(Accessibility.Public).AddNamespaceImport("Microsoft.EntityFrameworkCore")
                 .AddAttribute(typeof(GeneratedDbContextAttribute).FullName);
