@@ -18,12 +18,13 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
         {
-            var dtos = context.Dtos().ToList();
-            return Build(context, dtos);
+            var attributeCompilationCrawler = new AttributeCompilationCrawler(context);
+            var dtos = attributeCompilationCrawler.Dtos().ToList();
+            return Build(attributeCompilationCrawler, dtos);
         }
-        private List<CodeBuilder?> Build(GeneratorExecutionContext context, IEnumerable<INamedTypeSymbol> dtos)
+        private List<CodeBuilder?> Build(AttributeCompilationCrawler context, IEnumerable<INamedTypeSymbol> dtos)
         {
             var result = new List<CodeBuilder?>();
 
@@ -36,7 +37,7 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
 
             return result;
         }
-        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, INamedTypeSymbol dto, GeneratorExecutionContext context)
+        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, INamedTypeSymbol dto, AttributeCompilationCrawler context)
         {
             var result = builder.AddClass(dto.GetFullModelName()).WithAccessModifier(Accessibility.Public);
 

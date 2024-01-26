@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using CodeGenHelpers;
 using Codelisk.Foundation.Generator.CodeBuilders;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
@@ -10,21 +11,21 @@ namespace Codelisk.Foundation.Generator.Generators
     [Generator]
     public class FullModelGenerator : BaseGenerator
     {
-        public override void Execute(GeneratorExecutionContext context)
+        public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            if (context.Compilation.AssemblyName.Contains("Generator"))
+            var refitApiCodeBuilder = context.CompilationProvider.Select(static (compilation, _) =>
             {
-                return;
-            }
-            try
-            {
-                var fullModelCodeBuilder = new FullModelCodeBuilder(context.Compilation.AssemblyName).Get(context);
-                AddSource(context, "FullModels", fullModelCodeBuilder);
-            }
-            catch(Exception ex)
-            {
-                context.AddSource("ErrorFullModelGenerator", $"//{ex.Message} \n\n {ex.StackTrace}");
-            }
-}
+                var codeBuilder = new FullModelCodeBuilder(compilation.AssemblyName).Get(compilation);
+
+                var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+                {
+                    (codeBuilder, "FullModels", null),
+                };
+
+                return result;
+            });
+
+            AddSource(context, refitApiCodeBuilder);
+        }
     }
 }

@@ -67,6 +67,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.Controller.Generat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.Api.RefitApis.Generator", "src\Generators\Api\Codelisk.Api.RefitApis.Generator\Codelisk.Api.RefitApis.Generator.csproj", "{47EAFC9A-208F-43FA-BB5C-C8666448214B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codelisk.Foundation.Generator", "src\Generators\Foundation\Codelisk.Foundation.Generator\Codelisk.Foundation.Generator.csproj", "{A4651804-CFA9-4DC9-ABD6-330C0C95010D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +159,10 @@ Global
 		{47EAFC9A-208F-43FA-BB5C-C8666448214B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47EAFC9A-208F-43FA-BB5C-C8666448214B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47EAFC9A-208F-43FA-BB5C-C8666448214B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4651804-CFA9-4DC9-ABD6-330C0C95010D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4651804-CFA9-4DC9-ABD6-330C0C95010D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4651804-CFA9-4DC9-ABD6-330C0C95010D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4651804-CFA9-4DC9-ABD6-330C0C95010D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -188,6 +194,7 @@ Global
 		{A182F743-B52E-4323-B9C2-69B84EC7208B} = {0F721182-9BE8-464F-8C03-E08FDD165F56}
 		{83214749-667B-4EA5-B1A9-CE6B763F6D87} = {F3051289-022E-4E71-A7A9-D12E08ECC79C}
 		{47EAFC9A-208F-43FA-BB5C-C8666448214B} = {E99016E6-A7FE-4AA1-A808-061087629756}
+		{A4651804-CFA9-4DC9-ABD6-330C0C95010D} = {A87C58D3-7F29-4FEF-8CCF-A05A10BEE6AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {077D68B2-E4F9-47C8-BD23-66121BD01E40}
