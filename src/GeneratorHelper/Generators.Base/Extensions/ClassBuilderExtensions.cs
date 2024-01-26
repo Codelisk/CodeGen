@@ -18,10 +18,10 @@ namespace Generators.Base.Extensions
         //        });
         //    }
         //}
-        public static void AddMissingNamespaceImports(this CodeBuilder codeBuilder, GeneratorExecutionContext context)
+        public static void AddMissingNamespaceImports(this CodeBuilder codeBuilder, Compilation compilation)
         {
             List<string> imports = new List<string>();
-            var classes = codeBuilder.GetClasses(context);
+            var classes = codeBuilder.GetClasses(compilation);
 
             foreach (var clazz in classes)
             {

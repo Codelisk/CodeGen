@@ -7,15 +7,15 @@ namespace Generators.Base.Helpers
 {
     public static class InterfaceGenerator
     {
-        public static CodeBuilder GenerateSeperateInterfaceCodeBuilder<TRegisterAttribute>(this CodeBuilder c, GeneratorExecutionContext context) where TRegisterAttribute : BaseRegisterAttribute
+        public static CodeBuilder GenerateSeperateInterfaceCodeBuilder<TRegisterAttribute>(this CodeBuilder c, Compilation context) where TRegisterAttribute : BaseRegisterAttribute
         {
             //var lastClass = c.Classes.Last();
             //lastClass.AddAttribute(typeof(TRegisterAttribute).Name);
 
-            return c.GetClasses(context).Last().GenerateInterface(CodeBuilder.Create(context.Compilation.AssemblyName), context);
+            return c.GetClasses(context).Last().GenerateInterface(CodeBuilder.Create(context.AssemblyName), context);
         }
 
-        public static CodeBuilder GenerateInterface<TRegisterAttribute>(this CodeBuilder codeBuilder, GeneratorExecutionContext context) where TRegisterAttribute : Attribute
+        public static CodeBuilder GenerateInterface<TRegisterAttribute>(this CodeBuilder codeBuilder, Compilation context) where TRegisterAttribute : Attribute
         {
             var lastClass = codeBuilder.Classes.Last();
             TestLog.Add("Adding " + lastClass.Name);
@@ -23,7 +23,7 @@ namespace Generators.Base.Helpers
             codeBuilder.GetClasses(context).Last().GenerateInterface(codeBuilder, context);
             return codeBuilder;
         }
-        public static CodeBuilder GenerateInterface(this INamedTypeSymbol c, CodeBuilder codeBuilder, GeneratorExecutionContext context)
+        public static CodeBuilder GenerateInterface(this INamedTypeSymbol c, CodeBuilder codeBuilder, Compilation context)
         {
             TestLog.Add("Start Generate");
             var publicMethods = c.GetMethods().Where(x => x.DeclaredAccessibility == Accessibility.Public && !x.Name.Equals(".ctor"));

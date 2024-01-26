@@ -11,7 +11,7 @@ namespace Generators.Base.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null)
         {
             if (Services is null)
             {
@@ -23,7 +23,7 @@ namespace Generators.Base.CodeBuilders
             {
                 foreach (var codeBuilder in codeBuilders)
                 {
-                    foreach (var c in codeBuilder.GetClasses(context))
+                    foreach (var c in codeBuilder.GetClasses(compilation))
                     {
                         var registerAttribute = c.GetAttributes().FirstOrDefault(x => nameof(RegisterTransient).Equals(x.AttributeClass.Name));
 
@@ -48,7 +48,7 @@ namespace Generators.Base.CodeBuilders
                 Services.Add(("AddTransient", serviceType, ""));
             }
 
-            return base.Get(context);
+            return base.Get(compilation);
         }
         private void Add<TAttribute>(INamedTypeSymbol c) where TAttribute : BaseRegisterAttribute
         {

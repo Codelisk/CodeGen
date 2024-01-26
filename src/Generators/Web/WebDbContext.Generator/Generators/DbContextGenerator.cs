@@ -7,7 +7,7 @@ namespace WebDbContext.Generator.Generators
     [Generator]
     public class DbContextGenerator : BaseGenerator
     {
-        public override void Execute(GeneratorExecutionContext context)
+        public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
             if (context.Compilation.AssemblyName.Contains("Generator"))
             {

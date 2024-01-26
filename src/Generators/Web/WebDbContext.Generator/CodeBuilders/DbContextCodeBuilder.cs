@@ -15,13 +15,13 @@ namespace WebDbContext.Generator.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null)
         {
             var dtos = context.Entities().ToList();
             return Build(context, dtos);
         }
 
-        private List<CodeBuilder?> Build(GeneratorExecutionContext context, IEnumerable<INamedTypeSymbol> entities)
+        private List<CodeBuilder?> Build(Compilation context, IEnumerable<INamedTypeSymbol> entities)
         {
             var result = new List<CodeBuilder?>();
             var baseContext = context.BaseContext();
@@ -31,7 +31,7 @@ namespace WebDbContext.Generator.CodeBuilders
 
             return result;
         }
-        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IEnumerable<INamedTypeSymbol> entities, INamedTypeSymbol baseContext, GeneratorExecutionContext context)
+        private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IEnumerable<INamedTypeSymbol> entities, INamedTypeSymbol baseContext, Compilation context)
         {
             var result = builder.AddClass(baseContext.Name).WithAccessModifier(Accessibility.Public).AddNamespaceImport("Microsoft.EntityFrameworkCore")
                 .AddAttribute(typeof(GeneratedDbContextAttribute).FullName);

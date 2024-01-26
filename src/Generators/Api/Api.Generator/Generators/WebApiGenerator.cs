@@ -9,7 +9,7 @@ namespace Api.Generator.Generators
     [Generator]
     public class WebApiGenerator : BaseGenerator
     {
-        public override void Execute(GeneratorExecutionContext context)
+        public override void Execute(Compilation context)
         {
             try
             {

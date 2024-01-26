@@ -8,19 +8,19 @@ namespace WebManager.Generator.Generators
     [Generator]
     public class ManagerGenerator : BaseGenerator
     {
-        public override void Execute(GeneratorExecutionContext context)
+        public override void Execute(Compilation compilation)
         {
-            if (context.Compilation.AssemblyName.Contains("Generator"))
+            if (compilation.AssemblyName.Contains("Generator"))
             {
                 return;
             }
             try
             {
                 //Debugger.Launch();
-                var managerCodeBuilder = new ManagerCodeBuilder(context.Compilation.AssemblyName).Get(context);
-                var initializerBuilder = new ManagerInitializerCodeBuilder(context.Compilation.AssemblyName).Get(context, managerCodeBuilder);
-                AddSource(context, "Manager", managerCodeBuilder);
-                AddSource(context, "", initializerBuilder);
+                var managerCodeBuilder = new ManagerCodeBuilder(compilation.AssemblyName).Get(compilation);
+                var initializerBuilder = new ManagerInitializerCodeBuilder(compilation.AssemblyName).Get(compilation, managerCodeBuilder);
+                AddSource(compilation, "Manager", managerCodeBuilder);
+                AddSource(compilation, "", initializerBuilder);
             }
             catch(Exception ex)
             {

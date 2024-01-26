@@ -15,23 +15,23 @@ namespace Foundation.Crawler.Crawlers
 {
     public static class AttributeCrawler
     {
-        public static INamedTypeSymbol BaseApi(this GeneratorExecutionContext context)
+        public static INamedTypeSymbol BaseApi(this Compilation context)
         {
             return context.GetClassesWithAttribute(nameof(BaseApiAttribute)).First();
         }
-        public static INamedTypeSymbol BaseContext(this GeneratorExecutionContext context)
+        public static INamedTypeSymbol BaseContext(this Compilation context)
         {
             return context.GetClassesWithAttribute(nameof(BaseContextAttribute)).First();
         }
-        public static IEnumerable<INamedTypeSymbol> Dtos(this GeneratorExecutionContext context)
+        public static IEnumerable<INamedTypeSymbol> Dtos(this Compilation context)
         {
             return context.GetClassesWithAttribute(nameof(DtoAttribute));
         }
-        public static IEnumerable<INamedTypeSymbol> Entities(this GeneratorExecutionContext context)
+        public static IEnumerable<INamedTypeSymbol> Entities(this Compilation context)
         {
             return context.GetClassesWithAttribute(nameof(EntityAttribute));
         }
-        public static INamedTypeSymbol DefaultApiRepository(this GeneratorExecutionContext context)
+        public static INamedTypeSymbol DefaultApiRepository(this Compilation context)
         {
             return context.GetClassesWithAttribute(nameof(DefaultApiRepositoryAttribute)).First();
         }
@@ -40,18 +40,18 @@ namespace Foundation.Crawler.Crawlers
             //var attribute = context.GetClassesWithAttribute(nameof(UrlAttribute)).OfType<TAttribute>().First();
             return $"{attributeValue}";
         }
-        public static INamedTypeSymbol GetAttribute<TAttribute>(this GeneratorExecutionContext context) where TAttribute : Attribute
+        public static INamedTypeSymbol GetAttribute<TAttribute>(this Compilation context) where TAttribute : Attribute
         {
             // Find the property with the Url attribute
             return context.GetClass<TAttribute>("Codelisk.GeneratorAttributes");
         }
-        public static string AttributeUrl(this GeneratorExecutionContext context, Type t, INamedTypeSymbol dto)
+        public static string AttributeUrl(this Compilation context, Type t, INamedTypeSymbol dto)
         {
             // Find the property with the Url attribute
             var attributeSymobl = context.GetClass(t, "Codelisk.GeneratorAttributes");
             return attributeSymobl.AttributeUrl(dto);
         }
-        public static string AttributeUrl<TAttribute>(this GeneratorExecutionContext context, INamedTypeSymbol dto) where TAttribute : BaseHttpAttribute
+        public static string AttributeUrl<TAttribute>(this Compilation context, INamedTypeSymbol dto) where TAttribute : BaseHttpAttribute
         {
             // Find the property with the Url attribute
             var attributeSymobl = context.GetAttribute<TAttribute>();
@@ -63,21 +63,21 @@ namespace Foundation.Crawler.Crawlers
             bool plural = attributeSymobl.HasAttribute(nameof(PluralAttribute));
             return urlProperty.GetFirstConstructorArgument().AttributeUrl(dto);
         }
-        public static INamedTypeSymbol Manager(this GeneratorExecutionContext context, INamedTypeSymbol dto)
+        public static INamedTypeSymbol Manager(this Compilation context, INamedTypeSymbol dto)
         {
             return UserOrDefault<DefaultManagerAttribute>(context, dto);
         }
-        public static INamedTypeSymbol Controller(this GeneratorExecutionContext context, INamedTypeSymbol dto)
+        public static INamedTypeSymbol Controller(this Compilation context, INamedTypeSymbol dto)
         {
             return UserOrDefault<DefaultControllerAttribute>(context, dto);
         }
-        public static INamedTypeSymbol Repository(this GeneratorExecutionContext context, INamedTypeSymbol dto)
+        public static INamedTypeSymbol Repository(this Compilation context, INamedTypeSymbol dto)
         {
             return UserOrDefault<DefaultRepositoryAttribute>(context, dto);
         }
         //For caching
         private static IEnumerable<INamedTypeSymbol> classSymbols;
-        private static INamedTypeSymbol UserOrDefault<TAttribute>(this GeneratorExecutionContext context, INamedTypeSymbol dto, bool isUser = false)
+        private static INamedTypeSymbol UserOrDefault<TAttribute>(this Compilation context, INamedTypeSymbol dto, bool isUser = false)
             where TAttribute : Attribute
         {
             classSymbols = context.GetAllClasses("");

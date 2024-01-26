@@ -10,7 +10,7 @@ namespace Generator.Foundation.Generators.Base
         {
             CodeBuilderNamespace = codeBuilderNamespace;
         }
-        public abstract List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null);
+        public abstract List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null);
         public CodeBuilder CreateBuilder(string ns = null)
         {
             if (ns is null)

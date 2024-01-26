@@ -10,7 +10,7 @@ namespace WebGenerator.Base.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(IncrementalGeneratorInitializationContext context, List<CodeBuilder> codeBuilders = null)
         {
             Services = new List<(string, string, string)>();
             //AddDbContexts(context);

@@ -13,7 +13,7 @@ namespace WebAutoMapperProfile.Generator.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
         {
             var dtos = context.Dtos().ToList();
             var result = CreateBuilder();

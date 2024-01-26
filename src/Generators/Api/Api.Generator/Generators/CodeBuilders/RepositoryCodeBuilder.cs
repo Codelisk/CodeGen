@@ -18,11 +18,11 @@ namespace Api.Generator.Generators.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
         {
             return GenerateRepositories(context, codeBuilders);
         }
-        public List<CodeBuilder> GenerateRepositories(GeneratorExecutionContext context, List<CodeBuilder> refitApiCodeBuilder)
+        public List<CodeBuilder> GenerateRepositories(Compilation context, List<CodeBuilder> refitApiCodeBuilder)
         {
             var baseRepo = context.DefaultApiRepository();
 

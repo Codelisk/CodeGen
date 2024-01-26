@@ -7,10 +7,9 @@ namespace Generators.Base.Extensions
     public static class IMethodSymbolExtensions
     {
         // Get the specific return type from the method invocation
-        public static ITypeSymbol GetReturnTypeOrString(this IMethodSymbol method, GeneratorExecutionContext context, bool forceGetDto)
+        public static ITypeSymbol GetReturnTypeOrString(this IMethodSymbol method, Compilation compilation, bool forceGetDto)
         {
             var methodDeclaration = method.GetMethodDeclarationSyntax();
-            var compilation = context.Compilation;
             var semanticModel = compilation.GetSemanticModel(methodDeclaration.SyntaxTree);
 
             // Find the invocation expression of DoWithLoggingAsync method

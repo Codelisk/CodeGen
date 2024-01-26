@@ -50,10 +50,9 @@ public class FilterGenerator : ISourceGenerator
         }
     }
 
-    private static Dictionary<INamedTypeSymbol, IList<AttributeData>> GetClassAttributePairs(GeneratorExecutionContext context,
+    private static Dictionary<INamedTypeSymbol, IList<AttributeData>> GetClassAttributePairs(Compilation compilation,
         SyntaxReceiver receiver)
     {
-        var compilation = context.Compilation;
         var classSymbols = new Dictionary<INamedTypeSymbol, IList<AttributeData>>();
         foreach (var clazz in receiver.CandidateClasses)
         {

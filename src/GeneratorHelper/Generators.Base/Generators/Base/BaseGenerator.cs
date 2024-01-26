@@ -5,13 +5,15 @@ using Microsoft.CodeAnalysis;
 
 namespace Generators.Base.Generators.Base
 {
-    public abstract class BaseGenerator : ISourceGenerator
+    public abstract class BaseGenerator : IIncrementalGenerator
     {
-        protected void AddSource(GeneratorExecutionContext context, string folderName, List<CodeBuilder> codeBuilders, (string, string)? replace = null)
+        public abstract void Initialize(IncrementalGeneratorInitializationContext context);
+
+        protected void AddSource(IncrementalGeneratorInitializationContext context, Compilation compilation, string folderName, List<CodeBuilder> codeBuilders, (string, string)? replace = null)
         {
             foreach (var codeBuilder in codeBuilders)
             {
-                codeBuilder.AddMissingNamespaceImports(context);
+                codeBuilder.AddMissingNamespaceImports(compilation);
                 string code = codeBuilder.Build();
                 if (replace.HasValue)
                 {
@@ -32,24 +34,28 @@ namespace Generators.Base.Generators.Base
                         var fileName = codeBuilder.Classes.First().Name + ".g.cs";
                         if (string.IsNullOrEmpty(folderName))
                         {
-                            context.AddSource(fileName, code);
+                            context.RegisterPostInitializationOutput((c) =>
+                            {
+                                c.AddSource(fileName, code);
+                            });
                         }
                         else
                         {
-                            context.AddSource(folderName + "/" + fileName, code);
+                            context.RegisterPostInitializationOutput((c) =>
+                            {
+                                c.AddSource(folderName + "/" + fileName, code);
+                            });
                         }
                     }
                     catch (Exception ex)
                     {
-                        context.AddSource(folderName + "/Failed", ex.Message + " \n\nStacktrace:"  +ex.StackTrace);
+                        context.RegisterPostInitializationOutput((c) =>
+                        {
+                            c.AddSource(folderName + "/Failed", ex.Message + " \n\nStacktrace:" + ex.StackTrace);
+                        });
                     }
                 }
             }
-        }
-        public abstract void Execute(GeneratorExecutionContext context);
-
-        public virtual void Initialize(GeneratorInitializationContext context)
-        {
         }
     }
 }

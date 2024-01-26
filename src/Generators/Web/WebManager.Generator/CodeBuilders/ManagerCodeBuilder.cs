@@ -19,13 +19,13 @@ namespace WebManager.Generator.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
         {
             var dtos = context.Dtos().ToList();
             return Build(context, dtos);
         }
 
-        private List<CodeBuilder?> Build(GeneratorExecutionContext context, IEnumerable<INamedTypeSymbol> dtos)
+        private List<CodeBuilder?> Build(Compilation context, IEnumerable<INamedTypeSymbol> dtos)
         {
             var result = new List<CodeBuilder?>();
             foreach (var dto in dtos)
@@ -38,7 +38,7 @@ namespace WebManager.Generator.CodeBuilders
 
             return result;
         }
-        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, GeneratorExecutionContext context)
+        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol baseRepo, INamedTypeSymbol baseManager, Compilation context)
         {
             var dtoPropertiesWithForeignKey = dto.DtoForeignProperties();
             var constructedBaseManager = baseManager.ConstructFromDto(dto, context);

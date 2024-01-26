@@ -13,9 +13,9 @@ namespace WebManager.Contract.Generator.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
         {
-            var repos = new ManagerCodeBuilder(context.Compilation.AssemblyName).Get(context);
+            var repos = new ManagerCodeBuilder(context.AssemblyName).Get(context);
 
             List<CodeBuilder> result = new List<CodeBuilder>();
             foreach (var repo in repos)
@@ -26,7 +26,7 @@ namespace WebManager.Contract.Generator.CodeBuilders
 
             return result;
         }
-        private CodeBuilder ClassInterface(CodeBuilder originalBuilder, GeneratorExecutionContext context)
+        private CodeBuilder ClassInterface(CodeBuilder originalBuilder, Compilation context)
         {
             return originalBuilder.GenerateSeperateInterfaceCodeBuilder<RegisterTransient>(context);
         }

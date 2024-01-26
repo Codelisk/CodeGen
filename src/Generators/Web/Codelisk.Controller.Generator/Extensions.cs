@@ -42,7 +42,7 @@ namespace Controller.Generator
             return method.GetAttributeWithBaseType(typeof(BaseHttpAttribute)).AttributeClass;
         }
 
-        public static INamedTypeSymbol ConstructFromDto(this INamedTypeSymbol symbol, INamedTypeSymbol dto, GeneratorExecutionContext context)
+        public static INamedTypeSymbol ConstructFromDto(this INamedTypeSymbol symbol, INamedTypeSymbol dto, Compilation context)
         {
             var entity = context.GetClassesWithAttribute(nameof(EntityAttribute)).FirstOrDefault(x => (x.GetAttribute<EntityAttribute>().GetFirstConstructorArgumentAsTypedConstant().Value as INamedTypeSymbol).Name == dto.Name);
             var idProperty = dto.GetIdProperty();

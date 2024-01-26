@@ -11,7 +11,7 @@ namespace WebGenerator.Base
 {
     public static class Extensions
     {
-        public static ClassBuilder AddEntityUsing(this ClassBuilder classBuilder, GeneratorExecutionContext context)
+        public static ClassBuilder AddEntityUsing(this ClassBuilder classBuilder, Compilation context)
         {
             var namespaces = context.Dtos().Select(x => x.EntityFromDto(context).GetNamespace()).Distinct();
             foreach (var n in namespaces)
@@ -52,11 +52,11 @@ namespace WebGenerator.Base
         {
             return method.GetAttributeWithBaseType(typeof(BaseHttpAttribute)).AttributeClass;
         }
-        public static INamedTypeSymbol EntityFromDto(this INamedTypeSymbol dto, GeneratorExecutionContext context)
+        public static INamedTypeSymbol EntityFromDto(this INamedTypeSymbol dto, Compilation context)
         {
             return context.GetClassesWithAttribute(nameof(EntityAttribute)).FirstOrDefault(x => (x.GetAttribute<EntityAttribute>().GetFirstConstructorArgumentAsTypedConstant().Value as INamedTypeSymbol).Name == dto.Name);
         }
-        public static INamedTypeSymbol ConstructFromDto(this INamedTypeSymbol symbol, INamedTypeSymbol dto, GeneratorExecutionContext context)
+        public static INamedTypeSymbol ConstructFromDto(this INamedTypeSymbol symbol, INamedTypeSymbol dto, Compilation context)
         {
             var entity = dto.EntityFromDto(context);
             var idProperty = dto.GetIdProperty();

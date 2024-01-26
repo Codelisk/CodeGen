@@ -7,20 +7,20 @@ namespace Generators.Base.Extensions
 {
     public static class CodeBuilderExtensions
     {
-        public static List<INamedTypeSymbol> GetClasses(this ClassBuilder classBuilder, GeneratorExecutionContext context)
+        public static List<INamedTypeSymbol> GetClasses(this ClassBuilder classBuilder, Compilation compilation)
         {
-            return classBuilder.Build().GetClasses(context);
+            return classBuilder.Build().GetClasses(compilation);
         }
 
-        public static List<INamedTypeSymbol> GetClasses(this CodeBuilder codeBuilder, GeneratorExecutionContext context)
+        public static List<INamedTypeSymbol> GetClasses(this CodeBuilder codeBuilder, Compilation compilation)
         {
-            return codeBuilder.Build().GetClasses(context);
+            return codeBuilder.Build().GetClasses(compilation);
         }
 
-        private static List<INamedTypeSymbol> GetClasses(this string code, GeneratorExecutionContext context)
+        private static List<INamedTypeSymbol> GetClasses(this string code, Compilation compilation)
         {
             var syntaxTree = CSharpSyntaxTree.ParseText(code);
-            var compilation = CSharpCompilation.Create(context.Compilation.AssemblyName, new[] { syntaxTree });
+            var newCompilation = CSharpCompilation.Create(compilation.AssemblyName, new[] { syntaxTree });
 
             var root = syntaxTree.GetRoot();
             var interfaceDeclarations = root.DescendantNodes().OfType<ClassDeclarationSyntax>();

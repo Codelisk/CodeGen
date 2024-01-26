@@ -20,7 +20,7 @@ namespace Api.RefitApis.Generator.CodeBuilders
         {
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
         {
             var baseApi = context.BaseApi();
             var dtos = context.Dtos();
@@ -32,7 +32,7 @@ namespace Api.RefitApis.Generator.CodeBuilders
 
             return result;
         }
-        private CodeBuilder BuildApi(GeneratorExecutionContext context, INamedTypeSymbol dto, INamedTypeSymbol baseApi)
+        private CodeBuilder BuildApi(Compilation context, INamedTypeSymbol dto, INamedTypeSymbol baseApi)
         {
             var codeBuilder = CreateBuilder();
             var c = codeBuilder.AddClass(dto.ApiName()).WithAccessModifier(Accessibility.Public).OfType(TypeKind.Interface).Abstract(false)
@@ -43,7 +43,7 @@ namespace Api.RefitApis.Generator.CodeBuilders
 
             return codeBuilder;
         }
-        private ClassBuilder Method(GeneratorExecutionContext context, ClassBuilder c, INamedTypeSymbol dto)
+        private ClassBuilder Method(Compilation context, ClassBuilder c, INamedTypeSymbol dto)
         {
             var typeAndRefitAttribute = AttributeHelper.AllAttributesMethodeHeaderDictionary();
 

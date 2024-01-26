@@ -16,7 +16,7 @@ namespace Generators.Base.CodeBuilders
             _overrideMethodeName = overrideMethodeName;
         }
 
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null)
         {
             if (Services is null)
             {

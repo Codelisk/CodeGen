@@ -11,7 +11,7 @@ namespace Generators.Base.CodeBuilders
         }
         public abstract string ModuleName { get; set; }
         public virtual List<(string serviceUsage, string serviceType, string serviceImplementation)> Services { get; set; } = new List<(string serviceUsage, string serviceType, string serviceImplementation)>();
-        public override List<CodeBuilder> Get(GeneratorExecutionContext context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null)
         {
             var builder = CreateBuilder();
             builder.AddClass("ModuleInitializerHelper").AddNamespaceImport("Microsoft.Extensions.DependencyInjection").WithAccessModifier(Accessibility.Public).MakeStaticClass()
