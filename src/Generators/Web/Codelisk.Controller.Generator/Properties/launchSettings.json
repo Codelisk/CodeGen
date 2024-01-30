@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Codelisk.Controller.Generator": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\..\\..\\..\\..\\sample\\Sample.Controller\\Sample.Controller.csproj"
+    }
+  }
+}
