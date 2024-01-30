@@ -32,7 +32,7 @@ namespace Generators.Base.Extensions
                 if (i != null)
                 {
                     // Get the semantic model for the syntax tree
-                    var semanticModel = compilation.GetSemanticModel(syntaxTree);
+                    var semanticModel = newCompilation.GetSemanticModel(syntaxTree);
 
                     // Get the symbol representing the class
                     var classSymbol = semanticModel.GetDeclaredSymbol(i) as INamedTypeSymbol;

@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Web.Controllers\Web.Controllers.csproj" />
-    <ProjectReference Include="..\Web.Database\Web.Database.csproj" />
   </ItemGroup>
 
 </Project>

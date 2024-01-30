@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "WebRepositories.Contract.Generator": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\..\\..\\..\\..\\sample\\Sample.Repositories\\Sample.Repositories.csproj"
+    }
+  }
+}
