@@ -21,6 +21,10 @@ namespace Foundation.Crawler.Extensions
         {
             return foreignKeyProperty.Name.GetParameterName().Replace("Id","").Replace("id","");
         }
+        public static string GetFullTypeName(this INamedTypeSymbol dto)
+        {
+            return dto.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+        }
         public static string GetFullModelName(this INamedTypeSymbol dto, bool plural = false)
         {
             var name = dto.Name.Replace("Dto", "Full");

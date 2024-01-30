@@ -47,12 +47,12 @@ namespace Foundation.Crawler.Extensions.Extensions
 
             if (httpAttribute.HasAttribute(nameof(DtoBodyAttribute)))
             {
-                methodBuilder.AddParameter(dto.Name, dto.Name.GetParameterName());
+                methodBuilder.AddParameter(dto.GetFullTypeName(), dto.Name.GetParameterName());
             }
 
             if (httpAttribute.HasAttribute(nameof(DtoBodyListAttribute)))
             {
-                methodBuilder.AddParameter($"System.Collections.Generic.List<{dto.Name}>", dto.Name.GetParameterName(true));
+                methodBuilder.AddParameter($"System.Collections.Generic.List<{dto.GetFullTypeName()}>", dto.Name.GetParameterName(true));
             }
 
             return methodBuilder;
@@ -69,11 +69,11 @@ namespace Foundation.Crawler.Extensions.Extensions
 
             if (returnAttributeValue == ReturnKind.List)
             {
-                methodBuilder.WithReturnTypeTaskList(dto.Name);
+                methodBuilder.WithReturnTypeTaskList(dto.GetFullTypeName());
             }
             else if(returnAttributeValue == ReturnKind.Model)
             {
-                methodBuilder.WithReturnTypeTask(dto.Name);
+                methodBuilder.WithReturnTypeTask(dto.GetFullTypeName());
             }
             else if (returnAttributeValue == ReturnKind.ListFull)
             {

@@ -48,7 +48,7 @@ namespace Controller.Generator.CodeBuilders
         {
             var constructedBaseController = baseController.ConstructFromDto(dto, context);
             return builder.AddClass(dto.ControllerNameFromDto()).WithAccessModifier(Accessibility.Public)
-                .SetBaseClass(constructedBaseController.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
+                .SetBaseClass(constructedBaseController.GetFullTypeName())
                 .AddAttribute(Constants.ControllerAttribute)
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseController, (manager, dto.ManagerNameFromDto()))

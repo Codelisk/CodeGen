@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "WebManager.Generator": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\..\\..\\..\\..\\sample\\Sample.Managers\\Sample.Managers.csproj"
+    }
+  }
+}

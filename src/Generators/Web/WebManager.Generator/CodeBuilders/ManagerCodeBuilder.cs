@@ -46,7 +46,7 @@ namespace WebManager.Generator.CodeBuilders
 
             var constructor = builder.AddClass(dto.ManagerNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.ManagerNameFromDto())
-                .SetBaseClass(constructedBaseManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
+                .SetBaseClass(constructedBaseManager.GetFullTypeName())
                 .AddAttribute(typeof(GeneratedManagerAttribute).FullName)
                 .AddAttribute(typeof(RegisterTransient).FullName)
                 .AddConstructor();

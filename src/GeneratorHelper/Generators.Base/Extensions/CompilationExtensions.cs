@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Generators.Base.Extensions
 {
@@ -26,6 +27,38 @@ namespace Generators.Base.Extensions
             return compilation.GetAllClasses(assemblyName).Where(x => SymbolEqualityComparer.Default.Equals(x.BaseType, baseClass));
         }
         public static IEnumerable<INamedTypeSymbol> GetClassesWithAttribute(this Compilation compilation, string fullAttributeName, string assemblyName = "")
+        {
+            var result = new List<INamedTypeSymbol>();
+            INamedTypeSymbol attributeSymbol = compilation.GetTypeByMetadataName(fullAttributeName);
+            if (attributeSymbol == null)
+            {
+                // Handle missing attribute symbol
+                return null;
+            }
+
+            foreach (var syntaxTree in compilation.SyntaxTrees)
+            {
+                SemanticModel model = compilation.GetSemanticModel(syntaxTree);
+
+                foreach (var classNode in syntaxTree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>())
+                {
+                    INamedTypeSymbol classSymbol = model.GetDeclaredSymbol(classNode) as INamedTypeSymbol;
+                    if (classSymbol != null)
+                    {
+                        foreach (var attribute in classSymbol.GetAttributes())
+                        {
+                            if (attribute.AttributeClass.Equals(attributeSymbol, SymbolEqualityComparer.Default))
+                            {
+                                // This class has the attribute, process as needed
+                                result.Add(classSymbol);
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+        public static IEnumerable<INamedTypeSymbol> GetClassesWithAttributeOld(this Compilation compilation, string fullAttributeName, string assemblyName = "")
         {
             return compilation.GetAllClasses(assemblyName).Where(x => x.HasAttributeWithoutBaseClass(fullAttributeName));
         }
