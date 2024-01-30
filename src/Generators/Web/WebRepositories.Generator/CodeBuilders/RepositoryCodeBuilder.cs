@@ -7,6 +7,7 @@ using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using WebGenerator.Base;
 using System.Diagnostics;
+using Foundation.Crawler.Extensions;
 
 namespace WebRepositories.Generator.CodeBuilders
 {
@@ -42,7 +43,7 @@ namespace WebRepositories.Generator.CodeBuilders
             var constructedBaseRepo = baseRepository.ConstructFromDto(dto, context);
             return builder.AddClass(dto.RepositoryNameFromDto()).WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.RepositoryNameFromDto())
-                .SetBaseClass(constructedBaseRepo.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
+                .SetBaseClass(constructedBaseRepo.GetFullTypeName())
                 .AddAttribute(typeof(GeneratedRepositoryAttribute).FullName)
                 .AddAttribute(typeof(RegisterTransient).FullName)
                 .AddConstructor()
