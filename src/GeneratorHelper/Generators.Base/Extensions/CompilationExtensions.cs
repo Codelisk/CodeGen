@@ -26,7 +26,7 @@ namespace Generators.Base.Extensions
         {
             return compilation.GetAllClasses(assemblyName).Where(x => SymbolEqualityComparer.Default.Equals(x.BaseType, baseClass));
         }
-        public static IEnumerable<INamedTypeSymbol> GetClassesWithAttribute(this Compilation compilation, string fullAttributeName, string assemblyName = "")
+        public static IEnumerable<INamedTypeSymbol> GetClassesWithAttributeOld(this Compilation compilation, string fullAttributeName, string assemblyName = "")
         {
             var result = new List<INamedTypeSymbol>();
             INamedTypeSymbol attributeSymbol = compilation.GetTypeByMetadataName(fullAttributeName);
@@ -58,7 +58,7 @@ namespace Generators.Base.Extensions
             }
             return result;
         }
-        public static IEnumerable<INamedTypeSymbol> GetClassesWithAttributeOld(this Compilation compilation, string fullAttributeName, string assemblyName = "")
+        public static IEnumerable<INamedTypeSymbol> GetClassesWithAttribute(this Compilation compilation, string fullAttributeName, string assemblyName = "")
         {
             return compilation.GetAllClasses(assemblyName).Where(x => x.HasAttributeWithoutBaseClass(fullAttributeName));
         }
