@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Codelisk.Api.RefitApis.Generator": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\Codelisk\\ooeentwickler\\src\\ooeentwickleruno\\ApiConnector\\ooeentwickleruno.apiclient\\ooeentwickleruno.apiclient.csproj"
+    }
+  }
+}
