@@ -7,8 +7,4 @@
     <PackageTags>netstandard, EntityFramework, netcore, aspnetcore, auto filter, filtering, sorting, ordering, pagination</PackageTags>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AutoFilterer\Codelisk.AutoFilterer.csproj" PrivateAssets="All" />
-  </ItemGroup>
-
 </Project>

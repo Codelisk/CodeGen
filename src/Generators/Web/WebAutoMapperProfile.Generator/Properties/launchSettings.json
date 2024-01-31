@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "WebAutoMapperProfile.Generator": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\src\\ooeentwicklerapi\\src\\ooeentwicklerapi.Foundation\\ooeentwicklerapi.Foundation.csproj"
+    }
+  }
+}

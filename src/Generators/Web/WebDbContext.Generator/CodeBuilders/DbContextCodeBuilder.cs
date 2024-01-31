@@ -34,7 +34,9 @@ namespace WebDbContext.Generator.CodeBuilders
         }
         private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, IEnumerable<INamedTypeSymbol> entities, INamedTypeSymbol baseContext)
         {
-            var result = builder.AddClass(baseContext.Name).WithAccessModifier(Accessibility.Public).AddNamespaceImport("Microsoft.EntityFrameworkCore")
+            var result = builder.AddClass(baseContext.Name).WithAccessModifier(Accessibility.Public)
+                .SetBaseClass(baseContext.BaseType.ToDisplayString())
+                .AddNamespaceImport("Microsoft.EntityFrameworkCore")
                 .AddAttribute(typeof(GeneratedDbContextAttribute).FullName);
 
             foreach (var entity in entities)
