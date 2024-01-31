@@ -5,7 +5,7 @@
     },
     "Profile 1": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\src\\ooeentwicklerapi\\ooeentwicklerapi.Repositories\\ooeentwicklerapi.Repositories.csproj"
+      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\src\\ooeentwicklerapi\\src\\ooeentwicklerapi.Repositories\\ooeentwicklerapi.Repositories.csproj"
     }
   }
 }
