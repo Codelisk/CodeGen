@@ -26,7 +26,7 @@ namespace Api.RefitApis.Generator.Generators
                 return result;
             });
 
-            AddSourceImplementation(context, refitApiCodeBuilder);
+            AddSource(context, refitApiCodeBuilder);
         }
     }
 }
