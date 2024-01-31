@@ -116,7 +116,7 @@ namespace WebManager.Generator.CodeBuilders
                     }
 
                     x.AppendLine($"return {dto.GetFullModelName()};");
-                }).AddAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetFullAttribute));
+                }).AddAttribute(typeof(GetFullAttribute).FullName);
                 }
 
                 {
@@ -133,7 +133,7 @@ namespace WebManager.Generator.CodeBuilders
                         });
 
                         x.AppendLine($"return {returnName};");
-                    }).AddAttribute(nameof(Codelisk.GeneratorAttributes.WebAttributes.HttpMethod.GetFullAttribute));
+                    }).AddAttribute(typeof(GetFullAttribute).FullName);
                 }
             //}
 
