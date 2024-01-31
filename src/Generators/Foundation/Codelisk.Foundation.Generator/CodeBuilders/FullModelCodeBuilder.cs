@@ -39,7 +39,7 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
         }
         private IReadOnlyList<ClassBuilder> Class(CodeBuilder builder, INamedTypeSymbol dto, AttributeCompilationCrawler context)
         {
-            var result = builder.AddClass(dto.GetFullModelName()).WithAccessModifier(Accessibility.Public);
+            var result = builder.TopLevelNamespace().AddClass(dto.GetFullModelName()).WithAccessModifier(Accessibility.Public);
 
             result.AddProperty(dto.Name.GetParameterName(), Accessibility.Public).SetType(dto.Name).UseAutoProps();
             var dtoPropertiesWithForeignKey = dto.DtoForeignProperties();

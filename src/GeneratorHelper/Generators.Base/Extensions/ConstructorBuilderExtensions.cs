@@ -28,20 +28,27 @@ namespace Generators.Base.Extensions
             Dictionary<string, string> typeParameters = new Dictionary<string, string>();
             foreach (var parameter in baseConstructor.Parameters)
             {
-                var typeName = parameter.Type.GetFullName();
-                string name = parameter.Type.Name.GetParameterName();
+                var type = parameter.Type;
+                string typeName = type.Name;
+                string name = type.Name.GetParameterName();
                 if (replaceTypeName is not null)
                 {
-                    if (parameter.Type.Name.Equals(replaceTypeName.Value.Item1.Name))
+                    if (type.Name.Equals(replaceTypeName.Value.Item1.Name))
                     {
-                        typeName = typeName.Replace(parameter.Type.Name, replaceTypeName.Value.Item2);
+                        typeName = typeName.Replace(type.Name, replaceTypeName.Value.Item2);
                         name = replaceTypeName.Value.Item2.GetParameterName();
                     }
-                    else if (parameter.Type.Name.Equals("I" + replaceTypeName.Value.Item1.Name))
+                    else if (type.Name.Equals("I" + replaceTypeName.Value.Item1.Name))
                     {
-                        typeName = typeName.Replace(parameter.Type.Name, "I" + replaceTypeName.Value.Item2);
+                        typeName = typeName.Replace(type.Name, "I" + replaceTypeName.Value.Item2);
                         name = replaceTypeName.Value.Item2.GetParameterName();
                     }
+                }
+
+                //if typename has not been replaced use full
+                if (typeName.Equals(type.Name))
+                {
+                    typeName = type.GetFullName();
                 }
 
                 typeParameters.Add(typeName, name);

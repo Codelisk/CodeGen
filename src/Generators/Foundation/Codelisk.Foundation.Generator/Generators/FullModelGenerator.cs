@@ -19,7 +19,7 @@ namespace Codelisk.Foundation.Generator.Generators
 
                 var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
                 {
-                    (codeBuilder, "FullModels", null),
+                    (codeBuilder, "FullModels", ("namespace <global namespace>;", "")),
                 };
 
                 return result;
