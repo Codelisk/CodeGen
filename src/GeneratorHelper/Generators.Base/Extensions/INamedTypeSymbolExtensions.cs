@@ -6,24 +6,6 @@ namespace Generators.Base.Extensions
 {
     public static class INamedTypeSymbolExtensions
     {
-        public static Type ToReflectionType(this INamedTypeSymbol namedTypeSymbol)
-        {
-            if (namedTypeSymbol == null)
-            {
-                throw new ArgumentNullException(nameof(namedTypeSymbol));
-            }
-
-            if (namedTypeSymbol.TypeKind == TypeKind.Class)
-            {
-                string assemblyQualifiedName = namedTypeSymbol.GetAssemblyQualifiedName();
-                Assembly assembly = Assembly.Load(new AssemblyName(namedTypeSymbol.ContainingAssembly.Name));
-                Type type = assembly.GetType(assemblyQualifiedName);
-
-                return type;
-            }
-
-            return null;
-        }
 
         private static string GetAssemblyQualifiedName(this INamedTypeSymbol namedTypeSymbol)
         {
