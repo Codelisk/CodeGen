@@ -1,14 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <None Include="$(OutputPath)\Foundation.Crawler.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\WebGenerator.Base.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\Generators.Base.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\Codelisk.GeneratorAttributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\WebGenerator.Base\WebGenerator.Base.csproj" />
+    <ProjectReference Include="..\WebGenerator.Base\WebGenerator.Base.csproj" GeneratePathProperty="true" PrivateAssets="all" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+  </PropertyGroup>
+
+  <Target Name="GetDependencyTargetPaths">
+    <ItemGroup>
+
+      <!-- our local project will not generate path variable so we need to find it from it's own build output-->
+      <!-- I used $(OutputPath) variable because the dependecy has the exact TFM and configuration as the generator 
+               you might need to add configuration manually -->
+      <TargetPathWithTargetPlatformMoniker Include="..\WebGenerator.Base\$(OutputPath)\*.dll" IncludeRuntimeDependency="false" />
+    </ItemGroup>
+  </Target>
 </Project>

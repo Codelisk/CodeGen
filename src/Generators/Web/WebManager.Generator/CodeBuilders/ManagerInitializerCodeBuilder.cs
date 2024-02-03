@@ -7,7 +7,5 @@ namespace WebManager.Generator.CodeBuilders
         public ManagerInitializerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {
         }
-
-        public override string ModuleName { get; set; } = "Manager";
     }
 }

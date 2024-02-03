@@ -1,12 +1,12 @@
 
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
-using Shared.Constants;
+using Codelisk.GeneratorShared.Constants;
 
 namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 {
     [Url(ApiUrls.Save)]
     [DtoBody]
-    [Return(Shared.Models.ReturnKind.Model)]
+    [Return(Codelisk.GeneratorShared.Models.ReturnKind.Model)]
     public class SaveAttribute : BaseHttpAttribute
     {
     }

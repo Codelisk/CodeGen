@@ -4,6 +4,7 @@ using Generator.Foundation.Generators.Base;
 using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
 using WebRepositories.Generator.CodeBuilders;
+using System.Collections.Generic;
 
 namespace WebRepositories.Contract.Generator.CodeBuilders
 {

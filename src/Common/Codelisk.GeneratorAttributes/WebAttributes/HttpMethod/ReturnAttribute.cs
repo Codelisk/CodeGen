@@ -1,4 +1,4 @@
-﻿using Shared.Models;
+﻿using Codelisk.GeneratorShared.Models;
 
 namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 {

@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
-using Shared.Constants;
+using Codelisk.GeneratorShared.Constants;
 
 namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 {
     [Url(ApiUrls.GetAllFull)]
     [Plural]
-    [Return(Shared.Models.ReturnKind.ListFull)]
+    [Return(Codelisk.GeneratorShared.Models.ReturnKind.ListFull)]
     public class GetAllFullAttribute : BaseHttpAttribute
     {
     }

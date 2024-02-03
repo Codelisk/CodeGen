@@ -2,80 +2,42 @@
 using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
+using Generator.Foundation.Generators.Base;
 
 namespace Generators.Base.CodeBuilders
 {
-    public abstract class ClassServicesModuleInitializerBuilder : BaseModuleInitializerBuilder
+    public abstract class ClassServicesModuleInitializerBuilder : BaseCodeBuilder
     {
         public ClassServicesModuleInitializerBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {
         }
+        public virtual List<(string serviceUsage, string serviceType, string serviceImplementation)> Services { get; set; } = new List<(string serviceUsage, string serviceType, string serviceImplementation)>();
 
         public override List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null)
         {
-            if (Services is null)
-            {
-                Services = new List<(string, string, string)>();
-            }
-
-            List<string> serviceTypes = new List<string>();
-            if (codeBuilders is not null)
-            {
-                foreach (var codeBuilder in codeBuilders)
+            var builder = CreateBuilder();
+            builder.AddClass("ModuleInitializer").AddNamespaceImport("Microsoft.Extensions.DependencyInjection").WithAccessModifier(Accessibility.Public)
+                .AddMethod("partial AddServices").Abstract(true)
+                .AddParameter("IServiceCollection", "services")
+                .WithBody(x =>
                 {
-                    foreach (var c in codeBuilder.GetClasses(compilation))
+                    foreach (var service in Services)
                     {
-                        var registerAttribute = c.GetAttributes().FirstOrDefault(x => nameof(RegisterTransient).Equals(x.AttributeClass.Name));
+                        var serviceUsage = string.IsNullOrEmpty(service.serviceUsage) ? "AddTransient" : service.serviceUsage;
+                        var serviceImplementation = service.serviceImplementation is null ? string.Empty : service.serviceImplementation;
 
-                        if (registerAttribute is not null)
+                        if (!string.IsNullOrEmpty(serviceImplementation))
                         {
-                            var type = registerAttribute.GetFirstConstructorArgumentAsTypedConstant().Value as Type;
-                            if (type is not null)
-                            {
-                                Services.Add(("AddTransient", type.Name, c.Name));
-                            }
-                            else
-                            {
-                                Services.Add(("AddTransient", c.Interfaces.FirstOrDefault()?.Name, c.Name));
-                            }
+                            x.AppendLine($"services.{serviceUsage}<{service.serviceType},{serviceImplementation}>();");
+                        }
+                        else
+                        {
+                            x.AppendLine($"services.{serviceUsage}<{service.serviceType}>();");
                         }
                     }
-                }
-            }
+                });
 
-            foreach (var serviceType in serviceTypes)
-            {
-                Services.Add(("AddTransient", serviceType, ""));
-            }
-
-            return base.Get(compilation);
-        }
-        private void Add<TAttribute>(INamedTypeSymbol c) where TAttribute : BaseRegisterAttribute
-        {
-            var attribute = c.GetAttributes().FirstOrDefault(x => typeof(TAttribute).Name.Equals(x.AttributeClass.Name));
-            string implementationType = "AddSingleton";
-            if (attribute is RegisterTransient)
-            {
-                implementationType = "AddTransient";
-            }
-            else if (attribute is RegisterSingleton)
-            {
-
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
-
-            var type = attribute.GetFirstConstructorArgumentAsTypedConstant().Value as Type;
-            if (type is not null)
-            {
-                Services.Add((implementationType, type.Name, c.Name));
-            }
-            else
-            {
-                Services.Add((implementationType, c.Interfaces.FirstOrDefault()?.Name, c.Name));
-            }
+            return new List<CodeBuilder> { builder };
         }
     }
 }

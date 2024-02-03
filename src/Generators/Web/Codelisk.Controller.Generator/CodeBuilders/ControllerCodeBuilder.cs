@@ -7,7 +7,7 @@ using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
-using Shared.Constants;
+using Codelisk.GeneratorShared.Constants;
 using Foundation.Crawler.Extensions;
 using Codelisk.GeneratorAttributes.Helper;
 

@@ -1,4 +1,4 @@
-namespace Shared.Constants
+namespace Codelisk.GeneratorShared.Constants
 {
     public static class ApiUrls
     {

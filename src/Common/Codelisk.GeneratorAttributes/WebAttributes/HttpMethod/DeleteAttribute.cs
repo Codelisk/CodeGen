@@ -1,6 +1,6 @@
 
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
-using Shared.Constants;
+using Codelisk.GeneratorShared.Constants;
 
 namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 {

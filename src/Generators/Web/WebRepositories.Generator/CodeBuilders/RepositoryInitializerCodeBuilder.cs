@@ -7,7 +7,5 @@ namespace WebRepositories.Generator.CodeBuilders
         public RepositoryInitializerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {
         }
-
-        public override string ModuleName { get; set; } = "Repositories";
     }
 }

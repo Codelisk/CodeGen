@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Shared.Constants
+namespace Codelisk.GeneratorShared.Constants
 {
     public static class AttributeNames
     {

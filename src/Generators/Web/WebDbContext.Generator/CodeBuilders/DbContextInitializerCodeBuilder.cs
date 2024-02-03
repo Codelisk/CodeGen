@@ -7,7 +7,5 @@ namespace WebDbContext.Generator.CodeBuilders
         public DbContextInitializerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {
         }
-
-        public override string ModuleName { get; set; } = "DbContext";
     }
 }

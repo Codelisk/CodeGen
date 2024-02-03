@@ -1,6 +1,7 @@
 using CodeGenHelpers;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
+using System.Collections.Generic;
 using WebRepositories.Contract.Generator.CodeBuilders;
 
 namespace WebRepositories.Contract.Generator.Generators

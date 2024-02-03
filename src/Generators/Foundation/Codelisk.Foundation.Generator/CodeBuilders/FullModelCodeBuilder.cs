@@ -8,7 +8,7 @@ using Foundation.Crawler.Extensions;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using Shared.Constants;
+using Codelisk.GeneratorShared.Constants;
 
 namespace Codelisk.Foundation.Generator.CodeBuilders
 {

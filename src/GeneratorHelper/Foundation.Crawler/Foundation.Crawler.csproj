@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
+    <IsRoslynComponent>true</IsRoslynComponent>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,7 +11,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference OutputItemType="Analyzer" Include="..\..\Common\Shared\Shared.csproj" />
-    <ProjectReference OutputItemType="Analyzer" Include="..\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference Include="..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" PrivateAssets="All" />
   </ItemGroup>
+
+  <Target Name="GetDependencyTargetPaths">
+    <ItemGroup>
+
+      <!-- our local project will not generate path variable so we need to find it from it's own build output-->
+      <!-- I used $(OutputPath) variable because the dependecy has the exact TFM and configuration as the generator 
+               you might need to add configuration manually -->
+      <TargetPathWithTargetPlatformMoniker Include="$(ProjectDir)/../Generators.Base/$(OutputPath)/*.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(ProjectDir)/../../Common\Codelisk.GeneratorAttributes/$(OutputPath)/*.dll" IncludeRuntimeDependency="false" />
+    </ItemGroup>
+  </Target>
 </Project>

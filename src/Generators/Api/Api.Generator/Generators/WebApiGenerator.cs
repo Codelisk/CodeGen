@@ -20,7 +20,7 @@ namespace Api.Generator.Generators
                     //}
                     //Debugger.Launch();
                     var repositoriesCodeBuilder = new RepositoryCodeBuilder(compilation.AssemblyName).Get(compilation);
-                    var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(compilation.AssemblyName, "AddApis").Get(compilation, repositoriesCodeBuilder);
+                    var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(compilation.AssemblyName).Get(compilation, repositoriesCodeBuilder);
 
                     var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
                     {

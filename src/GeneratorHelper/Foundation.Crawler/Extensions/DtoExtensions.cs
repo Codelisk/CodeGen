@@ -1,7 +1,7 @@
 using Generators.Base;
 using Microsoft.CodeAnalysis;
 using Generators.Base.Extensions;
-using Shared.Constants;
+using Codelisk.GeneratorShared.Constants;
 
 namespace Foundation.Crawler.Extensions
 {

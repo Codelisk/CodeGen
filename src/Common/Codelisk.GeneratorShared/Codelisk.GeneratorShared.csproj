@@ -2,6 +2,5 @@
 
   <PropertyGroup>
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
-    <IsRoslynComponent>true</IsRoslynComponent>
   </PropertyGroup>
 </Project>

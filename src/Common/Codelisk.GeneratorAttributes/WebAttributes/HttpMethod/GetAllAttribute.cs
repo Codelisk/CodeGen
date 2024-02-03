@@ -1,11 +1,11 @@
 ﻿using Codelisk.GeneratorAttributes.WebAttributes.Dto;
-using Shared.Constants;
+using Codelisk.GeneratorShared.Constants;
 
 namespace Codelisk.GeneratorAttributes.WebAttributes.HttpMethod
 {
     [Url(ApiUrls.GetAll)]
     [Plural]
-    [Return(Shared.Models.ReturnKind.List)]
+    [Return(Codelisk.GeneratorShared.Models.ReturnKind.List)]
     public class GetAllAttribute : BaseHttpAttribute
     {
     }

@@ -4,7 +4,7 @@ using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using Shared.Models;
+using Codelisk.GeneratorShared.Models;
 
 namespace Foundation.Crawler.Extensions.Extensions
 {

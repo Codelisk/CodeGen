@@ -2,12 +2,10 @@ using Generators.Base.CodeBuilders;
 
 namespace Api.Generator.Generators.CodeBuilders
 {
-    public class ModuleInitializerBuilder : ServicesModuleInitializerBuilder
+    public class ModuleInitializerBuilder : ClassServicesModuleInitializerBuilder
     {
-        public ModuleInitializerBuilder(string codeBuilderNamespace, string overrideMethodeName) : base(codeBuilderNamespace, overrideMethodeName)
+        public ModuleInitializerBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
         {
         }
-
-        public override string ModuleName { get; set; } = "Repositories";
     }
 }

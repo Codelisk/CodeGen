@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\Common\Shared\Shared.csproj" />
+    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\Common\Shared\Generators.Shared.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
     <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\WebGenerator.Base\WebGenerator.Base.csproj" />
