@@ -36,7 +36,9 @@ namespace Api.RefitApis.Generator.CodeBuilders
         private CodeBuilder BuildApi(AttributeCompilationCrawler attributeCompilationCrawler, Compilation compilation, INamedTypeSymbol dto, INamedTypeSymbol baseApi)
         {
             var codeBuilder = CreateBuilder();
-            var c = codeBuilder.AddClass(dto.ApiName()).WithAccessModifier(Accessibility.Public).OfType(TypeKind.Interface).Abstract(false)
+            codeBuilder.TopLevelNamespace();
+            var c = codeBuilder.AddClass(dto.ApiName()).WithAccessModifier(Accessibility.Public)
+                .OfType(TypeKind.Interface).Abstract(false)
                 .AddNamespaceImport(Constants.RefitNamespaceImport)
                 .SetBaseClass(baseApi);
 

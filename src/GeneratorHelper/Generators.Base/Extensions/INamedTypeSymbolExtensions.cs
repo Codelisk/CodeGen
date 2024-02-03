@@ -107,7 +107,7 @@ namespace Generators.Base.Extensions
         }
         public static AttributeData GetAttribute<TAttribut>(this INamedTypeSymbol classObject) where TAttribut : Attribute
         {
-            return classObject.GetAttributes().Where(x => x.GetAttributeName().Equals(typeof(TAttribut).Name)).Single();
+            return classObject.GetAttributes().Where(x => x.GetAttributeName().Equals(typeof(TAttribut).Name)).Last();
         }
         public static IEnumerable<ISymbol> GetMembersWithAttribute(this INamedTypeSymbol classObject, string fullAttributeName)
         {
