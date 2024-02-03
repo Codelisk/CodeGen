@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference OutputItemType="Analyzer" Include="..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
     <ProjectReference OutputItemType="Analyzer" Include="..\..\Common\Shared\Shared.csproj" />
     <ProjectReference OutputItemType="Analyzer" Include="..\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>

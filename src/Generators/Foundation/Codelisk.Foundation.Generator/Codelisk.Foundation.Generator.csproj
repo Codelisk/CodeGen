@@ -7,7 +7,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
     <ProjectReference Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
     <ProjectReference Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
