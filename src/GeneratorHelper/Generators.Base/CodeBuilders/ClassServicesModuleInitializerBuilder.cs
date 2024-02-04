@@ -16,8 +16,9 @@ namespace Generators.Base.CodeBuilders
         public override List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null)
         {
             var builder = CreateBuilder();
-            builder.AddClass("ModuleInitializer").AddNamespaceImport("Microsoft.Extensions.DependencyInjection").WithAccessModifier(Accessibility.Public)
-                .AddMethod("partial AddServices").Abstract(true)
+            builder.AddClass("ModuleInitializer")
+                .AddNamespaceImport("Microsoft.Extensions.DependencyInjection").WithAccessModifier(Accessibility.Public)
+                .AddMethod("partial AddServices", Accessibility.NotApplicable)
                 .AddParameter("IServiceCollection", "services")
                 .WithBody(x =>
                 {

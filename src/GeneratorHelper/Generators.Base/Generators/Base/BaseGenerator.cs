@@ -85,6 +85,9 @@ namespace Generators.Base.Generators.Base
                                 code = code.Replace("using <global namespace>;", "");
                             }
 
+                            code = code.Replace("internal void partial", "partial void");
+                            code = code.Replace("void partial", "partial void");
+
                             try
                             {
                                 var fileName = codeBuilder.Classes.First().Name + ".g.cs";
