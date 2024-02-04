@@ -14,11 +14,6 @@ namespace Api.Generator.Generators
         {
             var codebuilders = context.CompilationProvider.Select(static (compilation, _) =>
             {
-                    //if (context.Compilation.AssemblyName.Contains("Generator"))
-                    //{
-                    //    return;
-                    //}
-                    //Debugger.Launch();
                     var repositoriesCodeBuilder = new RepositoryCodeBuilder(compilation.AssemblyName).Get(compilation);
                     var classServicesModuleInitializerBuilder = new ModuleInitializerBuilder(compilation.AssemblyName).Get(compilation, repositoriesCodeBuilder);
 
@@ -29,9 +24,6 @@ namespace Api.Generator.Generators
                     };
 
                 return result;
-                    //AddSource(context, "Repositories", repositoriesCodeBuilder, ("abstract partial", "partial"));
-                    //AddSource(context, "", classServicesModuleInitializerBuilder);
-                    //AddSource(context, "Repositories", repositoriesCodeBuilder);
             });
 
 

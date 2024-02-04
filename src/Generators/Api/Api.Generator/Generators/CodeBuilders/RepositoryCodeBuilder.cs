@@ -23,7 +23,7 @@ namespace Api.Generator.Generators.CodeBuilders
         {
             return GenerateRepositories(context, codeBuilders);
         }
-        
+
         public List<CodeBuilder> GenerateRepositories(Compilation context, List<CodeBuilder> refitApiCodeBuilder)
         {
             var crawler = new AttributeCompilationCrawler(context);
@@ -47,18 +47,18 @@ namespace Api.Generator.Generators.CodeBuilders
                     try
                     {
 
-                    var httpAttributeSymbol = context.GetClass(attr.Key, "Codelisk.GeneratorAttributes");
-                    var methodBuilder = repoClass.AddMethod(httpAttributeSymbol.AttributeUrl(dto), Accessibility.Public)
-                        .WithReturnTypeForHttpMethod(attr.Key, dto)
-                        .AddParametersForHttpMethod(httpAttributeSymbol, dto);
+                        var httpAttributeSymbol = context.GetClass(attr.Key, "Codelisk.GeneratorAttributes");
+                        var methodBuilder = repoClass.AddMethod(httpAttributeSymbol.AttributeUrl(dto), Accessibility.Public)
+                            .WithReturnTypeForHttpMethod(attr.Key, dto)
+                            .AddParametersForHttpMethod(httpAttributeSymbol, dto);
 
-                    var baseRepoMethod = baseRepo.GetMethodsWithAttributesIncludingBaseTypes(httpAttributeSymbol.Name).First();
-                    methodBuilder.WithBody((x) =>
-                    {
-                        x.AppendLine($"return {baseRepoMethod.Name}(() => _repositoryApi.{httpAttributeSymbol.AttributeUrl(dto)}({string.Join(",", methodBuilder.Parameters.Select(x => x.Name.GetParameterName()))}));");
-                    });
+                        var baseRepoMethod = baseRepo.GetMethodsWithAttributesIncludingBaseTypes(httpAttributeSymbol.Name).First();
+                        methodBuilder.WithBody((x) =>
+                        {
+                            x.AppendLine($"return {baseRepoMethod.Name}(() => _repositoryApi.{httpAttributeSymbol.AttributeUrl(dto)}({string.Join(",", methodBuilder.Parameters.Select(x => x.Name.GetParameterName()))}));");
+                        });
                     }
-                    catch(Exception ex) { }
+                    catch (Exception ex) { }
                 }
 
                 TestLog.Add("Start");
