@@ -23,24 +23,9 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
-    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" />
-    <ProjectReference Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
-    <ProjectReference Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="all"/>
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj"  PrivateAssets="all"/>
   </ItemGroup>
-
-  <PropertyGroup>
-    <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
-  </PropertyGroup>
-
-  <Target Name="GetDependencyTargetPaths">
-    <ItemGroup>
-
-      <!-- our local project will not generate path variable so we need to find it from it's own build output-->
-      <!-- I used $(OutputPath) variable because the dependecy has the exact TFM and configuration as the generator 
-               you might need to add configuration manually -->
-      <TargetPathWithTargetPlatformMoniker Include="..\..\..\GeneratorHelper\Foundation.Crawler\$(OutputPath)\*.dll" IncludeRuntimeDependency="false" />
-    </ItemGroup>
-  </Target>
-
 </Project>

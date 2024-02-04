@@ -16,18 +16,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" PrivateAssets="all"/>
   </ItemGroup>
-
-  <PropertyGroup>
-    <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
-  </PropertyGroup>
-
-  <Target Name="GetDependencyTargetPaths">
-    <ItemGroup>
-
-      <!-- our local project will not generate path variable so we need to find it from it's own build output-->
-      <!-- I used $(OutputPath) variable because the dependecy has the exact TFM and configuration as the generator 
-               you might need to add configuration manually -->
-      <TargetPathWithTargetPlatformMoniker Include="$(ProjectDir)/../Codelisk.GeneratorShared/$(OutputPath)/*.dll" IncludeRuntimeDependency="false" />
-    </ItemGroup>
-  </Target>
 </Project>

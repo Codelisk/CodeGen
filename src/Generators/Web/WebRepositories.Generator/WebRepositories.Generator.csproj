@@ -1,22 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <None Include="$(OutputPath)\Generators.Base.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\Foundation.Crawler.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\WebGenerator.Base.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\Generators.Base.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\Codelisk.GeneratorAttributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" />
-    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
-    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\WebGenerator.Base\WebGenerator.Base.csproj" />
-    <ProjectReference OutputItemType="Analyzer" PrivateAssets="All" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="all"  />
+    <ProjectReference PrivateAssets="All" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
+    <ProjectReference PrivateAssets="All" Include="..\WebGenerator.Base\WebGenerator.Base.csproj" />
+    <ProjectReference PrivateAssets="All" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
   </ItemGroup>
 
 </Project>

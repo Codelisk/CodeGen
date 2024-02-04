@@ -8,9 +8,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\Common\Shared\Generators.Shared.csproj" />
-    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
-    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="All"  />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" PrivateAssets="All"  />
+    <ProjectReference Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" PrivateAssets="All"  />
+    <ProjectReference Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" PrivateAssets="All"  />
   </ItemGroup>
 
   <ItemGroup>

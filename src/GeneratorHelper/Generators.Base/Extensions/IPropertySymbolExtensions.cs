@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using Codelisk.GeneratorShared.Constants;
 
 namespace Generators.Base.Extensions
 {

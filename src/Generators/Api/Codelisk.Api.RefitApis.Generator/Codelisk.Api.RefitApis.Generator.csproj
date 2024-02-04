@@ -1,23 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <None Include="$(OutputPath)\Generators.Base.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\Foundation.Crawler.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\Codelisk.GeneratorAttributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-    <None Include="$(OutputPath)\Shared.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\Common\Shared\Generators.Shared.csproj" />
-    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" />
-    <ProjectReference PrivateAssets="All" OutputItemType="Analyzer" Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="All"  />
+    <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" PrivateAssets="All"  />
+    <ProjectReference Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" PrivateAssets="All"  />
+    <ProjectReference Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" PrivateAssets="All"  />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Update="Microsoft.CodeAnalysis.CSharp" Version="4.9.0-3.final" />
+    <PackageReference Update="Microsoft.CodeAnalysis.CSharp" />
   </ItemGroup>
 </Project>
