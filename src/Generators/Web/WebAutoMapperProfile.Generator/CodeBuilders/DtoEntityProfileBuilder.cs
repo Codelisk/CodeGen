@@ -28,6 +28,7 @@ namespace WebAutoMapperProfile.Generator.CodeBuilders
                     foreach (var d in dtos)
                     {
                         x.AppendLine($"{Constants.AutoMapperCreateMap}<{d.Name}, {d.EntityFromDto(context).Name}>().{Constants.AutoMapperReverseMap}();");
+                        //x.AppendLine($"{Constants.AutoMapperCreateMap}<List<{d.Name}>, List<{d.EntityFromDto(context).Name}>>().{Constants.AutoMapperReverseMap}();");
                     }
                 });
 

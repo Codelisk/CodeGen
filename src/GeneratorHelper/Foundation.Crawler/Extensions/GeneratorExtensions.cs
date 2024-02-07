@@ -71,9 +71,13 @@ namespace Foundation.Crawler.Extensions.Extensions
             {
                 methodBuilder.WithReturnTypeTaskList(dto.GetFullTypeName());
             }
-            else if(returnAttributeValue == ReturnKind.Model)
+            else if (returnAttributeValue == ReturnKind.Model)
             {
                 methodBuilder.WithReturnTypeTask(dto.GetFullTypeName());
+            }
+            else if (returnAttributeValue == ReturnKind.ModelNullable)
+            {
+                methodBuilder.WithReturnTypeTask(dto.GetFullTypeName() + "?");
             }
             else if (returnAttributeValue == ReturnKind.ListFull)
             {

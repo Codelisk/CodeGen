@@ -46,7 +46,6 @@ namespace Api.Generator.Generators.CodeBuilders
                 {
                     try
                     {
-
                         var httpAttributeSymbol = context.GetClass(attr.Key, "Codelisk.GeneratorAttributes");
                         var methodBuilder = repoClass.AddMethod(httpAttributeSymbol.AttributeUrl(dto), Accessibility.Public)
                             .WithReturnTypeForHttpMethod(attr.Key, dto)

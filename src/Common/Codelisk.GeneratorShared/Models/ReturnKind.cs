@@ -5,6 +5,7 @@ namespace Codelisk.GeneratorShared.Models
         List,
         ListFull,
         Model,
+        ModelNullable,
         ModelFull
     }
 }
