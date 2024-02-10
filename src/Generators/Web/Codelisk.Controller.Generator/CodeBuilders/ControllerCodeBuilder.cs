@@ -84,7 +84,7 @@ namespace Controller.Generator.CodeBuilders
                     methodBuilder.MakeAsync();
                 }
 
-                if (item.Key == typeof(GetAllAttribute) || item.Key == typeof(GetAllFullAttribute))
+                if (item.Key == typeof(GetAllAttribute) || item.Key == typeof(GetAllFullAttribute) || item.Key == typeof(GetAttribute) || item.Key == typeof(GetFullAttribute))
                 {
                     if (dto.HasAttribute(nameof(CustomizeGetAll)))
                     {
