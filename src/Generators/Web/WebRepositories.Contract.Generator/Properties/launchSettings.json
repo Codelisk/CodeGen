@@ -5,7 +5,6 @@
     },
     "Profile 1": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\..\\..\\..\\..\\..\\sample\\Sample.Repositories\\Sample.Repositories.csproj"
     }
   }
 }
