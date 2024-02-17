@@ -90,7 +90,8 @@ namespace Generators.Base.Generators.Base
 
                             try
                             {
-                                var fileName = code + ".g.cs";
+                                var xyz = new Random().Next(999999);
+                                var fileName = code + xyz + ".g.cs";
                                 if (string.IsNullOrEmpty(folderName))
                                 {
                                     sourceProductionContext.AddSource(fileName, code);
