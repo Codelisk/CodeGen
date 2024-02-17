@@ -23,6 +23,16 @@ namespace Generators.Base.Helpers
             codeBuilder.GetClasses(context).Last().GenerateInterface(codeBuilder, context);
             return codeBuilder;
         }
+        static string FormatTypeName(ITypeSymbol typeSymbol)
+        {
+            if (typeSymbol is INamedTypeSymbol namedTypeSymbol && namedTypeSymbol.IsGenericType)
+            {
+                string genericType = namedTypeSymbol.ConstructedFrom.ToString();
+                string typeArguments = string.Join(", ", namedTypeSymbol.TypeArguments.Select(t => t.ToString()));
+                return $"{genericType}<{typeArguments}>";
+            }
+            return typeSymbol.ToString();
+        }
         public static CodeBuilder GenerateInterface(this INamedTypeSymbol c, CodeBuilder codeBuilder, Compilation context)
         {
             var displayFormat = new SymbolDisplayFormat(
@@ -44,7 +54,7 @@ namespace Generators.Base.Helpers
                 TestLog.Add("Method:" + publicMethod.Name);
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
-                    .WithReturnType(publicMethod.ReturnType.ToDisplayString(displayFormat))
+                    .WithReturnType(FormatTypeName(publicMethod.ReturnType))
                     .Abstract(true);
 
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
