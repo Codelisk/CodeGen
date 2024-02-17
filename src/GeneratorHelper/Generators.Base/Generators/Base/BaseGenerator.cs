@@ -1,13 +1,16 @@
 using System.Runtime.InteropServices.ComTypes;
+using System.Text.RegularExpressions;
 using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
+using System.Text.RegularExpressions;
 
 namespace Generators.Base.Generators.Base
 {
     public abstract class BaseGenerator : IIncrementalGenerator
     {
-        public abstract void Initialize(IncrementalGeneratorInitializationContext context);
+
+    public abstract void Initialize(IncrementalGeneratorInitializationContext context);
 
 
         protected void AddSourceImplementation(IncrementalGeneratorInitializationContext context, IncrementalValueProvider<List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>> codeBuildersProvider)
@@ -36,6 +39,12 @@ namespace Generators.Base.Generators.Base
                                 code = code.Replace("abstract ", "");
                                 code = code.Replace("using <global namespace>;", "");
                             }
+
+                            //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
+                            string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
+                            string replacement = "System.Collections.Generic.List<$1>";
+
+                            string corrected = Regex.Replace(code, pattern, replacement);
 
                             try
                             {
@@ -87,6 +96,12 @@ namespace Generators.Base.Generators.Base
 
                             code = code.Replace("internal void partial", "partial void");
                             code = code.Replace("void partial", "partial void");
+
+                            //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
+                            string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
+                            string replacement = "System.Collections.Generic.List<$1>";
+
+                            string corrected = Regex.Replace(code, pattern, replacement);
 
                             try
                             {
