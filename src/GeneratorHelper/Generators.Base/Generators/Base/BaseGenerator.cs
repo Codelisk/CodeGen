@@ -90,7 +90,7 @@ namespace Generators.Base.Generators.Base
 
                             try
                             {
-                                var fileName = codeBuilder.Classes.First().Name + ".g.cs";
+                                var fileName = code + ".g.cs";
                                 if (string.IsNullOrEmpty(folderName))
                                 {
                                     sourceProductionContext.AddSource(fileName, code);
