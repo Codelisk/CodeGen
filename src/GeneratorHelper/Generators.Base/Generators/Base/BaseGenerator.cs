@@ -92,10 +92,10 @@ namespace Generators.Base.Generators.Base
                             {
                                 var xyz = new Random().Next(999999);
                                 var fileName = code + xyz + ".g.cs";
-                                fileName = fileName.Replace(" ", "leerz").Replace(":", "doppel").Replace(";", "Strichpunkt").Replace("@", "attt").Replace("{", "Klaamerauf").Replace("[", "eckigauf")
-                                .Replace("}", "Klammerzu").Replace("|", "Oder").Replace("]", "eckigzu")
-                                .Replace("<", "auf").Replace(">", "zu").Replace(",", "Beisp").Replace("=", "gleich").Replace("_", "under").Replace("(", "ra")
-                                .Replace(")", "rzu").Replace("/", "backslash").Replace("-", "bind").Replace("?", "frage").Replace("!", "ruf").Replace("\r\n", "neuezeile").Replace("\n", "neuezeile");
+                                fileName = fileName.Replace(" ", "leerzf").Replace(":", "dopspel").Replace(";", "Strichpunkt").Replace("@", "attet").Replace("{", "Klaamerauf").Replace("[", "eckigauf")
+                                .Replace("}", "Klammerzu").Replace("|", "Oderdd").Replace("]", "eckigzua")
+                                .Replace("<", "aufssa").Replace(">", "zueee").Replace(",", "Beispf").Replace("=", "gleichhh").Replace("_", "underrrr").Replace("(", "ra")
+                                .Replace(")", "rzudsf").Replace("/", "backslash").Replace("-", "bindddd").Replace("?", "frageee").Replace("!", "ruffff").Replace("\r\n", "neuezeile").Replace("\n", "neuezeile");
                                 if (string.IsNullOrEmpty(folderName))
                                 {
                                     sourceProductionContext.AddSource(fileName, code);
