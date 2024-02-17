@@ -40,7 +40,7 @@ namespace Generators.Base.Helpers
                     .Abstract(true);
                 foreach (var parameter in publicMethod.Parameters)
                 {
-                    methode.AddParameter(parameter.Type.Name);
+                    methode.AddParameter(parameter.Name);
                 }
 
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
