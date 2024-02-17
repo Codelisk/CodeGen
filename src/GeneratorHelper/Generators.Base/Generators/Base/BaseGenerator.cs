@@ -92,10 +92,10 @@ namespace Generators.Base.Generators.Base
                             {
                                 var xyz = new Random().Next(999999);
                                 var fileName = code + xyz + ".g.cs";
-                                fileName.Replace(" ", "").Replace(":", "").Replace(";", "Strichpunkt").Replace("@", "at").Replace("{", "Klaamerauf").Replace("[","eckigauf")
+                                fileName = fileName.Replace(" ", "").Replace(":", "").Replace(";", "Strichpunkt").Replace("@", "at").Replace("{", "Klaamerauf").Replace("[","eckigauf")
                                 .Replace("}", "Klammer zu").Replace("|", "Oder").Replace("]", "eckigzu")
                                 .Replace("<","auf").Replace(">","zu").Replace(",","Beisp").Replace("=","gleich").Replace("_","under").Replace("(","ra")
-                                .Replace(")","rzu");
+                                .Replace(")","rzu").Replace("/","").Replace("-","").Replace("\n","").Replace("\r", "").Replace("\r\n", "").Replace("?", "frage").Replace("!","ruf");
                                 if (string.IsNullOrEmpty(folderName))
                                 {
                                     sourceProductionContext.AddSource(fileName, code);
