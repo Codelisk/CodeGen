@@ -6,7 +6,8 @@ namespace Generators.Base.Extensions
     {
         public static string GetFullTypeName(this ITypeSymbol typeSymbol)
         {
-            return typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat).Replace("System+Collections+Generic+List`1", "System.Collections.Generic.List<")
+            return typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)
+                .Replace("System+Collections+Generic+List`1", "System.Collections.Generic.List<")
                                    .Replace("[", "")
                                    .Replace("]", ">");
         }
