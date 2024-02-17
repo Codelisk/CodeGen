@@ -2,6 +2,7 @@
 using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
+using CodeGenHelpers.Internals;
 
 namespace Generators.Base.Helpers
 {
@@ -40,7 +41,7 @@ namespace Generators.Base.Helpers
                     .Abstract(true);
                 foreach (var parameter in publicMethod.Parameters)
                 {
-                    methode.AddParameter(parameter.Type.Name, parameter.Name);
+                    methode.AddParameter(parameter.Type.GetFullName(), parameter.Name);
                 }
 
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
