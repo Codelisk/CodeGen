@@ -25,6 +25,13 @@ namespace Generators.Base.Helpers
         }
         public static CodeBuilder GenerateInterface(this INamedTypeSymbol c, CodeBuilder codeBuilder, Compilation context)
         {
+            var displayFormat = new SymbolDisplayFormat(
+    typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+    genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+    memberOptions: SymbolDisplayMemberOptions.IncludeParameters,
+    parameterOptions: SymbolDisplayParameterOptions.IncludeType,
+    miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes
+);
             TestLog.Add("Start Generate");
             var publicMethods = c.GetMethods().Where(x => x.DeclaredAccessibility == Accessibility.Public && !x.Name.Equals(".ctor"));
 
@@ -37,7 +44,7 @@ namespace Generators.Base.Helpers
                 TestLog.Add("Method:" + publicMethod.Name);
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
-                    .WithReturnType(publicMethod.ReturnType.ToDisplayString())
+                    .WithReturnType(publicMethod.ReturnType.ToDisplayString(displayFormat))
                     .Abstract(true);
 
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
@@ -45,6 +52,7 @@ namespace Generators.Base.Helpers
                 nameSpacesFromUsedTypes.AddRange(publicMethod.Parameters.Select(x => x.Type.GetNamespace()));
             }
 
+            var xyz =codeBuilder.ToString();
 
             TestLog.Add("c.BaseType" + c.BaseType);
             if (c.BaseType is not null)
@@ -77,6 +85,7 @@ namespace Generators.Base.Helpers
                     TestLog.Add("NICE");
                 }
             }
+            xyz = codeBuilder.ToString();
 
             try
             {
@@ -86,6 +95,7 @@ namespace Generators.Base.Helpers
             {
                 TestLog.Add(ex.Message + " INNER" + ex.InnerException?.Message);
             }
+            xyz = codeBuilder.ToString();
 
             return codeBuilder;
         }
