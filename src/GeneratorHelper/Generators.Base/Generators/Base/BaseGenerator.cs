@@ -92,10 +92,28 @@ namespace Generators.Base.Generators.Base
                             {
                                 var xyz = new Random().Next(999999);
                                 var fileName = code + xyz + ".g.cs";
-                                fileName = fileName.Replace(" ", "leerzf").Replace(":", "dopspel").Replace(";", "Strichpunkt").Replace("@", "attet").Replace("{", "Klaamerauf").Replace("[", "eckigauf")
-                                .Replace("}", "Klammerzu").Replace("|", "Oderdd").Replace("]", "eckigzua")
-                                .Replace("<", "aufssa").Replace(">", "zueee").Replace(",", "Beispf").Replace("=", "gleichhh").Replace("_", "underrrr").Replace("(", "ra")
-                                .Replace(")", "rzudsf").Replace("/", "backslash").Replace("-", "bindddd").Replace("?", "frageee").Replace("!", "ruffff").Replace("\r\n", "neuezeile").Replace("\n", "neuezeile");
+                                fileName = fileName.Replace(" ", "leerzf")
+                                .Replace(":", "dopsspel")
+                                .Replace(";", "Strichpunkt")
+                                .Replace("@", "atteit")
+                                .Replace("{", "Kliaamerauf")
+                                .Replace("[", "eckiigauf")
+                                .Replace("}", "Klammerzu")
+                                .Replace("|", "Odöerdd")
+                                .Replace("]", "eclkigzua")
+                                .Replace("<", "aufkssa")
+                                .Replace(">", "zusjeee")
+                                .Replace(",", "Beihspf")
+                                .Replace("=", "gleigchhh")
+                                .Replace("_", "underrrrr")
+                                .Replace("(", "radsfsaaf")
+                                .Replace(")", "rzuwdsf")
+                                .Replace("/", "backaslash")
+                                .Replace("-", "bindaddd")
+                                .Replace("?", "frageee")
+                                .Replace("!", "rufffff")
+                                .Replace("\r\n", "neuezeile")
+                                .Replace("\n", "neuezeile");
                                 if (string.IsNullOrEmpty(folderName))
                                 {
                                     sourceProductionContext.AddSource(fileName, code);
