@@ -4,20 +4,6 @@
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
   </PropertyGroup>
 
-   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-        <IncludeSource>False</IncludeSource>
-        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-        <GenerateDocumentationFile>False</GenerateDocumentationFile>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PublishRepositoryUrl>False</PublishRepositoryUrl>
-        <EmbedUntrackedSources>False</EmbedUntrackedSources>
-    </PropertyGroup>
-	
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" />
-  </ItemGroup>
-	
   <ItemGroup>
     <Folder Include="CodeBuilders\" />
   </ItemGroup>

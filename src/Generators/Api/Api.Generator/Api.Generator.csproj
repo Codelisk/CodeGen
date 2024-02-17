@@ -7,7 +7,4 @@
     <ProjectReference Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" PrivateAssets="All"  />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Update="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All"  />
-  </ItemGroup>
 </Project>
