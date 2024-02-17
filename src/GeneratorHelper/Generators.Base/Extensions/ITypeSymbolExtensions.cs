@@ -4,6 +4,11 @@ namespace Generators.Base.Extensions
 {
     public static class ITypeSymbolExtensions
     {
+        public static string GetFullTypeName(this ITypeSymbol typeSymbol)
+        {
+            return typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+        }
+
         public static bool IsListType(this ITypeSymbol typeSymbol)
         {
             // Get all the base types of the type
@@ -32,7 +37,7 @@ namespace Generators.Base.Extensions
 
         private static bool IsListLikeInterface(this ITypeSymbol typeSymbol)
         {
-            if (typeSymbol.ToDisplayString().StartsWith("System.Collections."))
+            if (typeSymbol.ToDisplayString().StartsWith("System.Collections.") || typeSymbol.ToDisplayString().StartsWith("System+Collections+"))
             {
                 return true;
             }

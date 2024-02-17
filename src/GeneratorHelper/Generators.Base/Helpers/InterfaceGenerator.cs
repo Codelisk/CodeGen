@@ -55,7 +55,7 @@ namespace Generators.Base.Helpers
                 TestLog.Add("Method:" + publicMethod.Name);
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
-                    .WithReturnType(publicMethod.ReturnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
+                    .WithReturnType(publicMethod.ReturnType.OriginalDefinition.ToDisplayString())
                     .Abstract(true);
                 var dsf = publicMethod.ReturnType.GetNamespace();
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
