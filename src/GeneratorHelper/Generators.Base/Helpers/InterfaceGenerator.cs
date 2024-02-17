@@ -2,6 +2,7 @@
 using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
+using CodeGenHelpers.Internals;
 
 namespace Generators.Base.Helpers
 {
@@ -54,7 +55,7 @@ namespace Generators.Base.Helpers
                 TestLog.Add("Method:" + publicMethod.Name);
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
-                    .WithReturnType(FormatTypeName(publicMethod.ReturnType))
+                    .WithReturnType(publicMethod.ReturnType.GetTypeName() + "|" +publicMethod.ReturnType.GetGloballyQualifiedTypeName() + "|" +publicMethod.ReturnType.GetFullName() + "|" +publicMethod.ReturnType.Name)
                     .Abstract(true);
 
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
