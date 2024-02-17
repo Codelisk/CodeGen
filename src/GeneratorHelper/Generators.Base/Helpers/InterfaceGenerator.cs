@@ -37,7 +37,7 @@ namespace Generators.Base.Helpers
                 TestLog.Add("Method:" + publicMethod.Name);
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
-                    .WithReturnType(publicMethod.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
+                    .WithReturnType(publicMethod.ReturnType.ToDisplayString())
                     .Abstract(true);
 
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
