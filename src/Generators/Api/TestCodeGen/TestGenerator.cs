@@ -23,7 +23,7 @@ namespace ClassLibrary1.Generators
                 static (sourceProductionContext, codeBuildersTuples) =>
                 {
                     sourceProductionContext.AddSource(
-                        $"Test2.cs",
+                        $"Test2.g.cs",
                         $@"
     using System;
 using System.Collections.Generic;
