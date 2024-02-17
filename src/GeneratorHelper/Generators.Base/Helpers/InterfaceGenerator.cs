@@ -35,10 +35,13 @@ namespace Generators.Base.Helpers
             foreach (var publicMethod in publicMethods)
             {
                 TestLog.Add("Method:" + publicMethod.Name);
-                result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
-                    .AddParameters(publicMethod.Parameters)
+                var methode = result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .WithReturnType(publicMethod.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat))
                     .Abstract(true);
+                foreach (var parameter in publicMethod.Parameters)
+                {
+                    methode.AddParameter(parameter.Type.Name);
+                }
 
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
                 nameSpacesFromUsedTypes.Add(publicMethod.ReturnType.GetNamespace());
