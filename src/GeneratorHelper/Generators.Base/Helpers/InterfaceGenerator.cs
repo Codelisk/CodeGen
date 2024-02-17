@@ -55,6 +55,7 @@ namespace Generators.Base.Helpers
                 TestLog.Add("Method:" + publicMethod.Name);
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
+                    .WithReturnTypeTask()
                     .WithReturnType(publicMethod.ReturnType.GetFullTypeName())
                     .Abstract(true);
                 var dsf = publicMethod.ReturnType.GetNamespace();
