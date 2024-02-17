@@ -95,7 +95,7 @@ namespace Generators.Base.Generators.Base
                                 fileName = fileName.Replace(" ", "leerz").Replace(":", "doppel").Replace(";", "Strichpunkt").Replace("@", "attt").Replace("{", "Klaamerauf").Replace("[","eckigauf")
                                 .Replace("}", "Klammerzu").Replace("|", "Oder").Replace("]", "eckigzu")
                                 .Replace("<","auf").Replace(">","zu").Replace(",","Beisp").Replace("=","gleich").Replace("_","under").Replace("(","ra")
-                                .Replace(")","rzu").Replace("/","backslash").Replace("-","bind").Replace("?", "frage").Replace("!","ruf");
+                                .Replace(")","rzu").Replace("/","backslash").Replace("-","bind").Replace("?", "frage").Replace("!","ruf").Replace("\r\n","neuezeile").Replace("\n","neuezeile");
                                 if (string.IsNullOrEmpty(folderName))
                                 {
                                     sourceProductionContext.AddSource(fileName, code);
