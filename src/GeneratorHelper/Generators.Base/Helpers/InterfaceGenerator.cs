@@ -55,7 +55,7 @@ namespace Generators.Base.Helpers
                 TestLog.Add("Method:" + publicMethod.Name);
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
-                    .WithReturnType(publicMethod.ReturnType + "")
+                    .WithReturnType(publicMethod.ReturnType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat))
                     .Abstract(true);
                 var dsf = publicMethod.ReturnType.GetNamespace();
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
@@ -64,7 +64,6 @@ namespace Generators.Base.Helpers
             }
 
             var xyz =codeBuilder.ToString();
-
             TestLog.Add("c.BaseType" + c.BaseType);
             if (c.BaseType is not null)
             {
