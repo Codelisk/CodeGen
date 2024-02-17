@@ -87,9 +87,7 @@ namespace Generators.Base.Generators.Base
 
                             code = code.Replace("internal void partial", "partial void");
                             code = code.Replace("void partial", "partial void");
-                            code = code.Replace("System+Collections+Generic+List`1", "System.Collections.Generic.List<")
-                                   .Replace("[", "")
-                                   .Replace("]", ">");
+
 
                             try
                             {
