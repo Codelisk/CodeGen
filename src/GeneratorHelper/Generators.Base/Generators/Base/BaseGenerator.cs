@@ -99,7 +99,7 @@ namespace Generators.Base.Generators.Base
 
                             //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
                             string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
-                            string replacement = "System.Collections.Generic.List<$1>";
+                            string replacement = "List<$1>";
 
                             string corrected = Regex.Replace(code, pattern, replacement);
 
