@@ -55,9 +55,9 @@ namespace Generators.Base.Helpers
                 TestLog.Add("Method:" + publicMethod.Name);
                 result.AddMethod(publicMethod.Name, Accessibility.NotApplicable)
                     .AddParameters(publicMethod.Parameters)
-                    .WithReturnType(publicMethod.ReturnType.GetNamespace())
+                    .WithReturnType(publicMethod.ReturnType + "")
                     .Abstract(true);
-
+                var dsf = publicMethod.ReturnType.GetNamespace();
                 TestLog.Add("publicMethod.ReturnType:" + publicMethod.ReturnType);
                 nameSpacesFromUsedTypes.Add(publicMethod.ReturnType.GetNamespace());
                 nameSpacesFromUsedTypes.AddRange(publicMethod.Parameters.Select(x => x.Type.GetNamespace()));
