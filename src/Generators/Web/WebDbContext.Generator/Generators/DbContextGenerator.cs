@@ -25,7 +25,7 @@ namespace WebDbContext.Generator.Generators
                 return result;
             });
 
-            AddSource(context, result);
+            AddSourceFileName(context, result);
         }
     }
 }
