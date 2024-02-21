@@ -108,7 +108,7 @@ namespace Generators.Base.Generators.Base
                             //being included in DbContextGenerator usings
                             string pattern = @"using\s+(global::)?[\w\.]+<.*?(>;|$)";
 
-                            code = Regex.Replace(code, pattern, string.Empty);
+                            code = Regex.Replace(code, pattern, string.Empty, RegexOptions.Multiline);
 
                             try
                             {
