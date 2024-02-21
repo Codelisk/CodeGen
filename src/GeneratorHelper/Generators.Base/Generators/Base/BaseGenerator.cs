@@ -163,7 +163,7 @@ namespace Generators.Base.Generators.Base
                             //Workaround for 
                             //using Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<UserDto, Microsoft.AspNetCore.Identity.IdentityRole<System, System;
                             //being included in DbContextGenerator usings
-                            pattern = @"using [^\n]+<.+>;\n";
+                            pattern = @"using\s+[\w\.]+\s*<[^;]*;";
 
                             code = Regex.Replace(code, pattern, string.Empty);
 
