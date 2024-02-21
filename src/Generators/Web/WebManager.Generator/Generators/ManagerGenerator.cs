@@ -26,7 +26,7 @@ namespace WebManager.Generator.Generators
                 return result;
             });
 
-            AddSourceFileName(context, result);
+            AddSource(context, result);
         }
     }
 }

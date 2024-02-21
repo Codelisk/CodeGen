@@ -23,7 +23,7 @@ namespace WebManager.Contract.Generator.Generators
                 return result;
             });
 
-            AddSourceFileName(context, result);
+            AddSource(context, result);
         }
     }
 }
