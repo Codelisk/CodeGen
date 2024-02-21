@@ -98,10 +98,17 @@ namespace Generators.Base.Generators.Base
                             code = code.Replace("void partial", "partial void");
 
                             //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
-                            string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
-                            string replacement = "List<$1>";
+                            //string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
+                            //string replacement = "List<$1>";
 
-                            string corrected = Regex.Replace(code, pattern, replacement);
+                            //string corrected = Regex.Replace(code, pattern, replacement);
+
+                            //Workaround for 
+                            //using Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<UserDto, Microsoft.AspNetCore.Identity.IdentityRole<System, System;
+                            //being included in DbContextGenerator usings
+                            string pattern = @"using\s+[\w\.]+\s*<[^;]*;";
+
+                            code = Regex.Replace(code, pattern, string.Empty);
 
                             try
                             {
