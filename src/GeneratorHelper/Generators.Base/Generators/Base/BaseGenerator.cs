@@ -106,7 +106,7 @@ namespace Generators.Base.Generators.Base
                             //Workaround for 
                             //using Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<UserDto, Microsoft.AspNetCore.Identity.IdentityRole<System, System;
                             //being included in DbContextGenerator usings
-                            string pattern = @"using\s+(global::)?[\w\.]+<.*?(>;|$)";
+                            string pattern = @"using\s+(global::)?[\w\.\+]+<[^;]*;?\s*|[\w\.\+]+<,*>";
 
                             code = Regex.Replace(code, pattern, string.Empty, RegexOptions.Multiline);
 
