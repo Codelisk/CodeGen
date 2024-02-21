@@ -158,7 +158,15 @@ namespace Generators.Base.Generators.Base
                             string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
                             string replacement = "List<$1>";
 
-                            string corrected = Regex.Replace(code, pattern, replacement);
+                            code = Regex.Replace(code, pattern, replacement);
+
+                            //Workaround for 
+                            //using Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<UserDto, Microsoft.AspNetCore.Identity.IdentityRole<System, System;
+                            //being included in DbContextGenerator usings
+                            pattern = @"using [^\n]+<.+>;\n";
+
+                            code = Regex.Replace(code, pattern, string.Empty);
+
 
                             try
                             {
