@@ -143,7 +143,7 @@
     <PackageReference  PrivateAssets="all" Update="System.Collections" Version="4.3.0" />
     <PackageReference  PrivateAssets="all" Update="System.Configuration.ConfigurationManager" Version="7.0.0" />
     <PackageReference  PrivateAssets="all" Update="System.Data.SqlClient" Version="4.8.5" />
-    <PackageReference  PrivateAssets="all" Update="System.IdentityModel.Tokens.Jwt" Version="7.0.0-preview3" />
+    <PackageReference  PrivateAssets="all" Update="System.IdentityModel.Tokens.Jwt" Version="7.4.0" />
     <PackageReference  PrivateAssets="all" Update="System.Net.Http" Version="4.3.4" />
     <PackageReference  PrivateAssets="all" Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference  PrivateAssets="all" Update="System.Runtime.CompilerServices.Unsafe" Version="7.0.0-preview.2.22152.2" />
