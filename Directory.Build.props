@@ -1,31 +1,26 @@
 <Project>
     <Import Project="Directory.Packages.props" Condition="exists('Directory.Packages.props')" />
   <PropertyGroup>
+    <GeneratorTargetFramework>netstandard2.0</GeneratorTargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+	
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    <IsRoslynComponent>true</IsRoslynComponent>
-    <Authors>Codelisk</Authors>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
+	<ImplicitUsings>true</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
-    <GeneratorTargetFramework>netstandard2.0</GeneratorTargetFramework>
-    <RepositoryType>git</RepositoryType>
-    <IncludeSymbols>True</IncludeSymbols>
+	
+    <IsRoslynComponent>true</IsRoslynComponent>
+	<IncludeBuildOutput>true</IncludeBuildOutput>
 	<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
   </PropertyGroup>
   
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <Version>2.13.99</Version>
-  </PropertyGroup>
-  
-
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" />
   </ItemGroup>
   
   <ItemGroup>
-    <None Update="tools\**" Pack="true" PackagePath="" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="false" />
   </ItemGroup>
 </Project>
