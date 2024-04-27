@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <PackageReference PrivateAssets="All" Include="AvantiPoint.CodeGenHelpers" />
-    <PackageReference PrivateAssets="All" Include="Microsoft.CodeAnalysis.CSharp" />
-    <PackageReference PrivateAssets="All" Include="Microsoft.CodeAnalysis.Analyzers" />
     <PackageReference PrivateAssets="All" Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
 
