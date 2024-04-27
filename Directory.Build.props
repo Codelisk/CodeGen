@@ -1,35 +1,23 @@
 <Project>
+    <Import Project="Directory.Packages.props" Condition="exists('Directory.Packages.props')" />
   <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <IsRoslynComponent>true</IsRoslynComponent>
     <Authors>Codelisk</Authors>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
-    <Configurations>Debug;Release</Configurations>
-    <Description>CodeGen</Description>
     <GeneratorTargetFramework>netstandard2.0</GeneratorTargetFramework>
-    <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <RepositoryType>git</RepositoryType>
-    <CI Condition="'$(GITHUB_ACTIONS)' == 'true'">true</CI>
-    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
     <IncludeSymbols>True</IncludeSymbols>
 	<EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <Version>2.13.99</Version>
   </PropertyGroup>
   
-  <PropertyGroup>
-    <OrderlyzeFoundationVersion>3.0.10</OrderlyzeFoundationVersion>
-    <CodeliskVersion>2.13.99</CodeliskVersion>
-    <MicrosoftAspNetCore>8.0.0</MicrosoftAspNetCore>
-    <MicrosoftEntityFrameworkCore>8.0.0</MicrosoftEntityFrameworkCore>
-    <MicrosoftExtensionsVersion>8.0.0</MicrosoftExtensionsVersion>
-    <MicrosoftCodeAnalysisVersion>4.3.0</MicrosoftCodeAnalysisVersion>
-  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
