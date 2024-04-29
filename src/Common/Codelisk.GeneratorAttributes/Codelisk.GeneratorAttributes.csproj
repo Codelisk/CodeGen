@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 
   <PropertyGroup>
@@ -10,10 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="GeneralAttributes\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" PrivateAssets="all"/>
+    <ProjectReference Include="..\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" PrivateAssets="all" />
   </ItemGroup>
 </Project>

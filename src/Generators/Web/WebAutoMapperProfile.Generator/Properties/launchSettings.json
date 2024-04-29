@@ -3,9 +3,9 @@
     "WebAutoMapperProfile.Generator": {
       "commandName": "Project"
     },
-    "Profile 1": {
+    "Roslyn": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\src\\ooeentwickleruno\\ooeentwickleruno.foundation\\ooeentwickleruno.foundation.csproj"
+      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\src\\Backend\\Codelisk.ChatSupporter.WebApi\\Codelisk.ChatSupporter.WebApi.csproj"
     }
   }
 }
