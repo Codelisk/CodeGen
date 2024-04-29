@@ -4,8 +4,7 @@ namespace Api.Generator.Generators.CodeBuilders
 {
     public class ModuleInitializerBuilder : ClassServicesModuleInitializerBuilder
     {
-        public ModuleInitializerBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
-        {
-        }
+        public ModuleInitializerBuilder(string codeBuilderNamespace)
+            : base(codeBuilderNamespace) { }
     }
 }

@@ -6,6 +6,10 @@
     "Profile 1": {
       "commandName": "DebugRoslynComponent",
       "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\Codelisk\\ooeentwickler\\src\\ooeentwicklerapi\\src\\ooeentwicklerapi.Repositories\\ooeentwicklerapi.Repositories.csproj"
+    },
+    "Profile 2": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\src\\Backend\\Codelisk.ChatSupporter.WebApi\\Codelisk.ChatSupporter.WebApi.csproj"
     }
   }
 }
