@@ -5,7 +5,7 @@
     },
     "Profile 1": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\Codelisk\\ooeentwickler\\src\\ooeentwickleruno\\ApiConnector\\ooeentwickleruno.apiclient\\ooeentwickleruno.apiclient.csproj"
+      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\src\\Frontend\\Codelisk.ChatSupporter\\Codelisk.ChatSupporter.csproj"
     }
   }
 }
