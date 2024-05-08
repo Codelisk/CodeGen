@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <None Remove="bin\Debug\netstandard2.0\\Codelisk.Foundation.Generator.dll" />
-  </ItemGroup>
-
+  <PropertyGroup>
+    <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" PrivateAssets="all" />
