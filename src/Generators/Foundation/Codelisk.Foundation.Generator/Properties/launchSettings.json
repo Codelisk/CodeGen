@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Codelisk.Foundation.Generator": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\src\\Frontend\\Codelisk.ChatSupporter\\Codelisk.ChatSupporter.csproj"
+    }
+  }
+}
