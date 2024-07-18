@@ -1,7 +1,7 @@
-using Generators.Base;
-using Microsoft.CodeAnalysis;
-using Generators.Base.Extensions;
 using Codelisk.GeneratorShared.Constants;
+using Generators.Base;
+using Generators.Base.Extensions;
+using Microsoft.CodeAnalysis;
 
 namespace Foundation.Crawler.Extensions
 {
@@ -12,19 +12,27 @@ namespace Foundation.Crawler.Extensions
             var result = dto.DtoForeignProperties().Any();
             return result;
         }
+
         public static IEnumerable<IPropertySymbol> DtoForeignProperties(this INamedTypeSymbol dto)
         {
-            var result = dto.GetAllProperties(true).Where(x => x.GetAllAttributes().Any(x => x.AttributeClass.Name.Equals(AttributeNames.ForeignKey)));
+            var result = dto.GetAllProperties(true)
+                .Where(x =>
+                    x.GetAllAttributes()
+                        .Any(x => x.AttributeClass.Name.Equals(AttributeNames.ForeignKey))
+                );
             return result;
         }
+
         public static string GetFullModelNameFromProperty(this IPropertySymbol foreignKeyProperty)
         {
-            return foreignKeyProperty.Name.GetParameterName().Replace("Id","").Replace("id","");
+            return foreignKeyProperty.Name.GetParameterName().Replace("Id", "").Replace("id", "");
         }
+
         public static string GetFullTypeName(this INamedTypeSymbol dto)
         {
             return dto.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
         }
+
         public static string GetFullModelName(this INamedTypeSymbol dto, bool plural = false)
         {
             var name = dto.Name.Replace("Dto", "Full");
@@ -34,6 +42,17 @@ namespace Foundation.Crawler.Extensions
             }
             return name;
         }
+
+        public static string GetEntityName(this INamedTypeSymbol dto, bool plural = false)
+        {
+            var name = dto.Name.Replace("Dto", "Entity");
+            if (plural)
+            {
+                name = name.Pluralize();
+            }
+            return name;
+        }
+
         public static string ReplaceDtoSuffix(this INamedTypeSymbol dto, bool plural = false)
         {
             var name = dto.Name.Replace("Dto", "");
