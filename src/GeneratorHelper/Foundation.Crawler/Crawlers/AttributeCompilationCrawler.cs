@@ -126,5 +126,10 @@ namespace Foundation.Crawler.Crawlers
                 );
             }
         }
+
+        public Compilation GetCompilation()
+        {
+            return context;
+        }
     }
 }

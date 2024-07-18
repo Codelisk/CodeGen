@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CodeGenHelpers;
+using Codelisk.GeneratorAttributes.WebAttributes.Repository;
 using Codelisk.GeneratorShared.Constants;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions;
@@ -21,7 +22,7 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
             List<CodeBuilder> codeBuilders = null
         )
         {
-            var attributeCompilationCrawler = new AttributeCompilationCrawler(context);
+            var attributeCompilationCrawler = new AttributeCompilationCrawler(compilation);
             var dtos = attributeCompilationCrawler.Dtos().ToList();
             return Build(attributeCompilationCrawler, dtos);
         }
@@ -52,20 +53,24 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
             var result = builder
                 .TopLevelNamespace()
                 .AddClass(dto.GetEntityName())
+                .SetBaseClass(dto)
+                .AddAttribute($"{typeof(EntityAttribute).FullName}(typeof({dto.Name}))")
                 .WithAccessModifier(Accessibility.Public);
 
-            result
-                .AddProperty(dto.Name.GetParameterName(), Accessibility.Public)
-                .SetType(dto.Name)
-                .UseAutoProps();
-            var dtoProperties = dto.GetAllProperties();
+            var constructor = result.AddConstructor().AddParameter(dto);
 
-            foreach (var dtoProperty in dtoProperties)
+            var properties = dto.GetAllProperties(true)
+                .Where(x => x.DeclaredAccessibility == Accessibility.Public);
+
+            constructor.WithBody(x =>
             {
-                result
-                    .AddProperty(dtoProperty.Name, dtoProperty.DeclaredAccessibility)
-                    .SetType(dtoProperty.ContainingType);
-            }
+                foreach (var property in properties)
+                {
+                    x.AppendLine(
+                        $"this.{property.Name} = {dto.Name.GetParameterName()}.{property.Name};"
+                    );
+                }
+            });
 
             return builder.Classes;
         }

@@ -16,7 +16,7 @@ namespace Codelisk.Foundation.Generator.Generators
             var refitApiCodeBuilder = context.CompilationProvider.Select(
                 static (compilation, _) =>
                 {
-                    var codeBuilder = new FullModelCodeBuilder(compilation.AssemblyName).Get(
+                    var codeBuilder = new EntityCodeBuilder(compilation.AssemblyName).Get(
                         compilation
                     );
 

@@ -6,11 +6,17 @@ namespace Generator.Foundation.Generators.Base
     public abstract class BaseCodeBuilder
     {
         private readonly string CodeBuilderNamespace;
+
         public BaseCodeBuilder(string codeBuilderNamespace)
         {
             CodeBuilderNamespace = codeBuilderNamespace;
         }
-        public abstract List<CodeBuilder> Get(Compilation compilation, List<CodeBuilder> codeBuilders = null);
+
+        public abstract List<CodeBuilder> Get(
+            Compilation compilation,
+            List<CodeBuilder> codeBuilders = null
+        );
+
         public CodeBuilder CreateBuilder(string ns = null)
         {
             if (ns is null)

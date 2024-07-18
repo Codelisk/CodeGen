@@ -1,225 +1,258 @@
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices.ComTypes;
+using System.Text.RegularExpressions;
 using System.Text.RegularExpressions;
 using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using System.Text.RegularExpressions;
 
 namespace Generators.Base.Generators.Base
 {
     public abstract class BaseGenerator : IIncrementalGenerator
     {
+        public abstract void Initialize(IncrementalGeneratorInitializationContext context);
 
-    public abstract void Initialize(IncrementalGeneratorInitializationContext context);
-
-
-        protected void AddSourceImplementation(IncrementalGeneratorInitializationContext context, IncrementalValueProvider<List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>> codeBuildersProvider)
+        protected void AddSourceImplementation(
+            IncrementalGeneratorInitializationContext context,
+            IncrementalValueProvider<
+                List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+            > codeBuildersProvider
+        )
         {
-            context.RegisterImplementationSourceOutput(codeBuildersProvider, static (sourceProductionContext, codeBuildersTuples) =>
-            {
-                foreach (var codeBuilderTuple in codeBuildersTuples)
+            context.RegisterImplementationSourceOutput(
+                codeBuildersProvider,
+                static (sourceProductionContext, codeBuildersTuples) =>
                 {
-                    var codeBuilders = codeBuilderTuple.Item1;
-                    string? folderName = codeBuilderTuple.Item2;
-                    var replace = codeBuilderTuple.Item3;
-
-                    foreach (var codeBuilder in codeBuilders)
+                    foreach (var codeBuilderTuple in codeBuildersTuples)
                     {
-                        string code = codeBuilder.Build();
-                        if (replace.HasValue)
-                        {
-                            code = code.Replace(replace.Value.Item1, replace.Value.Item2);
-                        }
+                        var codeBuilders = codeBuilderTuple.Item1;
+                        string? folderName = codeBuilderTuple.Item2;
+                        var replace = codeBuilderTuple.Item3;
 
-                        if (codeBuilder.Classes.Any())
+                        foreach (var codeBuilder in codeBuilders)
                         {
-                            //Workaround because i cant make Interface methods
-                            if (codeBuilder.Classes.Any(x => x.Kind == TypeKind.Interface))
+                            string code = codeBuilder.Build();
+                            if (replace.HasValue)
                             {
-                                code = code.Replace("abstract ", "");
-                                code = code.Replace("using <global namespace>;", "");
+                                code = code.Replace(replace.Value.Item1, replace.Value.Item2);
                             }
 
-                            //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
-                            string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
-                            string replacement = "System.Collections.Generic.List<$1>";
-
-                            string corrected = Regex.Replace(code, pattern, replacement);
-
-                            try
+                            if (codeBuilder.Classes.Any())
                             {
-                                var fileName = codeBuilder.Classes.First().Name + ".g.cs";
-                                if (string.IsNullOrEmpty(folderName))
+                                //Workaround because i cant make Interface methods
+                                if (codeBuilder.Classes.Any(x => x.Kind == TypeKind.Interface))
                                 {
-                                    sourceProductionContext.AddSource(fileName, code);
+                                    code = code.Replace("abstract ", "");
+                                    code = code.Replace("using <global namespace>;", "");
                                 }
-                                else
-                                {
-                                    sourceProductionContext.AddSource(folderName + "/" + fileName, code);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                sourceProductionContext.AddSource(folderName + "/Failed", ex.Message + " \n\nStacktrace:" + ex.StackTrace);
+
+                                //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
+                                string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
+                                string replacement = "System.Collections.Generic.List<$1>";
+
+                                string corrected = Regex.Replace(code, pattern, replacement);
+
+                                var fileName = codeBuilder.Classes.First().Name;
+                                AddCode(sourceProductionContext, code, folderName, fileName);
                             }
                         }
                     }
                 }
-            });
+            );
         }
-        protected void AddSource(IncrementalGeneratorInitializationContext context, IncrementalValueProvider<List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>> codeBuildersProvider)
+
+        protected void AddSource(
+            IncrementalGeneratorInitializationContext context,
+            IncrementalValueProvider<
+                List<(
+                    string source,
+                    string? folderName,
+                    string fileName,
+                    (string, string)? replace
+                )>
+            > codeBuildersProvider
+        )
         {
-            context.RegisterSourceOutput(codeBuildersProvider, static (sourceProductionContext, codeBuildersTuples) =>
-            {
-                foreach (var codeBuilderTuple in codeBuildersTuples)
+            context.RegisterSourceOutput(
+                codeBuildersProvider,
+                static (sourceProductionContext, codeBuildersTuples) =>
                 {
-                    var codeBuilders = codeBuilderTuple.Item1;
-                    string? folderName = codeBuilderTuple.Item2;
-                    var replace = codeBuilderTuple.Item3;
-
-                    foreach (var codeBuilder in codeBuilders)
+                    foreach (var codeBuilderTuple in codeBuildersTuples)
                     {
-                        string code = codeBuilder.Build();
-                        if (replace.HasValue)
-                        {
-                            code = code.Replace(replace.Value.Item1, replace.Value.Item2);
-                        }
+                        var code = codeBuilderTuple.Item1;
+                        string? folderName = codeBuilderTuple.Item2;
+                        string? fileName = codeBuilderTuple.Item3;
+                        var replace = codeBuilderTuple.Item4;
 
-                        if (codeBuilder.Classes.Any())
+                        AddCode(sourceProductionContext, code, folderName, fileName);
+                    }
+                }
+            );
+        }
+
+        private static void AddCode(
+            SourceProductionContext sourceProductionContext,
+            string code,
+            string folderName,
+            string fileName
+        )
+        {
+            //Workaround for
+            //using Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<UserDto, Microsoft.AspNetCore.Identity.IdentityRole<System, System;
+            //being included in DbContextGenerator usings
+            string pattern = @"using\s+(global::)?[\w\.\+]+<[^;]*;?\s*|[\w\.\+]+<,*>";
+
+            code = Regex.Replace(code, pattern, string.Empty, RegexOptions.Multiline);
+
+            try
+            {
+                fileName = fileName + ".g.cs";
+                if (string.IsNullOrEmpty(folderName))
+                {
+                    sourceProductionContext.AddSource(fileName, code);
+                }
+                else
+                {
+                    sourceProductionContext.AddSource(folderName + "/" + fileName, code);
+                }
+            }
+            catch (Exception ex)
+            {
+                sourceProductionContext.AddSource(
+                    folderName + "/Failed",
+                    ex.Message + " \n\nStacktrace:" + ex.StackTrace
+                );
+            }
+        }
+
+        protected void AddSource(
+            IncrementalGeneratorInitializationContext context,
+            IncrementalValueProvider<
+                List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+            > codeBuildersProvider
+        )
+        {
+            context.RegisterSourceOutput(
+                codeBuildersProvider,
+                static (sourceProductionContext, codeBuildersTuples) =>
+                {
+                    foreach (var codeBuilderTuple in codeBuildersTuples)
+                    {
+                        var codeBuilders = codeBuilderTuple.Item1;
+                        string? folderName = codeBuilderTuple.Item2;
+                        var replace = codeBuilderTuple.Item3;
+
+                        foreach (var codeBuilder in codeBuilders)
                         {
-                            //Workaround because i cant make Interface methods
-                            if (codeBuilder.Classes.Any(x => x.Kind == TypeKind.Interface))
+                            string code = codeBuilder.Build();
+                            if (replace.HasValue)
                             {
-                                code = code.Replace("abstract ", "");
-                                code = code.Replace("using <global namespace>;", "");
+                                code = code.Replace(replace.Value.Item1, replace.Value.Item2);
                             }
 
-                            code = code.Replace("internal void partial", "partial void");
-                            code = code.Replace("void partial", "partial void");
-
-                            //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
-                            //string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
-                            //string replacement = "List<$1>";
-
-                            //string corrected = Regex.Replace(code, pattern, replacement);
-
-                            //Workaround for 
-                            //using Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<UserDto, Microsoft.AspNetCore.Identity.IdentityRole<System, System;
-                            //being included in DbContextGenerator usings
-                            string pattern = @"using\s+(global::)?[\w\.\+]+<[^;]*;?\s*|[\w\.\+]+<,*>";
-
-                            code = Regex.Replace(code, pattern, string.Empty, RegexOptions.Multiline);
-
-                            try
+                            if (codeBuilder.Classes.Any())
                             {
-                                var fileName = codeBuilder.Classes.First().Name + ".g.cs";
-                                if (string.IsNullOrEmpty(folderName))
+                                //Workaround because i cant make Interface methods
+                                if (codeBuilder.Classes.Any(x => x.Kind == TypeKind.Interface))
                                 {
-                                    sourceProductionContext.AddSource(fileName, code);
+                                    code = code.Replace("abstract ", "");
+                                    code = code.Replace("using <global namespace>;", "");
                                 }
-                                else
-                                {
-                                    sourceProductionContext.AddSource(folderName + "/" + fileName, code);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                sourceProductionContext.AddSource(folderName + "/Failed", ex.Message + " \n\nStacktrace:" + ex.StackTrace);
+
+                                code = code.Replace("internal void partial", "partial void");
+                                code = code.Replace("void partial", "partial void");
+
+                                //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
+                                //string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
+                                //string replacement = "List<$1>";
+
+                                //string corrected = Regex.Replace(code, pattern, replacement);
+
+                                var fileName = codeBuilder.Classes.First().Name;
+
+                                AddCode(sourceProductionContext, code, folderName, fileName);
                             }
                         }
                     }
                 }
-            });
+            );
         }
-        protected void AddSourceFileName(IncrementalGeneratorInitializationContext context, IncrementalValueProvider<List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>> codeBuildersProvider)
+
+        protected void AddSourceFileName(
+            IncrementalGeneratorInitializationContext context,
+            IncrementalValueProvider<
+                List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+            > codeBuildersProvider
+        )
         {
-            context.RegisterSourceOutput(codeBuildersProvider, static (sourceProductionContext, codeBuildersTuples) =>
-            {
-                foreach (var codeBuilderTuple in codeBuildersTuples)
+            context.RegisterSourceOutput(
+                codeBuildersProvider,
+                static (sourceProductionContext, codeBuildersTuples) =>
                 {
-                    var codeBuilders = codeBuilderTuple.Item1;
-                    string? folderName = codeBuilderTuple.Item2;
-                    var replace = codeBuilderTuple.Item3;
-
-                    foreach (var codeBuilder in codeBuilders)
+                    foreach (var codeBuilderTuple in codeBuildersTuples)
                     {
-                        string code = codeBuilder.Build();
-                        if (replace.HasValue)
-                        {
-                            code = code.Replace(replace.Value.Item1, replace.Value.Item2);
-                        }
+                        var codeBuilders = codeBuilderTuple.Item1;
+                        string? folderName = codeBuilderTuple.Item2;
+                        var replace = codeBuilderTuple.Item3;
 
-                        if (codeBuilder.Classes.Any())
+                        foreach (var codeBuilder in codeBuilders)
                         {
-                            //Workaround because i cant make Interface methods
-                            if (codeBuilder.Classes.Any(x => x.Kind == TypeKind.Interface))
+                            string code = codeBuilder.Build();
+                            if (replace.HasValue)
                             {
-                                code = code.Replace("abstract ", "");
-                                code = code.Replace("using <global namespace>;", "");
+                                code = code.Replace(replace.Value.Item1, replace.Value.Item2);
                             }
 
-                            code = code.Replace("internal void partial", "partial void");
-                            code = code.Replace("void partial", "partial void");
-
-                            //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
-                            string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
-                            string replacement = "List<$1>";
-
-                            code = Regex.Replace(code, pattern, replacement);
-
-                            //Workaround for 
-                            //using Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<UserDto, Microsoft.AspNetCore.Identity.IdentityRole<System, System;
-                            //being included in DbContextGenerator usings
-                            pattern = @"using\s+(global::)?[\w\.]+<.*?(>;|$)";
-
-                            code = Regex.Replace(code, pattern, string.Empty, RegexOptions.Multiline);
-
-
-                            try
+                            if (codeBuilder.Classes.Any())
                             {
+                                //Workaround because i cant make Interface methods
+                                if (codeBuilder.Classes.Any(x => x.Kind == TypeKind.Interface))
+                                {
+                                    code = code.Replace("abstract ", "");
+                                    code = code.Replace("using <global namespace>;", "");
+                                }
+
+                                code = code.Replace("internal void partial", "partial void");
+                                code = code.Replace("void partial", "partial void");
+
+                                //Workaround for interface generation in pipeline always generating false returntype for AddRange in GenerateInterface
+                                string pattern = @"System\+Collections\+Generic\+List`1\[(.*?)\]";
+                                string replacement = "List<$1>";
+
+                                code = Regex.Replace(code, pattern, replacement);
+
                                 var fileName = code;
 
-                                fileName = fileName.Replace(" ", "leerzf")
-.Replace(":", "dopsspel")
-.Replace(";", "Strichpunkt")
-.Replace("@", "atteit")
-.Replace("{", "Kliaamerauf")
-.Replace("[", "eckiigauf")
-.Replace("}", "Klammerzu")
-.Replace("|", "Odöerdd")
-.Replace("]", "eclkigzua")
-.Replace("<", "aufkssa")
-.Replace(">", "zusjeee")
-.Replace(",", "Beihspf")
-.Replace("=", "gleigchhh")
-.Replace("_", "underrrrr")
-.Replace("(", "radsfsaaf")
-.Replace(")", "rzuwdsf")
-.Replace("/", "backaslash")
-.Replace("-", "bindaddd")
-.Replace("?", "frageee")
-.Replace("!", "rufffff")
-.Replace("\r\n", "neuezeile")
-.Replace("\n", "neuezeile") + ".g.cs";
+                                fileName = fileName
+                                    .Replace(" ", "leerzf")
+                                    .Replace(":", "dopsspel")
+                                    .Replace(";", "Strichpunkt")
+                                    .Replace("@", "atteit")
+                                    .Replace("{", "Kliaamerauf")
+                                    .Replace("[", "eckiigauf")
+                                    .Replace("}", "Klammerzu")
+                                    .Replace("|", "Odöerdd")
+                                    .Replace("]", "eclkigzua")
+                                    .Replace("<", "aufkssa")
+                                    .Replace(">", "zusjeee")
+                                    .Replace(",", "Beihspf")
+                                    .Replace("=", "gleigchhh")
+                                    .Replace("_", "underrrrr")
+                                    .Replace("(", "radsfsaaf")
+                                    .Replace(")", "rzuwdsf")
+                                    .Replace("/", "backaslash")
+                                    .Replace("-", "bindaddd")
+                                    .Replace("?", "frageee")
+                                    .Replace("!", "rufffff")
+                                    .Replace("\r\n", "neuezeile")
+                                    .Replace("\n", "neuezeile");
 
-
-                                if (string.IsNullOrEmpty(folderName))
-                                {
-                                    sourceProductionContext.AddSource(fileName, code);
-                                }
-                                else
-                                {
-                                    sourceProductionContext.AddSource(folderName + "/" + fileName, code);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                sourceProductionContext.AddSource(folderName + "/Failed", ex.Message + " \n\nStacktrace:" + ex.StackTrace);
+                                AddCode(sourceProductionContext, code, folderName, fileName);
                             }
                         }
                     }
                 }
-            });
+            );
         }
     }
 }
