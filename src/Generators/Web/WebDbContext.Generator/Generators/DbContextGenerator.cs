@@ -19,9 +19,7 @@ namespace WebDbContext.Generator.Generators
                         compilation
                     );
                     var initializerBuilder = new DbContextInitializerCodeBuilder(
-                        new AttributeCompilationCrawler(
-                            compilation
-                        ).GetInitNamespace<DatabaseModuleInitializerAttribute>()
+                        new AttributeCompilationCrawler(compilation)
                     ).Get(compilation, codeBuilder);
 
                     var result = new List<(

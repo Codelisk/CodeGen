@@ -19,11 +19,12 @@ namespace WebRepositories.Generator.Generators
                     var codeBuilder = new RepositoryCodeBuilder(compilation.AssemblyName).Get(
                         compilation
                     );
-                    var initializerBuilder = new RepositoryInitializerCodeBuilder(
-                        new AttributeCompilationCrawler(
-                            compilation
-                        ).GetInitNamespace<RepositoryModuleInitializerAttribute>()
-                    ).Get(compilation, codeBuilder);
+                    var crawler = new AttributeCompilationCrawler(compilation);
+
+                    var initializerBuilder = new RepositoryInitializerCodeBuilder(crawler).Get(
+                        compilation,
+                        codeBuilder
+                    );
 
                     var result = new List<(
                         List<CodeBuilder> codeBuilder,

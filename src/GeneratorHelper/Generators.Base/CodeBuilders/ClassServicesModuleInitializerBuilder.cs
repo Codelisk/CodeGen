@@ -1,4 +1,5 @@
 using CodeGenHelpers;
+using Codelisk.GeneratorAttributes.GeneralAttributes.ModuleInitializers;
 using Codelisk.GeneratorAttributes.GeneralAttributes.Registration;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
@@ -8,8 +9,19 @@ namespace Generators.Base.CodeBuilders
 {
     public abstract class ClassServicesModuleInitializerBuilder : BaseCodeBuilder
     {
-        public ClassServicesModuleInitializerBuilder(string codeBuilderNamespace)
-            : base(codeBuilderNamespace) { }
+        private readonly string _addServicesMethodeName = "AddServices";
+
+        public ClassServicesModuleInitializerBuilder(
+            string codeBuilderNamespace,
+            string addServicesMethodeName = "AddServices"
+        )
+            : base(codeBuilderNamespace)
+        {
+            if (addServicesMethodeName is not null)
+            {
+                _addServicesMethodeName = addServicesMethodeName;
+            }
+        }
 
         public virtual List<(
             string serviceUsage,
@@ -90,7 +102,7 @@ namespace Generators.Base.CodeBuilders
                 .AddClass("ModuleInitializer")
                 .AddNamespaceImport("Microsoft.Extensions.DependencyInjection")
                 .WithAccessModifier(Accessibility.Public)
-                .AddMethod("partial AddServices", Accessibility.NotApplicable)
+                .AddMethod($"partial {_addServicesMethodeName}", Accessibility.NotApplicable)
                 .AddParameter("IServiceCollection", "services")
                 .WithBody(x =>
                 {

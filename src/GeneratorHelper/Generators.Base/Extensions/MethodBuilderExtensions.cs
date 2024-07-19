@@ -4,7 +4,10 @@ namespace Generators.Base.Extensions
 {
     public static class MethodBuilderExtensions
     {
-        public static MethodBuilder WithReturnTypeTask(this MethodBuilder methodBuilder, string returnType = null)
+        public static MethodBuilder WithReturnTypeTask(
+            this MethodBuilder methodBuilder,
+            string returnType = null
+        )
         {
             if (returnType is null)
             {
@@ -13,7 +16,19 @@ namespace Generators.Base.Extensions
 
             return methodBuilder.WithReturnType($"Task<{returnType}>");
         }
-        public static MethodBuilder WithReturnTypeTaskList(this MethodBuilder methodBuilder, string returnType)
+
+        public static MethodBuilder WithReturnTypeList(
+            this MethodBuilder methodBuilder,
+            string returnType
+        )
+        {
+            return methodBuilder.WithReturnType($"List<{returnType}>");
+        }
+
+        public static MethodBuilder WithReturnTypeTaskList(
+            this MethodBuilder methodBuilder,
+            string returnType
+        )
         {
             return methodBuilder.WithReturnTypeTask($"List<{returnType}>");
         }

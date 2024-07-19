@@ -20,9 +20,7 @@ namespace WebManager.Generator.Generators
                         compilation
                     );
                     var initializerBuilder = new ManagerInitializerCodeBuilder(
-                        new AttributeCompilationCrawler(
-                            compilation
-                        ).GetInitNamespace<ManagerModuleInitializerAttribute>()
+                        new AttributeCompilationCrawler(compilation)
                     ).Get(compilation, codeBuilder);
 
                     var result = new List<(

@@ -38,6 +38,20 @@ namespace Foundation.Crawler.Crawlers
             return result;
         }
 
+        public string? GetInitMethodeName<TInitAttribute>()
+            where TInitAttribute : BaseModuleInitializerAttribute
+        {
+            var result = context
+                .GetClassesWithAttribute(typeof(TInitAttribute).Name)
+                .FirstOrDefault();
+
+            if (result is not null)
+            {
+                return result.GetAttribute<TInitAttribute>().GetFirstConstructorArgument();
+            }
+            return null;
+        }
+
         public INamedTypeSymbol BaseApi()
         {
             return context.GetClassesWithAttribute(nameof(BaseApiAttribute)).First();
