@@ -60,6 +60,8 @@ namespace WebManager.Generator.CodeBuilders
 
             var constructor = builder
                 .AddClass(dto.ManagerNameFromDto())
+                .AddDtoUsing(context)
+                .AddEntityUsing(context, compilation)
                 .WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.GetFullTypeName())
