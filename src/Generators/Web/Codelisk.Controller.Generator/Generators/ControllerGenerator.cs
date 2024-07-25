@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Controller.Generator.Generators
 {
-    [Generator]
+    [Generator(LanguageNames.CSharp)]
     public class ControllerGenerator : BaseGenerator
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)

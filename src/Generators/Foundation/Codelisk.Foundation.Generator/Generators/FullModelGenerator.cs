@@ -8,22 +8,30 @@ using Microsoft.CodeAnalysis;
 
 namespace Codelisk.Foundation.Generator.Generators
 {
-    [Generator]
+    [Generator(LanguageNames.CSharp)]
     public class FullModelGenerator : BaseGenerator
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            var refitApiCodeBuilder = context.CompilationProvider.Select(static (compilation, _) =>
-            {
-                var codeBuilder = new FullModelCodeBuilder(compilation.AssemblyName).Get(compilation);
-
-                var result = new List<(List<CodeBuilder> codeBuilder, string? folderName, (string, string)? replace)>
+            var refitApiCodeBuilder = context.CompilationProvider.Select(
+                static (compilation, _) =>
                 {
-                    (codeBuilder, "FullModels", ("namespace <global namespace>;", "")),
-                };
+                    var codeBuilder = new FullModelCodeBuilder(compilation.AssemblyName).Get(
+                        compilation
+                    );
 
-                return result;
-            });
+                    var result = new List<(
+                        List<CodeBuilder> codeBuilder,
+                        string? folderName,
+                        (string, string)? replace
+                    )>
+                    {
+                        (codeBuilder, "FullModels", ("namespace <global namespace>;", "")),
+                    };
+
+                    return result;
+                }
+            );
 
             AddSource(context, refitApiCodeBuilder);
         }

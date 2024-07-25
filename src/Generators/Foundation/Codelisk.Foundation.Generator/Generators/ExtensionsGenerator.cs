@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Codelisk.Foundation.Generator.Generators
 {
-    [Generator]
+    [Generator(LanguageNames.CSharp)]
     internal class ExtensionsGenerator : BaseGenerator
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)

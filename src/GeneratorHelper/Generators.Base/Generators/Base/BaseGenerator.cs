@@ -132,7 +132,7 @@ namespace Generators.Base.Generators.Base
             > codeBuildersProvider
         )
         {
-            context.RegisterImplementationSourceOutput(
+            context.RegisterSourceOutput(
                 codeBuildersProvider,
                 static (sourceProductionContext, codeBuildersTuples) =>
                 {

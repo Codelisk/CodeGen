@@ -7,7 +7,7 @@ using WebDbContext.Generator.CodeBuilders;
 
 namespace WebDbContext.Generator.Generators
 {
-    [Generator]
+    [Generator(LanguageNames.CSharp)]
     public class DbContextGenerator : BaseGenerator
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)

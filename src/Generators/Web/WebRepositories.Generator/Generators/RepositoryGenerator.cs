@@ -8,7 +8,7 @@ using WebRepositories.Generator.CodeBuilders;
 
 namespace WebRepositories.Generator.Generators
 {
-    [Generator]
+    [Generator(LanguageNames.CSharp)]
     public class RepositoryGenerator : BaseGenerator
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)

@@ -8,7 +8,7 @@ using WebManager.Generator.CodeBuilders;
 
 namespace WebManager.Generator.Generators
 {
-    [Generator]
+    [Generator(LanguageNames.CSharp)]
     public class ManagerGenerator : BaseGenerator
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)
