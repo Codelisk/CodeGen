@@ -124,11 +124,11 @@ namespace Generators.Base.Extensions
             string assemblyName
         )
         {
-            var key = (compilation.AssemblyName, assemblyName);
-            if (Classes.ContainsKey(key))
-            {
-                return Classes[key];
-            }
+            //var key = (compilation.AssemblyName, assemblyName);
+            //if (Classes.ContainsKey(key))
+            //{
+            //    return Classes[key];
+            //}
 
             var result = new List<INamedTypeSymbol>();
 
@@ -137,7 +137,7 @@ namespace Generators.Base.Extensions
                 result.AddRange(assembly.GetAllTypeSymbols());
             }
 
-            Classes.Add(key, result);
+            //Classes.Add(key, result);
             return result;
         }
 
