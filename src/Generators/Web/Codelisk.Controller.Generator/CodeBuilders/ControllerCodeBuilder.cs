@@ -1,38 +1,47 @@
-using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using CodeGenHelpers;
+using Codelisk.GeneratorAttributes.Helper;
+using Codelisk.GeneratorAttributes.WebAttributes.Dto;
+using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+using Codelisk.GeneratorShared.Constants;
 using Foundation.Crawler.Crawlers;
+using Foundation.Crawler.Extensions;
 using Foundation.Crawler.Extensions.Extensions;
 using Foundation.Crawler.Models;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Extensions;
 using Microsoft.CodeAnalysis;
-using Codelisk.GeneratorAttributes.WebAttributes.Dto;
-using Codelisk.GeneratorShared.Constants;
-using Foundation.Crawler.Extensions;
-using Codelisk.GeneratorAttributes.Helper;
 
 namespace Controller.Generator.CodeBuilders
 {
     public class ControllerCodeBuilder : BaseCodeBuilder
     {
-        public ControllerCodeBuilder(string codeBuilderNamespace) : base(codeBuilderNamespace)
-        {
-        }
+        public ControllerCodeBuilder(string codeBuilderNamespace)
+            : base(codeBuilderNamespace) { }
 
-        public override List<CodeBuilder> Get(Compilation context, List<CodeBuilder> codeBuilders = null)
+        public override List<CodeBuilder> Get(
+            Compilation context,
+            List<CodeBuilder> codeBuilders = null
+        )
         {
             var attributeCompilationCrawler = new AttributeCompilationCrawler(context);
             var dtos = attributeCompilationCrawler.Dtos().ToList();
             return Build(attributeCompilationCrawler, context, dtos);
         }
 
-        private List<CodeBuilder?> Build(AttributeCompilationCrawler attributeCompilationCrawler, Compilation context, IEnumerable<INamedTypeSymbol> dtos)
+        private List<CodeBuilder?> Build(
+            AttributeCompilationCrawler attributeCompilationCrawler,
+            Compilation context,
+            IEnumerable<INamedTypeSymbol> dtos
+        )
         {
             var result = new List<CodeBuilder?>();
             foreach (var dto in dtos)
             {
-                var manager = attributeCompilationCrawler.Manager(dto);
-                var baseController = attributeCompilationCrawler.Controller(dto);
+                var manager = attributeCompilationCrawler.Manager(dto, CodeBuilderNamespace);
+                var baseController = attributeCompilationCrawler.Controller(
+                    dto,
+                    CodeBuilderNamespace
+                );
                 var builder = CreateBuilder();
 
                 var c = Class(builder, dto, manager, baseController, context);
@@ -44,30 +53,60 @@ namespace Controller.Generator.CodeBuilders
 
             return result;
         }
-        private ClassBuilder Class(CodeBuilder builder, INamedTypeSymbol dto, INamedTypeSymbol manager, INamedTypeSymbol baseController, Compilation context)
+
+        private ClassBuilder Class(
+            CodeBuilder builder,
+            INamedTypeSymbol dto,
+            INamedTypeSymbol manager,
+            INamedTypeSymbol baseController,
+            Compilation context
+        )
         {
             var constructedBaseController = baseController.ConstructFromDto(dto, context);
-            return builder.AddClass(dto.ControllerNameFromDto()).WithAccessModifier(Accessibility.Public)
+            return builder
+                .AddClass(dto.ControllerNameFromDto())
+                .WithAccessModifier(Accessibility.Public)
                 .SetBaseClass(constructedBaseController.GetFullTypeName())
                 .AddAttribute(Constants.ControllerAttribute)
                 .AddConstructor()
-                .BaseConstructorParameterBaseCall(constructedBaseController, (manager, dto.ManagerNameFromDto()))
+                .BaseConstructorParameterBaseCall(
+                    constructedBaseController,
+                    (manager, dto.ManagerNameFromDto())
+                )
                 .Class;
         }
-        private void Methods(ClassBuilder c, INamedTypeSymbol dto, INamedTypeSymbol baseController, ClassWithMethods repoModel)
+
+        private void Methods(
+            ClassBuilder c,
+            INamedTypeSymbol dto,
+            INamedTypeSymbol baseController,
+            ClassWithMethods repoModel
+        )
         {
-            var repoProperty = baseController.GetFieldsWithConstructedFromType(repoModel.Class).First();
+            var repoProperty = baseController
+                .GetFieldsWithConstructedFromType(repoModel.Class)
+                .First();
 
-            Dictionary<Type, string> methodsWithControllerAttributeName = AttributeHelper.AllAttributesMethodeHeaderDictionary(Constants.HttpDeleteAttribute, Constants.HttpGetAttribute, Constants.HttpPostAttribute);
+            Dictionary<Type, string> methodsWithControllerAttributeName =
+                AttributeHelper.AllAttributesMethodeHeaderDictionary(
+                    Constants.HttpDeleteAttribute,
+                    Constants.HttpGetAttribute,
+                    Constants.HttpPostAttribute
+                );
 
-            if(dto.HasAttribute(nameof(RemoveGetAll)))
+            if (dto.HasAttribute(nameof(RemoveGetAll)))
             {
                 methodsWithControllerAttributeName.Remove(typeof(GetAllAttribute));
             }
 
             foreach (var item in methodsWithControllerAttributeName)
             {
-                if((item.Key == typeof(GetFullAttribute) || item.Key == typeof(GetAllFullAttribute)) && !dto.DtoHasForeignKeyAttribute())
+                if (
+                    (
+                        item.Key == typeof(GetFullAttribute)
+                        || item.Key == typeof(GetAllFullAttribute)
+                    ) && !dto.DtoHasForeignKeyAttribute()
+                )
                 {
                     continue;
                 }
@@ -79,16 +118,22 @@ namespace Controller.Generator.CodeBuilders
                     .WithReturnTypeForHttpMethod(item.Key, dto)
                     .AddParametersForHttpMethod(httpAttribute, dto);
 
-                if(item.Key == typeof(GetAllFullAttribute) || item.Key == typeof(GetFullAttribute))
+                if (item.Key == typeof(GetAllFullAttribute) || item.Key == typeof(GetFullAttribute))
                 {
                     methodBuilder.MakeAsync();
                 }
 
-                if (item.Key == typeof(GetAllAttribute) || item.Key == typeof(GetAllFullAttribute) || item.Key == typeof(GetAttribute) || item.Key == typeof(GetFullAttribute))
+                if (
+                    item.Key == typeof(GetAllAttribute)
+                    || item.Key == typeof(GetAllFullAttribute)
+                    || item.Key == typeof(GetAttribute)
+                    || item.Key == typeof(GetFullAttribute)
+                )
                 {
                     if (dto.HasAttribute(nameof(CustomizeGetAll)))
                     {
-                        bool anonymous = dto.GetAttribute<CustomizeGetAll>().NamedArguments.Any(x => x.Key.Equals("AllowAnonymous"));
+                        bool anonymous = dto.GetAttribute<CustomizeGetAll>()
+                            .NamedArguments.Any(x => x.Key.Equals("AllowAnonymous"));
                         if (anonymous)
                         {
                             methodBuilder.AddAttribute(Constants.AllowAnonymousAttribute);
@@ -96,24 +141,33 @@ namespace Controller.Generator.CodeBuilders
                     }
                 }
 
-                methodBuilder.WithBody((x) =>
-                {
-                    if(item.Key == typeof(GetAllFullAttribute))
+                methodBuilder.WithBody(
+                    (x) =>
                     {
-                        x.AppendLine($"var result = await {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});");
-                        x.AppendLine($"return result.Cast<{dto.GetFullModelName()}>().ToList();");
-                        return;
-                    }
-                    else if(item.Key == typeof(GetFullAttribute))
-                    {
-                        x.AppendLine($"return (await {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)})) as {dto.GetFullModelName()};");
-                        return;
-                    }
+                        if (item.Key == typeof(GetAllFullAttribute))
+                        {
+                            x.AppendLine(
+                                $"var result = await {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});"
+                            );
+                            x.AppendLine(
+                                $"return result.Cast<{dto.GetFullModelName()}>().ToList();"
+                            );
+                            return;
+                        }
+                        else if (item.Key == typeof(GetFullAttribute))
+                        {
+                            x.AppendLine(
+                                $"return (await {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)})) as {dto.GetFullModelName()};"
+                            );
+                            return;
+                        }
 
-                    x.AppendLine($"return {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});");
-                });
+                        x.AppendLine(
+                            $"return {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});"
+                        );
+                    }
+                );
             }
         }
-
     }
 }
