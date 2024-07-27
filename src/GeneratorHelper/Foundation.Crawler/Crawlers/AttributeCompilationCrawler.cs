@@ -99,19 +99,19 @@ namespace Foundation.Crawler.Crawlers
             return attributeSymobl.AttributeUrl(dto);
         }
 
-        public INamedTypeSymbol Manager(INamedTypeSymbol dto)
+        public INamedTypeSymbol Manager(INamedTypeSymbol dto, string assemblyName)
         {
-            return UserOrDefault<DefaultManagerAttribute>(dto);
+            return UserOrDefault<DefaultManagerAttribute>(dto, assemblyName: assemblyName);
         }
 
-        public INamedTypeSymbol Controller(INamedTypeSymbol dto)
+        public INamedTypeSymbol Controller(INamedTypeSymbol dto, string assemblyName)
         {
-            return UserOrDefault<DefaultControllerAttribute>(dto);
+            return UserOrDefault<DefaultControllerAttribute>(dto, assemblyName: assemblyName);
         }
 
-        public INamedTypeSymbol Repository(INamedTypeSymbol dto)
+        public INamedTypeSymbol Repository(INamedTypeSymbol dto, string assemblyName)
         {
-            return UserOrDefault<DefaultRepositoryAttribute>(dto);
+            return UserOrDefault<DefaultRepositoryAttribute>(dto, assemblyName: assemblyName);
         }
 
         //For caching
@@ -119,11 +119,12 @@ namespace Foundation.Crawler.Crawlers
 
         private INamedTypeSymbol UserOrDefault<TAttribute>(
             INamedTypeSymbol dto,
-            bool isUser = false
+            bool isUser = false,
+            string assemblyName = ""
         )
             where TAttribute : Attribute
         {
-            classSymbols = context.GetAllClasses("");
+            classSymbols = context.GetAllClasses(assemblyName);
             var objectsWithAttribute = classSymbols.GetClassesWithAttribute(
                 typeof(TAttribute).Name
             );

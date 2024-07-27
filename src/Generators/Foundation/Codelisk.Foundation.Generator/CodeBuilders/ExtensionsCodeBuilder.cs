@@ -39,7 +39,7 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
             var extensionsClass = builder
                 .AddClass("DtoEntityExtensions")
                 .MakeStaticClass()
-                .AddDtoUsing(context)
+                //Removed for performance.AddDtoUsing(context)
                 .MakePublicClass();
 
             foreach (var dto in dtos)

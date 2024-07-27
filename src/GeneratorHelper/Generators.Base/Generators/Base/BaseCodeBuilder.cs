@@ -5,7 +5,7 @@ namespace Generator.Foundation.Generators.Base
 {
     public abstract class BaseCodeBuilder
     {
-        private readonly string CodeBuilderNamespace;
+        public readonly string CodeBuilderNamespace;
 
         public BaseCodeBuilder(string codeBuilderNamespace)
         {

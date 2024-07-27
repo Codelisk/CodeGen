@@ -38,8 +38,15 @@ namespace WebManager.Generator.CodeBuilders
             foreach (var dto in dtos)
             {
                 var builder = CreateBuilder();
-                var baseManager = context.Manager(dto);
-                Class(builder, dto, context.Repository(dto), baseManager, context, compilation);
+                var baseManager = context.Manager(dto, CodeBuilderNamespace);
+                Class(
+                    builder,
+                    dto,
+                    context.Repository(dto, CodeBuilderNamespace),
+                    baseManager,
+                    context,
+                    compilation
+                );
                 result.Add(builder);
             }
 
@@ -60,8 +67,8 @@ namespace WebManager.Generator.CodeBuilders
 
             var constructor = builder
                 .AddClass(dto.ManagerNameFromDto())
-                .AddDtoUsing(context)
-                .AddEntityUsing(context, compilation)
+                //Removed for performance.AddDtoUsing(context)
+                //Removed for performance.AddEntityUsing(context, compilation)
                 .WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.ManagerNameFromDto())
                 .SetBaseClass(constructedBaseManager.GetFullTypeName())

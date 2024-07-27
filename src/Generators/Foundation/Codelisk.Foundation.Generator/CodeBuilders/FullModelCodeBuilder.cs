@@ -60,7 +60,7 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
                 .AddProperty(dto.Name.GetParameterName(), Accessibility.Public)
                 .SetType(dto.Name)
                 .UseAutoProps();
-            result.AddDtoUsing(context);
+            //Removed for performance result.AddDtoUsing(context);
             var dtoPropertiesWithForeignKey = dto.DtoForeignProperties();
 
             foreach (var dtoProperty in dtoPropertiesWithForeignKey)
