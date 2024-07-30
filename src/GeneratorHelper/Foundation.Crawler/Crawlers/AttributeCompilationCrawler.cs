@@ -64,7 +64,9 @@ namespace Foundation.Crawler.Crawlers
 
         public IEnumerable<INamedTypeSymbol> Dtos()
         {
-            return context.GetClassesWithAttribute(nameof(DtoAttribute));
+            return context.GetClassesWithAttributes(
+                new string[] { nameof(UserDtoAttribute), nameof(DtoAttribute) }
+            );
         }
 
         public IEnumerable<INamedTypeSymbol> Entities()

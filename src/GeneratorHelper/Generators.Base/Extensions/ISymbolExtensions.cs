@@ -14,14 +14,41 @@ namespace Generators.Base.Extensions
             {
                 return namedTypeSymbol.ContainingNamespace.ToDisplayString();
             }
-            catch (Exception) { return null; }
+            catch (Exception)
+            {
+                return null;
+            }
         }
-        public static bool HasAttributeWithoutBaseClass(this ISymbol symbol, string fullAttributeName) => symbol.GetAttributes().Any(x => x?.AttributeClass is not null &&
-                                                                                                                x.AttributeClass.Name ==
-                                                                                                                fullAttributeName);
-        public static bool HasAttribute(this ISymbol symbol, string fullAttributeName) => symbol.GetAllAttributes().Any(x => x?.AttributeClass is not null &&
-                                                                                                                x.AttributeClass.Name ==
-                                                                                                                fullAttributeName);
+
+        public static bool HasAttributeWithoutBaseClass(
+            this ISymbol symbol,
+            string[] fullAttributeNames
+        )
+        {
+            return symbol
+                .GetAttributes()
+                .Any(x =>
+                    x?.AttributeClass is not null
+                    && fullAttributeNames.Any(fan => fan == x.AttributeClass.Name)
+                );
+        }
+
+        public static bool HasAttributeWithoutBaseClass(
+            this ISymbol symbol,
+            string fullAttributeName
+        ) =>
+            symbol
+                .GetAttributes()
+                .Any(x =>
+                    x?.AttributeClass is not null && x.AttributeClass.Name == fullAttributeName
+                );
+
+        public static bool HasAttribute(this ISymbol symbol, string fullAttributeName) =>
+            symbol
+                .GetAllAttributes()
+                .Any(x =>
+                    x?.AttributeClass is not null && x.AttributeClass.Name == fullAttributeName
+                );
 
         public static IEnumerable<AttributeData?> GetAllAttributes(this ISymbol? symbol)
         {

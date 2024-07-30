@@ -117,6 +117,17 @@ namespace Generators.Base.Extensions
                 .Where(x => x.HasAttributeWithoutBaseClass(fullAttributeName));
         }
 
+        public static IEnumerable<INamedTypeSymbol> GetClassesWithAttributes(
+            this Compilation compilation,
+            string[] fullAttributeName,
+            string assemblyName = ""
+        )
+        {
+            return compilation
+                .GetAllClasses(assemblyName)
+                .Where(x => x.HasAttributeWithoutBaseClass(fullAttributeName));
+        }
+
         private static Dictionary<(string, string), List<INamedTypeSymbol>> Classes = new();
 
         public static IEnumerable<INamedTypeSymbol> GetAllClasses(
