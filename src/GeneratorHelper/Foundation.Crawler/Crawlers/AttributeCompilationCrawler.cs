@@ -65,7 +65,7 @@ namespace Foundation.Crawler.Crawlers
         public IEnumerable<INamedTypeSymbol> Dtos()
         {
             return context.GetClassesWithAttributes(
-                new string[] { nameof(UserDtoAttribute), nameof(DtoAttribute) }
+                new string[] { nameof(TenantDtoAttribute), nameof(DtoAttribute) }
             );
         }
 
@@ -103,23 +103,23 @@ namespace Foundation.Crawler.Crawlers
 
         public INamedTypeSymbol Manager(INamedTypeSymbol dto, string assemblyName)
         {
-            return UserOrDefault<DefaultManagerAttribute>(dto, assemblyName: assemblyName);
+            return TenantOrDefault<DefaultManagerAttribute>(dto, assemblyName: assemblyName);
         }
 
         public INamedTypeSymbol Controller(INamedTypeSymbol dto, string assemblyName)
         {
-            return UserOrDefault<DefaultControllerAttribute>(dto, assemblyName: assemblyName);
+            return TenantOrDefault<DefaultControllerAttribute>(dto, assemblyName: assemblyName);
         }
 
         public INamedTypeSymbol Repository(INamedTypeSymbol dto, string assemblyName)
         {
-            return UserOrDefault<DefaultRepositoryAttribute>(dto, assemblyName: assemblyName);
+            return TenantOrDefault<DefaultRepositoryAttribute>(dto, assemblyName: assemblyName);
         }
 
         //For caching
         private IEnumerable<INamedTypeSymbol> classSymbols;
 
-        private INamedTypeSymbol UserOrDefault<TAttribute>(
+        private INamedTypeSymbol TenantOrDefault<TAttribute>(
             INamedTypeSymbol dto,
             bool isUser = false,
             string assemblyName = ""
@@ -130,16 +130,25 @@ namespace Foundation.Crawler.Crawlers
             var objectsWithAttribute = classSymbols.GetClassesWithAttribute(
                 typeof(TAttribute).Name
             );
-            if (dto.HasAttribute(nameof(UserDtoAttribute)))
+            if (dto.HasAttribute(nameof(TenantDtoAttribute)))
             {
+                string tenantName = dto.GetAttribute<TenantDtoAttribute>()
+                    .GetFirstConstructorArgument();
                 return objectsWithAttribute.FirstOrDefault(x =>
-                    x.HasAttribute(nameof(UserDtoAttribute))
-                );
+                {
+                    var tenantAttr = x.GetAttribute<TAttribute>();
+                    if (tenantAttr is null)
+                    {
+                        return false;
+                    }
+                    var tenantAttrName = tenantAttr.GetFirstConstructorArgument();
+                    return tenantAttrName == tenantName;
+                });
             }
             else
             {
                 return objectsWithAttribute.FirstOrDefault(x =>
-                    !x.HasAttribute(nameof(UserDtoAttribute))
+                    string.IsNullOrEmpty(x.GetAttribute<TAttribute>().GetFirstConstructorArgument())
                 );
             }
         }
