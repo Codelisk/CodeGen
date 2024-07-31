@@ -18,15 +18,11 @@ public partial class CategoryDto : BaseDto
     public List<ProductDto> Products { get; set; }
 }
 ```
-
-Add your Entities
-```csharp
-[Entity(typeof(CategoryDto))]
-public partial class Category : BaseEntity
+```csharp[TenantDto]
+public partial class UserDto : BaseDto
 {
-    public int CategoryId { get; set; }
-    public string CategoryName { get; set; }
-    public ICollection<Product> Product { get; set; }
+    public string Name { get; set; }
+    public List<ProductDto> Products { get; set; }
 }
 ```
 
