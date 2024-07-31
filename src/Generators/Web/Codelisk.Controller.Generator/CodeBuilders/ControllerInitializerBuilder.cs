@@ -6,10 +6,10 @@ namespace Controller.Generator.CodeBuilders
 {
     public class ControllerInitializerBuilder : ClassServicesModuleInitializerBuilder
     {
-        public ControllerInitializerBuilder(AttributeCompilationCrawler attributeCompilationCrawler)
-            : base(
-                attributeCompilationCrawler.GetInitNamespace<ControllerModuleInitializerAttribute>(),
-                attributeCompilationCrawler.GetInitMethodeName<ControllerModuleInitializerAttribute>()
-            ) { }
+        public ControllerInitializerBuilder(
+            (string codeBuilderNamespace, string addServicesMethodeName) nameSpaceMethode
+        )
+            : base(nameSpaceMethode.codeBuilderNamespace, nameSpaceMethode.addServicesMethodeName)
+        { }
     }
 }

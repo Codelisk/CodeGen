@@ -7,11 +7,9 @@ namespace WebRepositories.Generator.CodeBuilders
     public class RepositoryInitializerCodeBuilder : ClassServicesModuleInitializerBuilder
     {
         public RepositoryInitializerCodeBuilder(
-            AttributeCompilationCrawler attributeCompilationCrawler
+            (string codeBuilderNamespace, string addServicesMethodeName) nameSpaceMethode
         )
-            : base(
-                attributeCompilationCrawler.GetInitNamespace<RepositoryModuleInitializerAttribute>(),
-                attributeCompilationCrawler.GetInitMethodeName<RepositoryModuleInitializerAttribute>()
-            ) { }
+            : base(nameSpaceMethode.codeBuilderNamespace, nameSpaceMethode.addServicesMethodeName)
+        { }
     }
 }

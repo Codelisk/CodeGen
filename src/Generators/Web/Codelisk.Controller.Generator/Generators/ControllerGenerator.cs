@@ -21,7 +21,9 @@ namespace Controller.Generator.Generators
                     );
 
                     var initializerBuilder = new ControllerInitializerBuilder(
-                        new AttributeCompilationCrawler(compilation)
+                        new AttributeCompilationCrawler(
+                            compilation
+                        ).NameSpaceAndMethod<ControllerModuleInitializerAttribute>()
                     ).Get(compilation, codeBuilder);
 
                     var result = new List<(

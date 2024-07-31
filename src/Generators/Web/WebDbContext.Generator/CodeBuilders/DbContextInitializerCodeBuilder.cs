@@ -7,11 +7,9 @@ namespace WebDbContext.Generator.CodeBuilders
     public class DbContextInitializerCodeBuilder : ClassServicesModuleInitializerBuilder
     {
         public DbContextInitializerCodeBuilder(
-            AttributeCompilationCrawler attributeCompilationCrawler
+            (string codeBuilderNamespace, string addServicesMethodeName) nameSpaceMethode
         )
-            : base(
-                attributeCompilationCrawler.GetInitNamespace<DatabaseModuleInitializerAttribute>(),
-                attributeCompilationCrawler.GetInitMethodeName<DatabaseModuleInitializerAttribute>()
-            ) { }
+            : base(nameSpaceMethode.codeBuilderNamespace, nameSpaceMethode.addServicesMethodeName)
+        { }
     }
 }

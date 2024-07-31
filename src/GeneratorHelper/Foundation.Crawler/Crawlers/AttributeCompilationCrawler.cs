@@ -23,13 +23,22 @@ namespace Foundation.Crawler.Crawlers
             context = compilation;
         }
 
-        public string? GetInitNamespace<TInitAttribute>()
+        public (string?, string?) NameSpaceAndMethod<TInitAttribute>()
             where TInitAttribute : BaseModuleInitializerAttribute
         {
-            var result = context
+            var symbol = context
                 .GetClassesWithAttribute(typeof(TInitAttribute).Name)
-                .FirstOrDefault()
-                ?.GetNamespace();
+                .FirstOrDefault();
+            return (
+                GetInitNamespace<TInitAttribute>(symbol),
+                GetInitMethodeName<TInitAttribute>(symbol)
+            );
+        }
+
+        private string? GetInitNamespace<TInitAttribute>(INamedTypeSymbol symbol)
+            where TInitAttribute : BaseModuleInitializerAttribute
+        {
+            var result = symbol.GetNamespace();
 
             if (string.IsNullOrEmpty(result))
             {
@@ -38,16 +47,12 @@ namespace Foundation.Crawler.Crawlers
             return result;
         }
 
-        public string? GetInitMethodeName<TInitAttribute>()
+        private string? GetInitMethodeName<TInitAttribute>(INamedTypeSymbol symbol)
             where TInitAttribute : BaseModuleInitializerAttribute
         {
-            var result = context
-                .GetClassesWithAttribute(typeof(TInitAttribute).Name)
-                .FirstOrDefault();
-
-            if (result is not null)
+            if (symbol is not null)
             {
-                return result.GetAttribute<TInitAttribute>().GetFirstConstructorArgument();
+                return symbol.GetAttribute<TInitAttribute>().GetFirstConstructorArgument();
             }
             return null;
         }

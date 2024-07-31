@@ -7,11 +7,9 @@ namespace WebManager.Generator.CodeBuilders
     public class ManagerInitializerCodeBuilder : ClassServicesModuleInitializerBuilder
     {
         public ManagerInitializerCodeBuilder(
-            AttributeCompilationCrawler attributeCompilationCrawler
+            (string codeBuilderNamespace, string addServicesMethodeName) nameSpaceMethode
         )
-            : base(
-                attributeCompilationCrawler.GetInitNamespace<ManagerModuleInitializerAttribute>(),
-                attributeCompilationCrawler.GetInitMethodeName<ManagerModuleInitializerAttribute>()
-            ) { }
+            : base(nameSpaceMethode.codeBuilderNamespace, nameSpaceMethode.addServicesMethodeName)
+        { }
     }
 }
