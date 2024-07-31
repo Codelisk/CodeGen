@@ -180,3 +180,17 @@ public class DefaultUserRepository<T, TKey> : DefaultRepository<T, TKey> where T
     }
 }
 ```
+
+Api.Generator (unwichtig) => Erstellt einen Refit Client zu einem RestService
+Codelisk.Api.RefitApis.Generator (unwichtig) => Erstellet die Refit Apis zu einem Client
+Codelisk.Controller.Generator => Erstellt die Controller
+Codelisk.Foundation.Generator => Erstellt die Entities für die Dtos und Extensions Methoden
+Codelisk.GeneratorAttributes => Beeinhaltet die Attribute mit welchen man die Codegenerierung lenkt
+Codelsik.GeneratorShared => Shared Projekt mit Konstanten und Enums
+Foundation.Crawler => Helper Library der aus Klassen im Code durchforstet
+WebAutoMapperProfile (unwichtig)
+WebDbContext.Generator => Erstellt die DbSets für den DbContext
+WegManager.Generator => Erstellt die Manager
+WebManager.Contract.Generator => Erstellt die Interfaces für den Manager
+WebRepositories.Contract.Generator => Erstellt die Interface für Repositories
+WebRepositories.Generator => Erstellt die Repositories
