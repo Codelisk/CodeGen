@@ -11,12 +11,13 @@ public class BaseDto
 ``` 
 Add your Dtos:
 
-    ```csharp[Dto]
-    public partial class CategoryDto : BaseDto
-    {
-        public string Name { get; set; }
-        public List<ProductDto> Products { get; set; }
-    }```
+```csharp[Dto]
+public partial class CategoryDto : BaseDto
+{
+    public string Name { get; set; }
+    public List<ProductDto> Products { get; set; }
+}
+```
 
 Add your Entities
 ```csharp
