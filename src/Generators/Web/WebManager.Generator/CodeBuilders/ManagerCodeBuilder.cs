@@ -82,12 +82,13 @@ namespace WebManager.Generator.CodeBuilders
                 IPropertySymbol propertySymbol,
                 INamedTypeSymbol foreignKeyDto
             )> foreignRepos = new();
+            var dtos = context.Dtos();
             foreach (var dtoProperty in dtoPropertiesWithForeignKey)
             {
                 var foreignKeyName = dtoProperty.GetPropertyAttributeValue(
                     AttributeNames.ForeignKey
                 );
-                var foreignKeyDto = context.Dtos().First(x => x.Name == foreignKeyName);
+                var foreignKeyDto = dtos.First(x => x.Name == foreignKeyName);
                 string repoType = "I" + foreignKeyDto.ManagerNameFromDto();
                 string repoName = foreignKeyDto.ManagerNameFromDto().GetParameterName();
                 if (!foreignRepos.Any(x => x.repoType.Equals(repoType)))

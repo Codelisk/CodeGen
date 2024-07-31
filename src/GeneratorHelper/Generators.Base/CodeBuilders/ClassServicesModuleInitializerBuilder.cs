@@ -42,16 +42,16 @@ namespace Generators.Base.CodeBuilders
             {
                 foreach (var codeBuilder in codeBuilders)
                 {
-                    foreach (var c in codeBuilder.GetClasses(context))
+                    var classes = codeBuilder.GetClasses(context);
+                    foreach (var c in classes)
                     {
-                        var registerAttribute = c.GetAttributes()
-                            .FirstOrDefault(x =>
-                                nameof(RegisterTransient).Equals(x.AttributeClass.Name)
-                            );
-                        var registerSingletonAttribute = c.GetAttributes()
-                            .FirstOrDefault(x =>
-                                nameof(RegisterSingleton).Equals(x.AttributeClass.Name)
-                            );
+                        var attributes = c.GetAttributes();
+                        var registerAttribute = attributes.FirstOrDefault(x =>
+                            nameof(RegisterTransient).Equals(x.AttributeClass.Name)
+                        );
+                        var registerSingletonAttribute = attributes.FirstOrDefault(x =>
+                            nameof(RegisterSingleton).Equals(x.AttributeClass.Name)
+                        );
 
                         if (registerAttribute is not null)
                         {

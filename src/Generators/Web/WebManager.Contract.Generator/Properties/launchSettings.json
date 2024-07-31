@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "WebManager.Contract.Generator": {
+      "commandName": "Project"
+    },
+    "Profile 1": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\Communalaudit.Api\\Communalaudit.Api.csproj"
+    }
+  }
+}

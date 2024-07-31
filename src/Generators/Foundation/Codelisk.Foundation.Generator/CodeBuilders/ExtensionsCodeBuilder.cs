@@ -44,52 +44,52 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
 
             foreach (var dto in dtos)
             {
+                var properties = dto.GetAllProperties(true);
+                var dtoReturnName = dto.GetReturnTypeName();
+                var entityName = dto.GetEntityName();
                 extensionsClass
                     .AddMethod("ToEntity", Accessibility.Public)
                     .MakeStaticMethod()
-                    .AddParameter("this " + dto.GetReturnTypeName(), dto.Name.GetParameterName())
+                    .AddParameter("this " + dtoReturnName, dto.Name.GetParameterName())
                     .WithBody(x =>
                     {
-                        var properties = dto.GetAllProperties(true)
-                            .Where(x => x.DeclaredAccessibility == Accessibility.Public);
+                        properties.Where(x => x.DeclaredAccessibility == Accessibility.Public);
 
                         x.AppendLine(
-                            $"var result = new {dto.GetEntityName()}({dto.Name.GetParameterName()});"
+                            $"var result = new {entityName}({dto.Name.GetParameterName()});"
                         );
                         x.AppendLine("return result;");
                     })
-                    .WithReturnType(dto.GetEntityName());
+                    .WithReturnType(entityName);
 
                 extensionsClass
                     .AddMethod("ToEntities", Accessibility.Public)
                     .MakeStaticMethod()
                     .AddParameter(
-                        "this " + $"List<{dto.GetReturnTypeName()}>",
+                        "this " + $"List<{dtoReturnName}>",
                         dto.Name.GetParameterName(true)
                     )
                     .WithBody(x =>
                     {
-                        var properties = dto.GetAllProperties(true)
-                            .Where(x => x.DeclaredAccessibility == Accessibility.Public);
+                        properties.Where(x => x.DeclaredAccessibility == Accessibility.Public);
 
-                        x.AppendLine($"var result = new List<{dto.GetEntityName()}>();");
+                        x.AppendLine($"var result = new List<{entityName}>();");
                         x.ForEach("var dto", dto.Name.GetParameterName(true))
                             .WithBody(y =>
                             {
-                                y.AppendLine($"result.Add(new {dto.GetEntityName()}(dto));");
+                                y.AppendLine($"result.Add(new {entityName}(dto));");
                             });
                         x.AppendLine("return result;");
                     })
-                    .WithReturnTypeList(dto.GetEntityName());
+                    .WithReturnTypeList(entityName);
 
                 extensionsClass
                     .AddMethod("ToDto", Accessibility.Public)
                     .MakeStaticMethod()
-                    .AddParameter("this " + dto.GetEntityName(), "entity")
+                    .AddParameter("this " + entityName, "entity")
                     .WithBody(x =>
                     {
-                        var properties = dto.GetAllProperties(true)
-                            .Where(x => x.DeclaredAccessibility == Accessibility.Public);
+                        properties.Where(x => x.DeclaredAccessibility == Accessibility.Public);
 
                         x.AppendLine($"return entity as {dto.Name};");
                     })
@@ -98,11 +98,10 @@ namespace Codelisk.Foundation.Generator.CodeBuilders
                 extensionsClass
                     .AddMethod("ToDtos", Accessibility.Public)
                     .MakeStaticMethod()
-                    .AddParameter("this " + $"List<{dto.GetEntityName()}>", "entities")
+                    .AddParameter("this " + $"List<{entityName}>", "entities")
                     .WithBody(x =>
                     {
-                        var properties = dto.GetAllProperties(true)
-                            .Where(x => x.DeclaredAccessibility == Accessibility.Public);
+                        properties.Where(x => x.DeclaredAccessibility == Accessibility.Public);
 
                         x.AppendLine($"var result = new List<{dto.Name}>();");
                         x.ForEach("var entity", "entities")

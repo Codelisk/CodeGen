@@ -144,26 +144,27 @@ namespace Controller.Generator.CodeBuilders
                 methodBuilder.WithBody(
                     (x) =>
                     {
+                        var httpAttributeUrl = httpAttribute.AttributeUrl(dto);
+                        var parameterNames = httpAttribute.GetParametersNamesForHttpMethod(dto);
+                        var dtoFullName = dto.GetFullModelName();
                         if (item.Key == typeof(GetAllFullAttribute))
                         {
                             x.AppendLine(
-                                $"var result = await {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});"
+                                $"var result = await {repoProperty.Name}.{httpAttributeUrl}({parameterNames});"
                             );
-                            x.AppendLine(
-                                $"return result.Cast<{dto.GetFullModelName()}>().ToList();"
-                            );
+                            x.AppendLine($"return result.Cast<{dtoFullName}>().ToList();");
                             return;
                         }
                         else if (item.Key == typeof(GetFullAttribute))
                         {
                             x.AppendLine(
-                                $"return (await {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)})) as {dto.GetFullModelName()};"
+                                $"return (await {repoProperty.Name}.{httpAttributeUrl}({parameterNames})) as {dtoFullName};"
                             );
                             return;
                         }
 
                         x.AppendLine(
-                            $"return {repoProperty.Name}.{httpAttribute.AttributeUrl(dto)}({httpAttribute.GetParametersNamesForHttpMethod(dto)});"
+                            $"return {repoProperty.Name}.{httpAttributeUrl}({parameterNames});"
                         );
                     }
                 );

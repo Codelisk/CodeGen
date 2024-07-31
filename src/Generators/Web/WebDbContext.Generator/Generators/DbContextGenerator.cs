@@ -1,6 +1,7 @@
 using CodeGenHelpers;
 using Codelisk.GeneratorAttributes.GeneralAttributes.ModuleInitializers;
 using Foundation.Crawler.Crawlers;
+using Generators.Base.Extensions;
 using Generators.Base.Generators.Base;
 using Microsoft.CodeAnalysis;
 using WebDbContext.Generator.CodeBuilders;
@@ -18,10 +19,9 @@ namespace WebDbContext.Generator.Generators
                     var codeBuilder = new DbContextCodeBuilder(compilation.AssemblyName).Get(
                         compilation
                     );
-                    var initializerBuilder = new DbContextInitializerCodeBuilder((null, null)).Get(
-                        compilation,
-                        codeBuilder
-                    );
+                    var initializerBuilder = new DbContextInitializerCodeBuilder(
+                        (compilation.Assembly.GetNamespace(), null)
+                    ).Get(compilation, codeBuilder);
 
                     var result = new List<(
                         List<CodeBuilder> codeBuilder,
