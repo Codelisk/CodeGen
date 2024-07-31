@@ -11,7 +11,7 @@ public class BaseDto
 ``` 
 Add your Dtos:
 
-    ```[Dto]
+    ```csharp[Dto]
     public partial class CategoryDto : BaseDto
     {
         public string Name { get; set; }
@@ -19,7 +19,7 @@ Add your Dtos:
     }```
 
 Add your Entities
-```
+```csharp
 [Entity(typeof(CategoryDto))]
 public partial class Category : BaseEntity
 {
@@ -31,7 +31,7 @@ public partial class Category : BaseEntity
 
 Declare your [BaseContext]:
 
-```
+```csharp
 [BaseContext]
 public partial class BaseContext : DbContext
 {
@@ -49,7 +49,7 @@ public partial class BaseContext : DbContext
 
 Declare your [DefaultController]:
 
-```
+```csharp
 [DefaultController]
 [Route("[controller]")]
 public class DefaultController<T, TKey, TEntity> : Microsoft.AspNetCore.Mvc.Controller
@@ -68,7 +68,7 @@ public class DefaultController<T, TKey, TEntity> : Microsoft.AspNetCore.Mvc.Cont
 
 Declare your [DefaultController] [Delete] [GetAll] [Save] [Get]:
 
-```
+```csharp
 [DefaultManager]
 public class DefaultManager<TDto, TKey, TEntity> : IDefaultManager<TDto,TKey,TEntity> where TDto : class where TEntity : class
 {
@@ -105,7 +105,7 @@ public class DefaultManager<TDto, TKey, TEntity> : IDefaultManager<TDto,TKey,TEn
 
 Declare your [DefaultRepository] [Delete] [GetAll] [Save] [Get]:
 
-```
+```csharp
 [DefaultRepository]
 public class DefaultRepository<T, TKey> : IDefaultRepository<T, TKey> where T : class
 {
@@ -142,7 +142,8 @@ public class DefaultRepository<T, TKey> : IDefaultRepository<T, TKey> where T : 
 ```
 
 Declare your [DefaultRepository] [UserDto]:
-```
+
+```csharp
 [DefaultController]
 [UserDto]
 public class DefaultUserController<T, TKey, TEntity> : DefaultController<T, TKey, TEntity>
@@ -158,7 +159,7 @@ public class DefaultUserController<T, TKey, TEntity> : DefaultController<T, TKey
 
 
 Declare your [DefaultManager] [UserDto]:
-```
+```csharp
 [DefaultManager]
 [UserDto]
 public class DefaultUserManager<TDto, TKey, TEntity> : DefaultManager<TDto, TKey, TEntity> where TDto : class where TEntity : class
@@ -170,7 +171,7 @@ public class DefaultUserManager<TDto, TKey, TEntity> : DefaultManager<TDto, TKey
 ```
 
 Declare your [DefaultRepository] [UserDto]:
-```
+```csharp
 [DefaultRepository]
 [UserDto]
 public class DefaultUserRepository<T, TKey> : DefaultRepository<T, TKey> where T : class
