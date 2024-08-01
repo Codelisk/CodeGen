@@ -26,51 +26,9 @@ namespace Codelisk.Foundation.Generator.Generators
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            var dtos = context
-                .SyntaxProvider.ForAttributeWithMetadataName(
-                    typeof(DtoAttribute).FullName,
-                    static (n, _) => n is ClassDeclarationSyntax,
-                    static (context, cancellationToken) =>
-                    {
-                        ClassDeclarationSyntax classDeclarationSyntax = (ClassDeclarationSyntax)
-                            context.TargetNode;
-
-                        return classDeclarationSyntax.HasAttribute<DtoAttribute>()
-                            ? classDeclarationSyntax
-                            : null;
-                    }
-                )
-                .Where(static typeDeclaration => typeDeclaration is not null)
-                .Collect();
-
-            var tenantDtos = context
-                .SyntaxProvider.ForAttributeWithMetadataName(
-                    typeof(TenantDtoAttribute).FullName,
-                    static (n, _) => n is ClassDeclarationSyntax,
-                    static (context, cancellationToken) =>
-                    {
-                        ClassDeclarationSyntax classDeclarationSyntax = (ClassDeclarationSyntax)
-                            context.TargetNode;
-
-                        return classDeclarationSyntax.HasAttribute<TenantDtoAttribute>()
-                            ? classDeclarationSyntax
-                            : null;
-                    }
-                )
-                .Where(static typeDeclaration => typeDeclaration is not null)
-                .Collect();
-
-            var combinedDtosProvider = dtos.Combine(tenantDtos)
-                .Select(
-                    (combined, _) =>
-                    {
-                        var (dtos, tenantDtos) = combined;
-                        return dtos.Concat(tenantDtos).Distinct().ToImmutableArray();
-                    }
-                );
-
+            var dtos = context.Dtos();
             context.RegisterSourceOutput(
-                combinedDtosProvider,
+                dtos,
                 static (sourceProductionContext, dtos) =>
                 {
                     var result = new List<CodeBuilder?>();

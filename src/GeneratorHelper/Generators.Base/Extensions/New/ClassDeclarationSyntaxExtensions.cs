@@ -31,6 +31,11 @@ namespace Generators.Base.Extensions.New
             return false;
         }
 
+        public static string GetName(this ClassDeclarationSyntax classDeclaration)
+        {
+            return classDeclaration.Identifier.Text;
+        }
+
         public static string GetNamespace(this ClassDeclarationSyntax classDeclaration)
         {
             // Get the root of the syntax tree
