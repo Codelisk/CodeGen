@@ -24,36 +24,6 @@ namespace Codelisk.Foundation.Generator.Generators
     [Generator(LanguageNames.CSharp)]
     internal class EntityGenerator : BaseGenerator
     {
-        private static IReadOnlyList<ClassBuilder> Class(
-            CodeBuilder builder,
-            ClassDeclarationSyntax dto
-        )
-        {
-            var result = builder
-                .TopLevelNamespace()
-                .AddClass(dto.GetEntityName())
-                .SetBaseClass(dto.Identifier.Text)
-                .AddAttribute($"{typeof(EntityAttribute).FullName}(typeof({dto.Identifier.Text}))")
-                .WithAccessModifier(Accessibility.Public);
-
-            result.AddConstructor();
-            var constructor = result.AddConstructor().AddParameter(dto.Identifier.Text);
-
-            var properties = dto.GetAllProperties(true, true);
-
-            constructor.WithBody(x =>
-            {
-                foreach (var property in properties)
-                {
-                    x.AppendLine(
-                        $"this.{property.Identifier.Text} = {dto.Identifier.Text.GetParameterName()}.{property.Identifier.Text};"
-                    );
-                }
-            });
-
-            return builder.Classes;
-        }
-
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
             var dtos = context
@@ -123,6 +93,36 @@ namespace Codelisk.Foundation.Generator.Generators
                     AddSourceHelper.Add(sourceProductionContext, codeBuildersTuples);
                 }
             );
+        }
+
+        private static IReadOnlyList<ClassBuilder> Class(
+            CodeBuilder builder,
+            ClassDeclarationSyntax dto
+        )
+        {
+            var result = builder
+                .TopLevelNamespace()
+                .AddClass(dto.GetEntityName())
+                .SetBaseClass(dto.Identifier.Text)
+                .AddAttribute($"{typeof(EntityAttribute).FullName}(typeof({dto.Identifier.Text}))")
+                .WithAccessModifier(Accessibility.Public);
+
+            result.AddConstructor();
+            var constructor = result.AddConstructor().AddParameter(dto.Identifier.Text);
+
+            var properties = dto.GetAllProperties(true, true);
+
+            constructor.WithBody(x =>
+            {
+                foreach (var property in properties)
+                {
+                    x.AppendLine(
+                        $"this.{property.Identifier.Text} = {dto.Identifier.Text.GetParameterName()}.{property.Identifier.Text};"
+                    );
+                }
+            });
+
+            return builder.Classes;
         }
     }
 }
