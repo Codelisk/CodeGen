@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 using CodeGenHelpers;
-using Codelisk.Foundation.Generator.CodeBuilders;
 using Codelisk.GeneratorAttributes;
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Codelisk.GeneratorAttributes.WebAttributes.Repository;
