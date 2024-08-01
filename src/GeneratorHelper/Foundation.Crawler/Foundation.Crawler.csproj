@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj"  PrivateAssets="All"/>
+    <ProjectReference Include="..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\..\Common\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" PrivateAssets="All" />
     <ProjectReference Include="..\Generators.Base\Generators.Base.csproj" PrivateAssets="All" />
   </ItemGroup>
