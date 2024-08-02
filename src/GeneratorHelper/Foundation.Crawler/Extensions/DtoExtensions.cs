@@ -1,6 +1,7 @@
 using Codelisk.GeneratorShared.Constants;
 using Generators.Base;
 using Generators.Base.Extensions;
+using Generators.Base.Extensions.Common;
 using Microsoft.CodeAnalysis;
 
 namespace Foundation.Crawler.Extensions
@@ -25,7 +26,10 @@ namespace Foundation.Crawler.Extensions
 
         public static string GetFullModelNameFromProperty(this IPropertySymbol foreignKeyProperty)
         {
-            return foreignKeyProperty.Name.GetParameterName().Replace("Id", "").Replace("id", "");
+            return foreignKeyProperty
+                .Name.GetParameterName()
+                .ReplaceLast("Id", "")
+                .ReplaceLast("id", "");
         }
 
         public static string GetFullTypeName(this INamedTypeSymbol dto)
@@ -35,7 +39,7 @@ namespace Foundation.Crawler.Extensions
 
         public static string GetFullModelName(this INamedTypeSymbol dto, bool plural = false)
         {
-            var name = dto.Name.Replace("Dto", "Full");
+            var name = dto.Name.ReplaceLast("Dto", "Full");
             if (plural)
             {
                 name = name.Pluralize();
@@ -45,7 +49,7 @@ namespace Foundation.Crawler.Extensions
 
         public static string GetEntityName(this INamedTypeSymbol dto, bool plural = false)
         {
-            var name = dto.Name.Replace("Dto", "Entity");
+            var name = dto.Name.ReplaceLast("Dto", "Entity");
             if (plural)
             {
                 name = name.Pluralize();
@@ -55,7 +59,7 @@ namespace Foundation.Crawler.Extensions
 
         public static string ReplaceDtoSuffix(this INamedTypeSymbol dto, bool plural = false)
         {
-            var name = dto.Name.Replace("Dto", "");
+            var name = dto.Name.ReplaceLast("Dto", "");
             if (plural)
             {
                 name = name.Pluralize();

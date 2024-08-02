@@ -1,4 +1,5 @@
 ﻿using Foundation.Crawler.Extensions;
+using Generators.Base.Extensions.Common;
 using Microsoft.CodeAnalysis;
 
 namespace Api.Generator
@@ -9,18 +10,22 @@ namespace Api.Generator
         {
             return dto.ReplaceDtoSuffix() + "Repository";
         }
+
         public static string ApiName(this INamedTypeSymbol dto)
         {
             return "I" + dto.ReplaceDtoSuffix() + "Api";
         }
+
         public static string RefitInterfaceNameFromController(this INamedTypeSymbol controller)
         {
-            return "I" + controller.Name.Replace("Controller", "") + "Api";
+            return "I" + controller.Name.ReplaceLast("Controller", "") + "Api";
         }
+
         public static string RepositoryNameFromApi(this INamedTypeSymbol api)
         {
             return api.Name.Substring(1, api.Name.Length - 1) + "Repository";
         }
+
         public static string RepositoryInterfaceNameFromApi(this INamedTypeSymbol api)
         {
             return "I" + RepositoryNameFromApi(api);

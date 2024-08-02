@@ -7,6 +7,7 @@ using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Codelisk.GeneratorShared.Constants;
 using Generators.Base;
 using Generators.Base.Extensions;
+using Generators.Base.Extensions.Common;
 using Generators.Base.Extensions.New;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -99,16 +100,18 @@ namespace Foundation.Crawler.Extensions.New
             this PropertyDeclarationSyntax foreignKeyProperty
         )
         {
-            return foreignKeyProperty
-                .GetPropertyType()
+            var result = foreignKeyProperty
+                .GetPropertyName()
                 .GetParameterName()
-                .Replace("Id", "")
-                .Replace("id", "");
+                .ReplaceLast("Id", "")
+                .ReplaceLast("id", "");
+
+            return result;
         }
 
         public static string GetFullModelName(this ClassDeclarationSyntax dto, bool plural = false)
         {
-            var name = dto.Identifier.Text.Replace("Dto", "Full");
+            var name = dto.Identifier.Text.ReplaceLast("Dto", "Full");
             if (plural)
             {
                 name = name.Pluralize();
@@ -118,7 +121,7 @@ namespace Foundation.Crawler.Extensions.New
 
         public static string GetEntityName(this ClassDeclarationSyntax dto, bool plural = false)
         {
-            var name = dto.Identifier.Text.Replace("Dto", "Entity");
+            var name = dto.Identifier.Text.ReplaceLast("Dto", "Entity");
             if (plural)
             {
                 name = name.Pluralize();

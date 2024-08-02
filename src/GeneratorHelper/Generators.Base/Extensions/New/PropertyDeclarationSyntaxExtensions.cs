@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Generators.Base.Extensions.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -47,7 +48,7 @@ namespace Generators.Base.Extensions.New
             // Find the attribute with the specified name
             var attribute = propertyDeclaration
                 .AttributeLists.SelectMany(al => al.Attributes)
-                .FirstOrDefault(attr => attr.Name.ToString() == attributeName);
+                .FirstOrDefault(attr => attr.Name.ToString() == attributeName.RealAttributeName());
 
             if (attribute == null)
             {
@@ -56,6 +57,18 @@ namespace Generators.Base.Extensions.New
 
             // Get the value of the first constructor argument
             var argument = attribute.ArgumentList?.Arguments.FirstOrDefault();
+            if (
+                argument?.Expression is InvocationExpressionSyntax invocation
+                && invocation.Expression is IdentifierNameSyntax identifierName
+                && identifierName.Identifier.Text == "nameof"
+            )
+            {
+                // Handle nameof(xyz) and return xyz
+                var nameofArgument = invocation.ArgumentList.Arguments.FirstOrDefault();
+                return nameofArgument?.ToString();
+            }
+
+            // Otherwise, return the expression as a string
             return argument?.Expression.ToString();
         }
 
@@ -72,7 +85,7 @@ namespace Generators.Base.Extensions.New
         {
             return propertyDeclaration
                 .AttributeLists.SelectMany(al => al.Attributes)
-                .Any(attr => attr.Name.ToString() == attributeName);
+                .Any(attr => attr.Name.ToString() == attributeName.RealAttributeName());
         }
     }
 }
