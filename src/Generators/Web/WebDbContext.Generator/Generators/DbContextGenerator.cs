@@ -20,7 +20,7 @@ namespace WebDbContext.Generator.Generators
                         compilation
                     );
                     var initializerBuilder = new DbContextInitializerCodeBuilder(
-                        (compilation.Assembly.GetNamespace(), null)
+                        (compilation.AssemblyName, null)
                     ).Get(compilation, codeBuilder);
 
                     var result = new List<(

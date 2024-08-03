@@ -26,16 +26,18 @@ namespace Codelisk.Foundation.Generator.Generators
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
             var dtos = context.Dtos();
+            var compilationAndClasses = context.CompilationProvider.Combine(dtos);
             context.RegisterSourceOutput(
-                dtos,
-                static (sourceProductionContext, dtos) =>
+                compilationAndClasses,
+                static (sourceProductionContext, compilationAndClasses) =>
                 {
+                    var dtos = compilationAndClasses.Right;
                     var result = new List<CodeBuilder?>();
                     var nameSpace = dtos.First().GetNamespace();
                     foreach (var dto in dtos)
                     {
                         var builder = CodeBuilder.Create(nameSpace);
-                        Class(builder, dto);
+                        Class(builder, dto, compilationAndClasses.Left);
                         result.Add(builder);
                     }
                     var codeBuildersTuples = new List<(
@@ -54,7 +56,8 @@ namespace Codelisk.Foundation.Generator.Generators
 
         private static IReadOnlyList<ClassBuilder> Class(
             CodeBuilder builder,
-            ClassDeclarationSyntax dto
+            ClassDeclarationSyntax dto,
+            Compilation compilation
         )
         {
             var result = builder
@@ -66,15 +69,15 @@ namespace Codelisk.Foundation.Generator.Generators
 
             result.AddConstructor();
             var constructor = result.AddConstructor().AddParameter(dto.Identifier.Text);
-
-            var properties = dto.GetAllProperties(true);
+            var semanticModel = compilation.GetSemanticModel(dto.SyntaxTree);
+            var properties = dto.GetAllPropertiesWithBaseClass(semanticModel, true);
 
             constructor.WithBody(x =>
             {
                 foreach (var property in properties)
                 {
                     x.AppendLine(
-                        $"this.{property.Identifier.Text} = {dto.Identifier.Text.GetParameterName()}.{property.Identifier.Text};"
+                        $"this.{property.Name} = {dto.GetName().GetParameterName()}.{property.Name};"
                     );
                 }
             });
