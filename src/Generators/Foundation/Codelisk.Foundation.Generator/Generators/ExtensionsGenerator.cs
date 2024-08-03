@@ -21,15 +21,17 @@ namespace Codelisk.Foundation.Generator.Generators
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
             var dtos = context.Dtos();
+            var compilationAndClasses = context.CompilationProvider.Combine(dtos);
             context.RegisterSourceOutput(
-                dtos,
-                static (sourceProductionContext, dtos) =>
+                compilationAndClasses,
+                static (sourceProductionContext, compilationAndClasses) =>
                 {
+                    var dtos = compilationAndClasses.Right;
                     var result = new List<CodeBuilder?>();
                     var nameSpace = dtos.First().GetNamespace();
 
                     var builder = CodeBuilder.Create(nameSpace);
-                    Class(builder, dtos);
+                    Class(builder, dtos, compilationAndClasses.Left);
                     result.Add(builder);
 
                     var codeBuildersTuples = new List<(
@@ -48,7 +50,8 @@ namespace Codelisk.Foundation.Generator.Generators
 
         private static List<CodeBuilder?> Class(
             CodeBuilder builder,
-            ImmutableArray<ClassDeclarationSyntax> dtos
+            ImmutableArray<ClassDeclarationSyntax> dtos,
+            Compilation compilation
         )
         {
             var result = new List<CodeBuilder?>();
@@ -61,7 +64,8 @@ namespace Codelisk.Foundation.Generator.Generators
 
             foreach (var dto in dtos)
             {
-                var properties = dto.GetAllProperties(true, true);
+                var semanticModel = compilation.GetSemanticModel(dto.SyntaxTree);
+                var properties = dto.GetAllPropertiesWithBaseClass(semanticModel, true);
                 var dtoName = dto.GetName();
                 var entityName = dto.GetEntityName();
                 extensionsClass

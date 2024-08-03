@@ -67,7 +67,7 @@ namespace Codelisk.Foundation.Generator.Generators
             result.AddConstructor();
             var constructor = result.AddConstructor().AddParameter(dto.Identifier.Text);
 
-            var properties = dto.GetAllProperties(true, true);
+            var properties = dto.GetAllProperties(true);
 
             constructor.WithBody(x =>
             {

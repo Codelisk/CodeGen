@@ -65,46 +65,58 @@ namespace Generators.Base.Extensions.New
             return null;
         }
 
+        public static IEnumerable<IPropertySymbol>? GetAllPropertiesWithBaseClass(
+            this ClassDeclarationSyntax classDeclaration,
+            SemanticModel semanticModel,
+            bool onlyPublic
+        )
+        {
+            var allProperties = new List<IPropertySymbol>();
+
+            var classSymbol = semanticModel.GetDeclaredSymbol(classDeclaration) as INamedTypeSymbol;
+            if (classSymbol == null)
+                return null;
+
+            allProperties = classSymbol.GetAllProperties(true);
+            if (onlyPublic)
+            {
+                return allProperties.Where(p => p.DeclaredAccessibility == Accessibility.Public);
+            }
+
+            return allProperties;
+        }
+
+        private static IEnumerable<INamedTypeSymbol> GetBaseTypes(INamedTypeSymbol type)
+        {
+            var baseTypes = new List<INamedTypeSymbol>();
+            var currentType = type.BaseType;
+
+            while (currentType != null)
+            {
+                baseTypes.Add(currentType);
+                currentType = currentType.BaseType;
+            }
+
+            return baseTypes;
+        }
+
         public static List<PropertyDeclarationSyntax> GetAllProperties(
             this ClassDeclarationSyntax classDeclaration,
-            bool withBaseTypes,
             bool onlyPublic
         )
         {
             var properties = new List<PropertyDeclarationSyntax>();
-            var currentClass = classDeclaration;
 
-            while (currentClass != null)
+            var classProperties = classDeclaration.Members.OfType<PropertyDeclarationSyntax>();
+            if (onlyPublic)
             {
-                var classProperties = currentClass.Members.OfType<PropertyDeclarationSyntax>();
-                if (onlyPublic)
-                {
-                    classProperties = classProperties.Where(p =>
-                        p.Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword))
-                    );
-                }
-                properties.AddRange(classProperties);
-
-                if (!withBaseTypes)
-                    break;
-                currentClass = currentClass.GetBaseClass();
+                classProperties = classProperties.Where(p =>
+                    p.Modifiers.Any(m => m.IsKind(SyntaxKind.PublicKeyword))
+                );
             }
+            properties.AddRange(classProperties);
 
             return properties.ToList();
-        }
-
-        private static ClassDeclarationSyntax GetBaseClass(
-            this ClassDeclarationSyntax classDeclaration
-        )
-        {
-            var baseType = classDeclaration.BaseList?.Types.FirstOrDefault();
-            if (baseType == null)
-                return null;
-
-            var root = classDeclaration.SyntaxTree.GetRoot();
-            return root.DescendantNodes()
-                .OfType<ClassDeclarationSyntax>()
-                .FirstOrDefault(c => c.Identifier.Text == baseType.Type.ToString());
         }
     }
 }

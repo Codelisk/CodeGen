@@ -16,13 +16,13 @@ namespace Foundation.Crawler.Extensions.New
 {
     public static class DtoExtensions
     {
-        public static IEnumerable<PropertyDeclarationSyntax> DtoForeignProperties(
-            this ClassDeclarationSyntax dto
+        public static IEnumerable<IPropertySymbol> DtoForeignProperties(
+            this ClassDeclarationSyntax dto,
+            SemanticModel semanticModel
         )
         {
-            var result = dto.GetAllProperties(true, false)
+            return dto.GetAllPropertiesWithBaseClass(semanticModel, true)
                 .Where(x => x.HasAttribute(AttributeNames.ForeignKey));
-            return result;
         }
 
         public static IncrementalValueProvider<ImmutableArray<ClassDeclarationSyntax>> Dtos(
