@@ -12,6 +12,39 @@ namespace Generators.Base.Extensions.New
 {
     public static class ClassDeclarationSyntaxExtensions
     {
+        public static ClassDeclarationSyntax Construct(
+            this ClassDeclarationSyntax symbol,
+            params string[] typeArguments
+        )
+        {
+            // Erstelle eine Liste der TypeArgumentSyntax-Knoten basierend auf den übergebenen Strings
+            var typeArgumentList = SyntaxFactory.TypeArgumentList(
+                SyntaxFactory.SeparatedList<TypeSyntax>(
+                    typeArguments.Select(arg => SyntaxFactory.ParseTypeName(arg))
+                )
+            );
+
+            // Erstelle eine neue BaseList, wenn Typargumente vorhanden sind
+            var newBaseList =
+                symbol.BaseList != null
+                    ? symbol.BaseList.WithTypes(
+                        SyntaxFactory.SeparatedList<BaseTypeSyntax>(
+                            symbol.BaseList.Types.Select(bt =>
+                                bt.WithType(
+                                    SyntaxFactory.GenericName(
+                                        ((IdentifierNameSyntax)bt.Type).Identifier,
+                                        typeArgumentList
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    : null;
+
+            // Rückgabe einer neuen Klasse mit den modifizierten Basisklassen
+            return symbol.WithBaseList(newBaseList);
+        }
+
         public static bool HasAttribute<TAttribute>(
             this ClassDeclarationSyntax classDeclarationSyntax
         )
