@@ -1,7 +1,6 @@
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text.RegularExpressions;
-using System.Text.RegularExpressions;
 using CodeGenHelpers;
 using Generators.Base.Extensions;
 using Generators.Base.Helpers;
@@ -20,7 +19,7 @@ namespace Generators.Base.Generators.Base
             > codeBuildersProvider
         )
         {
-            context.RegisterSourceOutput(
+            context.RegisterImplementationSourceOutput(
                 codeBuildersProvider,
                 static (sourceProductionContext, codeBuildersTuples) =>
                 {
