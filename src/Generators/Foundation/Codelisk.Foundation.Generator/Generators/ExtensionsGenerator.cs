@@ -22,7 +22,7 @@ namespace Codelisk.Foundation.Generator.Generators
         {
             var dtos = context.Dtos();
             var compilationAndClasses = context.CompilationProvider.Combine(dtos);
-            context.RegisterSourceOutput(
+            context.RegisterImplementationSourceOutput(
                 compilationAndClasses,
                 static (sourceProductionContext, compilationAndClasses) =>
                 {
