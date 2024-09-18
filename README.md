@@ -194,3 +194,11 @@ WegManager.Generator => Erstellt die Manager
 WebManager.Contract.Generator => Erstellt die Interfaces für den Manager
 WebRepositories.Contract.Generator => Erstellt die Interface für Repositories
 WebRepositories.Generator => Erstellt die Repositories
+
+
+### EntityGenerator
+Attributes:
+- Dtos
+What is used:
+- Dto Name
+- All Properties from DTO
