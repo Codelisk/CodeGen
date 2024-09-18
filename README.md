@@ -199,6 +199,7 @@ WebRepositories.Generator => Erstellt die Repositories
 ### EntityGenerator
 Attributes:
 - Dtos
+
 What is used:
 - Dto Namespace
 - Dto Name
@@ -207,6 +208,7 @@ What is used:
 ### ExtensionsGenerator
 Attributes:
 - Dtos
+- 
 What is used:
 - Dto Namespace
 - Dto Name
@@ -215,6 +217,7 @@ What is used:
 ### FullModelGenerator
 Attributes:
 - Dtos
+
 What is used:
 - Dto Namespace
 - Dto Name
@@ -225,6 +228,7 @@ What is used:
 Attributes:
 - BaseContext
 - Entity
+  
 What is used:
 - Entity names
 - BaseContext name
@@ -233,10 +237,18 @@ What is used:
 ### ControllerGenerator
 Attributes:
 - Dto
+- Entities
 - DefaultManagerAttribute
 - DefaultControllerAttribute
+  
 What is used:
 - Dto name
-- Controller class
-- Manager class
-
+- Entity First constructor argument
+- dto id property type
+- dto attributes
+- controller name
+- controller type
+- controller constructor parameters
+- manager name
+- manager methods
+- controller properties
