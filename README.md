@@ -220,3 +220,23 @@ What is used:
 - Dto Name
 - Dto Type
 - All Foreign Properties from DTO
+
+### DbContextGenerator
+Attributes:
+- BaseContext
+- Entity
+What is used:
+- Entity names
+- BaseContext name
+- BaseContext Type
+
+### ControllerGenerator
+Attributes:
+- Dto
+- DefaultManagerAttribute
+- DefaultControllerAttribute
+What is used:
+- Dto name
+- Controller class
+- Manager class
+
