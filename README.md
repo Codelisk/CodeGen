@@ -200,5 +200,23 @@ WebRepositories.Generator => Erstellt die Repositories
 Attributes:
 - Dtos
 What is used:
+- Dto Namespace
 - Dto Name
 - All Properties from DTO
+
+### ExtensionsGenerator
+Attributes:
+- Dtos
+What is used:
+- Dto Namespace
+- Dto Name
+- All Properties from DTO
+
+### FullModelGenerator
+Attributes:
+- Dtos
+What is used:
+- Dto Namespace
+- Dto Name
+- Dto Type
+- All Foreign Properties from DTO
