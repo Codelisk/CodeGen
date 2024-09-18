@@ -11,14 +11,16 @@ public class BaseDto
 ``` 
 Add your Dtos:
 
-```csharp[Dto]
+```csharp
+[Dto]
 public partial class CategoryDto : BaseDto
 {
     public string Name { get; set; }
     public List<ProductDto> Products { get; set; }
 }
 ```
-```csharp[TenantDto]
+```csharp
+[TenantDto]
 public partial class UserDto : BaseDto
 {
     public string Name { get; set; }
