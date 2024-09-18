@@ -208,7 +208,7 @@ What is used:
 ### ExtensionsGenerator
 Attributes:
 - Dtos
-- 
+  
 What is used:
 - Dto Namespace
 - Dto Name
@@ -252,3 +252,29 @@ What is used:
 - manager name
 - manager methods
 - controller properties
+  
+### RepositoryGenerator
+Attributes:
+- Dto
+- DefaultRepositoryAttribute
+  
+What is used:
+- Dto name
+- Entity First constructor argument
+- dto id property type
+- repository name
+- repository type
+- repository constructor parameters
+
+### ManagerGenerator
+Attributes:
+- Dto
+- DefaultRepositoryAttribute
+  
+What is used:
+- Dto name
+- Entity First constructor argument
+- dto id property type
+- repository name
+- repository type
+- repository constructor parameters
