@@ -50,7 +50,7 @@ namespace Codelisk.Foundation.Generator.Generators
 
         private static List<CodeBuilder?> Class(
             CodeBuilder builder,
-            ImmutableArray<ClassDeclarationSyntax> dtos,
+            ImmutableArray<RecordDeclarationSyntax> dtos,
             Compilation compilation
         )
         {

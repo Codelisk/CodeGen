@@ -56,8 +56,8 @@ namespace Codelisk.Foundation.Generator.Generators
 
         private static IReadOnlyList<ClassBuilder> Class(
             CodeBuilder builder,
-            ClassDeclarationSyntax dto,
-            ImmutableArray<ClassDeclarationSyntax> dtos,
+            RecordDeclarationSyntax dto,
+            ImmutableArray<RecordDeclarationSyntax> dtos,
             Compilation compilation
         )
         {

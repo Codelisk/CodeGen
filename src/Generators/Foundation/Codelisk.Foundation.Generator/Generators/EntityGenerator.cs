@@ -46,7 +46,7 @@ namespace Codelisk.Foundation.Generator.Generators
                         (string, string)? replace
                     )>
                     {
-                        (result, "Entities", ("namespace <global namespace>;", "")),
+                        (result, "Entities", ("public partial class ", "public partial record ")),
                     };
 
                     AddSourceHelper.Add(sourceProductionContext, codeBuildersTuples);
@@ -56,7 +56,7 @@ namespace Codelisk.Foundation.Generator.Generators
 
         private static IReadOnlyList<ClassBuilder> Class(
             CodeBuilder builder,
-            ClassDeclarationSyntax dto,
+            RecordDeclarationSyntax dto,
             Compilation compilation
         )
         {

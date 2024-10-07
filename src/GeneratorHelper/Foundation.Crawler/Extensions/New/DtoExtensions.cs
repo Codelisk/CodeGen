@@ -17,7 +17,7 @@ namespace Foundation.Crawler.Extensions.New
     public static class DtoExtensions
     {
         public static IEnumerable<IPropertySymbol> DtoForeignProperties(
-            this ClassDeclarationSyntax dto,
+            this RecordDeclarationSyntax dto,
             SemanticModel semanticModel
         )
         {
@@ -25,17 +25,17 @@ namespace Foundation.Crawler.Extensions.New
                 .Where(x => x.HasAttribute(AttributeNames.ForeignKey));
         }
 
-        public static IncrementalValueProvider<ImmutableArray<ClassDeclarationSyntax>> Dtos(
+        public static IncrementalValueProvider<ImmutableArray<RecordDeclarationSyntax>> Dtos(
             this IncrementalGeneratorInitializationContext context
         )
         {
             var dtos = context
                 .SyntaxProvider.ForAttributeWithMetadataName(
                     typeof(DtoAttribute).FullName,
-                    static (n, _) => n is ClassDeclarationSyntax,
+                    static (n, _) => n is RecordDeclarationSyntax,
                     static (context, cancellationToken) =>
                     {
-                        ClassDeclarationSyntax classDeclarationSyntax = (ClassDeclarationSyntax)
+                        RecordDeclarationSyntax classDeclarationSyntax = (RecordDeclarationSyntax)
                             context.TargetNode;
 
                         return classDeclarationSyntax.HasAttribute<DtoAttribute>()
@@ -49,10 +49,10 @@ namespace Foundation.Crawler.Extensions.New
             var tenantDtos = context
                 .SyntaxProvider.ForAttributeWithMetadataName(
                     typeof(TenantDtoAttribute).FullName,
-                    static (n, _) => n is ClassDeclarationSyntax,
+                    static (n, _) => n is RecordDeclarationSyntax,
                     static (context, cancellationToken) =>
                     {
-                        ClassDeclarationSyntax classDeclarationSyntax = (ClassDeclarationSyntax)
+                        RecordDeclarationSyntax classDeclarationSyntax = (RecordDeclarationSyntax)
                             context.TargetNode;
 
                         return classDeclarationSyntax.HasAttribute<TenantDtoAttribute>()
@@ -109,7 +109,7 @@ namespace Foundation.Crawler.Extensions.New
             return result;
         }
 
-        public static string GetFullModelName(this ClassDeclarationSyntax dto, bool plural = false)
+        public static string GetFullModelName(this RecordDeclarationSyntax dto, bool plural = false)
         {
             var name = dto.Identifier.Text.ReplaceLast("Dto", "Full");
             if (plural)
@@ -119,7 +119,7 @@ namespace Foundation.Crawler.Extensions.New
             return name;
         }
 
-        public static string GetEntityName(this ClassDeclarationSyntax dto, bool plural = false)
+        public static string GetEntityName(this RecordDeclarationSyntax dto, bool plural = false)
         {
             var name = dto.Identifier.Text.ReplaceLast("Dto", "Entity");
             if (plural)
