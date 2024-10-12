@@ -7,19 +7,36 @@ namespace Codelisk.GeneratorAttributes.Helper
 {
     public static class AttributeHelper
     {
-        public static Dictionary<Type, string> AllAttributesMethodeHeaderDictionary(string delete="Delete", string get="Get", string post="Post")
+        public static Dictionary<Type, string> AllAttributesMethodeHeaderDictionary(
+            string delete = "Delete",
+            string get = "Get",
+            string post = "Post"
+        )
         {
             return new Dictionary<Type, string>
             {
-                {typeof(GetAttribute), get },
-                {typeof(GetLastAttribute), get },
-                {typeof(GetFullAttribute), get },
-                {typeof(GetAllAttribute), get },
-                {typeof(GetAllFullAttribute), get },
-                {typeof(SaveAttribute), post },
-                {typeof(AddAttribute), post },
-                {typeof(AddRangeAttribute), post },
-                {typeof(DeleteAttribute), delete }
+                { typeof(GetAttribute), get },
+                { typeof(GetLastAttribute), get },
+                { typeof(GetFullAttribute), get },
+                { typeof(GetAllAttribute), get },
+                { typeof(GetAllFullAttribute), get },
+                { typeof(SaveAttribute), post },
+                { typeof(AddAttribute), post },
+                { typeof(AddRangeAttribute), post },
+                { typeof(DeleteAttribute), delete }
+            };
+        }
+
+        public static Dictionary<Type, string> AllFullAttributesMethodeHeaderDictionary(
+            string delete = "Delete",
+            string get = "Get",
+            string post = "Post"
+        )
+        {
+            return new Dictionary<Type, string>
+            {
+                { typeof(GetFullAttribute), get },
+                { typeof(GetAllFullAttribute), get },
             };
         }
     }

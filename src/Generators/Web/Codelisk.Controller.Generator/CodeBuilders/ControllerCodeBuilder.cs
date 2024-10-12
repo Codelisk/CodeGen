@@ -88,7 +88,7 @@ namespace Controller.Generator.CodeBuilders
                 .First();
 
             Dictionary<Type, string> methodsWithControllerAttributeName =
-                AttributeHelper.AllAttributesMethodeHeaderDictionary(
+                AttributeHelper.AllFullAttributesMethodeHeaderDictionary(
                     Constants.HttpDeleteAttribute,
                     Constants.HttpGetAttribute,
                     Constants.HttpPostAttribute
