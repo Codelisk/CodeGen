@@ -96,6 +96,26 @@ namespace Generators.Base.Extensions.New
             return null;
         }
 
+        public static IEnumerable<PropertyDeclarationSyntax> GetProperties(
+            this RecordDeclarationSyntax classSyntax
+        )
+        {
+            return classSyntax.Members.OfType<PropertyDeclarationSyntax>();
+        }
+
+        // Hilfsmethode, um eine Klasse im Syntaxbaum zu finden
+        private static ClassDeclarationSyntax FindClassInSyntaxTree(
+            string className,
+            BaseTypeSyntax rootSyntax
+        )
+        {
+            // Suche im Syntaxbaum nach der Klasse mit dem angegebenen Namen
+            return rootSyntax
+                .DescendantNodes()
+                .OfType<ClassDeclarationSyntax>()
+                .FirstOrDefault(c => c.Identifier.Text.Equals(className, StringComparison.Ordinal));
+        }
+
         public static IEnumerable<IPropertySymbol>? GetAllPropertiesWithBaseClass(
             this RecordDeclarationSyntax RecordDeclaration,
             SemanticModel semanticModel,

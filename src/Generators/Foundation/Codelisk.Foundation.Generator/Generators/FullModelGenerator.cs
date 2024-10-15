@@ -22,22 +22,17 @@ namespace Codelisk.Foundation.Generator.Generators
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
             var dtos = context.Dtos();
-            var compilationAndClasses = context.CompilationProvider.Combine(dtos);
+            var baseDtosAndClasses = context.BaseDtos().Combine(dtos);
             context.RegisterImplementationSourceOutput(
-                compilationAndClasses,
-                static (sourceProductionContext, compilationAndClasses) =>
+                baseDtosAndClasses,
+                static (sourceProductionContext, baseDtosAndClasses) =>
                 {
                     var result = new List<CodeBuilder?>();
-                    var nameSpace = compilationAndClasses.Right.First().GetNamespace();
-                    foreach (var dto in compilationAndClasses.Right)
+                    var nameSpace = baseDtosAndClasses.Right.First().GetNamespace();
+                    foreach (var dto in baseDtosAndClasses.Right)
                     {
                         var builder = CodeBuilder.Create(nameSpace);
-                        Class(
-                            builder,
-                            dto,
-                            compilationAndClasses.Right,
-                            compilationAndClasses.Left
-                        );
+                        Class(builder, dto, baseDtosAndClasses.Right, baseDtosAndClasses.Left);
                         result.Add(builder);
                     }
                     var codeBuildersTuples = new List<(
@@ -58,7 +53,7 @@ namespace Codelisk.Foundation.Generator.Generators
             CodeBuilder builder,
             RecordDeclarationSyntax dto,
             ImmutableArray<RecordDeclarationSyntax> dtos,
-            Compilation compilation
+            IEnumerable<RecordDeclarationSyntax> baseDtos
         )
         {
             var result = builder
@@ -71,9 +66,7 @@ namespace Codelisk.Foundation.Generator.Generators
                 .SetType(dto.GetName())
                 .UseAutoProps();
 
-            //Removed for performance result.AddDtoUsing(context);
-            var semanticModel = compilation.GetSemanticModel(dto.SyntaxTree);
-            var dtoPropertiesWithForeignKey = dto.DtoForeignProperties(semanticModel);
+            var dtoPropertiesWithForeignKey = dto.DtoForeignProperties(baseDtos);
 
             foreach (var dtoProperty in dtoPropertiesWithForeignKey)
             {

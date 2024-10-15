@@ -21,17 +21,17 @@ namespace Codelisk.Foundation.Generator.Generators
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
             var dtos = context.Dtos();
-            var compilationAndClasses = context.CompilationProvider.Combine(dtos);
+            var baseDtosAndClasses = context.BaseDtos().Combine(dtos);
             context.RegisterImplementationSourceOutput(
-                compilationAndClasses,
-                static (sourceProductionContext, compilationAndClasses) =>
+                baseDtosAndClasses,
+                static (sourceProductionContext, baseDtosAndClasses) =>
                 {
-                    var dtos = compilationAndClasses.Right;
+                    var dtos = baseDtosAndClasses.Right;
                     var result = new List<CodeBuilder?>();
                     var nameSpace = dtos.First().GetNamespace();
 
                     var builder = CodeBuilder.Create(nameSpace);
-                    Class(builder, dtos, compilationAndClasses.Left);
+                    Class(builder, dtos, baseDtosAndClasses.Left);
                     result.Add(builder);
 
                     var codeBuildersTuples = new List<(
@@ -51,7 +51,7 @@ namespace Codelisk.Foundation.Generator.Generators
         private static List<CodeBuilder?> Class(
             CodeBuilder builder,
             ImmutableArray<RecordDeclarationSyntax> dtos,
-            Compilation compilation
+            IEnumerable<RecordDeclarationSyntax> baseDtos
         )
         {
             var result = new List<CodeBuilder?>();
@@ -64,8 +64,7 @@ namespace Codelisk.Foundation.Generator.Generators
 
             foreach (var dto in dtos)
             {
-                var semanticModel = compilation.GetSemanticModel(dto.SyntaxTree);
-                var properties = dto.GetAllPropertiesWithBaseClass(semanticModel, true);
+                var properties = dto.DtoProperties(baseDtos);
                 var dtoName = dto.GetName();
                 var entityName = dto.GetEntityName();
                 extensionsClass

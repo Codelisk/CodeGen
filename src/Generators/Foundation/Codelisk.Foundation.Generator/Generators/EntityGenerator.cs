@@ -26,18 +26,18 @@ namespace Codelisk.Foundation.Generator.Generators
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
             var dtos = context.Dtos();
-            var compilationAndClasses = context.CompilationProvider.Combine(dtos);
+            var baseDtosAndClasses = context.BaseDtos().Combine(dtos);
             context.RegisterImplementationSourceOutput(
-                compilationAndClasses,
-                static (sourceProductionContext, compilationAndClasses) =>
+                baseDtosAndClasses,
+                static (sourceProductionContext, baseDtosAndClasses) =>
                 {
-                    var dtos = compilationAndClasses.Right;
+                    var dtos = baseDtosAndClasses.Right;
                     var result = new List<CodeBuilder?>();
                     var nameSpace = dtos.First().GetNamespace();
                     foreach (var dto in dtos)
                     {
                         var builder = CodeBuilder.Create(nameSpace);
-                        Class(builder, dto, compilationAndClasses.Left);
+                        Class(builder, dto, baseDtosAndClasses.Left);
                         result.Add(builder);
                     }
                     var codeBuildersTuples = new List<(
@@ -57,7 +57,7 @@ namespace Codelisk.Foundation.Generator.Generators
         private static IReadOnlyList<ClassBuilder> Class(
             CodeBuilder builder,
             RecordDeclarationSyntax dto,
-            Compilation compilation
+            IEnumerable<RecordDeclarationSyntax> baseDtos
         )
         {
             var result = builder
@@ -69,15 +69,15 @@ namespace Codelisk.Foundation.Generator.Generators
 
             result.AddConstructor();
             var constructor = result.AddConstructor().AddParameter(dto.Identifier.Text);
-            var semanticModel = compilation.GetSemanticModel(dto.SyntaxTree);
-            var properties = dto.GetAllPropertiesWithBaseClass(semanticModel, true);
+
+            var allProperties = dto.DtoProperties(baseDtos);
 
             constructor.WithBody(x =>
             {
-                foreach (var property in properties)
+                foreach (var property in allProperties)
                 {
                     x.AppendLine(
-                        $"this.{property.Name} = {dto.GetName().GetParameterName()}.{property.Name};"
+                        $"this.{property.GetPropertyName()} = {dto.GetName().GetParameterName()}.{property.GetPropertyName()};"
                     );
                 }
             });
