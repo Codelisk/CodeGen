@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 using Codelisk.GeneratorAttributes;
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
@@ -12,6 +13,61 @@ namespace Generators.Base.Extensions.New
 {
     public static class ClassDeclarationSyntaxExtensions
     {
+        public static ClassDeclarationSyntax Construct(
+            this ClassDeclarationSyntax classDeclaration,
+            RecordDeclarationSyntax dto
+        )
+        {
+            // Check if the dto has a TypeParameterList
+            if (dto.TypeParameterList == null)
+            {
+                // If no type parameters, return the original class declaration
+                return classDeclaration;
+            }
+
+            // Create a new ClassDeclarationSyntax with the same name and modifiers
+            var typeParameters = dto
+                .TypeParameterList.Parameters.Select(tp =>
+                    SyntaxFactory.TypeParameter(tp.Identifier.Text)
+                )
+                .ToArray();
+
+            // Create a new TypeParameterListSyntax
+            var newTypeParameterList = SyntaxFactory.TypeParameterList(
+                SyntaxFactory.SeparatedList(typeParameters)
+            );
+
+            // Create the new ClassDeclarationSyntax with the new type parameters
+            return classDeclaration.WithTypeParameterList(newTypeParameterList);
+        }
+
+        public static AttributeSyntax GetAttribute<TAttribute>(this ClassDeclarationSyntax c)
+            where TAttribute : Attribute
+        {
+            var attributeName = typeof(TAttribute).Name;
+
+            // Iterate over all attribute lists and their attributes in the class
+            return c
+                .AttributeLists.SelectMany(attrList => attrList.Attributes)
+                .LastOrDefault(attr =>
+                    attr.Name.ToString().Equals(attributeName)
+                    || attr.Name.ToString().Equals(attributeName.Replace("Attribute", ""))
+                );
+        }
+
+        public static string GetBaseClassName(this ClassDeclarationSyntax classDeclaration)
+        {
+            // Prüfen, ob eine Basisklasse vorhanden ist
+            var baseTypeSyntax = classDeclaration.BaseList?.Types.FirstOrDefault();
+
+            // Wenn keine Basisklasse vorhanden ist, gib einen leeren String zurück
+            if (baseTypeSyntax == null)
+                return string.Empty;
+
+            // Extrahiere den Namen der Basisklasse als String
+            return baseTypeSyntax.Type.ToString();
+        }
+
         public static ClassDeclarationSyntax Construct(
             this ClassDeclarationSyntax symbol,
             params string[] typeArguments
@@ -119,20 +175,6 @@ namespace Generators.Base.Extensions.New
             return allProperties;
         }
 
-        private static IEnumerable<INamedTypeSymbol> GetBaseTypes(INamedTypeSymbol type)
-        {
-            var baseTypes = new List<INamedTypeSymbol>();
-            var currentType = type.BaseType;
-
-            while (currentType != null)
-            {
-                baseTypes.Add(currentType);
-                currentType = currentType.BaseType;
-            }
-
-            return baseTypes;
-        }
-
         public static List<PropertyDeclarationSyntax> GetAllProperties(
             this ClassDeclarationSyntax classDeclaration,
             bool onlyPublic
@@ -151,5 +193,79 @@ namespace Generators.Base.Extensions.New
 
             return properties.ToList();
         }
+
+        #region Methods
+
+        public static IEnumerable<MethodDeclarationSyntax> GetMethods(
+            this ClassDeclarationSyntax classSyntax
+        )
+        {
+            return classSyntax.Members.OfType<MethodDeclarationSyntax>();
+        }
+
+        public static IEnumerable<MethodDeclarationSyntax> GetMethodsWithBaseClasses(
+            this ClassDeclarationSyntax classSyntax,
+            ImmutableArray<ClassDeclarationSyntax> baseClasses
+        )
+        {
+            List<MethodDeclarationSyntax> methods = new List<MethodDeclarationSyntax>();
+            methods.AddRange(classSyntax.GetMethods());
+            ExtractBaseMethods(classSyntax.BaseList, baseClasses, methods);
+
+            return methods
+        }
+
+        public static IEnumerable<MethodDeclarationSyntax> GetMethodsWithAttributes<TAttribute>(
+            this ClassDeclarationSyntax classSyntax,
+            ImmutableArray<ClassDeclarationSyntax> baseClasses
+        )
+            where TAttribute : Attribute
+        {
+            List<MethodDeclarationSyntax> methods = new List<MethodDeclarationSyntax>();
+            methods.AddRange(classSyntax.GetMethods());
+            ExtractBaseMethods(classSyntax.BaseList, baseClasses, methods);
+
+            string attributeName = typeof(TAttribute).RealAttributeName();
+
+            return methods.Where(method =>
+                method
+                    .AttributeLists.SelectMany(attrList => attrList.Attributes)
+                    .Any(attr => attr.Name.ToString() == attributeName)
+            );
+        }
+
+        static void ExtractBaseMethods(
+            BaseListSyntax baseList,
+            IEnumerable<ClassDeclarationSyntax> baseClasses, // Hier verwenden wir ClassDeclarationSyntax
+            List<MethodDeclarationSyntax> methods // Liste, um die Methoden zu speichern
+        )
+        {
+            if (baseList == null)
+                return; // Keine Basisklasse vorhanden
+
+            foreach (var baseTypeSyntax in baseList.Types)
+            {
+                // Hole den Namen der Basisklasse
+                var baseTypeName = baseTypeSyntax.Type.GetName();
+
+                if (!string.IsNullOrEmpty(baseTypeName))
+                {
+                    // Suche nach der Basisklasse in den bekannten baseClasses
+                    var baseClass = baseClasses.FirstOrDefault(x =>
+                        x.Identifier.Text == baseTypeName
+                    );
+
+                    if (baseClass != null)
+                    {
+                        // Füge die Methoden der Basisklasse hinzu
+                        methods.AddRange(baseClass.GetMethods());
+
+                        // Rekursiv weitermachen, falls diese Basisklasse ebenfalls eine Basisklasse hat
+                        ExtractBaseMethods(baseClass.BaseList, baseClasses, methods);
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }

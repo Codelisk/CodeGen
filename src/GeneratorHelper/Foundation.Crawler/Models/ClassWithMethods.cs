@@ -1,23 +1,29 @@
-﻿
+﻿using System.Collections.Immutable;
 using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using Generators.Base.Extensions;
+using Generators.Base.Extensions.New;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Foundation.Crawler.Models
 {
     public class ClassWithMethods
     {
-        public ClassWithMethods(INamedTypeSymbol c)
+        public ClassWithMethods(
+            ClassDeclarationSyntax c,
+            ImmutableArray<ClassDeclarationSyntax> baseTypes
+        )
         {
             Class = c;
 
-            Methods = c.GetMethodsWithAttributesIncludingBaseTypes().ToList();
+            Methods = c.GetMethodsWithBaseClasses(baseTypes).ToList();
         }
 
-        public INamedTypeSymbol Class { get; set; }
-        private List<IMethodSymbol> Methods { get; set; }
+        public ClassDeclarationSyntax Class { get; set; }
+        private List<MethodDeclarationSyntax> Methods { get; set; }
 
-        public IMethodSymbol MethodFromAttribute<TAttribute>() where TAttribute : BaseHttpAttribute
+        public MethodDeclarationSyntax MethodFromAttribute<TAttribute>()
+            where TAttribute : BaseHttpAttribute
         {
             foreach (var method in Methods)
             {
@@ -29,7 +35,8 @@ namespace Foundation.Crawler.Models
 
             return null;
         }
-        public IMethodSymbol MethodFromAttribute(Type attrType)
+
+        public MethodDeclarationSyntax MethodFromAttribute(Type attrType)
         {
             foreach (var method in Methods)
             {

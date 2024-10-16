@@ -5,6 +5,7 @@ using Foundation.Crawler.Extensions;
 using Generators.Base.Extensions;
 using Generators.Base.Extensions.Common;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Controller.Generator
 {
@@ -14,19 +15,32 @@ namespace Controller.Generator
         {
             return $"{dto.ReplaceDtoSuffix()}DbContext";
         }
+
         public static string RepositoryNameFromDto(this INamedTypeSymbol dto)
         {
             return $"{dto.ReplaceDtoSuffix()}Repository";
         }
+
         public static string ManagerNameFromDto(this INamedTypeSymbol dto)
         {
             return $"{dto.ReplaceDtoSuffix()}Manager";
         }
+
         public static string ControllerNameFromDto(this INamedTypeSymbol dto)
         {
             return $"{dto.ReplaceDtoSuffix()}Controller";
         }
-        public static string HttpControllerAttribute(this IMethodSymbol method, INamedTypeSymbol dto, string httpControllerAttribute)
+
+        public static string ControllerNameFromDto(this RecordDeclarationSyntax dto)
+        {
+            return $"{dto.ReplaceDtoSuffix()}Controller";
+        }
+
+        public static string HttpControllerAttribute(
+            this IMethodSymbol method,
+            INamedTypeSymbol dto,
+            string httpControllerAttribute
+        )
         {
             return method.MethodName(dto).AttributeWithConstructor(httpControllerAttribute);
         }
@@ -42,9 +56,21 @@ namespace Controller.Generator
             return method.GetAttributeWithBaseType(typeof(BaseHttpAttribute)).AttributeClass;
         }
 
-        public static INamedTypeSymbol ConstructFromDto(this INamedTypeSymbol symbol, INamedTypeSymbol dto, Compilation context)
+        public static INamedTypeSymbol ConstructFromDto(
+            this INamedTypeSymbol symbol,
+            INamedTypeSymbol dto,
+            Compilation context
+        )
         {
-            var entity = context.GetClassesWithAttribute(nameof(EntityAttribute)).FirstOrDefault(x => (x.GetAttribute<EntityAttribute>().GetFirstConstructorArgumentAsTypedConstant().Value as INamedTypeSymbol).Name == dto.Name);
+            var entity = context
+                .GetClassesWithAttribute(nameof(EntityAttribute))
+                .FirstOrDefault(x =>
+                    (
+                        x.GetAttribute<EntityAttribute>()
+                            .GetFirstConstructorArgumentAsTypedConstant()
+                            .Value as INamedTypeSymbol
+                    ).Name == dto.Name
+                );
             var idProperty = dto.GetIdProperty();
 
             if (symbol.TypeArguments.Length == 3)
@@ -60,9 +86,15 @@ namespace Controller.Generator
                 return symbol.Construct(entity);
             }
         }
-        public static string GetRealManagerName(this INamedTypeSymbol defaultManager, INamedTypeSymbol dto)
+
+        public static string GetRealManagerName(
+            this INamedTypeSymbol defaultManager,
+            INamedTypeSymbol dto
+        )
         {
-            return defaultManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat).Replace(defaultManager.Name, dto.ManagerNameFromDto());
+            return defaultManager
+                .ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)
+                .Replace(defaultManager.Name, dto.ManagerNameFromDto());
         }
     }
 }

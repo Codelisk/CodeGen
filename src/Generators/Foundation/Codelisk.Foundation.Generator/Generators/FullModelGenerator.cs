@@ -28,10 +28,9 @@ namespace Codelisk.Foundation.Generator.Generators
                 static (sourceProductionContext, baseDtosAndClasses) =>
                 {
                     var result = new List<CodeBuilder?>();
-                    var nameSpace = baseDtosAndClasses.Right.First().GetNamespace();
                     foreach (var dto in baseDtosAndClasses.Right)
                     {
-                        var builder = CodeBuilder.Create(nameSpace);
+                        var builder = CodeBuilder.Create(dto.GetNamespace());
                         Class(builder, dto, baseDtosAndClasses.Right, baseDtosAndClasses.Left);
                         result.Add(builder);
                     }

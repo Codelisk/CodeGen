@@ -8,5 +8,9 @@
     <ProjectReference Include="..\WebGenerator.Base\WebGenerator.Base.csproj" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CodeBuilders\" />
+  </ItemGroup>
+
 
 </Project>

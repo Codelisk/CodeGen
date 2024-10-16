@@ -1,9 +1,20 @@
 using System.Diagnostics;
 using CodeGenHelpers;
 using Codelisk.GeneratorAttributes.GeneralAttributes.ModuleInitializers;
+using Codelisk.GeneratorAttributes.GeneralAttributes.Registration;
+using Codelisk.GeneratorAttributes.GeneratorAttributes;
+using Codelisk.GeneratorAttributes.WebAttributes.Repository;
 using Foundation.Crawler.Crawlers;
+using Foundation.Crawler.Extensions;
+using Foundation.Crawler.Extensions.New;
+using Foundation.Crawler.Extensions.New.AttributeFinder;
+using Generators.Base.Extensions;
+using Generators.Base.Extensions.New;
 using Generators.Base.Generators.Base;
+using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using WebGenerator.Base;
 using WebRepositories.Generator.CodeBuilders;
 
 namespace WebRepositories.Generator.Generators
@@ -13,33 +24,57 @@ namespace WebRepositories.Generator.Generators
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
-            var result = context.CompilationProvider.Select(
-                static (compilation, _) =>
+            var dtos = context.Dtos();
+            var repos = context.DefaultRepositories();
+            var baseDtosAndClasses = context.BaseDtos().Combine(dtos).Combine(repos);
+            context.RegisterImplementationSourceOutput(
+                baseDtosAndClasses,
+                static (sourceProductionContext, combinedResult) =>
                 {
-                    var codeBuilder = new RepositoryCodeBuilder(compilation.AssemblyName).Get(
-                        compilation
-                    );
-                    var crawler = new AttributeCompilationCrawler(compilation);
+                    // Hier kannst du die kombinierten Ergebnisse verarbeiten
+                    var (baseDtos, dtos) = combinedResult.Left;
+                    var repos = combinedResult.Right;
 
-                    var initializerBuilder = new RepositoryInitializerCodeBuilder(
-                        crawler.NameSpaceAndMethod<RepositoryModuleInitializerAttribute>()
-                    ).Get(compilation, codeBuilder);
-
-                    var result = new List<(
+                    var result = new List<CodeBuilder?>();
+                    foreach (var dto in dtos)
+                    {
+                        var builder = CodeBuilder.Create(dto.GetNamespace());
+                        var repo = dto.TenantOrDefault<DefaultRepositoryAttribute>(repos);
+                        Class(builder, dto, repo, baseDtos);
+                        result.Add(builder);
+                    }
+                    var codeBuildersTuples = new List<(
                         List<CodeBuilder> codeBuilder,
                         string? folderName,
                         (string, string)? replace
                     )>
                     {
-                        (codeBuilder, "Repositories", null),
-                        (initializerBuilder, null, null)
+                        (result, "Repositories", null),
                     };
 
-                    return result;
+                    AddSourceHelper.Add(sourceProductionContext, codeBuildersTuples);
                 }
             );
+        }
 
-            AddSource(context, result);
+        private static ClassBuilder Class(
+            CodeBuilder builder,
+            RecordDeclarationSyntax dto,
+            ClassDeclarationSyntax baseRepository,
+            IEnumerable<RecordDeclarationSyntax> baseDtos
+        )
+        {
+            var constructedBaseRepo = baseRepository.Construct(dto);
+            return builder
+                .AddClass(dto.RepositoryNameFromDto())
+                .WithAccessModifier(Accessibility.Public)
+                .AddInterface("I" + dto.RepositoryNameFromDto())
+                .SetBaseClass($"{constructedBaseRepo.GetName()}<{dto.GetEntityName()}, Guid>")
+                .AddAttribute(typeof(GeneratedRepositoryAttribute).FullName)
+                .AddAttribute(typeof(RegisterTransient).FullName)
+                .AddConstructor()
+                .BaseConstructorParameterBaseCall(constructedBaseRepo)
+                .Class;
         }
     }
 }

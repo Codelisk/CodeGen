@@ -1,11 +1,15 @@
-﻿using Codelisk.GeneratorAttributes.WebAttributes.Dto;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Text;
+using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+using Foundation.Crawler.Extensions.New;
 using Foundation.Crawler.Models;
 using Generators.Base.Extensions;
+using Generators.Base.Extensions.New;
 using Microsoft.CodeAnalysis;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Foundation.Crawler.Extensions
 {
@@ -16,18 +20,25 @@ namespace Foundation.Crawler.Extensions
             //var attribute = context.GetClassesWithAttribute(nameof(UrlAttribute)).OfType<TAttribute>().First();
             return $"{attributeValue}";
         }
-        public static string AttributeUrl(this INamedTypeSymbol attributeSymobl, INamedTypeSymbol dto)
+
+        public static string AttributeUrl(
+            this INamedTypeSymbol attributeSymobl,
+            INamedTypeSymbol dto
+        )
         {
             var urlProperty = attributeSymobl.GetAttribute<UrlAttribute>();
             bool plural = attributeSymobl.HasAttribute(nameof(PluralAttribute));
             return urlProperty.GetFirstConstructorArgument().AttributeUrl(dto);
         }
+
         public static string GetIdPropertyMethodeName(this INamedTypeSymbol dto)
         {
             INamedTypeSymbol baseType = dto;
             while (baseType is not null)
             {
-                var result = baseType.GetMethodsWithAttribute(nameof(GetIdAttribute)).FirstOrDefault();
+                var result = baseType
+                    .GetMethodsWithAttribute(nameof(GetIdAttribute))
+                    .FirstOrDefault();
                 if (result is not null)
                 {
                     return result.Name + "()";
@@ -37,6 +48,7 @@ namespace Foundation.Crawler.Extensions
             }
             return null;
         }
+
         public static IPropertySymbol GetIdProperty(this INamedTypeSymbol dto)
         {
             INamedTypeSymbol baseType = dto;
@@ -53,9 +65,20 @@ namespace Foundation.Crawler.Extensions
             return null;
         }
 
-        public static ClassWithMethods GetClassWithMethods(this INamedTypeSymbol classSymbol)
+        public static PropertyDeclarationSyntax GetIdProperty(
+            this RecordDeclarationSyntax dto,
+            IEnumerable<RecordDeclarationSyntax> baseDtos
+        )
         {
-            return new ClassWithMethods(classSymbol);
+            return dto.DtoProperties(baseDtos).First(x => x.HasAttribute(nameof(IdAttribute)));
+        }
+
+        public static ClassWithMethods GetClassWithMethods(
+            this ClassDeclarationSyntax classSymbol,
+            ImmutableArray<ClassDeclarationSyntax> baseTypes
+        )
+        {
+            return new ClassWithMethods(classSymbol, baseTypes);
         }
     }
 }
