@@ -74,12 +74,10 @@ namespace Generators.Base.Extensions.New
                     SyntaxFactory.TypeParameter(tp.Identifier.Text)
                 )
                 .ToArray();
-
             // Create a new TypeParameterListSyntax
             var newTypeParameterList = SyntaxFactory.TypeParameterList(
                 SyntaxFactory.SeparatedList(typeParameters)
             );
-
             // Create the new ClassDeclarationSyntax with the new type parameters
             return classDeclaration.WithTypeParameterList(newTypeParameterList);
         }
@@ -119,7 +117,7 @@ namespace Generators.Base.Extensions.New
             // Prüfen, ob eine Basisklasse vorhanden ist
             var baseTypeSyntax = classDeclaration
                 .BaseList?.Types.OfType<SimpleBaseTypeSyntax>()
-                .First(x => x.Type is GenericNameSyntax);
+                .First(x => x.Type.GetName().StartsWith("I"));
 
             // Wenn keine Basisklasse vorhanden ist, gib einen leeren String zurück
             if (baseTypeSyntax == null)

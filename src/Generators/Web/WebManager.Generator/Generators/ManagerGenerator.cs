@@ -48,7 +48,7 @@ namespace WebManager.Generator.Generators
                     var result = new List<CodeBuilder?>();
                     foreach (var dto in dtos)
                     {
-                        var builder = CodeBuilder.Create(dto.GetNamespace());
+                        var builder = CodeBuilder.Create("Communalaudit.Api");
                         var baseManager = dto.TenantOrDefault<DefaultManagerAttribute>(managers);
                         var baseRepo = dto.TenantOrDefault<DefaultRepositoryAttribute>(repos);
                         Class(builder, dtos, dto, baseRepo, baseManager, baseDtos, managers, repos);
@@ -60,7 +60,7 @@ namespace WebManager.Generator.Generators
                         (string, string)? replace
                     )>
                     {
-                        (result, "Repositories", null),
+                        (result, "Managers", null),
                     };
 
                     AddSourceHelper.Add(sourceProductionContext, codeBuildersTuples);
@@ -81,6 +81,13 @@ namespace WebManager.Generator.Generators
         {
             var dtoPropertiesWithForeignKey = dto.DtoForeignProperties(baseDtos);
             var constructedBaseManager = baseManager.Construct(dto);
+
+            var test = constructedBaseManager.GetFirstInterfaceFullTypeName();
+            builder
+                .AddClass("I" + dto.ManagerNameFromDto())
+                .OfType(TypeKind.Interface)
+                .SetBaseClass(constructedBaseManager.GetFirstInterfaceFullTypeName())
+                .WithAccessModifier(Accessibility.Public);
 
             var constructor = builder
                 .AddClass(dto.ManagerNameFromDto())
