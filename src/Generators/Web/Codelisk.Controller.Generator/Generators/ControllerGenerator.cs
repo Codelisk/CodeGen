@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System.Diagnostics;
 using CodeGenHelpers;
 using Codelisk.GeneratorAttributes.GeneralAttributes.ModuleInitializers;
@@ -56,8 +57,6 @@ namespace Controller.Generator.Generators
                         var builder = CodeBuilder.Create(dto.GetNamespace());
                         var c = Class(builder, dto, baseManager, baseController);
 
-                        Methods(c, dto, baseController, baseManager.GetClassWithMethods(managers));
-
                         result.Add(builder);
                     }
 
@@ -93,101 +92,6 @@ namespace Controller.Generator.Generators
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseController)
                 .Class;
-        }
-
-        private static void Methods(
-            ClassBuilder c,
-            RecordDeclarationSyntax dto,
-            ClassDeclarationSyntax baseController,
-            ClassWithMethods repoModel
-        )
-        {
-            var repoProperty = baseController
-                .GetFieldsWithConstructedFromType(repoModel.Class)
-                .First();
-
-            Dictionary<Type, string> methodsWithControllerAttributeName =
-                AttributeHelper.AllFullAttributesMethodeHeaderDictionary(
-                    Constants.HttpDeleteAttribute,
-                    Constants.HttpGetAttribute,
-                    Constants.HttpPostAttribute
-                );
-
-            if (dto.HasAttribute(nameof(RemoveGetAll)))
-            {
-                methodsWithControllerAttributeName.Remove(typeof(GetAllAttribute));
-            }
-
-            foreach (var item in methodsWithControllerAttributeName)
-            {
-                if (
-                    (
-                        item.Key == typeof(GetFullAttribute)
-                        || item.Key == typeof(GetAllFullAttribute)
-                    ) && !dto.DtoHasForeignKeyAttribute()
-                )
-                {
-                    continue;
-                }
-                var method = repoModel.MethodFromAttribute(item.Key);
-
-                var httpAttribute = method.HttpAttribute();
-                var methodBuilder = c.AddMethod(method.MethodName(dto), Accessibility.Public)
-                    .AddAttribute(method.HttpControllerAttribute(dto, item.Value))
-                    .WithReturnTypeForHttpMethod(item.Key, dto)
-                    .AddParametersForHttpMethod(httpAttribute, dto);
-
-                if (item.Key == typeof(GetAllFullAttribute) || item.Key == typeof(GetFullAttribute))
-                {
-                    methodBuilder.MakeAsync();
-                }
-
-                if (
-                    item.Key == typeof(GetAllAttribute)
-                    || item.Key == typeof(GetAllFullAttribute)
-                    || item.Key == typeof(GetAttribute)
-                    || item.Key == typeof(GetFullAttribute)
-                )
-                {
-                    if (dto.HasAttribute(nameof(CustomizeGetAll)))
-                    {
-                        bool anonymous = dto.GetAttribute<CustomizeGetAll>()
-                            .NamedArguments.Any(x => x.Key.Equals("AllowAnonymous"));
-                        if (anonymous)
-                        {
-                            methodBuilder.AddAttribute(Constants.AllowAnonymousAttribute);
-                        }
-                    }
-                }
-
-                methodBuilder.WithBody(
-                    (x) =>
-                    {
-                        var httpAttributeUrl = httpAttribute.AttributeUrl(dto);
-                        var parameterNames = httpAttribute.GetParametersNamesForHttpMethod(dto);
-                        var dtoFullName = dto.GetFullModelName();
-                        if (item.Key == typeof(GetAllFullAttribute))
-                        {
-                            x.AppendLine(
-                                $"var result = await {repoProperty.Name}.{httpAttributeUrl}({parameterNames});"
-                            );
-                            x.AppendLine($"return result.Cast<{dtoFullName}>().ToList();");
-                            return;
-                        }
-                        else if (item.Key == typeof(GetFullAttribute))
-                        {
-                            x.AppendLine(
-                                $"return (await {repoProperty.Name}.{httpAttributeUrl}({parameterNames})) as {dtoFullName};"
-                            );
-                            return;
-                        }
-
-                        x.AppendLine(
-                            $"return {repoProperty.Name}.{httpAttributeUrl}({parameterNames});"
-                        );
-                    }
-                );
-            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using CodeGenHelpers;
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
@@ -44,6 +45,29 @@ namespace Foundation.Crawler.Extensions.Extensions
             else if (httpAttribute.HasAttribute(nameof(DtoBodyListAttribute)))
             {
                 return dto.Name.GetParameterName(true);
+            }
+
+            return string.Empty;
+        }
+
+        public static string GetParametersNamesForHttpMethod(
+            this AttributeSyntax httpAttribute,
+            RecordDeclarationSyntax dto,
+            ImmutableArray<RecordDeclarationSyntax> baseDtos
+        )
+        {
+            if (httpAttribute.HasAttribute<IdQueryAttribute>())
+            {
+                return dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName();
+            }
+
+            if (httpAttribute.HasAttribute<DtoBodyAttribute>())
+            {
+                return dto.GetName().GetParameterName();
+            }
+            else if (httpAttribute.HasAttribute<DtoBodyListAttribute>())
+            {
+                return dto.GetName().GetParameterName(true);
             }
 
             return string.Empty;

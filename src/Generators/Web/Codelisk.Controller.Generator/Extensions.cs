@@ -2,6 +2,7 @@
 using Codelisk.GeneratorAttributes.WebAttributes.Repository;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions;
+using Foundation.Crawler.Extensions.New.AttributeFinder;
 using Generators.Base.Extensions;
 using Generators.Base.Extensions.Common;
 using Microsoft.CodeAnalysis;
@@ -39,6 +40,15 @@ namespace Controller.Generator
         public static string HttpControllerAttribute(
             this IMethodSymbol method,
             INamedTypeSymbol dto,
+            string httpControllerAttribute
+        )
+        {
+            return method.MethodName(dto).AttributeWithConstructor(httpControllerAttribute);
+        }
+
+        public static string HttpControllerAttribute(
+            this MethodDeclarationSyntax method,
+            RecordDeclarationSyntax dto,
             string httpControllerAttribute
         )
         {

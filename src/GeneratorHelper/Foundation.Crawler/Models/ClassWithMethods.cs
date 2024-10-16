@@ -14,12 +14,12 @@ namespace Foundation.Crawler.Models
             ImmutableArray<ClassDeclarationSyntax> baseTypes
         )
         {
-            Class = c;
+            FirstInterfaceName = c.GetFirstInterfaceFullTypeName(false);
 
             Methods = c.GetMethodsWithBaseClasses(baseTypes).ToList();
         }
 
-        public ClassDeclarationSyntax Class { get; set; }
+        public string FirstInterfaceName { get; set; }
         private List<MethodDeclarationSyntax> Methods { get; set; }
 
         public MethodDeclarationSyntax MethodFromAttribute<TAttribute>()
@@ -27,7 +27,7 @@ namespace Foundation.Crawler.Models
         {
             foreach (var method in Methods)
             {
-                if (method.HasAttribute(typeof(TAttribute).Name))
+                if (method.HasAttribute<TAttribute>())
                 {
                     return method;
                 }
@@ -40,7 +40,7 @@ namespace Foundation.Crawler.Models
         {
             foreach (var method in Methods)
             {
-                if (method.HasAttribute(attrType.Name))
+                if (method.HasAttribute(attrType))
                 {
                     return method;
                 }

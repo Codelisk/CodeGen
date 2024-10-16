@@ -13,6 +13,15 @@ namespace Foundation.Crawler.Extensions.New.AttributeFinder
 {
     public static class ControllerAttributeFinderExtensions
     {
+        public static string MethodName(
+            this MethodDeclarationSyntax method,
+            RecordDeclarationSyntax dto
+        )
+        {
+            var attribute = method.HttpAttribute().First();
+            return attribute.GetFirstConstructorArgument();
+        }
+
         public static IncrementalValueProvider<
             ImmutableArray<ClassDeclarationSyntax>
         > DefaultControllers(this IncrementalGeneratorInitializationContext context)

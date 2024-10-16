@@ -1,4 +1,6 @@
+using System.Collections.Immutable;
 using Codelisk.GeneratorShared.Constants;
+using Foundation.Crawler.Extensions.New;
 using Generators.Base;
 using Generators.Base.Extensions;
 using Generators.Base.Extensions.Common;
@@ -13,6 +15,15 @@ namespace Foundation.Crawler.Extensions
         public static bool DtoHasForeignKeyAttribute(this INamedTypeSymbol dto)
         {
             var result = dto.DtoForeignProperties().Any();
+            return result;
+        }
+
+        public static bool DtoHasForeignKeyAttribute(
+            this RecordDeclarationSyntax dto,
+            ImmutableArray<RecordDeclarationSyntax> baseDtos
+        )
+        {
+            var result = dto.DtoForeignProperties(baseDtos).Any();
             return result;
         }
 

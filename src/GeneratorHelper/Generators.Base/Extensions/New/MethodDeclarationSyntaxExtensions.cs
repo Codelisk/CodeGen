@@ -1,54 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+using Generators.Base.Extensions.Common;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Generators.Base.Extensions.New
 {
     public static class MethodDeclarationSyntaxExtensions
     {
+        public static IEnumerable<AttributeSyntax> HttpAttribute(
+            this MethodDeclarationSyntax method
+        )
+        {
+            return method
+                .GetAttributes()
+                .Where(x => x.HasAttribute<GetFullAttribute>() || x.HasAttribute<GetAttribute>());
+        }
+
+        public static IEnumerable<AttributeSyntax> GetAttributes(
+            this MethodDeclarationSyntax method
+        )
+        {
+            return method.AttributeLists.SelectMany(attributeList => attributeList.Attributes);
+        }
+
         public static bool HasAttribute(
             this MethodDeclarationSyntax methodDeclarationSyntax,
-            string attributeName
+            Type type
         )
         {
             // Überprüfen, ob die Methode Attribute hat
             return methodDeclarationSyntax
                 .AttributeLists.SelectMany(attributeList => attributeList.Attributes)
-                .Any(attribute => attribute.Name.ToString() == attributeName);
+                .Any(attribute => attribute.Name.ToString() == type.RealAttributeName());
+        }
+
+        public static bool HasAttribute<TAttribute>(
+            this MethodDeclarationSyntax methodDeclarationSyntax
+        )
+        {
+            // Überprüfen, ob die Methode Attribute hat
+            return methodDeclarationSyntax
+                .AttributeLists.SelectMany(attributeList => attributeList.Attributes)
+                .Any(attribute =>
+                    attribute.Name.ToString() == typeof(TAttribute).RealAttributeName()
+                );
         }
 
         public static string GetName(this MethodDeclarationSyntax methodDeclarationSyntax)
         {
             return methodDeclarationSyntax.Identifier.Text;
-        }
-
-        /// <summary>
-        /// Gibt eine Liste von Attributen zurück, die auf der Methode angewendet wurden und von einem bestimmten Basistyp abgeleitet sind.
-        /// </summary>
-        /// <param name="methodDeclaration">Die Methodendeklaration, die überprüft werden soll.</param>
-        /// <param name="baseTypeName">Der Name des Basistyps, nach dem gesucht werden soll.</param>
-        /// <returns>Eine Liste von Attributen, die von dem angegebenen Basistyp abgeleitet sind.</returns>
-        public static IEnumerable<AttributeSyntax> GetAttributesDerivedFrom(
-            this MethodDeclarationSyntax methodDeclaration,
-            string baseTypeName
-        )
-        {
-            // Überprüfen Sie, ob die Methode Attributlisten hat
-            return methodDeclaration
-                .AttributeLists.SelectMany(attributeList => attributeList.Attributes)
-                .Where(attribute =>
-                {
-                    // Holen Sie sich den Namen des Attributs
-                    var attributeName = attribute
-                        .DescendantNodes()
-                        .OfType<IdentifierNameSyntax>()
-                        .FirstOrDefault()
-                        ?.Identifier.Text;
-
-                    // Vergleichen Sie den Namen des Attributs mit dem Basistypnamen
-                    return attributeName != null && IsDerivedFrom(attributeName, baseTypeName);
-                });
         }
 
         /// <summary>

@@ -13,6 +13,49 @@ namespace Generators.Base.Extensions.New
 {
     public static class ClassDeclarationSyntaxExtensions
     {
+        public static List<FieldDeclarationSyntax> GetFieldsWithConstructedFromType(
+            this ClassDeclarationSyntax classDeclaration,
+            string typeName
+        )
+        {
+            var fields = new List<FieldDeclarationSyntax>();
+
+            // Iterate over all field declarations in the class
+            foreach (var member in classDeclaration.GetAllFields())
+            {
+                // Get the type of the field (syntax-based)
+                var fieldType = member.Declaration.Type;
+
+                // Check if the field type matches the provided typeName
+                if (
+                    fieldType is IdentifierNameSyntax identifierNameSyntax
+                    && identifierNameSyntax.Identifier.Text == typeName
+                )
+                {
+                    fields.Add(member);
+                }
+                else if (fieldType is GenericNameSyntax genericNameSyntax)
+                {
+                    var fullTypeName = genericNameSyntax.GetFullTypeName(false);
+                    // In case of generic types, we check the base generic type name
+                    if (fullTypeName.Equals(typeName))
+                    {
+                        fields.Add(member);
+                    }
+                }
+            }
+
+            return fields;
+        }
+
+        public static List<FieldDeclarationSyntax> GetAllFields(
+            this ClassDeclarationSyntax classObject
+        )
+        {
+            var result = classObject.Members.OfType<FieldDeclarationSyntax>().ToList();
+            return result;
+        }
+
         public static ClassDeclarationSyntax Construct(
             this ClassDeclarationSyntax classDeclaration,
             RecordDeclarationSyntax dto
@@ -66,6 +109,32 @@ namespace Generators.Base.Extensions.New
 
             // Extrahiere den Namen der Basisklasse als String
             return baseTypeSyntax.Type.ToString();
+        }
+
+        public static string GetFirstInterfaceFullTypeName(
+            this ClassDeclarationSyntax classDeclaration,
+            bool includeNamespace = true
+        )
+        {
+            // Prüfen, ob eine Basisklasse vorhanden ist
+            var baseTypeSyntax = classDeclaration
+                .BaseList?.Types.OfType<SimpleBaseTypeSyntax>()
+                .First(x => x.Type is GenericNameSyntax);
+
+            // Wenn keine Basisklasse vorhanden ist, gib einen leeren String zurück
+            if (baseTypeSyntax == null)
+                return string.Empty;
+
+            var result = baseTypeSyntax.ToString();
+
+            // Get the namespace, if available
+            var namespaceName = baseTypeSyntax.GetNamespace();
+            if (includeNamespace && !string.IsNullOrEmpty(namespaceName))
+            {
+                result = $"{namespaceName}.{result}";
+            }
+
+            return result;
         }
 
         public static ClassDeclarationSyntax Construct(
@@ -212,7 +281,7 @@ namespace Generators.Base.Extensions.New
             methods.AddRange(classSyntax.GetMethods());
             ExtractBaseMethods(classSyntax.BaseList, baseClasses, methods);
 
-            return methods
+            return methods;
         }
 
         public static IEnumerable<MethodDeclarationSyntax> GetMethodsWithAttributes<TAttribute>(

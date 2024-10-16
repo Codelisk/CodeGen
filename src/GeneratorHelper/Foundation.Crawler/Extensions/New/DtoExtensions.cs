@@ -114,28 +114,6 @@ namespace Foundation.Crawler.Extensions.New
             return allProperties;
         }
 
-        private static string GetNamespace(SyntaxNode node)
-        {
-            var nameSpace = string.Empty;
-            for (SyntaxNode? current = node; current != null; current = current.Parent)
-            {
-                if (current is NamespaceDeclarationSyntax namespaceDeclaration)
-                {
-                    nameSpace = namespaceDeclaration.Name.ToString() + "." + nameSpace;
-                }
-                else if (current is FileScopedNamespaceDeclarationSyntax fileScopedNamespace)
-                {
-                    nameSpace = fileScopedNamespace.Name.ToString() + "." + nameSpace;
-                }
-                else if (current is CompilationUnitSyntax)
-                {
-                    // Reached the root, stop traversing
-                    break;
-                }
-            }
-            return nameSpace.TrimEnd('.');
-        }
-
         public static string GetFullModelNameFromProperty(
             this PropertyDeclarationSyntax foreignKeyProperty
         )

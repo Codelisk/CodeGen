@@ -61,15 +61,6 @@ namespace WebGenerator.Base
             return $"{dto.ReplaceDtoSuffix()}Controller";
         }
 
-        public static string HttpControllerAttribute(
-            this IMethodSymbol method,
-            INamedTypeSymbol dto,
-            string httpControllerAttribute
-        )
-        {
-            return method.MethodName(dto).AttributeWithConstructor(httpControllerAttribute);
-        }
-
         public static string MethodName(this IMethodSymbol method, INamedTypeSymbol dto)
         {
             var attribute = method.HttpAttribute();
@@ -79,13 +70,6 @@ namespace WebGenerator.Base
         public static INamedTypeSymbol HttpAttribute(this IMethodSymbol method)
         {
             return method.GetAttributeWithBaseType(typeof(BaseHttpAttribute)).AttributeClass;
-        }
-
-        public static IEnumerable<AttributeSyntax> HttpAttribute(
-            this MethodDeclarationSyntax method
-        )
-        {
-            return method.GetAttributesDerivedFrom(nameof(BaseHttpAttribute));
         }
 
         public static INamedTypeSymbol EntityFromDto(this INamedTypeSymbol dto, Compilation context)

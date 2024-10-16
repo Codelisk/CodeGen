@@ -32,7 +32,7 @@ namespace WebDbContext.Generator.Generators
                     var dbContexts = combinedResult.Right;
 
                     var result = new List<CodeBuilder?>();
-                    var nameSpace = dtos.First().GetNamespace();
+                    var nameSpace = dbContexts.First().GetNamespace();
                     var builder = CodeBuilder.Create(nameSpace);
                     Class(builder, dtos, dbContexts.First());
                     result.Add(builder);
