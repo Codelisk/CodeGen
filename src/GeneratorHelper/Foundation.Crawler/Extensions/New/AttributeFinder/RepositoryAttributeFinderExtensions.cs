@@ -12,6 +12,14 @@ namespace Foundation.Crawler.Extensions.New.AttributeFinder
 {
     public static class RepositoryAttributeFinderExtensions
     {
+        public static ClassDeclarationSyntax Repository(
+            this RecordDeclarationSyntax dto,
+            IEnumerable<ClassDeclarationSyntax> repos
+        )
+        {
+            return dto.TenantOrDefault<DefaultRepositoryAttribute>(repos);
+        }
+
         public static IncrementalValueProvider<
             ImmutableArray<ClassDeclarationSyntax>
         > DefaultRepositories(this IncrementalGeneratorInitializationContext context)

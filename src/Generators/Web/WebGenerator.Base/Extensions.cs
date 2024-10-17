@@ -1,19 +1,28 @@
-﻿using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
+﻿using CodeGenHelpers;
+using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using Codelisk.GeneratorAttributes.WebAttributes.Repository;
-using CodeGenHelpers;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions;
 using Generators.Base.Extensions;
 using Generators.Base.Extensions.Common;
+using Generators.Base.Extensions.New;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace WebGenerator.Base
 {
     public static class Extensions
     {
-        public static ClassBuilder AddEntityUsing(this ClassBuilder classBuilder, AttributeCompilationCrawler attributeCompilationCrawler, Compilation compilation)
+        public static ClassBuilder AddEntityUsing(
+            this ClassBuilder classBuilder,
+            AttributeCompilationCrawler attributeCompilationCrawler,
+            Compilation compilation
+        )
         {
-            var namespaces = attributeCompilationCrawler.Dtos().Select(x => x.EntityFromDto(compilation).GetNamespace()).Distinct();
+            var namespaces = attributeCompilationCrawler
+                .Dtos()
+                .Select(x => x.EntityFromDto(compilation).GetNamespace())
+                .Distinct();
             foreach (var n in namespaces)
             {
                 classBuilder.AddNamespaceImport(n);
@@ -21,25 +30,35 @@ namespace WebGenerator.Base
 
             return classBuilder;
         }
+
         public static string DbContextNameFromDto(this INamedTypeSymbol dto)
         {
             return $"{dto.ReplaceDtoSuffix()}DbContext";
         }
+
         public static string RepositoryNameFromDto(this INamedTypeSymbol dto)
         {
             return $"{dto.ReplaceDtoSuffix()}Repository";
         }
+
+        public static string RepositoryNameFromDto(this RecordDeclarationSyntax dto)
+        {
+            return $"{dto.ReplaceDtoSuffix()}Repository";
+        }
+
         public static string ManagerNameFromDto(this INamedTypeSymbol dto)
         {
             return $"{dto.ReplaceDtoSuffix()}Manager";
         }
+
+        public static string ManagerNameFromDto(this RecordDeclarationSyntax dto)
+        {
+            return $"{dto.ReplaceDtoSuffix()}Manager";
+        }
+
         public static string ControllerNameFromDto(this INamedTypeSymbol dto)
         {
             return $"{dto.ReplaceDtoSuffix()}Controller";
-        }
-        public static string HttpControllerAttribute(this IMethodSymbol method, INamedTypeSymbol dto, string httpControllerAttribute)
-        {
-            return method.MethodName(dto).AttributeWithConstructor(httpControllerAttribute);
         }
 
         public static string MethodName(this IMethodSymbol method, INamedTypeSymbol dto)
@@ -52,11 +71,25 @@ namespace WebGenerator.Base
         {
             return method.GetAttributeWithBaseType(typeof(BaseHttpAttribute)).AttributeClass;
         }
+
         public static INamedTypeSymbol EntityFromDto(this INamedTypeSymbol dto, Compilation context)
         {
-            return context.GetClassesWithAttribute(nameof(EntityAttribute)).FirstOrDefault(x => (x.GetAttribute<EntityAttribute>().GetFirstConstructorArgumentAsTypedConstant().Value as INamedTypeSymbol).Name == dto.Name);
+            return context
+                .GetClassesWithAttribute(nameof(EntityAttribute))
+                .FirstOrDefault(x =>
+                    (
+                        x.GetAttribute<EntityAttribute>()
+                            .GetFirstConstructorArgumentAsTypedConstant()
+                            .Value as INamedTypeSymbol
+                    ).Name == dto.Name
+                );
         }
-        public static INamedTypeSymbol ConstructFromDto(this INamedTypeSymbol symbol, INamedTypeSymbol dto, Compilation context)
+
+        public static INamedTypeSymbol ConstructFromDto(
+            this INamedTypeSymbol symbol,
+            INamedTypeSymbol dto,
+            Compilation context
+        )
         {
             var entity = dto.EntityFromDto(context);
             var idProperty = dto.GetIdProperty();
@@ -74,9 +107,15 @@ namespace WebGenerator.Base
                 return symbol.Construct(entity);
             }
         }
-        public static string GetRealManagerName(this INamedTypeSymbol defaultManager, INamedTypeSymbol dto)
+
+        public static string GetRealManagerName(
+            this INamedTypeSymbol defaultManager,
+            INamedTypeSymbol dto
+        )
         {
-            return defaultManager.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat).Replace(defaultManager.Name, dto.ManagerNameFromDto());
+            return defaultManager
+                .ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)
+                .Replace(defaultManager.Name, dto.ManagerNameFromDto());
         }
     }
 }

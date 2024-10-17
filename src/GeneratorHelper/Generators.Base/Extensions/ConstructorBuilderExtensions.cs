@@ -1,13 +1,16 @@
 ﻿using CodeGenHelpers;
 using CodeGenHelpers.Internals;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Generators.Base.Extensions
 {
     public static class ConstructorBuilderExtensions
     {
-
-        public static ConstructorBuilder BaseConstructorTypeParameterParameterBaseCall(this ConstructorBuilder c, INamedTypeSymbol baseClass)
+        public static ConstructorBuilder BaseConstructorTypeParameterParameterBaseCall(
+            this ConstructorBuilder c,
+            INamedTypeSymbol baseClass
+        )
         {
             var baseConstructor = baseClass.InstanceConstructors.First();
             Dictionary<string, string> typeParameters = new Dictionary<string, string>();
@@ -22,7 +25,12 @@ namespace Generators.Base.Extensions
 
             return c;
         }
-        public static ConstructorBuilder BaseConstructorParameterBaseCall(this ConstructorBuilder c, INamedTypeSymbol baseClass, (INamedTypeSymbol, string)? replaceTypeName = null)
+
+        public static ConstructorBuilder BaseConstructorParameterBaseCall(
+            this ConstructorBuilder c,
+            INamedTypeSymbol baseClass,
+            (INamedTypeSymbol, string)? replaceTypeName = null
+        )
         {
             var baseConstructor = baseClass.InstanceConstructors.First();
             Dictionary<string, string> typeParameters = new Dictionary<string, string>();
@@ -54,6 +62,68 @@ namespace Generators.Base.Extensions
                 typeParameters.Add(typeName, name);
             }
 
+            c.WithBaseCall(typeParameters);
+
+            return c;
+        }
+
+        public static ConstructorBuilder AddParameterWithBaseCall(
+            this ConstructorBuilder c,
+            string type,
+            string parameter
+        )
+        {
+            c.AddParameter(type, parameter);
+
+            Dictionary<string, string> typeParameters = new Dictionary<string, string>();
+            typeParameters.Add(type, parameter);
+            // Call the base constructor with the collected type parameters
+            c.WithBaseCall(typeParameters);
+
+            return c;
+        }
+
+        public static ConstructorBuilder BaseConstructorParameterBaseCall(
+            this ConstructorBuilder c,
+            ClassDeclarationSyntax baseClass,
+            (string, string)? replaceTypeName = null
+        )
+        {
+            // Get the first constructor from the base class
+            var baseConstructor = baseClass
+                .Members.OfType<ConstructorDeclarationSyntax>()
+                .FirstOrDefault();
+
+            // If no constructor found, we can't proceed
+            if (baseConstructor == null)
+            {
+                return c;
+            }
+
+            Dictionary<string, string> typeParameters = new Dictionary<string, string>();
+
+            // Iterate over the parameters of the base constructor
+            foreach (var parameter in baseConstructor.ParameterList.Parameters)
+            {
+                // Extract type and parameter name
+                var typeSyntax = parameter.Type;
+                var parameterName = parameter.Identifier.Text;
+                var typeName = typeSyntax.ToString();
+
+                // Handle replacements if needed
+                if (replaceTypeName.HasValue)
+                {
+                    typeName = typeName.Replace(
+                        replaceTypeName.Value.Item1,
+                        replaceTypeName.Value.Item2
+                    );
+                }
+
+                // Add the type and parameter to the dictionary
+                typeParameters.Add(typeName, parameterName);
+            }
+
+            // Call the base constructor with the collected type parameters
             c.WithBaseCall(typeParameters);
 
             return c;

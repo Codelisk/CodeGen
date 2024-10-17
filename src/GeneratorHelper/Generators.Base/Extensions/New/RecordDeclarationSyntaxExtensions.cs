@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Generators.Base.Extensions.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -60,6 +61,20 @@ namespace Generators.Base.Extensions.New
                 }
             }
             return false;
+        }
+
+        public static AttributeSyntax GetAttribute<TAttribute>(this RecordDeclarationSyntax record)
+            where TAttribute : Attribute
+        {
+            var attributeName = typeof(TAttribute).Name;
+
+            // Iterate over all attribute lists and their attributes in the record
+            return record
+                .AttributeLists.SelectMany(attrList => attrList.Attributes)
+                .LastOrDefault(attr =>
+                    attr.Name.ToString().Equals(attributeName)
+                    || attr.Name.ToString().Equals(attributeName.Replace("Attribute", ""))
+                );
         }
 
         public static string GetName(this RecordDeclarationSyntax RecordDeclaration)
@@ -138,20 +153,6 @@ namespace Generators.Base.Extensions.New
             return allProperties;
         }
 
-        private static IEnumerable<INamedTypeSymbol> GetBaseTypes(INamedTypeSymbol type)
-        {
-            var baseTypes = new List<INamedTypeSymbol>();
-            var currentType = type.BaseType;
-
-            while (currentType != null)
-            {
-                baseTypes.Add(currentType);
-                currentType = currentType.BaseType;
-            }
-
-            return baseTypes;
-        }
-
         public static List<PropertyDeclarationSyntax> GetAllProperties(
             this RecordDeclarationSyntax RecordDeclaration,
             bool onlyPublic
@@ -170,5 +171,74 @@ namespace Generators.Base.Extensions.New
 
             return properties.ToList();
         }
+
+        #region Methods
+
+        public static IEnumerable<MethodDeclarationSyntax> GetMethods(
+            this RecordDeclarationSyntax classSyntax
+        )
+        {
+            return classSyntax.Members.OfType<MethodDeclarationSyntax>();
+        }
+
+        public static IEnumerable<MethodDeclarationSyntax> GetMethodsWithAttributes(
+            this RecordDeclarationSyntax classSyntax,
+            string attributeFullName
+        )
+        {
+            return classSyntax
+                .GetMethods()
+                .Where(method =>
+                    method
+                        .AttributeLists.SelectMany(attrList => attrList.Attributes)
+                        .Any(attr => attr.Name.ToString() == attributeFullName)
+                );
+        }
+
+        static void ExtractBaseMethods(
+            BaseListSyntax baseList,
+            IEnumerable<RecordDeclarationSyntax> baseClasses, // Hier verwenden wir ClassDeclarationSyntax
+            List<MethodDeclarationSyntax> methods // Liste, um die Methoden zu speichern
+        )
+        {
+            if (baseList == null)
+                return; // Keine Basisklasse vorhanden
+
+            foreach (var baseTypeSyntax in baseList.Types)
+            {
+                // Hole den Namen der Basisklasse
+                var baseTypeName = baseTypeSyntax.Type.GetName();
+
+                if (!string.IsNullOrEmpty(baseTypeName))
+                {
+                    // Suche nach der Basisklasse in den bekannten baseClasses
+                    var baseClass = baseClasses.FirstOrDefault(x =>
+                        x.Identifier.Text == baseTypeName
+                    );
+
+                    if (baseClass != null)
+                    {
+                        // Füge die Methoden der Basisklasse hinzu
+                        methods.AddRange(baseClass.GetMethods());
+
+                        // Rekursiv weitermachen, falls diese Basisklasse ebenfalls eine Basisklasse hat
+                        ExtractBaseMethods(baseClass.BaseList, baseClasses, methods);
+                    }
+                }
+            }
+        }
+
+        public static string GetIdPropertyMethodeName(
+            this RecordDeclarationSyntax dto,
+            IEnumerable<RecordDeclarationSyntax> baseDtos
+        )
+        {
+            List<MethodDeclarationSyntax> methods = new List<MethodDeclarationSyntax>();
+            methods.AddRange(dto.GetMethods());
+            ExtractBaseMethods(dto.BaseList, baseDtos, methods);
+
+            return methods.First(x => x.HasAttribute<GetIdAttribute>()).GetName() + "()";
+        }
+        #endregion
     }
 }

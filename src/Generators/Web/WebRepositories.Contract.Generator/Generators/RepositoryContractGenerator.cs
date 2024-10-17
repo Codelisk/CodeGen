@@ -11,6 +11,7 @@ namespace WebRepositories.Contract.Generator.Generators
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
+            return;
             var result = context.CompilationProvider.Select(
                 static (compilation, _) =>
                 {

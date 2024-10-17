@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 using Codelisk.GeneratorAttributes;
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
@@ -12,37 +13,100 @@ namespace Generators.Base.Extensions.New
 {
     public static class ClassDeclarationSyntaxExtensions
     {
-        public static ClassDeclarationSyntax Construct(
-            this ClassDeclarationSyntax symbol,
-            params string[] typeArguments
+        public static List<FieldDeclarationSyntax> GetFieldsWithConstructedFromType(
+            this ClassDeclarationSyntax classDeclaration,
+            string typeName
         )
         {
-            // Erstelle eine Liste der TypeArgumentSyntax-Knoten basierend auf den übergebenen Strings
-            var typeArgumentList = SyntaxFactory.TypeArgumentList(
-                SyntaxFactory.SeparatedList<TypeSyntax>(
-                    typeArguments.Select(arg => SyntaxFactory.ParseTypeName(arg))
+            var fields = new List<FieldDeclarationSyntax>();
+
+            // Iterate over all field declarations in the class
+            foreach (var member in classDeclaration.GetAllFields())
+            {
+                // Get the type of the field (syntax-based)
+                var fieldType = member.Declaration.Type;
+
+                // Check if the field type matches the provided typeName
+                if (
+                    fieldType is IdentifierNameSyntax identifierNameSyntax
+                    && identifierNameSyntax.Identifier.Text == typeName
                 )
-            );
+                {
+                    fields.Add(member);
+                }
+                else if (fieldType is GenericNameSyntax genericNameSyntax)
+                {
+                    var fullTypeName = genericNameSyntax.GetFullTypeName(false);
+                    // In case of generic types, we check the base generic type name
+                    if (fullTypeName.Equals(typeName))
+                    {
+                        fields.Add(member);
+                    }
+                }
+            }
 
-            // Erstelle eine neue BaseList, wenn Typargumente vorhanden sind
-            var newBaseList =
-                symbol.BaseList != null
-                    ? symbol.BaseList.WithTypes(
-                        SyntaxFactory.SeparatedList<BaseTypeSyntax>(
-                            symbol.BaseList.Types.Select(bt =>
-                                bt.WithType(
-                                    SyntaxFactory.GenericName(
-                                        ((IdentifierNameSyntax)bt.Type).Identifier,
-                                        typeArgumentList
-                                    )
-                                )
-                            )
-                        )
-                    )
-                    : null;
+            return fields;
+        }
 
-            // Rückgabe einer neuen Klasse mit den modifizierten Basisklassen
-            return symbol.WithBaseList(newBaseList);
+        public static List<FieldDeclarationSyntax> GetAllFields(
+            this ClassDeclarationSyntax classObject
+        )
+        {
+            var result = classObject.Members.OfType<FieldDeclarationSyntax>().ToList();
+            return result;
+        }
+
+        public static AttributeSyntax GetAttribute<TAttribute>(this ClassDeclarationSyntax c)
+            where TAttribute : Attribute
+        {
+            var attributeName = typeof(TAttribute).Name;
+
+            // Iterate over all attribute lists and their attributes in the class
+            return c
+                .AttributeLists.SelectMany(attrList => attrList.Attributes)
+                .LastOrDefault(attr =>
+                    attr.Name.ToString().Equals(attributeName)
+                    || attr.Name.ToString().Equals(attributeName.Replace("Attribute", ""))
+                );
+        }
+
+        public static string GetBaseClassName(this ClassDeclarationSyntax classDeclaration)
+        {
+            // Prüfen, ob eine Basisklasse vorhanden ist
+            var baseTypeSyntax = classDeclaration.BaseList?.Types.FirstOrDefault();
+
+            // Wenn keine Basisklasse vorhanden ist, gib einen leeren String zurück
+            if (baseTypeSyntax == null)
+                return string.Empty;
+
+            // Extrahiere den Namen der Basisklasse als String
+            return baseTypeSyntax.Type.ToString();
+        }
+
+        public static string GetFirstInterfaceFullTypeName(
+            this ClassDeclarationSyntax classDeclaration,
+            bool includeNamespace = true
+        )
+        {
+            // Prüfen, ob eine Basisklasse vorhanden ist
+            var baseTypeSyntax = classDeclaration
+                .BaseList?.Types.OfType<SimpleBaseTypeSyntax>()
+                .First(x => x.Type.GetName().StartsWith("I"));
+
+            // Wenn keine Basisklasse vorhanden ist, gib einen leeren String zurück
+            if (baseTypeSyntax == null)
+                return string.Empty;
+
+            var result = baseTypeSyntax.ToString();
+
+            // Get the namespace, if available
+            var namespaceName = baseTypeSyntax.GetNamespace();
+            if (includeNamespace && !string.IsNullOrEmpty(namespaceName))
+            {
+                result = $"{namespaceName}.{result}";
+            }
+
+            return result;
         }
 
         public static bool HasAttribute<TAttribute>(
@@ -119,20 +183,6 @@ namespace Generators.Base.Extensions.New
             return allProperties;
         }
 
-        private static IEnumerable<INamedTypeSymbol> GetBaseTypes(INamedTypeSymbol type)
-        {
-            var baseTypes = new List<INamedTypeSymbol>();
-            var currentType = type.BaseType;
-
-            while (currentType != null)
-            {
-                baseTypes.Add(currentType);
-                currentType = currentType.BaseType;
-            }
-
-            return baseTypes;
-        }
-
         public static List<PropertyDeclarationSyntax> GetAllProperties(
             this ClassDeclarationSyntax classDeclaration,
             bool onlyPublic
@@ -151,5 +201,79 @@ namespace Generators.Base.Extensions.New
 
             return properties.ToList();
         }
+
+        #region Methods
+
+        public static IEnumerable<MethodDeclarationSyntax> GetMethods(
+            this ClassDeclarationSyntax classSyntax
+        )
+        {
+            return classSyntax.Members.OfType<MethodDeclarationSyntax>();
+        }
+
+        public static IEnumerable<MethodDeclarationSyntax> GetMethodsWithBaseClasses(
+            this ClassDeclarationSyntax classSyntax,
+            ImmutableArray<ClassDeclarationSyntax> baseClasses
+        )
+        {
+            List<MethodDeclarationSyntax> methods = new List<MethodDeclarationSyntax>();
+            methods.AddRange(classSyntax.GetMethods());
+            ExtractBaseMethods(classSyntax.BaseList, baseClasses, methods);
+
+            return methods;
+        }
+
+        public static IEnumerable<MethodDeclarationSyntax> GetMethodsWithAttributes<TAttribute>(
+            this ClassDeclarationSyntax classSyntax,
+            ImmutableArray<ClassDeclarationSyntax> baseClasses
+        )
+            where TAttribute : Attribute
+        {
+            List<MethodDeclarationSyntax> methods = new List<MethodDeclarationSyntax>();
+            methods.AddRange(classSyntax.GetMethods());
+            ExtractBaseMethods(classSyntax.BaseList, baseClasses, methods);
+
+            string attributeName = typeof(TAttribute).RealAttributeName();
+
+            return methods.Where(method =>
+                method
+                    .AttributeLists.SelectMany(attrList => attrList.Attributes)
+                    .Any(attr => attr.Name.ToString() == attributeName)
+            );
+        }
+
+        static void ExtractBaseMethods(
+            BaseListSyntax baseList,
+            IEnumerable<ClassDeclarationSyntax> baseClasses, // Hier verwenden wir ClassDeclarationSyntax
+            List<MethodDeclarationSyntax> methods // Liste, um die Methoden zu speichern
+        )
+        {
+            if (baseList == null)
+                return; // Keine Basisklasse vorhanden
+
+            foreach (var baseTypeSyntax in baseList.Types)
+            {
+                // Hole den Namen der Basisklasse
+                var baseTypeName = baseTypeSyntax.Type.GetName();
+
+                if (!string.IsNullOrEmpty(baseTypeName))
+                {
+                    // Suche nach der Basisklasse in den bekannten baseClasses
+                    var baseClass = baseClasses.FirstOrDefault(x =>
+                        x.Identifier.Text == baseTypeName
+                    );
+
+                    if (baseClass != null)
+                    {
+                        // Füge die Methoden der Basisklasse hinzu
+                        methods.AddRange(baseClass.GetMethods());
+
+                        // Rekursiv weitermachen, falls diese Basisklasse ebenfalls eine Basisklasse hat
+                        ExtractBaseMethods(baseClass.BaseList, baseClasses, methods);
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }

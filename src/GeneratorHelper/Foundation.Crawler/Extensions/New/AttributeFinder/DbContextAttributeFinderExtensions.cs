@@ -2,40 +2,30 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
-using Codelisk.GeneratorAttributes;
 using Codelisk.GeneratorAttributes.WebAttributes.Controller;
-using Codelisk.GeneratorAttributes.WebAttributes.Dto;
+using Codelisk.GeneratorAttributes.WebAttributes.Database;
 using Generators.Base.Extensions.New;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Foundation.Crawler.Extensions.New.AttributeFinder
 {
-    public static class ControllerAttributeFinderExtensions
+    public static class DbContextAttributeFinderExtensions
     {
-        public static string MethodName(
-            this MethodDeclarationSyntax method,
-            RecordDeclarationSyntax dto
+        public static IncrementalValueProvider<ImmutableArray<ClassDeclarationSyntax>> DbContexts(
+            this IncrementalGeneratorInitializationContext context
         )
         {
-            var attribute = method.HttpAttribute().First();
-            return attribute.GetFirstConstructorArgument();
-        }
-
-        public static IncrementalValueProvider<
-            ImmutableArray<ClassDeclarationSyntax>
-        > DefaultControllers(this IncrementalGeneratorInitializationContext context)
-        {
-            var defaultControllers = context
+            var baseContext = context
                 .SyntaxProvider.ForAttributeWithMetadataName(
-                    typeof(DefaultControllerAttribute).FullName,
+                    typeof(BaseContextAttribute).FullName,
                     static (n, _) => n is ClassDeclarationSyntax,
                     static (context, cancellationToken) =>
                     {
                         ClassDeclarationSyntax classDeclarationSyntax = (ClassDeclarationSyntax)
                             context.TargetNode;
 
-                        return classDeclarationSyntax.HasAttribute<DefaultControllerAttribute>()
+                        return classDeclarationSyntax.HasAttribute<BaseContextAttribute>()
                             ? classDeclarationSyntax
                             : null;
                     }
@@ -43,7 +33,7 @@ namespace Foundation.Crawler.Extensions.New.AttributeFinder
                 .Where(static typeDeclaration => typeDeclaration is not null)
                 .Collect();
 
-            return defaultControllers!;
+            return baseContext!;
         }
     }
 }

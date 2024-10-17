@@ -12,6 +12,7 @@ namespace Api.Generator.Generators
     {
         public override void Initialize(IncrementalGeneratorInitializationContext context)
         {
+            return;
             var codebuilders = context.CompilationProvider.Select(
                 static (compilation, _) =>
                 {
