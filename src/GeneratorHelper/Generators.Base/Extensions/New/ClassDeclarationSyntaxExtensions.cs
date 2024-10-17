@@ -56,32 +56,6 @@ namespace Generators.Base.Extensions.New
             return result;
         }
 
-        public static ClassDeclarationSyntax Construct(
-            this ClassDeclarationSyntax classDeclaration,
-            RecordDeclarationSyntax dto
-        )
-        {
-            // Check if the dto has a TypeParameterList
-            if (dto.TypeParameterList == null)
-            {
-                // If no type parameters, return the original class declaration
-                return classDeclaration;
-            }
-
-            // Create a new ClassDeclarationSyntax with the same name and modifiers
-            var typeParameters = dto
-                .TypeParameterList.Parameters.Select(tp =>
-                    SyntaxFactory.TypeParameter(tp.Identifier.Text)
-                )
-                .ToArray();
-            // Create a new TypeParameterListSyntax
-            var newTypeParameterList = SyntaxFactory.TypeParameterList(
-                SyntaxFactory.SeparatedList(typeParameters)
-            );
-            // Create the new ClassDeclarationSyntax with the new type parameters
-            return classDeclaration.WithTypeParameterList(newTypeParameterList);
-        }
-
         public static AttributeSyntax GetAttribute<TAttribute>(this ClassDeclarationSyntax c)
             where TAttribute : Attribute
         {
@@ -133,39 +107,6 @@ namespace Generators.Base.Extensions.New
             }
 
             return result;
-        }
-
-        public static ClassDeclarationSyntax Construct(
-            this ClassDeclarationSyntax symbol,
-            params string[] typeArguments
-        )
-        {
-            // Erstelle eine Liste der TypeArgumentSyntax-Knoten basierend auf den übergebenen Strings
-            var typeArgumentList = SyntaxFactory.TypeArgumentList(
-                SyntaxFactory.SeparatedList<TypeSyntax>(
-                    typeArguments.Select(arg => SyntaxFactory.ParseTypeName(arg))
-                )
-            );
-
-            // Erstelle eine neue BaseList, wenn Typargumente vorhanden sind
-            var newBaseList =
-                symbol.BaseList != null
-                    ? symbol.BaseList.WithTypes(
-                        SyntaxFactory.SeparatedList<BaseTypeSyntax>(
-                            symbol.BaseList.Types.Select(bt =>
-                                bt.WithType(
-                                    SyntaxFactory.GenericName(
-                                        ((IdentifierNameSyntax)bt.Type).Identifier,
-                                        typeArgumentList
-                                    )
-                                )
-                            )
-                        )
-                    )
-                    : null;
-
-            // Rückgabe einer neuen Klasse mit den modifizierten Basisklassen
-            return symbol.WithBaseList(newBaseList);
         }
 
         public static bool HasAttribute<TAttribute>(

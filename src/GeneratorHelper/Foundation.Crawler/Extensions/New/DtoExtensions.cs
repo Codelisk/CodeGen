@@ -10,12 +10,96 @@ using Generators.Base.Extensions;
 using Generators.Base.Extensions.Common;
 using Generators.Base.Extensions.New;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Foundation.Crawler.Extensions.New
 {
     public static class DtoExtensions
     {
+        public static string GetFullTypeName(this TypeDeclarationSyntax c)
+        {
+            // Start with the class name (Identifier)
+            var fullTypeName = c.Identifier.Text;
+
+            // Check if the class has type parameters (generics)
+            if (c.TypeParameterList != null && c.TypeParameterList.Parameters.Any())
+            {
+                var typeParameters = string.Join(
+                    ", ",
+                    c.TypeParameterList.Parameters.Select(p => p.Identifier.Text)
+                );
+                fullTypeName += $"<{typeParameters}>";
+            }
+
+            // Traverse any containing types (to handle nested types)
+            var parent = c.Parent;
+            while (parent is TypeDeclarationSyntax typeDeclaration)
+            {
+                var parentTypeName = typeDeclaration.Identifier.Text;
+
+                // Handle generics for the containing type
+                if (
+                    typeDeclaration is ClassDeclarationSyntax parentClass
+                    && parentClass.TypeParameterList != null
+                    && parentClass.TypeParameterList.Parameters.Any()
+                )
+                {
+                    var parentTypeParameters = string.Join(
+                        ", ",
+                        parentClass.TypeParameterList.Parameters.Select(p => p.Identifier.Text)
+                    );
+                    parentTypeName += $"<{parentTypeParameters}>";
+                }
+
+                fullTypeName = $"{parentTypeName}.{fullTypeName}";
+                parent = parent.Parent;
+            }
+
+            // Get the namespace, if available
+            var namespaceName = c.GetNamespace();
+            if (!string.IsNullOrEmpty(namespaceName))
+            {
+                fullTypeName = $"{namespaceName}.{fullTypeName}";
+            }
+
+            return fullTypeName;
+        }
+
+        public static ClassDeclarationSyntax Construct(
+            this ClassDeclarationSyntax classDeclaration,
+            RecordDeclarationSyntax dto
+        )
+        {
+            // Check if the dto has a TypeParameterList
+            if (classDeclaration.TypeParameterList == null)
+            {
+                // If no type parameters, return the original class declaration
+                return classDeclaration;
+            }
+
+            // Create a new ClassDeclarationSyntax with the same name and modifiers
+            var typeParameters = classDeclaration
+                .TypeParameterList.Parameters.Select(tp =>
+                    SyntaxFactory.TypeParameter(ReplaceConstructValue(dto, tp.Identifier.Text))
+                )
+                .ToArray();
+            // Create a new TypeParameterListSyntax
+            var newTypeParameterList = SyntaxFactory.TypeParameterList(
+                SyntaxFactory.SeparatedList(typeParameters)
+            );
+            // Create the new ClassDeclarationSyntax with the new type parameters
+            return classDeclaration.WithTypeParameterList(newTypeParameterList);
+        }
+
+        public static string ReplaceConstructValue(this RecordDeclarationSyntax dto, string name)
+        {
+            name = name.Replace("TEntity", dto.GetEntityName());
+            name = name.Replace("TDto", dto.GetName());
+            name = name.Replace("TKey", "Guid");
+            return name;
+        }
+
         public static IEnumerable<PropertyDeclarationSyntax> DtoForeignProperties(
             this RecordDeclarationSyntax dto,
             IEnumerable<RecordDeclarationSyntax> baseDtos

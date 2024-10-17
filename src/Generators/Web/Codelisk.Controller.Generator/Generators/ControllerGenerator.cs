@@ -90,7 +90,10 @@ namespace Controller.Generator.Generators
                 )
                 .AddAttribute(Constants.ControllerAttribute)
                 .AddConstructor()
-                .BaseConstructorParameterBaseCall(constructedBaseController)
+                .AddParameterWithBaseCall(
+                    "I" + dto.ManagerNameFromDto(),
+                    dto.ManagerNameFromDto().GetParameterName()
+                )
                 .Class;
         }
     }

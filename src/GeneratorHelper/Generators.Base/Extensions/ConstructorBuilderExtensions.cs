@@ -67,6 +67,22 @@ namespace Generators.Base.Extensions
             return c;
         }
 
+        public static ConstructorBuilder AddParameterWithBaseCall(
+            this ConstructorBuilder c,
+            string type,
+            string parameter
+        )
+        {
+            c.AddParameter(type, parameter);
+
+            Dictionary<string, string> typeParameters = new Dictionary<string, string>();
+            typeParameters.Add(type, parameter);
+            // Call the base constructor with the collected type parameters
+            c.WithBaseCall(typeParameters);
+
+            return c;
+        }
+
         public static ConstructorBuilder BaseConstructorParameterBaseCall(
             this ConstructorBuilder c,
             ClassDeclarationSyntax baseClass,
@@ -95,21 +111,12 @@ namespace Generators.Base.Extensions
                 var typeName = typeSyntax.ToString();
 
                 // Handle replacements if needed
-                if (replaceTypeName is not null)
+                if (replaceTypeName.HasValue)
                 {
-                    var (oldType, newType) = replaceTypeName.Value;
-
-                    // Replace type if it matches the replaceTypeName provided
-                    if (typeName.Equals(oldType))
-                    {
-                        typeName = newType;
-                        parameterName = newType.GetParameterName();
-                    }
-                    else if (typeName.Equals("I" + oldType))
-                    {
-                        typeName = "I" + newType;
-                        parameterName = newType.GetParameterName();
-                    }
+                    typeName = typeName.Replace(
+                        replaceTypeName.Value.Item1,
+                        replaceTypeName.Value.Item2
+                    );
                 }
 
                 // Add the type and parameter to the dictionary

@@ -28,7 +28,7 @@ namespace WebDbContext.Generator.Generators
                 static (sourceProductionContext, combinedResult) =>
                 {
                     // Hier kannst du die kombinierten Ergebnisse verarbeiten
-                    var (dtos, baseDtos) = combinedResult.Left;
+                    var (baseDtos, dtos) = combinedResult.Left;
                     var dbContexts = combinedResult.Right;
 
                     var result = new List<CodeBuilder?>();

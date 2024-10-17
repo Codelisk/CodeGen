@@ -81,12 +81,14 @@ namespace WebManager.Generator.Generators
         {
             var dtoPropertiesWithForeignKey = dto.DtoForeignProperties(baseDtos);
             var constructedBaseManager = baseManager.Construct(dto);
-
-            var test = constructedBaseManager.GetFirstInterfaceFullTypeName();
             builder
                 .AddClass("I" + dto.ManagerNameFromDto())
                 .OfType(TypeKind.Interface)
-                .SetBaseClass(constructedBaseManager.GetFirstInterfaceFullTypeName())
+                .SetBaseClass(
+                    dto.ReplaceConstructValue(
+                        constructedBaseManager.GetFirstInterfaceFullTypeName()
+                    )
+                )
                 .WithAccessModifier(Accessibility.Public);
 
             var constructor = builder
@@ -133,7 +135,12 @@ namespace WebManager.Generator.Generators
                 }
             });
 
-            var result = constructor.BaseConstructorParameterBaseCall(constructedBaseManager).Class;
+            var result = constructor
+                .AddParameterWithBaseCall(
+                    "I" + dto.RepositoryNameFromDto(),
+                    dto.RepositoryNameFromDto().GetParameterName()
+                )
+                .Class;
 
             foreach (var repo in foreignRepos)
             {
@@ -153,7 +160,10 @@ namespace WebManager.Generator.Generators
                         .Override()
                         .WithReturnTypeTask("object")
                         .MakeAsync()
-                        .AddParametersForHttpMethod(getMethode.HttpAttribute(), dto, baseDtos)
+                        .AddParameter(
+                            "Guid",
+                            $"{dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()}"
+                        )
                         .WithBody(x =>
                         {
                             x.AppendLine(
@@ -167,13 +177,13 @@ namespace WebManager.Generator.Generators
                             );
                             foreach (var repo in foreignRepos)
                             {
-                                bool isNotNull = repo.propertySymbol.Type.IsNotNull;
-                                string managerParametervalue = isNotNull
-                                    ? repo.propertySymbol.GetPropertyName()
-                                    : repo.propertySymbol.GetPropertyName() + ".Value";
+                                bool isNull = repo.propertySymbol.GetPropertyType().Contains("?");
+                                string managerParametervalue = isNull
+                                    ? repo.propertySymbol.GetPropertyName() + ".Value"
+                                    : repo.propertySymbol.GetPropertyName();
                                 string returnLine =
                                     $"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = ({repo.foreignKeyDto.GetFullModelName()})await _{repo.repoName}.{getMethodeFull.GetName()}({dto.GetName().GetParameterName()}.{managerParametervalue});";
-                                if (!isNotNull)
+                                if (isNull)
                                 {
                                     x.If(
                                             $"{dto.GetName().GetParameterName()}.{repo.propertySymbol.GetPropertyName()}.HasValue"
@@ -186,7 +196,14 @@ namespace WebManager.Generator.Generators
                                 }
                                 else
                                 {
-                                    x.AppendLine(returnLine);
+                                    x.If(
+                                            $"{dto.GetName().GetParameterName()}.{repo.propertySymbol.GetPropertyName()} != default"
+                                        )
+                                        .WithBody(x =>
+                                        {
+                                            x.AppendLine(returnLine);
+                                        })
+                                        .EndIf();
                                 }
                             }
 

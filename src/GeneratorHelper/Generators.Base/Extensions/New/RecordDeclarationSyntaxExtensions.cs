@@ -237,7 +237,7 @@ namespace Generators.Base.Extensions.New
             methods.AddRange(dto.GetMethods());
             ExtractBaseMethods(dto.BaseList, baseDtos, methods);
 
-            return methods.First(x => x.HasAttribute<GetIdAttribute>()).GetName();
+            return methods.First(x => x.HasAttribute<GetIdAttribute>()).GetName() + "()";
         }
         #endregion
     }

@@ -72,55 +72,6 @@ namespace Foundation.Crawler.Extensions
             return fullTypeName;
         }
 
-        public static string GetFullTypeName(this ClassDeclarationSyntax c)
-        {
-            // Start with the class name (Identifier)
-            var fullTypeName = c.Identifier.Text;
-
-            // Check if the class has type parameters (generics)
-            if (c.TypeParameterList != null && c.TypeParameterList.Parameters.Any())
-            {
-                var typeParameters = string.Join(
-                    ", ",
-                    c.TypeParameterList.Parameters.Select(p => p.Identifier.Text)
-                );
-                fullTypeName += $"<{typeParameters}>";
-            }
-
-            // Traverse any containing types (to handle nested types)
-            var parent = c.Parent;
-            while (parent is TypeDeclarationSyntax typeDeclaration)
-            {
-                var parentTypeName = typeDeclaration.Identifier.Text;
-
-                // Handle generics for the containing type
-                if (
-                    typeDeclaration is ClassDeclarationSyntax parentClass
-                    && parentClass.TypeParameterList != null
-                    && parentClass.TypeParameterList.Parameters.Any()
-                )
-                {
-                    var parentTypeParameters = string.Join(
-                        ", ",
-                        parentClass.TypeParameterList.Parameters.Select(p => p.Identifier.Text)
-                    );
-                    parentTypeName += $"<{parentTypeParameters}>";
-                }
-
-                fullTypeName = $"{parentTypeName}.{fullTypeName}";
-                parent = parent.Parent;
-            }
-
-            // Get the namespace, if available
-            var namespaceName = c.GetNamespace();
-            if (!string.IsNullOrEmpty(namespaceName))
-            {
-                fullTypeName = $"{namespaceName}.{fullTypeName}";
-            }
-
-            return fullTypeName;
-        }
-
         public static string GetFullModelName(this INamedTypeSymbol dto, bool plural = false)
         {
             var name = dto.Name.ReplaceLast("Dto", "Full");

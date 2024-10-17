@@ -65,6 +65,15 @@ namespace WebRepositories.Generator.Generators
         )
         {
             var constructedBaseRepo = baseRepository.Construct(dto);
+
+            builder
+                .AddClass("I" + dto.RepositoryNameFromDto())
+                .OfType(TypeKind.Interface)
+                .SetBaseClass(
+                    dto.ReplaceConstructValue(constructedBaseRepo.GetFirstInterfaceFullTypeName())
+                )
+                .WithAccessModifier(Accessibility.Public);
+
             return builder
                 .AddClass(dto.RepositoryNameFromDto())
                 .WithAccessModifier(Accessibility.Public)
@@ -73,7 +82,7 @@ namespace WebRepositories.Generator.Generators
                 .AddAttribute(typeof(GeneratedRepositoryAttribute).FullName)
                 .AddAttribute(typeof(RegisterTransient).FullName)
                 .AddConstructor()
-                .BaseConstructorParameterBaseCall(constructedBaseRepo)
+                .BaseConstructorParameterBaseCall(constructedBaseRepo, ("TKey", "Guid"))
                 .Class;
         }
     }
