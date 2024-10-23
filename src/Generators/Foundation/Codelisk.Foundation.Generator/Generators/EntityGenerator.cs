@@ -66,6 +66,7 @@ namespace Codelisk.Foundation.Generator.Generators
                 .AddAttribute($"{typeof(EntityAttribute).FullName}(typeof({dto.Identifier.Text}))")
                 .WithAccessModifier(Accessibility.Public);
 
+            result.AddConstructor();
             var constructor = result
                 .AddConstructor()
                 .WithBaseCall(
