@@ -115,7 +115,36 @@ namespace Generators.Base.Extensions.New
             this RecordDeclarationSyntax classSyntax
         )
         {
-            return classSyntax.Members.OfType<PropertyDeclarationSyntax>();
+            // Get explicit properties from the record's members
+            var explicitProperties = classSyntax.Members.OfType<PropertyDeclarationSyntax>();
+
+            // Get positional parameters from the primary constructor and create PropertyDeclarationSyntax for them
+            var positionalParameters =
+                classSyntax.ParameterList?.Parameters.Select(param =>
+                    SyntaxFactory
+                        .PropertyDeclaration(
+                            param.Type,
+                            SyntaxFactory.Identifier(param.Identifier.Text)
+                        )
+                        .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
+                        .WithAccessorList(
+                            SyntaxFactory.AccessorList(
+                                SyntaxFactory.List(
+                                    new[]
+                                    {
+                                        SyntaxFactory
+                                            .AccessorDeclaration(SyntaxKind.GetAccessorDeclaration)
+                                            .WithSemicolonToken(
+                                                SyntaxFactory.Token(SyntaxKind.SemicolonToken)
+                                            )
+                                    }
+                                )
+                            )
+                        )
+                ) ?? Enumerable.Empty<PropertyDeclarationSyntax>();
+
+            // Combine explicit properties and positional parameters
+            return explicitProperties.Concat(positionalParameters);
         }
 
         // Hilfsmethode, um eine Klasse im Syntaxbaum zu finden

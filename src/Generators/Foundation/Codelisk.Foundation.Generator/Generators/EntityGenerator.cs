@@ -66,20 +66,14 @@ namespace Codelisk.Foundation.Generator.Generators
                 .AddAttribute($"{typeof(EntityAttribute).FullName}(typeof({dto.Identifier.Text}))")
                 .WithAccessModifier(Accessibility.Public);
 
-            result.AddConstructor();
-            var constructor = result.AddConstructor().AddParameter(dto.Identifier.Text);
-
-            var allProperties = dto.DtoProperties(baseDtos);
-
-            constructor.WithBody(x =>
-            {
-                foreach (var property in allProperties)
-                {
-                    x.AppendLine(
-                        $"this.{property.GetPropertyName()} = {dto.GetName().GetParameterName()}.{property.GetPropertyName()};"
-                    );
-                }
-            });
+            var constructor = result
+                .AddConstructor()
+                .WithBaseCall(
+                    new Dictionary<string, string>
+                    {
+                        { dto.GetFullTypeName(), dto.Identifier.Text }
+                    }
+                );
 
             return builder.Classes;
         }
