@@ -182,6 +182,99 @@ namespace Foundation.Crawler.Extensions.New
             return dtos;
         }
 
+        public static IncrementalValueProvider<
+            ImmutableArray<InterfaceDeclarationSyntax>
+        > BaseDtoInterfaces(this IncrementalGeneratorInitializationContext context)
+        {
+            var dtos = context
+                .SyntaxProvider.ForAttributeWithMetadataName(
+                    typeof(DtoBaseInterfaceAttribute).FullName,
+                    static (n, _) => n is InterfaceDeclarationSyntax,
+                    static (context, cancellationToken) =>
+                    {
+                        InterfaceDeclarationSyntax interfaceDeclarationSyntax =
+                            (InterfaceDeclarationSyntax)context.TargetNode;
+
+                        return interfaceDeclarationSyntax.HasAttribute<DtoBaseInterfaceAttribute>()
+                            ? interfaceDeclarationSyntax
+                            : null;
+                    }
+                )
+                .Where(static typeDeclaration => typeDeclaration is not null)
+                .Collect();
+
+            return dtos;
+        }
+
+        public static IEnumerable<BaseTypeSyntax> DtoInterfaces(
+            this RecordDeclarationSyntax dto,
+            ImmutableArray<RecordDeclarationSyntax> baseDtos,
+            ImmutableArray<InterfaceDeclarationSyntax> baseInterfaces
+        )
+        {
+            var allInterfaces = new HashSet<BaseTypeSyntax>();
+            FindInterfacesRecursively(dto, baseDtos, baseInterfaces, allInterfaces);
+            return allInterfaces;
+        }
+
+        private static void FindInterfacesRecursively(
+            RecordDeclarationSyntax dto,
+            ImmutableArray<RecordDeclarationSyntax> baseDtos,
+            ImmutableArray<InterfaceDeclarationSyntax> baseInterfaces,
+            HashSet<BaseTypeSyntax> allInterfaces
+        )
+        {
+            // Überprüfe, ob das aktuelle DTO Interfaces hat
+            if (dto.BaseList != null)
+            {
+                foreach (var baseType in dto.BaseList.Types)
+                {
+                    // Überprüfe auch, ob das BaseType selbst ein Interface ist
+                    if (baseInterfaces.Any(i => i.Identifier.Text == baseType.Type.ToString()))
+                    {
+                        allInterfaces.Add(baseType);
+                    }
+
+                    var typeName = baseType.Type.GetName();
+                    // Finde die Basis-DTO
+                    var baseDto = baseDtos.FirstOrDefault(b =>
+                        b.Identifier.Text == baseType.Type.GetName()
+                    );
+
+                    // Wenn die Basis-DTO gefunden wurde, die Interfaces hinzufügen
+                    if (baseDto != null)
+                    {
+                        // Füge alle Interfaces der Basisklasse hinzu
+                        AddInterfaces(baseDto.BaseList, baseInterfaces, allInterfaces);
+
+                        // Rekursiv die Interfaces von den Basisklassen der Basisklasse hinzufügen
+                        FindInterfacesRecursively(baseDto, baseDtos, baseInterfaces, allInterfaces);
+                    }
+                }
+            }
+        }
+
+        private static void AddInterfaces(
+            BaseListSyntax baseList,
+            ImmutableArray<InterfaceDeclarationSyntax> baseInterfaces,
+            HashSet<BaseTypeSyntax> allInterfaces
+        )
+        {
+            int count = 0;
+            foreach (var baseType in baseList.Types)
+            {
+                if (count > 0)
+                {
+                    allInterfaces.Add(baseType);
+                }
+                if (baseInterfaces.Any(i => i.Identifier.Text == baseType.Type.GetName()))
+                {
+                    allInterfaces.Add(baseType);
+                }
+                count++;
+            }
+        }
+
         public static IEnumerable<PropertyDeclarationSyntax> DtoProperties(
             this RecordDeclarationSyntax dto,
             IEnumerable<RecordDeclarationSyntax> baseDtos
