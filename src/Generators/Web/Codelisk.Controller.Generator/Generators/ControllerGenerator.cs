@@ -55,7 +55,7 @@ namespace Controller.Generator.Generators
                         );
 
                         var builder = CodeBuilder.Create("Communalaudit.Api");
-                        var c = Class(builder, dto, baseManager, baseController);
+                        var c = Class(builder, dto, baseDtos, baseManager, baseController);
 
                         result.Add(builder);
                     }
@@ -77,12 +77,13 @@ namespace Controller.Generator.Generators
         private static ClassBuilder Class(
             CodeBuilder builder,
             RecordDeclarationSyntax dto,
+            ImmutableArray<RecordDeclarationSyntax> baseDtos,
             ClassDeclarationSyntax manager,
             ClassDeclarationSyntax baseController
         )
         {
             var constructedBaseController = baseController.Construct(dto);
-            return builder
+            var result = builder
                 .AddClass(dto.ControllerNameFromDto())
                 .WithAccessModifier(Accessibility.Public)
                 .SetBaseClass(
@@ -95,6 +96,28 @@ namespace Controller.Generator.Generators
                     dto.ManagerNameFromDto().GetParameterName()
                 )
                 .Class;
+
+            var foreignProperties = dto.DtoForeignProperties(baseDtos);
+
+            foreach (var foreignProperty in foreignProperties)
+            {
+                result
+                    .AddMethod($"GetBy{foreignProperty.GetPropertyName()}", Accessibility.Public)
+                    .AddParameter("Guid", "id")
+                    .AddAttribute(
+                        $"[{Constants.HttpGetAttribute}(\"GetBy{foreignProperty.GetPropertyName()}\")]"
+                    )
+                    .MakeAsync()
+                    .WithReturnTypeTaskList(dto.GetName())
+                    .WithBody(x =>
+                    {
+                        x.AppendLine(
+                            $"return await (_manager as I{dto.ManagerNameFromDto()}).GetBy{foreignProperty.GetPropertyName()}(id);"
+                        );
+                    });
+            }
+
+            return result;
         }
     }
 }
