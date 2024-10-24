@@ -81,7 +81,7 @@ namespace WebManager.Generator.Generators
         {
             var dtoPropertiesWithForeignKey = dto.DtoForeignProperties(baseDtos);
             var constructedBaseManager = baseManager.Construct(dto);
-            builder
+            var intf = builder
                 .AddClass("I" + dto.ManagerNameFromDto())
                 .OfType(TypeKind.Interface)
                 .SetBaseClass(
@@ -271,6 +271,29 @@ namespace WebManager.Generator.Generators
                 .WithReturnTypeList(dto.GetEntityName())
                 .AddParameter($"List<{dto.GetName()}>", "dtos")
                 .WithBody(x => x.AppendLine("return dtos.ToEntities();"));
+
+            var foreignProperties = dto.DtoForeignProperties(baseDtos);
+
+            foreach (var foreignProperty in foreignProperties)
+            {
+                intf.AddMethod($"GetBy{foreignProperty.GetPropertyName()}")
+                    .AddParameter("Guid", "id")
+                    .Abstract()
+                    .WithReturnTypeTaskList(dto.GetName());
+
+                result
+                    .AddMethod($"GetBy{foreignProperty.GetPropertyName()}", Accessibility.Public)
+                    .AddParameter("Guid", "id")
+                    .MakeAsync()
+                    .WithReturnTypeTaskList(dto.GetName())
+                    .WithBody(x =>
+                    {
+                        x.AppendLine(
+                            $"return ToDtos(await (_repo as I{dto.RepositoryNameFromDto()}).GetBy{foreignProperty.GetPropertyName()}(id));"
+                        );
+                    });
+            }
+
             return result;
         }
     }

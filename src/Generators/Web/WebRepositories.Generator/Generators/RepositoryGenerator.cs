@@ -66,7 +66,7 @@ namespace WebRepositories.Generator.Generators
         {
             var constructedBaseRepo = baseRepository.Construct(dto);
 
-            builder
+            var interf = builder
                 .AddClass("I" + dto.RepositoryNameFromDto())
                 .OfType(TypeKind.Interface)
                 .SetBaseClass(
@@ -74,7 +74,7 @@ namespace WebRepositories.Generator.Generators
                 )
                 .WithAccessModifier(Accessibility.Public);
 
-            return builder
+            var result = builder
                 .AddClass(dto.RepositoryNameFromDto())
                 .WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.RepositoryNameFromDto())
@@ -84,6 +84,29 @@ namespace WebRepositories.Generator.Generators
                 .AddConstructor()
                 .BaseConstructorParameterBaseCall(constructedBaseRepo, ("TKey", "Guid"))
                 .Class;
+
+            var foreignProperties = dto.DtoForeignProperties(baseDtos);
+
+            foreach (var foreignProperty in foreignProperties)
+            {
+                interf
+                    .AddMethod($"GetBy{foreignProperty.GetPropertyName()}")
+                    .AddParameter("Guid", "id")
+                    .Abstract()
+                    .WithReturnTypeTaskList(dto.GetEntityName());
+
+                result
+                    .AddMethod($"GetBy{foreignProperty.GetPropertyName()}", Accessibility.Public)
+                    .AddParameter("Guid", "id")
+                    .WithReturnTypeTaskList(dto.GetEntityName())
+                    .WithBody(x =>
+                    {
+                        x.AppendLine(
+                            $"return EntityByPropertyAsync(\"{foreignProperty.GetPropertyName()}\", id);"
+                        );
+                    });
+            }
+            return result;
         }
     }
 }
