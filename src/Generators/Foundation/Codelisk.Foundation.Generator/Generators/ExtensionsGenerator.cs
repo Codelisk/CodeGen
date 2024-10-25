@@ -73,6 +73,7 @@ namespace Codelisk.Foundation.Generator.Generators
                     .AddParameter("this " + dtoName, dtoName.GetParameterName())
                     .WithBody(x =>
                     {
+                        x.If($"if({dtoName.GetParameterName()} is null) return null");
                         x.AppendLine(
                             $"var result = new {entityName}({dtoName.GetParameterName()});"
                         );
@@ -102,6 +103,7 @@ namespace Codelisk.Foundation.Generator.Generators
                     .AddParameter("this " + entityName, "entity")
                     .WithBody(x =>
                     {
+                        x.If($"if(entity is null) return null");
                         x.AppendLine($"return entity as {dtoName};");
                     })
                     .WithReturnType(dtoName);
