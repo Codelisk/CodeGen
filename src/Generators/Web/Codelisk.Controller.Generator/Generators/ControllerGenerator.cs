@@ -117,28 +117,31 @@ namespace Controller.Generator.Generators
                     });
             }
 
-            result
-                .AddMethod($"GetFull", Accessibility.Public)
-                .AddParameter("Guid", "id")
-                .MakeAsync()
-                .WithReturnTypeTask(dto.GetFullModelName())
-                .WithBody(x =>
-                {
-                    x.AppendLine(
-                        $"return await (_manager as I{dto.ManagerNameFromDto()}).GetFull(id);"
-                    );
-                });
+            if (foreignProperties.Any())
+            {
+                result
+                    .AddMethod($"GetFull", Accessibility.Public)
+                    .AddParameter("Guid", "id")
+                    .MakeAsync()
+                    .WithReturnTypeTask(dto.GetFullModelName())
+                    .WithBody(x =>
+                    {
+                        x.AppendLine(
+                            $"return await (_manager as I{dto.ManagerNameFromDto()}).GetFull(id);"
+                        );
+                    });
 
-            result
-                .AddMethod($"GetAllFull", Accessibility.Public)
-                .MakeAsync()
-                .WithReturnTypeTaskList(dto.GetFullModelName())
-                .WithBody(x =>
-                {
-                    x.AppendLine(
-                        $"return await (_manager as I{dto.ManagerNameFromDto()}).GetAllFull();"
-                    );
-                });
+                result
+                    .AddMethod($"GetAllFull", Accessibility.Public)
+                    .MakeAsync()
+                    .WithReturnTypeTaskList(dto.GetFullModelName())
+                    .WithBody(x =>
+                    {
+                        x.AppendLine(
+                            $"return await (_manager as I{dto.ManagerNameFromDto()}).GetAllFull();"
+                        );
+                    });
+            }
 
             return result;
         }

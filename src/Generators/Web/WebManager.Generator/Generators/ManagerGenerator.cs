@@ -147,10 +147,9 @@ namespace WebManager.Generator.Generators
                 result.AddProperty($"_{repo.Item2}").SetType(repo.Item1).WithReadonlyValue();
             }
 
-            //if (foreignRepos.Any())
-            //{
-            //Generate GetFull methode
+            if (foreignRepos.Any())
             {
+                //Generate GetFull methode
                 var getMethode = baseRepo.GetMethodsWithAttributes<GetAttribute>(repos).First();
                 result
                     .AddMethod(ApiUrls.GetFull, Accessibility.Public)
@@ -206,18 +205,18 @@ namespace WebManager.Generator.Generators
                         x.AppendLine($"return {dto.GetFullModelName()};");
                     })
                     .AddAttribute(typeof(GetFullAttribute).FullName);
-            }
-            intf.AddMethod(ApiUrls.GetFull)
-                .WithReturnTypeTask($"{dto.GetFullModelName()}")
-                .Abstract()
-                .AddParameter(
-                    "Guid",
-                    $"{dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()}"
-                )
-                .AddAttribute(typeof(GetFullAttribute).FullName);
 
-            {
+                intf.AddMethod(ApiUrls.GetFull)
+                    .WithReturnTypeTask($"{dto.GetFullModelName()}")
+                    .Abstract()
+                    .AddParameter(
+                        "Guid",
+                        $"{dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()}"
+                    )
+                    .AddAttribute(typeof(GetFullAttribute).FullName);
+
                 string returnName = dto.GetFullModelName().GetParameterName() + "s";
+
                 //Generate GetAllFull methode
                 var getAllMethode = baseRepo
                     .GetMethodsWithAttributes<GetAllAttribute>(repos)
@@ -252,7 +251,6 @@ namespace WebManager.Generator.Generators
                     .WithReturnTypeTaskList($"{dto.GetFullModelName()}")
                     .AddAttribute(typeof(GetAllFullAttribute).FullName);
             }
-            //}
 
             //Add abstract methods
             result
