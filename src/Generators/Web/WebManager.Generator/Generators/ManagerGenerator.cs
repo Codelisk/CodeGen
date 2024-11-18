@@ -152,13 +152,9 @@ namespace WebManager.Generator.Generators
             //Generate GetFull methode
             {
                 var getMethode = baseRepo.GetMethodsWithAttributes<GetAttribute>(repos).First();
-                var getMethodeFull = baseManager
-                    .GetMethodsWithAttributes<GetFullAttribute>(managers)
-                    .First();
                 result
                     .AddMethod(ApiUrls.GetFull, Accessibility.Public)
-                    .Override()
-                    .WithReturnTypeTask("object")
+                    .WithReturnTypeTask($"{dto.GetFullModelName()}")
                     .MakeAsync()
                     .AddParameter(
                         "Guid",
@@ -182,7 +178,7 @@ namespace WebManager.Generator.Generators
                                 ? repo.propertySymbol.GetPropertyName() + ".Value"
                                 : repo.propertySymbol.GetPropertyName();
                             string returnLine =
-                                $"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = ({repo.foreignKeyDto.GetFullModelName()})await _{repo.repoName}.{getMethodeFull.GetName()}({dto.GetName().GetParameterName()}.{managerParametervalue});";
+                                $"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = ({repo.foreignKeyDto.GetFullModelName()})await _{repo.repoName}.{ApiUrls.GetFull}({dto.GetName().GetParameterName()}.{managerParametervalue});";
                             if (isNull)
                             {
                                 x.If(
@@ -220,12 +216,11 @@ namespace WebManager.Generator.Generators
                     .First();
                 result
                     .AddMethod(ApiUrls.GetAllFull, Accessibility.Public)
-                    .Override()
-                    .WithReturnTypeTaskList("object")
+                    .WithReturnTypeTaskList($"{dto.GetFullModelName()}")
                     .MakeAsync()
                     .WithBody(x =>
                     {
-                        x.AppendLine($"List<object> {returnName} = new ();");
+                        x.AppendLine($"List<{dto.GetFullModelName()}> {returnName} = new ();");
                         x.AppendLine(
                             $"var {dto.GetName().GetParameterName()}s = await {getAllMethode.GetName()}();"
                         );
