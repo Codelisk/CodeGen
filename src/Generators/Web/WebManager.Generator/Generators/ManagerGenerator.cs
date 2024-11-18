@@ -207,6 +207,14 @@ namespace WebManager.Generator.Generators
                     })
                     .AddAttribute(typeof(GetFullAttribute).FullName);
             }
+            intf.AddMethod(ApiUrls.GetFull)
+                .WithReturnTypeTask($"{dto.GetFullModelName()}")
+                .Abstract()
+                .AddParameter(
+                    "Guid",
+                    $"{dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()}"
+                )
+                .AddAttribute(typeof(GetFullAttribute).FullName);
 
             {
                 string returnName = dto.GetFullModelName().GetParameterName() + "s";
@@ -237,7 +245,12 @@ namespace WebManager.Generator.Generators
 
                         x.AppendLine($"return {returnName};");
                     })
-                    .AddAttribute(typeof(GetFullAttribute).FullName);
+                    .AddAttribute(typeof(GetAllFullAttribute).FullName);
+
+                intf.AddMethod(ApiUrls.GetAllFull)
+                    .Abstract()
+                    .WithReturnTypeTaskList($"{dto.GetFullModelName()}")
+                    .AddAttribute(typeof(GetAllFullAttribute).FullName);
             }
             //}
 
