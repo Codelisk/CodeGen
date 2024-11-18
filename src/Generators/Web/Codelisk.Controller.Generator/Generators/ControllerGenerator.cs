@@ -7,6 +7,7 @@ using Codelisk.GeneratorAttributes.WebAttributes.Controller;
 using Codelisk.GeneratorAttributes.WebAttributes.Dto;
 using Codelisk.GeneratorAttributes.WebAttributes.HttpMethod;
 using Codelisk.GeneratorAttributes.WebAttributes.Manager;
+using Codelisk.GeneratorShared.Constants;
 using Controller.Generator.CodeBuilders;
 using Foundation.Crawler.Crawlers;
 using Foundation.Crawler.Extensions;
@@ -122,6 +123,7 @@ namespace Controller.Generator.Generators
                 result
                     .AddMethod($"GetFull", Accessibility.Public)
                     .AddParameter("Guid", "id")
+                    .AddAttribute($"[{Constants.HttpGetAttribute}(\"{ApiUrls.GetFull}\")]")
                     .MakeAsync()
                     .WithReturnTypeTask(dto.GetFullModelName())
                     .WithBody(x =>
@@ -134,6 +136,7 @@ namespace Controller.Generator.Generators
                 result
                     .AddMethod($"GetAllFull", Accessibility.Public)
                     .MakeAsync()
+                    .AddAttribute($"[{Constants.HttpGetAttribute}(\"{ApiUrls.GetAllFull}\")]")
                     .WithReturnTypeTaskList(dto.GetFullModelName())
                     .WithBody(x =>
                     {
