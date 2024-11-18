@@ -146,110 +146,103 @@ namespace WebManager.Generator.Generators
                 result.AddProperty($"_{repo.Item2}").SetType(repo.Item1).WithReadonlyValue();
             }
 
-            if (foreignRepos.Any())
-            {
-                //Generate GetFull methode
-                var getMethode = baseRepo.GetMethodsWithAttributes<GetAttribute>(repos).First();
-                result
-                    .AddMethod(ApiUrls.GetFull, Accessibility.Public)
-                    .WithReturnTypeTask($"{dto.GetFullModelName()}")
-                    .MakeAsync()
-                    .AddParameter(
-                        "Guid",
-                        $"{dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()}"
-                    )
-                    .WithBody(x =>
+            //Generate GetFull methode
+            var getMethode = baseRepo.GetMethodsWithAttributes<GetAttribute>(repos).First();
+            result
+                .AddMethod(ApiUrls.GetFull, Accessibility.Public)
+                .WithReturnTypeTask($"{dto.GetFullModelName()}")
+                .MakeAsync()
+                .AddParameter(
+                    "Guid",
+                    $"{dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()}"
+                )
+                .WithBody(x =>
+                {
+                    x.AppendLine($"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ();");
+                    x.AppendLine(
+                        $"var {dto.GetName().GetParameterName()} = await {getMethode.GetName()}({dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()});"
+                    );
+                    x.AppendLine(
+                        $"{dto.GetFullModelName()}.{dto.GetName().GetParameterName()} = {dto.GetName().GetParameterName()};"
+                    );
+                    foreach (var repo in foreignRepos)
                     {
-                        x.AppendLine(
-                            $"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ();"
-                        );
-                        x.AppendLine(
-                            $"var {dto.GetName().GetParameterName()} = await {getMethode.GetName()}({dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()});"
-                        );
-                        x.AppendLine(
-                            $"{dto.GetFullModelName()}.{dto.GetName().GetParameterName()} = {dto.GetName().GetParameterName()};"
-                        );
-                        foreach (var repo in foreignRepos)
+                        bool isNull = repo.propertySymbol.GetPropertyType().Contains("?");
+                        string managerParametervalue = isNull
+                            ? repo.propertySymbol.GetPropertyName() + ".Value"
+                            : repo.propertySymbol.GetPropertyName();
+                        string returnLine =
+                            $"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = ({repo.foreignKeyDto.GetFullModelName()})await _{repo.repoName}.{ApiUrls.GetFull}({dto.GetName().GetParameterName()}.{managerParametervalue});";
+                        if (isNull)
                         {
-                            bool isNull = repo.propertySymbol.GetPropertyType().Contains("?");
-                            string managerParametervalue = isNull
-                                ? repo.propertySymbol.GetPropertyName() + ".Value"
-                                : repo.propertySymbol.GetPropertyName();
-                            string returnLine =
-                                $"{dto.GetFullModelName()}.{repo.propertySymbol.GetFullModelNameFromProperty()} = ({repo.foreignKeyDto.GetFullModelName()})await _{repo.repoName}.{ApiUrls.GetFull}({dto.GetName().GetParameterName()}.{managerParametervalue});";
-                            if (isNull)
-                            {
-                                x.If(
-                                        $"{dto.GetName().GetParameterName()}.{repo.propertySymbol.GetPropertyName()}.HasValue"
-                                    )
-                                    .WithBody(x =>
-                                    {
-                                        x.AppendLine(returnLine);
-                                    })
-                                    .EndIf();
-                            }
-                            else
-                            {
-                                x.If(
-                                        $"{dto.GetName().GetParameterName()}.{repo.propertySymbol.GetPropertyName()} != default"
-                                    )
-                                    .WithBody(x =>
-                                    {
-                                        x.AppendLine(returnLine);
-                                    })
-                                    .EndIf();
-                            }
+                            x.If(
+                                    $"{dto.GetName().GetParameterName()}.{repo.propertySymbol.GetPropertyName()}.HasValue"
+                                )
+                                .WithBody(x =>
+                                {
+                                    x.AppendLine(returnLine);
+                                })
+                                .EndIf();
                         }
+                        else
+                        {
+                            x.If(
+                                    $"{dto.GetName().GetParameterName()}.{repo.propertySymbol.GetPropertyName()} != default"
+                                )
+                                .WithBody(x =>
+                                {
+                                    x.AppendLine(returnLine);
+                                })
+                                .EndIf();
+                        }
+                    }
 
-                        x.AppendLine($"return {dto.GetFullModelName()};");
-                    })
-                    .AddAttribute(typeof(GetFullAttribute).FullName);
+                    x.AppendLine($"return {dto.GetFullModelName()};");
+                })
+                .AddAttribute(typeof(GetFullAttribute).FullName);
 
-                intf.AddMethod(ApiUrls.GetFull)
-                    .WithReturnTypeTask($"{dto.GetFullModelName()}")
-                    .Abstract()
-                    .AddParameter(
-                        "Guid",
-                        $"{dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()}"
-                    )
-                    .AddAttribute(typeof(GetFullAttribute).FullName);
+            intf.AddMethod(ApiUrls.GetFull)
+                .WithReturnTypeTask($"{dto.GetFullModelName()}")
+                .Abstract()
+                .AddParameter(
+                    "Guid",
+                    $"{dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()}"
+                )
+                .AddAttribute(typeof(GetFullAttribute).FullName);
 
-                string returnName = dto.GetFullModelName().GetParameterName() + "s";
+            string returnName = dto.GetFullModelName().GetParameterName() + "s";
 
-                //Generate GetAllFull methode
-                var getAllMethode = baseRepo
-                    .GetMethodsWithAttributes<GetAllAttribute>(repos)
-                    .First();
-                result
-                    .AddMethod(ApiUrls.GetAllFull, Accessibility.Public)
-                    .WithReturnTypeTaskList($"{dto.GetFullModelName()}")
-                    .MakeAsync()
-                    .WithBody(x =>
-                    {
-                        x.AppendLine($"List<{dto.GetFullModelName()}> {returnName} = new ();");
-                        x.AppendLine(
-                            $"var {dto.GetName().GetParameterName()}s = await {getAllMethode.GetName()}();"
-                        );
-                        x.ForEach(
-                                $"var {dto.GetName().GetParameterName()}",
-                                $"{dto.GetName().GetParameterName()}s"
-                            )
-                            .WithBody(x =>
-                            {
-                                x.AppendLine(
-                                    $"{returnName}.Add(await {ApiUrls.GetFull}({dto.GetName().GetParameterName()}.{dto.GetIdPropertyMethodeName(baseDtos)}));"
-                                );
-                            });
+            //Generate GetAllFull methode
+            var getAllMethode = baseRepo.GetMethodsWithAttributes<GetAllAttribute>(repos).First();
+            result
+                .AddMethod(ApiUrls.GetAllFull, Accessibility.Public)
+                .WithReturnTypeTaskList($"{dto.GetFullModelName()}")
+                .MakeAsync()
+                .WithBody(x =>
+                {
+                    x.AppendLine($"List<{dto.GetFullModelName()}> {returnName} = new ();");
+                    x.AppendLine(
+                        $"var {dto.GetName().GetParameterName()}s = await {getAllMethode.GetName()}();"
+                    );
+                    x.ForEach(
+                            $"var {dto.GetName().GetParameterName()}",
+                            $"{dto.GetName().GetParameterName()}s"
+                        )
+                        .WithBody(x =>
+                        {
+                            x.AppendLine(
+                                $"{returnName}.Add(await {ApiUrls.GetFull}({dto.GetName().GetParameterName()}.{dto.GetIdPropertyMethodeName(baseDtos)}));"
+                            );
+                        });
 
-                        x.AppendLine($"return {returnName};");
-                    })
-                    .AddAttribute(typeof(GetAllFullAttribute).FullName);
+                    x.AppendLine($"return {returnName};");
+                })
+                .AddAttribute(typeof(GetAllFullAttribute).FullName);
 
-                intf.AddMethod(ApiUrls.GetAllFull)
-                    .Abstract()
-                    .WithReturnTypeTaskList($"{dto.GetFullModelName()}")
-                    .AddAttribute(typeof(GetAllFullAttribute).FullName);
-            }
+            intf.AddMethod(ApiUrls.GetAllFull)
+                .Abstract()
+                .WithReturnTypeTaskList($"{dto.GetFullModelName()}")
+                .AddAttribute(typeof(GetAllFullAttribute).FullName);
 
             //Add abstract methods
             result
