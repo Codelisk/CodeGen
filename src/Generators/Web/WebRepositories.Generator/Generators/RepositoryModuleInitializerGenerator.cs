@@ -15,7 +15,6 @@ using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using WebGenerator.Base;
-using WebRepositories.Generator.CodeBuilders;
 
 namespace WebRepositories.Generator.Generators
 {
