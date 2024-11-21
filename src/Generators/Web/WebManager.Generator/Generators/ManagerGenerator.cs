@@ -136,8 +136,11 @@ namespace WebManager.Generator.Generators
 
             var result = constructor
                 .AddParameterWithBaseCall(
-                    "I" + dto.RepositoryNameFromDto(),
-                    dto.RepositoryNameFromDto().GetParameterName()
+                    (
+                        "I" + dto.RepositoryNameFromDto(),
+                        dto.RepositoryNameFromDto().GetParameterName()
+                    ),
+                    ("DefaultManagerProvider", "defaultManagerProvider")
                 )
                 .Class;
 

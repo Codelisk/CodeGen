@@ -1,4 +1,5 @@
-﻿using CodeGenHelpers;
+﻿using System.Reflection.Metadata;
+using CodeGenHelpers;
 using CodeGenHelpers.Internals;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -69,14 +70,16 @@ namespace Generators.Base.Extensions
 
         public static ConstructorBuilder AddParameterWithBaseCall(
             this ConstructorBuilder c,
-            string type,
-            string parameter
+            params (string type, string parameter)[] typesAndParameters
         )
         {
-            c.AddParameter(type, parameter);
-
             Dictionary<string, string> typeParameters = new Dictionary<string, string>();
-            typeParameters.Add(type, parameter);
+            foreach (var item in typesAndParameters)
+            {
+                c.AddParameter(item.type, item.parameter);
+
+                typeParameters.Add(item.type, item.parameter);
+            }
             // Call the base constructor with the collected type parameters
             c.WithBaseCall(typeParameters);
 
@@ -86,7 +89,7 @@ namespace Generators.Base.Extensions
         public static ConstructorBuilder BaseConstructorParameterBaseCall(
             this ConstructorBuilder c,
             ClassDeclarationSyntax baseClass,
-            (string, string)? replaceTypeName = null
+            params (string, string)[]? replaceTypeName
         )
         {
             // Get the first constructor from the base class
@@ -111,12 +114,12 @@ namespace Generators.Base.Extensions
                 var typeName = typeSyntax.ToString();
 
                 // Handle replacements if needed
-                if (replaceTypeName.HasValue)
+                if (replaceTypeName is not null && replaceTypeName.Any())
                 {
-                    typeName = typeName.Replace(
-                        replaceTypeName.Value.Item1,
-                        replaceTypeName.Value.Item2
-                    );
+                    foreach (var item in replaceTypeName)
+                    {
+                        typeName = typeName.Replace(item.Item1, item.Item2);
+                    }
                 }
 
                 // Add the type and parameter to the dictionary

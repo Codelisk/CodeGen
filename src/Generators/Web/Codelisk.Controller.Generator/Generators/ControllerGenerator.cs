@@ -93,8 +93,7 @@ namespace Controller.Generator.Generators
                 .AddAttribute(Constants.ControllerAttribute)
                 .AddConstructor()
                 .AddParameterWithBaseCall(
-                    "I" + dto.ManagerNameFromDto(),
-                    dto.ManagerNameFromDto().GetParameterName()
+                    ("I" + dto.ManagerNameFromDto(), dto.ManagerNameFromDto().GetParameterName())
                 )
                 .Class;
 
