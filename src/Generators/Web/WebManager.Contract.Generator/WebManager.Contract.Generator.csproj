@@ -7,7 +7,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\Codelisk.GeneratorAttributes\Codelisk.GeneratorAttributes.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\..\..\GeneratorHelper\Foundation.Crawler\Foundation.Crawler.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj"  PrivateAssets="all"/>
-    <ProjectReference Include="..\WebManager.Generator\WebManager.Generator.csproj"  PrivateAssets="all"/>
+    <ProjectReference Include="..\..\..\GeneratorHelper\Generators.Base\Generators.Base.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\WebManager.Generator\WebManager.Generator.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CodeBuilders\" />
+    <Folder Include="Generators\" />
   </ItemGroup>
 </Project>

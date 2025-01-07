@@ -4,7 +4,6 @@ using Codelisk.GeneratorAttributes.GeneralAttributes.Registration;
 using Generator.Foundation.Generators.Base;
 using Generators.Base.Helpers;
 using Microsoft.CodeAnalysis;
-using WebRepositories.Generator.CodeBuilders;
 
 namespace WebRepositories.Contract.Generator.CodeBuilders
 {
