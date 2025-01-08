@@ -10,6 +10,22 @@ namespace Generators.Base.Generators.Base
 {
     public abstract class BaseGenerator : IIncrementalGenerator
     {
+        public IncrementalValueProvider<string> DefaultNameSpace(IncrementalGeneratorInitializationContext context)
+        {
+            var defaultNamespaceProvider = context.AnalyzerConfigOptionsProvider.Select((options, cancellationToken) =>
+            {
+                if (options.GlobalOptions.TryGetValue("build_property.RootNamespace", out var defaultNamespace))
+                {
+                    return defaultNamespace;
+                }
+
+                // Fallback, falls kein RootNamespace definiert ist
+                return "DefaultNamespace";
+            });
+
+            return defaultNamespaceProvider;
+        }
+
         public abstract void Initialize(IncrementalGeneratorInitializationContext context);
 
         protected void AddSource(

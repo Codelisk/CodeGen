@@ -25,14 +25,16 @@ namespace WebRepositories.Generator.Generators
         {
             var dtos = context.Dtos();
             var repos = context.DefaultRepositories();
-            var baseDtosAndClasses = context.BaseDtos().Combine(dtos).Combine(repos);
+            var baseDtosAndClasses = context.BaseDtos().Combine(dtos).Combine(repos).Combine(base.DefaultNameSpace(context));
             context.RegisterImplementationSourceOutput(
                 baseDtosAndClasses,
                 static (sourceProductionContext, combinedResult) =>
                 {
-                    // Hier kannst du die kombinierten Ergebnisse verarbeiten
-                    var (baseDtos, dtos) = combinedResult.Left;
-                    var repos = combinedResult.Right;
+                    // Struktur des kombinierten Ergebnisses entpacken
+                    var baseDtos = combinedResult.Left.Left.Left; // baseDtos
+                    var dtos = combinedResult.Left.Left.Right;    // dtos
+                    var repos = combinedResult.Left.Right;       // repos
+                    var defaultNamespace = combinedResult.Right; // DefaultNamespace
 
                     var result = new List<CodeBuilder?>();
                     foreach (var dto in dtos)

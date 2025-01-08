@@ -35,16 +35,17 @@ namespace Controller.Generator.Generators
             var controllers = context.DefaultControllers();
             var baseDtos = context.BaseDtos();
 
-            var combinedResults = baseDtos.Combine(dtos).Combine(managers).Combine(controllers);
+            var combinedResults = baseDtos.Combine(dtos).Combine(managers).Combine(controllers).Combine(base.DefaultNameSpace(context));
 
             context.RegisterImplementationSourceOutput(
                 combinedResults,
                 static (sourceProductionContext, combinedResult) =>
                 {
-                    var baseDtos = combinedResult.Left.Left.Left; // baseDtos
-                    var dtos = combinedResult.Left.Left.Right; // dtos
-                    var managers = combinedResult.Left.Right; // managers
-                    var controllers = combinedResult.Right;
+                    var baseDtos = combinedResult.Left.Left.Left.Left; // baseDtos
+                    var dtos = combinedResult.Left.Left.Left.Right; // dtos
+                    var managers = combinedResult.Left.Left.Right; // managers
+                    var controllers = combinedResult.Left.Right; // controllers
+                    var defaultNamespace = combinedResult.Right; // DefaultNamespace
 
                     var result = new List<CodeBuilder?>();
 

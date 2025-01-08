@@ -5,7 +5,7 @@
     },
     "Profile 1": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\..\\..\\..\\..\\..\\..\\..\\Communalaudit.Api\\Communalaudit.Api.csproj"
+      "targetProject": "..\\..\\..\\..\\..\\..\\Orderlyze.Printing.Restservice\\Orderlyze.Printing.Restservice.csproj"
     }
   }
 }

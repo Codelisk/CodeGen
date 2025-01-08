@@ -25,8 +25,8 @@ namespace WebRepositories.Generator.Generators
         {
             var dtos = context.Dtos();
             context.RegisterImplementationSourceOutput(
-                dtos,
-                static (sourceProductionContext, dtos) =>
+                dtos.Combine(base.DefaultNameSpace(context)),
+                static (sourceProductionContext, combined) =>
                 {
                     var result = new List<CodeBuilder?>();
                     var builder = CodeBuilder.Create("Communalaudit.Api");
@@ -35,7 +35,7 @@ namespace WebRepositories.Generator.Generators
                         string serviceType,
                         string serviceImplementation
                     )> services = new();
-                    foreach (var dto in dtos)
+                    foreach (var dto in combined.Left)
                     {
                         services.Add(
                             (null, "I" + dto.ManagerNameFromDto(), dto.ManagerNameFromDto())
