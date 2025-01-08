@@ -48,7 +48,7 @@ namespace WebManager.Generator.Generators
                     var result = new List<CodeBuilder?>();
                     foreach (var dto in dtos)
                     {
-                        var builder = CodeBuilder.Create("Communalaudit.Api");
+                        var builder = CodeBuilder.Create(defaultNamespace);
                         var baseManager = dto.TenantOrDefault<DefaultManagerAttribute>(managers);
                         var baseRepo = dto.TenantOrDefault<DefaultRepositoryAttribute>(repos);
                         Class(builder, dtos, dto, baseRepo, baseManager, baseDtos, managers, repos);

@@ -29,7 +29,7 @@ namespace WebRepositories.Generator.Generators
                 static (sourceProductionContext, combined) =>
                 {
                     var result = new List<CodeBuilder?>();
-                    var builder = CodeBuilder.Create("Communalaudit.Api");
+                    var builder = CodeBuilder.Create(combined.Right);
                     List<(
                         string serviceUsage,
                         string serviceType,

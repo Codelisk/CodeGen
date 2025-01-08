@@ -39,7 +39,7 @@ namespace WebRepositories.Generator.Generators
                     var result = new List<CodeBuilder?>();
                     foreach (var dto in dtos)
                     {
-                        var builder = CodeBuilder.Create("Communalaudit.Api");
+                        var builder = CodeBuilder.Create(defaultNamespace);
                         var repo = dto.TenantOrDefault<DefaultRepositoryAttribute>(repos);
                         Class(builder, dto, repo, baseDtos);
                         result.Add(builder);

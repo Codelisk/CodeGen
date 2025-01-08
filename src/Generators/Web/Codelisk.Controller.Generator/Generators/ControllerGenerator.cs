@@ -56,7 +56,7 @@ namespace Controller.Generator.Generators
                             controllers
                         );
 
-                        var builder = CodeBuilder.Create("Communalaudit.Api");
+                        var builder = CodeBuilder.Create(defaultNamespace);
                         var c = Class(builder, dto, baseDtos, baseManager, baseController);
 
                         result.Add(builder);
