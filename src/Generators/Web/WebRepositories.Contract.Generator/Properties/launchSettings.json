@@ -1,10 +1,7 @@
 {
   "profiles": {
-    "WebRepositories.Contract.Generator": {
-      "commandName": "Project"
-    },
     "Profile 1": {
-      "commandName": "DebugRoslynComponent",
+      "commandName": "DebugRoslynComponent"
     }
   }
 }

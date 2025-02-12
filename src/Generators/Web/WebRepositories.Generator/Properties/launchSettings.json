@@ -5,7 +5,7 @@
     },
     "Profile 1": {
       "commandName": "DebugRoslynComponent",
-      "targetProject": "..\\..\\..\\..\\..\\..\\Orderlyze.Printing.Restservice\\Orderlyze.Printing.Restservice.csproj"
+      "targetProject": "..\\..\\..\\..\\..\\..\\src\\Backend\\Supporter_Api\\Supporter_Api.csproj"
     }
   }
 }

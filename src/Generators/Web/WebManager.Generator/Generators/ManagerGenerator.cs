@@ -33,7 +33,11 @@ namespace WebManager.Generator.Generators
             var repos = context.DefaultRepositories();
             var baseDtos = context.BaseDtos();
 
-            var combinedResults = baseDtos.Combine(dtos).Combine(managers).Combine(repos).Combine(base.DefaultNameSpace(context));
+            var combinedResults = baseDtos
+                .Combine(dtos)
+                .Combine(managers)
+                .Combine(repos)
+                .Combine(base.DefaultNameSpace(context));
 
             context.RegisterImplementationSourceOutput(
                 combinedResults,
@@ -141,7 +145,7 @@ namespace WebManager.Generator.Generators
                         "I" + dto.RepositoryNameFromDto(),
                         dto.RepositoryNameFromDto().GetParameterName()
                     ),
-                    ("DefaultManagerProvider", "defaultManagerProvider")
+                    ("BaseManagerProvider", "defaultManagerProvider")
                 )
                 .Class;
 

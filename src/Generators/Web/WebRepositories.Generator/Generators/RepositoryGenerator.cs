@@ -25,15 +25,19 @@ namespace WebRepositories.Generator.Generators
         {
             var dtos = context.Dtos();
             var repos = context.DefaultRepositories();
-            var baseDtosAndClasses = context.BaseDtos().Combine(dtos).Combine(repos).Combine(base.DefaultNameSpace(context));
+            var baseDtosAndClasses = context
+                .BaseDtos()
+                .Combine(dtos)
+                .Combine(repos)
+                .Combine(base.DefaultNameSpace(context));
             context.RegisterImplementationSourceOutput(
                 baseDtosAndClasses,
                 static (sourceProductionContext, combinedResult) =>
                 {
                     // Struktur des kombinierten Ergebnisses entpacken
                     var baseDtos = combinedResult.Left.Left.Left; // baseDtos
-                    var dtos = combinedResult.Left.Left.Right;    // dtos
-                    var repos = combinedResult.Left.Right;       // repos
+                    var dtos = combinedResult.Left.Left.Right; // dtos
+                    var repos = combinedResult.Left.Right; // repos
                     var defaultNamespace = combinedResult.Right; // DefaultNamespace
 
                     var result = new List<CodeBuilder?>();
@@ -79,7 +83,7 @@ namespace WebRepositories.Generator.Generators
                 .AddClass(dto.RepositoryNameFromDto())
                 .WithAccessModifier(Accessibility.Public)
                 .AddInterface("I" + dto.RepositoryNameFromDto())
-                .SetBaseClass($"{constructedBaseRepo.GetName()}<{dto.GetEntityName()}, Guid>")
+                .SetBaseClass($"{constructedBaseRepo.GetFullTypeName()}")
                 .AddAttribute(typeof(GeneratedRepositoryAttribute).FullName)
                 .AddAttribute(typeof(RegisterTransient).FullName)
                 .AddConstructor()
