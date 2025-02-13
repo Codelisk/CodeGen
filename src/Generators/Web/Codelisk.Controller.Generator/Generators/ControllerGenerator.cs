@@ -35,7 +35,11 @@ namespace Controller.Generator.Generators
             var controllers = context.DefaultControllers();
             var baseDtos = context.BaseDtos();
 
-            var combinedResults = baseDtos.Combine(dtos).Combine(managers).Combine(controllers).Combine(base.DefaultNameSpace(context));
+            var combinedResults = baseDtos
+                .Combine(dtos)
+                .Combine(managers)
+                .Combine(controllers)
+                .Combine(base.DefaultNameSpace(context));
 
             context.RegisterImplementationSourceOutput(
                 combinedResults,
@@ -88,9 +92,7 @@ namespace Controller.Generator.Generators
             var result = builder
                 .AddClass(dto.ControllerNameFromDto())
                 .WithAccessModifier(Accessibility.Public)
-                .SetBaseClass(
-                    $"{baseController.GetName()}<{dto.GetName()}, Guid, {dto.GetEntityName()}>"
-                )
+                .SetBaseClass($"{baseController.Construct(dto).GetFullTypeName()}")
                 .AddAttribute(Constants.ControllerAttribute)
                 .AddConstructor()
                 .AddParameterWithBaseCall(
