@@ -126,6 +126,7 @@ namespace Controller.Generator.Generators
                     .AddMethod($"GetFull", Accessibility.Public)
                     .AddParameter("Guid", "id")
                     .AddAttribute($"[{Constants.HttpGetAttribute}(\"{ApiUrls.GetFull}\")]")
+                    .AddAttribute($"Microsoft.AspNetCore.Mvc.Produces(type: typeof(object))")
                     .MakeAsync()
                     .WithReturnTypeTask("Microsoft.AspNetCore.Mvc.IActionResult")
                     .WithBody(x =>
@@ -139,6 +140,7 @@ namespace Controller.Generator.Generators
                     .AddMethod($"GetAllFull", Accessibility.Public)
                     .MakeAsync()
                     .AddAttribute($"[{Constants.HttpGetAttribute}(\"{ApiUrls.GetAllFull}\")]")
+                    .AddAttribute($"Microsoft.AspNetCore.Mvc.Produces(type: typeof(object))")
                     .WithReturnTypeTask("Microsoft.AspNetCore.Mvc.IActionResult")
                     .WithBody(x =>
                     {
