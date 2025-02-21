@@ -61,6 +61,7 @@ namespace Codelisk.Foundation.Generator.Generators
                 .WithAccessModifier(Accessibility.Public);
             result
                 .AddConstructor()
+                .AddAttribute("System.Diagnostics.CodeAnalysis.SetsRequiredMembersAttribute")
                 .AddParameter(dto.GetName(), dto.GetName().GetParameterName())
                 .WithBody(x =>
                 {
