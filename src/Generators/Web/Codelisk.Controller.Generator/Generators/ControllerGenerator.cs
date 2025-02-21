@@ -127,11 +127,11 @@ namespace Controller.Generator.Generators
                     .AddParameter("Guid", "id")
                     .AddAttribute($"[{Constants.HttpGetAttribute}(\"{ApiUrls.GetFull}\")]")
                     .MakeAsync()
-                    .WithReturnTypeTask(dto.GetFullModelName())
+                    .WithReturnTypeTask("Microsoft.AspNetCore.Mvc.IActionResult")
                     .WithBody(x =>
                     {
                         x.AppendLine(
-                            $"return await (_manager as I{dto.ManagerNameFromDto()}).GetFull(id);"
+                            $"return Ok(await (_manager as I{dto.ManagerNameFromDto()}).GetFull(id));"
                         );
                     });
 
@@ -139,11 +139,11 @@ namespace Controller.Generator.Generators
                     .AddMethod($"GetAllFull", Accessibility.Public)
                     .MakeAsync()
                     .AddAttribute($"[{Constants.HttpGetAttribute}(\"{ApiUrls.GetAllFull}\")]")
-                    .WithReturnTypeTaskList(dto.GetFullModelName())
+                    .WithReturnTypeTask("Microsoft.AspNetCore.Mvc.IActionResult")
                     .WithBody(x =>
                     {
                         x.AppendLine(
-                            $"return await (_manager as I{dto.ManagerNameFromDto()}).GetAllFull();"
+                            $"return Ok(await (_manager as I{dto.ManagerNameFromDto()}).GetAllFull());"
                         );
                     });
             }
