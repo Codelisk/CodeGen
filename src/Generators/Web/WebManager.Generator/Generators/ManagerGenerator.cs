@@ -166,13 +166,13 @@ namespace WebManager.Generator.Generators
                 )
                 .WithBody(x =>
                 {
-                    x.AppendLine($"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ();");
                     x.AppendLine(
                         $"var {dto.GetName().GetParameterName()} = await {getMethode.GetName()}({dto.GetIdProperty(baseDtos).GetPropertyName().GetParameterName()});"
                     );
                     x.AppendLine(
-                        $"{dto.GetFullModelName()}.{dto.GetName().GetParameterName()} = {dto.GetName().GetParameterName()};"
+                        $"{dto.GetFullModelName()} {dto.GetFullModelName()} = new ({dto.GetName().GetParameterName()});"
                     );
+
                     foreach (var repo in foreignRepos)
                     {
                         bool isNull = repo.propertySymbol.GetPropertyType().Contains("?");

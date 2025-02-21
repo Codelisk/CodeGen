@@ -59,10 +59,19 @@ namespace Codelisk.Foundation.Generator.Generators
                 .TopLevelNamespace()
                 .AddClass(dto.GetFullModelName())
                 .WithAccessModifier(Accessibility.Public);
+            result
+                .AddConstructor()
+                .AddParameter(dto.GetName(), dto.GetName().GetParameterName())
+                .WithBody(x =>
+                {
+                    x.AppendLine(
+                        $"this.{dto.GetName().GetParameterName()} = {dto.GetName().GetParameterName()};"
+                    );
+                });
 
             result
                 .AddProperty(dto.GetName().GetParameterName(), Accessibility.Public)
-                .SetType(dto.GetName())
+                .SetType("required " + dto.GetName())
                 .UseAutoProps();
 
             var dtoPropertiesWithForeignKey = dto.DtoForeignProperties(baseDtos);
