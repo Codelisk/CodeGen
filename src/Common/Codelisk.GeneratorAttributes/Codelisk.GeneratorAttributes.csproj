@@ -5,10 +5,6 @@
     <TargetFramework>$(GeneratorTargetFramework)</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Codelisk.GeneratorShared\Codelisk.GeneratorShared.csproj" PrivateAssets="all" />
   </ItemGroup>
